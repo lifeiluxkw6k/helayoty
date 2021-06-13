@@ -1,0 +1,436 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{35145425-D3A3-43E1-BD52-D3446BD37974}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WinformControlLibraryExtension</RootNamespace>
+    <AssemblyName>WinformControlLibraryExtension</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Commom\ControlCommom.cs" />
+    <Compile Include="Design\EmptyConverter.cs" />
+    <Compile Include="Design\MenuExtEditor.cs" />
+    <Compile Include="Design\RadioButtonExtDesigner.cs" />
+    <Compile Include="Design\CollectionEditorExt.cs" />
+    <Compile Include="Design\ColorEditorExt.cs" />
+    <Compile Include="Design\DottedLineBorderExtDesigner.cs" />
+    <Compile Include="Design\ImageCarouselExtDesigner.cs" />
+    <Compile Include="Design\ImageWhirligigExtDesigner.cs" />
+    <Compile Include="Design\FisheyeBarExtDesigner.cs" />
+    <Compile Include="Design\CheckBoxExtDesigner.cs" />
+    <Compile Include="Design\TextCarouselExtDesigner.cs" />
+    <Compile Include="Design\DateExtDesigner.cs" />
+    <Compile Include="Design\DatePickerExtDesigner.cs" />
+    <Compile Include="Design\ColorPickerExtDesigner.cs" />
+    <Compile Include="Design\ColorExtDesigner.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Commom\WindowNavigate.cs" />
+    <Compile Include="控件\AnimationStaticTimer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="控件\SlideMenuExt\SlideMenuPanelExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="控件\SlideMenuExt\SlideMenuPanelExt.designer.cs">
+      <DependentUpon>SlideMenuPanelExt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="控件\SlideMenuExt\SlideMenuExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="控件\SlideMenuExt\SlideMenuExt.designer.cs">
+      <DependentUpon>SlideMenuExt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="控件\RadioButtonExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="控件\RadioButtonExt.designer.cs">
+      <DependentUpon>RadioButtonExt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="控件\FisheyeMenuExt\FisheyeMenuExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="控件\FisheyeMenuExt\FisheyeMenuExt.designer.cs">
+      <DependentUpon>FisheyeMenuExt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="控件\FisheyeMenuExt\FisheyeMenuComponentExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="控件\FisheyeMenuExt\FisheyeMenuComponentExt.Designer.cs">
+      <DependentUpon>FisheyeMenuComponentExt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="控件\HalvingLineExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="控件\HalvingLineExt.Designer.cs">
+      <DependentUpon>HalvingLineExt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="控件\RadianMenuExt\RadianMenuComponentExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="控件\RadianMenuExt\RadianMenuComponentExt.Designer.cs">
+      <DependentUpon>RadianMenuComponentExt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="控件\CheckBoxExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="控件\CheckBoxExt.designer.cs">
+      <DependentUpon>CheckBoxExt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="控件\TimerExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="控件\TimerExt.Designer.cs">
+      <DependentUpon>TimerExt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="控件\AnimationComponent.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="控件\AnimationComponent.Designer.cs">
+      <DependentUpon>AnimationComponent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="控件\ImageExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="控件\ImageExt.Designer.cs">
+      <DependentUpon>ImageExt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="控件\ButtonExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="控件\ButtonExt.Designer.cs">
+      <DependentUpon>ButtonExt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="控件\ChartExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="控件\ChartExt.designer.cs">
+      <DependentUpon>ChartExt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="控件\ColorExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="控件\ColorExt.designer.cs">
+      <DependentUpon>ColorExt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="控件\DateExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="控件\DateExt.designer.cs">
+      <DependentUpon>DateExt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="控件\AlertFormExt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="控件\AlertFormExt.Designer.cs">
+      <DependentUpon>AlertFormExt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="控件\ImageWhirligigExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="控件\ImageWhirligigExt.designer.cs">
+      <DependentUpon>ImageWhirligigExt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="控件\ImageCarouselExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="控件\ImageCarouselExt.designer.cs">
+      <DependentUpon>ImageCarouselExt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="控件\JigsawValidExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="控件\JigsawValidExt.designer.cs">
+      <DependentUpon>JigsawValidExt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="控件\LoadExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="控件\LoadExt.Designer.cs">
+      <DependentUpon>LoadExt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="控件\MeterExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="控件\MeterExt.designer.cs">
+      <DependentUpon>MeterExt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="控件\NavigationBarExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="控件\NavigationBarExt.Designer.cs">
+      <DependentUpon>NavigationBarExt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="控件\PatternLockExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="控件\PatternLockExt.designer.cs">
+      <DependentUpon>PatternLockExt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="控件\PercentageProgressExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="控件\PercentageProgressExt.designer.cs">
+      <DependentUpon>PercentageProgressExt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="控件\GradualProgressExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="控件\GradualProgressExt.designer.cs">
+      <DependentUpon>GradualProgressExt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="控件\RadarChartExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="控件\RadarChartExt.designer.cs">
+      <DependentUpon>RadarChartExt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="控件\RadarScanExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="控件\RadarScanExt.Designer.cs">
+      <DependentUpon>RadarScanExt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="控件\RadianMenuExt\RadianMenuExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="控件\RadianMenuExt\RadianMenuExt.designer.cs">
+      <DependentUpon>RadianMenuExt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="控件\MultidropSlideBarExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="控件\MultidropSlideBarExt.designer.cs">
+      <DependentUpon>MultidropSlideBarExt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="控件\ProcedureExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="控件\ProcedureExt.designer.cs">
+      <DependentUpon>ProcedureExt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="控件\SwitchButtonExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="控件\SwitchButtonExt.designer.cs">
+      <DependentUpon>SwitchButtonExt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="控件\TabControlExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="控件\TabControlExt.Designer.cs">
+      <DependentUpon>TabControlExt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="控件\TextCarouselExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="控件\TextCarouselExt.designer.cs">
+      <DependentUpon>TextCarouselExt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="控件\ThermometerExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="控件\ThermometerExt.Designer.cs">
+      <DependentUpon>ThermometerExt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="控件\NumberTimeExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="控件\NumberTimeExt.Designer.cs">
+      <DependentUpon>NumberTimeExt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="控件\ToolTipExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="控件\ToolTipExt.Designer.cs">
+      <DependentUpon>ToolTipExt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="控件\WaveProgressExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="控件\WaveProgressExt.designer.cs">
+      <DependentUpon>WaveProgressExt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="控件\GroupPanelExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="控件\GroupPanelExt.designer.cs">
+      <DependentUpon>GroupPanelExt.cs</DependentUpon>
+    </Compile>
+    <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="控件\AlertFormExt.resx">
+      <DependentUpon>AlertFormExt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="控件\FisheyeMenuExt\FisheyeMenuComponentExt.resx">
+      <DependentUpon>FisheyeMenuComponentExt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="控件\ImageWhirligigExt.resx">
+      <DependentUpon>ImageWhirligigExt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="控件\ImageCarouselExt.resx">
+      <DependentUpon>ImageCarouselExt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="控件\HalvingLineExt.resx">
+      <DependentUpon>HalvingLineExt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="控件\RadianMenuExt\RadianMenuComponentExt.resx">
+      <DependentUpon>RadianMenuComponentExt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="控件\RadianMenuExt\RadianMenuExt.resx">
+      <DependentUpon>RadianMenuExt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="控件\TabControlExt.resx">
+      <DependentUpon>TabControlExt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="控件\ToolTipExt.resx">
+      <DependentUpon>ToolTipExt.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\date.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Global.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\msg.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\shake.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\squaresback.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\错误.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\通过.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\通知.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\通知栏错误闪烁图标.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\通知栏警告闪烁图标.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\通知栏通过闪烁图标.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\通知栏正常图标.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\疑问.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\通知栏通知闪烁图标.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\通知栏疑问闪烁图标.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\警告.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\关闭.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\复制.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\自定义.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\collapsebtn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\expandbtn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fixed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\layout.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\unfixed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\searchclearbtn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\expandfirstbtn.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\WcleAnimationLibrary\WcleAnimationLibrary.csproj">
+      <Project>{bca4d193-8e66-4335-b553-d8778e950688}</Project>
+      <Name>WcleAnimationLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
