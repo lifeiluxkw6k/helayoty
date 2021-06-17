@@ -636,6 +636,10 @@ namespace WinformControlLibraryExtension
         protected override void OnEnabledChanged(EventArgs e)
         {
             base.OnEnabledChanged(e);
+
+            if (this.DesignMode)
+                return;
+
             if (this.Enabled)
             {
                 if (this.AnimationActive || this.Visible)
@@ -652,6 +656,10 @@ namespace WinformControlLibraryExtension
         protected override void OnVisibleChanged(EventArgs e)
         {
             base.OnVisibleChanged(e);
+
+            if (this.DesignMode)
+                return;
+
             if (this.Visible)
             {
                 if (this.AnimationActive || this.Enabled)

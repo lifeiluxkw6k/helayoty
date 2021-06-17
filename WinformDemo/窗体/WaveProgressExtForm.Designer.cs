@@ -60,7 +60,7 @@
             this.waveProgressExt1.Text = "waveProgressExt1";
             this.waveProgressExt1.Value = 0.36F;
             this.waveProgressExt1.WaveBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.waveProgressExt1.WaveBehindColor = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.waveProgressExt1.WaveBehindColor = System.Drawing.Color.FromArgb(((int)(((byte)(159)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.waveProgressExt1.WaveFrontColor = System.Drawing.Color.FromArgb(((int)(((byte)(159)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.waveProgressExt1.WaveHeight = 15;
             this.waveProgressExt1.WaveInterval = 10;

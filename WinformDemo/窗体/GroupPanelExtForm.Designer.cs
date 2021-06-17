@@ -40,7 +40,6 @@
             this.groupPanelExt2.Name = "groupPanelExt2";
             this.groupPanelExt2.Size = new System.Drawing.Size(200, 100);
             this.groupPanelExt2.TabIndex = 0;
-            this.groupPanelExt2.TabStop = false;
             this.groupPanelExt2.TitleBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(159)))), ((int)(((byte)(106)))), ((int)(((byte)(90)))), ((int)(((byte)(205)))));
             this.groupPanelExt2.TitleImage = global::WinformDemo.Properties.Resources.GroupPanelTitle;
             this.groupPanelExt2.TitleTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
@@ -51,7 +50,6 @@
             this.groupPanelExt1.Name = "groupPanelExt1";
             this.groupPanelExt1.Size = new System.Drawing.Size(200, 100);
             this.groupPanelExt1.TabIndex = 0;
-            this.groupPanelExt1.TabStop = false;
             this.groupPanelExt1.TitleImage = global::WinformDemo.Properties.Resources.GroupPanelTitle;
             this.groupPanelExt1.TitleTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             // 

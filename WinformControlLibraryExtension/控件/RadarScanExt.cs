@@ -528,9 +528,12 @@ namespace WinformControlLibraryExtension
             SetStyle(ControlStyles.ResizeRedraw, true);
             SetStyle(ControlStyles.SupportsTransparentBackColor, true);
 
-            if (this.RadarScanActive == true || this.pointFlickerActive == true)
+            if (!this.DesignMode)
             {
-                AnimationStaticTimer.AnimationStart(this);
+                if (this.RadarScanActive == true || this.pointFlickerActive == true)
+                {
+                    AnimationStaticTimer.AnimationStart(this);
+                }
             }
         }
 
@@ -638,6 +641,10 @@ namespace WinformControlLibraryExtension
         protected override void OnVisibleChanged(EventArgs e)
         {
             base.OnVisibleChanged(e);
+
+            if (this.DesignMode)
+                return;
+
             if (this.Visible)
             {
                 if (this.Enabled == true && this.RadarScanActive == true || this.pointFlickerActive == true)

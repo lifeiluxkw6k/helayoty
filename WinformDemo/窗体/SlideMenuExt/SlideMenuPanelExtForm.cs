@@ -11,9 +11,9 @@ using WinformControlLibraryExtension;
 
 namespace WinformDemo
 {
-    public partial class MenuPanelExtForm : Form
+    public partial class SlideMenuPanelExtForm : Form
     {
-        public MenuPanelExtForm()
+        public SlideMenuPanelExtForm()
         {
             InitializeComponent();
         }

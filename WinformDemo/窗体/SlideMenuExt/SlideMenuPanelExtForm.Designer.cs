@@ -1,6 +1,6 @@
 ﻿namespace WinformDemo
 {
-    partial class MenuPanelExtForm
+    partial class SlideMenuPanelExtForm
     {
         /// <summary>
         /// Required designer variable.

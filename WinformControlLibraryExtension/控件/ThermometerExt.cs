@@ -864,6 +864,10 @@ namespace WinformControlLibraryExtension
         protected override void OnVisibleChanged(EventArgs e)
         {
             base.OnVisibleChanged(e);
+
+            if (this.DesignMode)
+                return;
+
             if (this.Visible)
             {
 

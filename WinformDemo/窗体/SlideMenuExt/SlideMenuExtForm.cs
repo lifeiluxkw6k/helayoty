@@ -6,9 +6,9 @@ using WinformControlLibraryExtension;
 
 namespace WinformDemo
 {
-    public partial class MenuExtForm : Form
+    public partial class SlideMenuExtForm : Form
     {
-        public MenuExtForm()
+        public SlideMenuExtForm()
         {
             InitializeComponent();
         }

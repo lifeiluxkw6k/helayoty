@@ -7,8 +7,6 @@ D:\Git\花木兰控件库\WinformDemo\bin\Debug\WcleAnimationLibrary.pdb
 D:\Git\花木兰控件库\WinformDemo\bin\Debug\WinformControlLibraryExtension.pdb
 D:\Git\花木兰控件库\WinformDemo\obj\x86\Debug\WinformDemo.csprojAssemblyReference.cache
 D:\Git\花木兰控件库\WinformDemo\obj\x86\Debug\WinformDemo.DemoForm.resources
-D:\Git\花木兰控件库\WinformDemo\obj\x86\Debug\WinformDemo.MenuExtForm.resources
-D:\Git\花木兰控件库\WinformDemo\obj\x86\Debug\WinformDemo.MenuPanelExtForm.resources
 D:\Git\花木兰控件库\WinformDemo\obj\x86\Debug\WinformDemo.RadioButtonExtForm.resources
 D:\Git\花木兰控件库\WinformDemo\obj\x86\Debug\WinformDemo.CheckBoxExtForm.resources
 D:\Git\花木兰控件库\WinformDemo\obj\x86\Debug\WinformDemo.HalvingLineExtForm.resources
@@ -51,3 +49,6 @@ D:\Git\花木兰控件库\WinformDemo\obj\x86\Debug\WinformDemo.csproj.CoreCompi
 D:\Git\花木兰控件库\WinformDemo\obj\x86\Debug\WinformDemo.csproj.CopyComplete
 D:\Git\花木兰控件库\WinformDemo\obj\x86\Debug\WinformDemo.exe
 D:\Git\花木兰控件库\WinformDemo\obj\x86\Debug\WinformDemo.pdb
+D:\Git\花木兰控件库\WinformDemo\obj\x86\Debug\WinformDemo.AllForm.resources
+D:\Git\花木兰控件库\WinformDemo\obj\x86\Debug\WinformDemo.SlideMenuExtForm.resources
+D:\Git\花木兰控件库\WinformDemo\obj\x86\Debug\WinformDemo.SlideMenuPanelExtForm.resources

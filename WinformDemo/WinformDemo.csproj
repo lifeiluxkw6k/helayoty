@@ -58,6 +58,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AllForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AllForm.Designer.cs">
+      <DependentUpon>AllForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="DemoForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -69,18 +75,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="窗体\SlideMenuExt\MenuExtForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="窗体\SlideMenuExt\MenuExtForm.Designer.cs">
-      <DependentUpon>MenuExtForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="窗体\SlideMenuExt\MenuPanelExtForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="窗体\SlideMenuExt\MenuPanelExtForm.Designer.cs">
-      <DependentUpon>MenuPanelExtForm.cs</DependentUpon>
     </Compile>
     <Compile Include="窗体\RadioButtonExtForm.cs">
       <SubType>Form</SubType>
@@ -123,6 +117,18 @@
     </Compile>
     <Compile Include="窗体\RadianMenuExt\RadianMenuExtComponentForm.Designer.cs">
       <DependentUpon>RadianMenuExtComponentForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="窗体\SlideMenuExt\SlideMenuExtForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="窗体\SlideMenuExt\SlideMenuExtForm.Designer.cs">
+      <DependentUpon>SlideMenuExtForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="窗体\SlideMenuExt\SlideMenuPanelExtForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="窗体\SlideMenuExt\SlideMenuPanelExtForm.Designer.cs">
+      <DependentUpon>SlideMenuPanelExtForm.cs</DependentUpon>
     </Compile>
     <Compile Include="窗体\TextCarouselExtForm.cs">
       <SubType>Form</SubType>
@@ -299,14 +305,11 @@
       <DependentUpon>AnimationLibraryForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AllForm.resx">
+      <DependentUpon>AllForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DemoForm.resx">
       <DependentUpon>DemoForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="窗体\SlideMenuExt\MenuExtForm.resx">
-      <DependentUpon>MenuExtForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="窗体\SlideMenuExt\MenuPanelExtForm.resx">
-      <DependentUpon>MenuPanelExtForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="窗体\RadioButtonExtForm.resx">
       <DependentUpon>RadioButtonExtForm.cs</DependentUpon>
@@ -328,6 +331,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="窗体\RadianMenuExt\RadianMenuExtComponentForm.resx">
       <DependentUpon>RadianMenuExtComponentForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="窗体\SlideMenuExt\SlideMenuExtForm.resx">
+      <DependentUpon>SlideMenuExtForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="窗体\SlideMenuExt\SlideMenuPanelExtForm.resx">
+      <DependentUpon>SlideMenuPanelExtForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="窗体\TextCarouselExtForm.resx">
       <DependentUpon>TextCarouselExtForm.cs</DependentUpon>

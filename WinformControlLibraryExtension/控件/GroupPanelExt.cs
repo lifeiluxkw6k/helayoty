@@ -58,7 +58,7 @@ namespace WinformControlLibraryExtension
     /// </summary>
     [ToolboxItem(true)]
     [Description("GroupPanel扩展")]
-    public partial class GroupPanelExt : Control
+    public partial class GroupPanelExt : Panel
     {
         #region 停用事件
 
@@ -582,7 +582,7 @@ namespace WinformControlLibraryExtension
         /// </summary>
         private void NCInvalidate()
         {
-            IntPtr hDC =WindowNavigate.GetWindowDC(this.Handle);
+            IntPtr hDC = WindowNavigate.GetWindowDC(this.Handle);
             Graphics g = Graphics.FromHdc(hDC);
             this.OnNCPaint(new PaintEventArgs(g, new Rectangle(0, 0, this.Width, this.Height)));
             g.Dispose();

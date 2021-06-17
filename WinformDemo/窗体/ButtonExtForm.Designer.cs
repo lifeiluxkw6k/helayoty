@@ -28,18 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            WcleAnimationLibrary.AnimationOptions animationOptions1 = new WcleAnimationLibrary.AnimationOptions();
-            WcleAnimationLibrary.AnimationOptions animationOptions2 = new WcleAnimationLibrary.AnimationOptions();
-            WcleAnimationLibrary.AnimationOptions animationOptions3 = new WcleAnimationLibrary.AnimationOptions();
-            WcleAnimationLibrary.AnimationOptions animationOptions4 = new WcleAnimationLibrary.AnimationOptions();
-            WcleAnimationLibrary.AnimationOptions animationOptions5 = new WcleAnimationLibrary.AnimationOptions();
-            WcleAnimationLibrary.AnimationOptions animationOptions6 = new WcleAnimationLibrary.AnimationOptions();
-            WcleAnimationLibrary.AnimationOptions animationOptions7 = new WcleAnimationLibrary.AnimationOptions();
-            WcleAnimationLibrary.AnimationOptions animationOptions8 = new WcleAnimationLibrary.AnimationOptions();
-            WcleAnimationLibrary.AnimationOptions animationOptions9 = new WcleAnimationLibrary.AnimationOptions();
-            WcleAnimationLibrary.AnimationOptions animationOptions10 = new WcleAnimationLibrary.AnimationOptions();
-            WcleAnimationLibrary.AnimationOptions animationOptions11 = new WcleAnimationLibrary.AnimationOptions();
-            WcleAnimationLibrary.AnimationOptions animationOptions12 = new WcleAnimationLibrary.AnimationOptions();
             this.buttonExt11 = new WinformControlLibraryExtension.ButtonExt();
             this.buttonExt12 = new WinformControlLibraryExtension.ButtonExt();
             this.buttonExt10 = new WinformControlLibraryExtension.ButtonExt();
@@ -56,9 +44,8 @@
             // 
             // buttonExt11
             // 
-            animationOptions1.AllTransformTime = 250D;
-            animationOptions1.Data = null;
-            this.buttonExt11.Animation.Options = animationOptions1;
+            this.buttonExt11.Animation.Options.AllTransformTime = 250D;
+            this.buttonExt11.Animation.Options.Data = null;
             this.buttonExt11.BackColor = System.Drawing.Color.OliveDrab;
             this.buttonExt11.FlatAppearance.BorderSize = 0;
             this.buttonExt11.Location = new System.Drawing.Point(559, 24);
@@ -69,9 +56,8 @@
             // 
             // buttonExt12
             // 
-            animationOptions2.AllTransformTime = 250D;
-            animationOptions2.Data = null;
-            this.buttonExt12.Animation.Options = animationOptions2;
+            this.buttonExt12.Animation.Options.AllTransformTime = 250D;
+            this.buttonExt12.Animation.Options.Data = null;
             this.buttonExt12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(204)))), ((int)(((byte)(153)))));
             this.buttonExt12.FlatAppearance.BorderSize = 0;
             this.buttonExt12.Location = new System.Drawing.Point(559, 130);
@@ -82,9 +68,8 @@
             // 
             // buttonExt10
             // 
-            animationOptions3.AllTransformTime = 250D;
-            animationOptions3.Data = null;
-            this.buttonExt10.Animation.Options = animationOptions3;
+            this.buttonExt10.Animation.Options.AllTransformTime = 250D;
+            this.buttonExt10.Animation.Options.Data = null;
             this.buttonExt10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
             this.buttonExt10.FlatAppearance.BorderSize = 0;
             this.buttonExt10.Location = new System.Drawing.Point(24, 24);
@@ -95,9 +80,8 @@
             // 
             // buttonExt6
             // 
-            animationOptions4.AllTransformTime = 250D;
-            animationOptions4.Data = null;
-            this.buttonExt6.Animation.Options = animationOptions4;
+            this.buttonExt6.Animation.Options.AllTransformTime = 250D;
+            this.buttonExt6.Animation.Options.Data = null;
             this.buttonExt6.BackColor = System.Drawing.Color.OliveDrab;
             this.buttonExt6.FlatAppearance.BorderSize = 0;
             this.buttonExt6.Location = new System.Drawing.Point(452, 24);
@@ -108,9 +92,8 @@
             // 
             // buttonExt1
             // 
-            animationOptions5.AllTransformTime = 250D;
-            animationOptions5.Data = null;
-            this.buttonExt1.Animation.Options = animationOptions5;
+            this.buttonExt1.Animation.Options.AllTransformTime = 250D;
+            this.buttonExt1.Animation.Options.Data = null;
             this.buttonExt1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(102)))), ((int)(((byte)(153)))));
             this.buttonExt1.FlatAppearance.BorderSize = 0;
             this.buttonExt1.Location = new System.Drawing.Point(24, 130);
@@ -121,9 +104,8 @@
             // 
             // buttonExt5
             // 
-            animationOptions6.AllTransformTime = 250D;
-            animationOptions6.Data = null;
-            this.buttonExt5.Animation.Options = animationOptions6;
+            this.buttonExt5.Animation.Options.AllTransformTime = 250D;
+            this.buttonExt5.Animation.Options.Data = null;
             this.buttonExt5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(204)))), ((int)(((byte)(153)))));
             this.buttonExt5.FlatAppearance.BorderSize = 0;
             this.buttonExt5.Location = new System.Drawing.Point(452, 130);
@@ -134,10 +116,9 @@
             // 
             // buttonExt7
             // 
-            animationOptions7.AllTransformTime = 250D;
-            animationOptions7.Data = null;
-            this.buttonExt7.Animation.Options = animationOptions7;
-            this.buttonExt7.BackColor = System.Drawing.Color.OliveDrab;
+            this.buttonExt7.Animation.Options.AllTransformTime = 250D;
+            this.buttonExt7.Animation.Options.Data = null;
+            this.buttonExt7.BackColor = System.Drawing.Color.LightCoral;
             this.buttonExt7.FlatAppearance.BorderSize = 0;
             this.buttonExt7.Location = new System.Drawing.Point(345, 24);
             this.buttonExt7.Name = "buttonExt7";
@@ -147,9 +128,8 @@
             // 
             // buttonExt4
             // 
-            animationOptions8.AllTransformTime = 250D;
-            animationOptions8.Data = null;
-            this.buttonExt4.Animation.Options = animationOptions8;
+            this.buttonExt4.Animation.Options.AllTransformTime = 250D;
+            this.buttonExt4.Animation.Options.Data = null;
             this.buttonExt4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(204)))), ((int)(((byte)(153)))));
             this.buttonExt4.FlatAppearance.BorderSize = 0;
             this.buttonExt4.Location = new System.Drawing.Point(345, 130);
@@ -160,9 +140,8 @@
             // 
             // buttonExt2
             // 
-            animationOptions9.AllTransformTime = 250D;
-            animationOptions9.Data = null;
-            this.buttonExt2.Animation.Options = animationOptions9;
+            this.buttonExt2.Animation.Options.AllTransformTime = 250D;
+            this.buttonExt2.Animation.Options.Data = null;
             this.buttonExt2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(102)))), ((int)(((byte)(153)))));
             this.buttonExt2.FlatAppearance.BorderSize = 0;
             this.buttonExt2.Location = new System.Drawing.Point(131, 130);
@@ -173,9 +152,8 @@
             // 
             // buttonExt9
             // 
-            animationOptions10.AllTransformTime = 250D;
-            animationOptions10.Data = null;
-            this.buttonExt9.Animation.Options = animationOptions10;
+            this.buttonExt9.Animation.Options.AllTransformTime = 250D;
+            this.buttonExt9.Animation.Options.Data = null;
             this.buttonExt9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
             this.buttonExt9.FlatAppearance.BorderSize = 0;
             this.buttonExt9.Location = new System.Drawing.Point(131, 24);
@@ -186,10 +164,9 @@
             // 
             // buttonExt8
             // 
-            animationOptions11.AllTransformTime = 250D;
-            animationOptions11.Data = null;
-            this.buttonExt8.Animation.Options = animationOptions11;
-            this.buttonExt8.BackColor = System.Drawing.Color.OliveDrab;
+            this.buttonExt8.Animation.Options.AllTransformTime = 250D;
+            this.buttonExt8.Animation.Options.Data = null;
+            this.buttonExt8.BackColor = System.Drawing.Color.LightCoral;
             this.buttonExt8.FlatAppearance.BorderSize = 0;
             this.buttonExt8.Location = new System.Drawing.Point(238, 24);
             this.buttonExt8.Name = "buttonExt8";
@@ -199,9 +176,8 @@
             // 
             // buttonExt3
             // 
-            animationOptions12.AllTransformTime = 250D;
-            animationOptions12.Data = null;
-            this.buttonExt3.Animation.Options = animationOptions12;
+            this.buttonExt3.Animation.Options.AllTransformTime = 250D;
+            this.buttonExt3.Animation.Options.Data = null;
             this.buttonExt3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(204)))), ((int)(((byte)(153)))));
             this.buttonExt3.FlatAppearance.BorderSize = 0;
             this.buttonExt3.Location = new System.Drawing.Point(238, 130);
