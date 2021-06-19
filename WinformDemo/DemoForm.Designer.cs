@@ -41,7 +41,7 @@
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(247)))), ((int)(((byte)(240)))));
             this.panel1.Location = new System.Drawing.Point(200, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1071, 650);
+            this.panel1.Size = new System.Drawing.Size(1071, 534);
             this.panel1.TabIndex = 1;
             // 
             // menuExt1
@@ -52,7 +52,7 @@
             this.menuExt1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.menuExt1.CausesValidation = false;
             this.menuExt1.Location = new System.Drawing.Point(0, 0);
-            this.menuExt1.MenuHeight = 650;
+            this.menuExt1.MenuHeight = 534;
             // 
             // 
             // 
@@ -81,12 +81,12 @@
             this.menuExt1.MenuPanel.NodeBorderStyle = WinformControlLibraryExtension.SlideMenuPanelExt.NodeBorderStyles.BottomBorder;
             this.menuExt1.MenuPanel.NodeImagePaddingRight = 18;
             this.menuExt1.MenuPanel.Scroll.SlideDisableBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.menuExt1.MenuPanel.Size = new System.Drawing.Size(200, 650);
+            this.menuExt1.MenuPanel.Size = new System.Drawing.Size(200, 534);
             this.menuExt1.MenuPanel.TabIndex = 0;
             this.menuExt1.MenuPanel.Tool.Search = false;
             this.menuExt1.MinimumSize = new System.Drawing.Size(5, 0);
             this.menuExt1.Name = "menuExt1";
-            this.menuExt1.Size = new System.Drawing.Size(200, 650);
+            this.menuExt1.Size = new System.Drawing.Size(200, 534);
             this.menuExt1.TabIndex = 0;
             this.menuExt1.Text = null;
             // 
@@ -95,7 +95,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1272, 650);
+            this.ClientSize = new System.Drawing.Size(1272, 534);
             this.Controls.Add(this.menuExt1);
             this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

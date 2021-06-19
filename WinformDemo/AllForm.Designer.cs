@@ -127,6 +127,7 @@
             this.buttonExt10 = new WinformControlLibraryExtension.ButtonExt();
             this.buttonExt8 = new WinformControlLibraryExtension.ButtonExt();
             this.groupPanelExt1 = new WinformControlLibraryExtension.GroupPanelExt();
+            this.radioButtonExt2 = new WinformControlLibraryExtension.RadioButtonExt();
             this.checkBoxExt1 = new WinformControlLibraryExtension.CheckBoxExt();
             this.buttonExt1 = new WinformControlLibraryExtension.ButtonExt();
             this.buttonExt4 = new WinformControlLibraryExtension.ButtonExt();
@@ -145,9 +146,7 @@
             this.switchExt4 = new WinformControlLibraryExtension.SwitchButtonExt();
             this.switchExt3 = new WinformControlLibraryExtension.SwitchButtonExt();
             this.switchExt2 = new WinformControlLibraryExtension.SwitchButtonExt();
-            this.switchExt1 = new WinformControlLibraryExtension.SwitchButtonExt();
             this.switchExt6 = new WinformControlLibraryExtension.SwitchButtonExt();
-            this.radioButtonExt2 = new WinformControlLibraryExtension.RadioButtonExt();
             this.radarExt2 = new WinformControlLibraryExtension.RadarScanExt();
             this.percentageBarExt3 = new WinformControlLibraryExtension.PercentageProgressExt();
             this.percentageBarExt2 = new WinformControlLibraryExtension.PercentageProgressExt();
@@ -205,11 +204,11 @@
             this.progressExt3.ColorItems.Add(colorItem2);
             this.progressExt3.Font = new System.Drawing.Font("宋体", 12F);
             this.progressExt3.ForeColor = System.Drawing.Color.OliveDrab;
-            this.progressExt3.Location = new System.Drawing.Point(955, 9);
+            this.progressExt3.Location = new System.Drawing.Point(434, 224);
             this.progressExt3.Name = "progressExt3";
             this.progressExt3.Orientation = System.Windows.Forms.Orientation.Vertical;
             this.progressExt3.ProgressColorType = WinformControlLibraryExtension.GradualProgressExt.ColorDrawType.Gradient;
-            this.progressExt3.Size = new System.Drawing.Size(44, 204);
+            this.progressExt3.Size = new System.Drawing.Size(44, 220);
             this.progressExt3.TabIndex = 0;
             this.progressExt3.TabStop = false;
             this.progressExt3.Text = "progressExt3";
@@ -245,12 +244,31 @@
             // 
             this.groupPanelExt1.Controls.Add(this.radioButtonExt2);
             this.groupPanelExt1.Controls.Add(this.checkBoxExt1);
-            this.groupPanelExt1.Location = new System.Drawing.Point(681, 9);
+            this.groupPanelExt1.Controls.Add(this.animationImageExt1);
+            this.groupPanelExt1.Location = new System.Drawing.Point(581, 12);
             this.groupPanelExt1.Name = "groupPanelExt1";
-            this.groupPanelExt1.Size = new System.Drawing.Size(254, 109);
+            this.groupPanelExt1.Size = new System.Drawing.Size(272, 109);
             this.groupPanelExt1.TabIndex = 0;
             this.groupPanelExt1.TitleImage = global::WinformDemo.Properties.Resources.GroupPanelTitle;
             this.groupPanelExt1.TitleTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            // 
+            // radioButtonExt2
+            // 
+            this.radioButtonExt2.Checked = true;
+            this.radioButtonExt2.CheckedBackColor = System.Drawing.Color.Empty;
+            this.radioButtonExt2.CheckedBoxCharColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.radioButtonExt2.DisableBoxBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.radioButtonExt2.DisableBoxCharColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.radioButtonExt2.DisableTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.radioButtonExt2.Location = new System.Drawing.Point(15, 43);
+            this.radioButtonExt2.Name = "radioButtonExt2";
+            this.radioButtonExt2.OperateScope = WinformControlLibraryExtension.RadioButtonExt.OperateScopes.BoxText;
+            this.radioButtonExt2.Size = new System.Drawing.Size(112, 24);
+            this.radioButtonExt2.TabIndex = 12;
+            this.radioButtonExt2.Text = "符号图标模式";
+            this.radioButtonExt2.UnCheckedBackColor = System.Drawing.Color.Empty;
+            this.radioButtonExt2.UnCheckedBoxBackColor = System.Drawing.Color.Empty;
+            this.radioButtonExt2.UnCheckedBoxCharColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             // 
             // checkBoxExt1
             // 
@@ -264,7 +282,7 @@
             this.checkBoxExt1.DisableBoxBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.checkBoxExt1.DisableBoxCharColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.checkBoxExt1.DisableTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.checkBoxExt1.Location = new System.Drawing.Point(37, 13);
+            this.checkBoxExt1.Location = new System.Drawing.Point(15, 13);
             this.checkBoxExt1.Name = "checkBoxExt1";
             this.checkBoxExt1.OperateScope = WinformControlLibraryExtension.CheckBoxExt.OperateScopes.BoxText;
             this.checkBoxExt1.Size = new System.Drawing.Size(87, 24);
@@ -323,7 +341,7 @@
             this.waveProgressExt3.ForeColor = System.Drawing.Color.LightCoral;
             this.waveProgressExt3.Location = new System.Drawing.Point(144, 106);
             this.waveProgressExt3.Name = "waveProgressExt3";
-            this.waveProgressExt3.Size = new System.Drawing.Size(211, 100);
+            this.waveProgressExt3.Size = new System.Drawing.Size(100, 100);
             this.waveProgressExt3.Style = WinformControlLibraryExtension.WaveProgressExt.WaveProgressStyles.Quadrangle;
             this.waveProgressExt3.TabIndex = 0;
             this.waveProgressExt3.TabStop = false;
@@ -367,10 +385,10 @@
             this.loadProgressExt3.DrawCircleRadius = 18;
             this.loadProgressExt3.ForeColor = System.Drawing.Color.OliveDrab;
             this.loadProgressExt3.LineLenght = 10;
-            this.loadProgressExt3.Location = new System.Drawing.Point(865, 124);
+            this.loadProgressExt3.Location = new System.Drawing.Point(765, 127);
             this.loadProgressExt3.Name = "loadProgressExt3";
             this.loadProgressExt3.ProgressType = WinformControlLibraryExtension.LoadExt.LoadProgressType.Arc;
-            this.loadProgressExt3.Size = new System.Drawing.Size(70, 89);
+            this.loadProgressExt3.Size = new System.Drawing.Size(88, 79);
             this.loadProgressExt3.TabIndex = 0;
             this.loadProgressExt3.TabStop = false;
             this.loadProgressExt3.Text = "加载中...";
@@ -386,10 +404,10 @@
             this.loadProgressExt2.CausesValidation = false;
             this.loadProgressExt2.ForeColor = System.Drawing.Color.OliveDrab;
             this.loadProgressExt2.LineLenght = 10;
-            this.loadProgressExt2.Location = new System.Drawing.Point(773, 124);
+            this.loadProgressExt2.Location = new System.Drawing.Point(673, 127);
             this.loadProgressExt2.Name = "loadProgressExt2";
             this.loadProgressExt2.ProgressType = WinformControlLibraryExtension.LoadExt.LoadProgressType.Dot;
-            this.loadProgressExt2.Size = new System.Drawing.Size(70, 89);
+            this.loadProgressExt2.Size = new System.Drawing.Size(88, 79);
             this.loadProgressExt2.TabIndex = 0;
             this.loadProgressExt2.TabStop = false;
             this.loadProgressExt2.Text = "加载中...";
@@ -406,9 +424,9 @@
             this.loadProgressExt1.DrawCircleRadius = 18;
             this.loadProgressExt1.ForeColor = System.Drawing.Color.OliveDrab;
             this.loadProgressExt1.LineLenght = 10;
-            this.loadProgressExt1.Location = new System.Drawing.Point(681, 124);
+            this.loadProgressExt1.Location = new System.Drawing.Point(581, 127);
             this.loadProgressExt1.Name = "loadProgressExt1";
-            this.loadProgressExt1.Size = new System.Drawing.Size(70, 89);
+            this.loadProgressExt1.Size = new System.Drawing.Size(88, 79);
             this.loadProgressExt1.TabIndex = 0;
             this.loadProgressExt1.TabStop = false;
             this.loadProgressExt1.Text = "加载中...";
@@ -422,7 +440,7 @@
             this.thermometerExt3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.thermometerExt3.CausesValidation = false;
             this.thermometerExt3.ForeColor = System.Drawing.Color.DimGray;
-            this.thermometerExt3.Location = new System.Drawing.Point(615, 224);
+            this.thermometerExt3.Location = new System.Drawing.Point(484, 224);
             this.thermometerExt3.Name = "thermometerExt3";
             this.thermometerExt3.Size = new System.Drawing.Size(80, 220);
             this.thermometerExt3.TabIndex = 0;
@@ -494,9 +512,9 @@
             textItem1.TextCharAvgWidth = 28F;
             textItem1.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(149)))), ((int)(((byte)(218)))), ((int)(((byte)(112)))), ((int)(((byte)(214)))));
             this.textCarouselExt6.Items.Add(textItem1);
-            this.textCarouselExt6.Location = new System.Drawing.Point(38, 729);
+            this.textCarouselExt6.Location = new System.Drawing.Point(248, 1043);
             this.textCarouselExt6.Name = "textCarouselExt6";
-            this.textCarouselExt6.Size = new System.Drawing.Size(570, 60);
+            this.textCarouselExt6.Size = new System.Drawing.Size(691, 60);
             this.textCarouselExt6.TabIndex = 0;
             this.textCarouselExt6.TabStop = false;
             this.textCarouselExt6.Text = "textCarouselExt6";
@@ -573,9 +591,9 @@
             textItem2.TextColorItems.Add(colorItem4);
             textItem2.TextColorItems.Add(colorItem5);
             this.textCarouselExt7.Items.Add(textItem2);
-            this.textCarouselExt7.Location = new System.Drawing.Point(38, 806);
+            this.textCarouselExt7.Location = new System.Drawing.Point(248, 1120);
             this.textCarouselExt7.Name = "textCarouselExt7";
-            this.textCarouselExt7.Size = new System.Drawing.Size(570, 60);
+            this.textCarouselExt7.Size = new System.Drawing.Size(691, 60);
             this.textCarouselExt7.TabIndex = 0;
             this.textCarouselExt7.TabStop = false;
             this.textCarouselExt7.Text = "textCarouselExt7";
@@ -587,7 +605,7 @@
             this.timeExt1.HourLineHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(154)))), ((int)(((byte)(205)))), ((int)(((byte)(50)))));
             this.timeExt1.LineHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(130)))), ((int)(((byte)(238)))));
             this.timeExt1.LineShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.timeExt1.Location = new System.Drawing.Point(40, 281);
+            this.timeExt1.Location = new System.Drawing.Point(365, 832);
             this.timeExt1.MillisecondLineHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(112)))), ((int)(((byte)(219)))));
             this.timeExt1.MinuteLineHighlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(191)))), ((int)(((byte)(255)))));
             this.timeExt1.Name = "timeExt1";
@@ -610,7 +628,7 @@
             this.switchExt5.DisableSlideBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.switchExt5.DisableTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.switchExt5.Font = new System.Drawing.Font("宋体", 11F, System.Drawing.FontStyle.Bold);
-            this.switchExt5.Location = new System.Drawing.Point(575, 57);
+            this.switchExt5.Location = new System.Drawing.Point(463, 57);
             this.switchExt5.Name = "switchExt5";
             this.switchExt5.Size = new System.Drawing.Size(90, 30);
             this.switchExt5.Style = WinformControlLibraryExtension.SwitchButtonExt.SwitchSlideStyles.Annular;
@@ -633,7 +651,7 @@
             this.switchExt4.DisableSlideBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.switchExt4.DisableTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.switchExt4.Font = new System.Drawing.Font("宋体", 11F, System.Drawing.FontStyle.Bold);
-            this.switchExt4.Location = new System.Drawing.Point(466, 57);
+            this.switchExt4.Location = new System.Drawing.Point(357, 57);
             this.switchExt4.Name = "switchExt4";
             this.switchExt4.Size = new System.Drawing.Size(90, 30);
             this.switchExt4.Style = WinformControlLibraryExtension.SwitchButtonExt.SwitchSlideStyles.Dot;
@@ -656,7 +674,7 @@
             this.switchExt3.DisableSlideBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.switchExt3.DisableTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.switchExt3.Font = new System.Drawing.Font("宋体", 11F, System.Drawing.FontStyle.Bold);
-            this.switchExt3.Location = new System.Drawing.Point(357, 55);
+            this.switchExt3.Location = new System.Drawing.Point(250, 55);
             this.switchExt3.Name = "switchExt3";
             this.switchExt3.Size = new System.Drawing.Size(90, 35);
             this.switchExt3.Style = WinformControlLibraryExtension.SwitchButtonExt.SwitchSlideStyles.Excircle;
@@ -679,7 +697,7 @@
             this.switchExt2.DisableSlideBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.switchExt2.DisableTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.switchExt2.Font = new System.Drawing.Font("宋体", 11F, System.Drawing.FontStyle.Bold);
-            this.switchExt2.Location = new System.Drawing.Point(256, 60);
+            this.switchExt2.Location = new System.Drawing.Point(144, 60);
             this.switchExt2.Name = "switchExt2";
             this.switchExt2.Size = new System.Drawing.Size(90, 30);
             this.switchExt2.Style = WinformControlLibraryExtension.SwitchButtonExt.SwitchSlideStyles.Internal;
@@ -690,31 +708,6 @@
             this.switchExt2.UnCheckedSlideBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.switchExt2.UnCheckedSlideBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.switchExt2.UnCheckedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            // 
-            // switchExt1
-            // 
-            this.switchExt1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.switchExt1.CausesValidation = false;
-            this.switchExt1.CheckedSlideBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.switchExt1.CheckedText = "ON";
-            this.switchExt1.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.switchExt1.DisableBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.switchExt1.DisableSlideBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.switchExt1.DisableSlideBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.switchExt1.DisableTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.switchExt1.Enabled = false;
-            this.switchExt1.Font = new System.Drawing.Font("宋体", 11F, System.Drawing.FontStyle.Bold);
-            this.switchExt1.Location = new System.Drawing.Point(147, 60);
-            this.switchExt1.Name = "switchExt1";
-            this.switchExt1.Size = new System.Drawing.Size(90, 30);
-            this.switchExt1.SlideRadius = 6;
-            this.switchExt1.TabIndex = 23;
-            this.switchExt1.Text = "switchExt1";
-            this.switchExt1.UnCheckedBorderColor = System.Drawing.Color.Transparent;
-            this.switchExt1.UnCheckedSlideBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.switchExt1.UnCheckedSlideBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.switchExt1.UnCheckedText = "OFF";
-            this.switchExt1.UnCheckedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             // 
             // switchExt6
             // 
@@ -739,24 +732,6 @@
             this.switchExt6.UnCheckedSlideBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.switchExt6.UnCheckedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             // 
-            // radioButtonExt2
-            // 
-            this.radioButtonExt2.Checked = true;
-            this.radioButtonExt2.CheckedBackColor = System.Drawing.Color.Empty;
-            this.radioButtonExt2.CheckedBoxCharColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.radioButtonExt2.DisableBoxBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.radioButtonExt2.DisableBoxCharColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.radioButtonExt2.DisableTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.radioButtonExt2.Location = new System.Drawing.Point(37, 43);
-            this.radioButtonExt2.Name = "radioButtonExt2";
-            this.radioButtonExt2.OperateScope = WinformControlLibraryExtension.RadioButtonExt.OperateScopes.BoxText;
-            this.radioButtonExt2.Size = new System.Drawing.Size(112, 24);
-            this.radioButtonExt2.TabIndex = 12;
-            this.radioButtonExt2.Text = "符号图标模式";
-            this.radioButtonExt2.UnCheckedBackColor = System.Drawing.Color.Empty;
-            this.radioButtonExt2.UnCheckedBoxBackColor = System.Drawing.Color.Empty;
-            this.radioButtonExt2.UnCheckedBoxCharColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            // 
             // radarExt2
             // 
             this.radarExt2.AreaColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(213)))), ((int)(((byte)(138)))));
@@ -764,7 +739,7 @@
             this.radarExt2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.radarExt2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(189)))), ((int)(((byte)(183)))), ((int)(((byte)(107)))));
             this.radarExt2.CausesValidation = false;
-            this.radarExt2.Location = new System.Drawing.Point(429, 281);
+            this.radarExt2.Location = new System.Drawing.Point(765, 832);
             this.radarExt2.Name = "radarExt2";
             this.radarExt2.PointColor = System.Drawing.Color.Coral;
             this.radarExt2.ScanColor = System.Drawing.Color.FromArgb(((int)(((byte)(205)))), ((int)(((byte)(213)))), ((int)(((byte)(138)))));
@@ -782,9 +757,9 @@
             this.percentageBarExt3.ArcThickness = 20;
             this.percentageBarExt3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.percentageBarExt3.CausesValidation = false;
-            this.percentageBarExt3.Location = new System.Drawing.Point(575, 106);
+            this.percentageBarExt3.Location = new System.Drawing.Point(464, 106);
             this.percentageBarExt3.Name = "percentageBarExt3";
-            this.percentageBarExt3.Size = new System.Drawing.Size(100, 107);
+            this.percentageBarExt3.Size = new System.Drawing.Size(100, 100);
             this.percentageBarExt3.SquareBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.percentageBarExt3.TabIndex = 0;
             this.percentageBarExt3.TabStop = false;
@@ -800,7 +775,7 @@
             this.percentageBarExt2.ArcColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(154)))), ((int)(((byte)(205)))), ((int)(((byte)(50)))));
             this.percentageBarExt2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.percentageBarExt2.CausesValidation = false;
-            this.percentageBarExt2.Location = new System.Drawing.Point(467, 106);
+            this.percentageBarExt2.Location = new System.Drawing.Point(356, 106);
             this.percentageBarExt2.Name = "percentageBarExt2";
             this.percentageBarExt2.Size = new System.Drawing.Size(100, 100);
             this.percentageBarExt2.SquareBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
@@ -819,7 +794,7 @@
             this.percentageBarExt1.BackColor = System.Drawing.Color.Transparent;
             this.percentageBarExt1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.percentageBarExt1.CausesValidation = false;
-            this.percentageBarExt1.Location = new System.Drawing.Point(361, 106);
+            this.percentageBarExt1.Location = new System.Drawing.Point(250, 106);
             this.percentageBarExt1.Name = "percentageBarExt1";
             this.percentageBarExt1.Size = new System.Drawing.Size(100, 100);
             this.percentageBarExt1.SquareBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
@@ -841,7 +816,7 @@
             this.percentageBarExt7.CausesValidation = false;
             this.percentageBarExt7.Location = new System.Drawing.Point(38, 224);
             this.percentageBarExt7.Name = "percentageBarExt7";
-            this.percentageBarExt7.Size = new System.Drawing.Size(387, 37);
+            this.percentageBarExt7.Size = new System.Drawing.Size(386, 37);
             this.percentageBarExt7.SquareBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.percentageBarExt7.TabIndex = 0;
             this.percentageBarExt7.TabStop = false;
@@ -946,7 +921,7 @@
             this.stepProgressExt1.Items.Add(procedureItem3);
             this.stepProgressExt1.Items.Add(procedureItem4);
             this.stepProgressExt1.Items.Add(procedureItem5);
-            this.stepProgressExt1.Location = new System.Drawing.Point(38, 384);
+            this.stepProgressExt1.Location = new System.Drawing.Point(365, 928);
             this.stepProgressExt1.Name = "stepProgressExt1";
             this.stepProgressExt1.Size = new System.Drawing.Size(385, 97);
             this.stepProgressExt1.SlelectIndex = 4;
@@ -964,9 +939,9 @@
             this.halvingLineExt6.CausesValidation = false;
             this.halvingLineExt6.LineCircular = true;
             this.halvingLineExt6.LineThickness = 4;
-            this.halvingLineExt6.Location = new System.Drawing.Point(615, 519);
+            this.halvingLineExt6.Location = new System.Drawing.Point(430, 760);
             this.halvingLineExt6.Name = "halvingLineExt6";
-            this.halvingLineExt6.Size = new System.Drawing.Size(401, 23);
+            this.halvingLineExt6.Size = new System.Drawing.Size(532, 23);
             this.halvingLineExt6.TabIndex = 0;
             this.halvingLineExt6.TabStop = false;
             this.halvingLineExt6.Text = "标题";
@@ -976,9 +951,9 @@
             this.halvingLineExt4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.halvingLineExt4.CausesValidation = false;
             this.halvingLineExt4.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.halvingLineExt4.Location = new System.Drawing.Point(615, 490);
+            this.halvingLineExt4.Location = new System.Drawing.Point(430, 731);
             this.halvingLineExt4.Name = "halvingLineExt4";
-            this.halvingLineExt4.Size = new System.Drawing.Size(401, 23);
+            this.halvingLineExt4.Size = new System.Drawing.Size(532, 23);
             this.halvingLineExt4.TabIndex = 0;
             this.halvingLineExt4.TabStop = false;
             this.halvingLineExt4.Text = "标题";
@@ -989,9 +964,9 @@
             this.halvingLineExt3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.halvingLineExt3.CausesValidation = false;
             this.halvingLineExt3.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(104)))), ((int)(((byte)(238)))));
-            this.halvingLineExt3.Location = new System.Drawing.Point(615, 450);
+            this.halvingLineExt3.Location = new System.Drawing.Point(430, 691);
             this.halvingLineExt3.Name = "halvingLineExt3";
-            this.halvingLineExt3.Size = new System.Drawing.Size(401, 23);
+            this.halvingLineExt3.Size = new System.Drawing.Size(532, 23);
             this.halvingLineExt3.TabIndex = 0;
             this.halvingLineExt3.TabStop = false;
             this.halvingLineExt3.Text = "标题";
@@ -1046,7 +1021,7 @@
             this.radarChartExt1.ChartLineItems.Add(chartLine5);
             this.radarChartExt1.ChartLineItems.Add(chartLine6);
             this.radarChartExt1.ChartLineItems.Add(chartLine7);
-            this.radarChartExt1.Location = new System.Drawing.Point(616, 548);
+            this.radarChartExt1.Location = new System.Drawing.Point(40, 451);
             this.radarChartExt1.LoopBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.radarChartExt1.LoopEvenBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(247)))), ((int)(((byte)(240)))));
             this.radarChartExt1.LoopLineMaxValueShow = true;
@@ -1058,7 +1033,7 @@
             this.radarChartExt1.OptionAreaWidth = 100;
             this.radarChartExt1.OptionTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.radarChartExt1.OptionTipTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.radarChartExt1.Size = new System.Drawing.Size(401, 318);
+            this.radarChartExt1.Size = new System.Drawing.Size(384, 318);
             this.radarChartExt1.TabIndex = 0;
             this.radarChartExt1.TabStop = false;
             this.radarChartExt1.Title = "实时分析图";
@@ -1079,7 +1054,7 @@
             this.meterBarExt3.GradualColorItems.Add(colorItem6);
             this.meterBarExt3.GradualColorItems.Add(colorItem7);
             this.meterBarExt3.GradualShow = true;
-            this.meterBarExt3.Location = new System.Drawing.Point(682, 900);
+            this.meterBarExt3.Location = new System.Drawing.Point(630, 457);
             this.meterBarExt3.Name = "meterBarExt3";
             this.meterBarExt3.PointerCapColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(149)))), ((int)(((byte)(237)))));
             this.meterBarExt3.PointerColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(149)))), ((int)(((byte)(237)))));
@@ -1109,7 +1084,7 @@
             this.meterBarExt4.GradualColorItems.Add(colorItem8);
             this.meterBarExt4.GradualColorItems.Add(colorItem9);
             this.meterBarExt4.GradualShow = true;
-            this.meterBarExt4.Location = new System.Drawing.Point(855, 921);
+            this.meterBarExt4.Location = new System.Drawing.Point(799, 477);
             this.meterBarExt4.Name = "meterBarExt4";
             this.meterBarExt4.PointerCapColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(149)))), ((int)(((byte)(237)))));
             this.meterBarExt4.PointerColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(149)))), ((int)(((byte)(237)))));
@@ -1139,7 +1114,7 @@
             this.meterBarExt6.GradualColorItems.Add(colorItem10);
             this.meterBarExt6.GradualColorItems.Add(colorItem11);
             this.meterBarExt6.GradualShow = true;
-            this.meterBarExt6.Location = new System.Drawing.Point(473, 892);
+            this.meterBarExt6.Location = new System.Drawing.Point(425, 451);
             this.meterBarExt6.Name = "meterBarExt6";
             this.meterBarExt6.PointerCapColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(149)))), ((int)(((byte)(237)))));
             this.meterBarExt6.PointerColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(149)))), ((int)(((byte)(237)))));
@@ -1157,7 +1132,7 @@
             this.patternLockExt1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(247)))), ((int)(((byte)(240)))));
             this.patternLockExt1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.patternLockExt1.CausesValidation = false;
-            this.patternLockExt1.Location = new System.Drawing.Point(494, 1698);
+            this.patternLockExt1.Location = new System.Drawing.Point(516, 1828);
             this.patternLockExt1.Name = "patternLockExt1";
             this.patternLockExt1.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
             this.patternLockExt1.Size = new System.Drawing.Size(220, 220);
@@ -1172,7 +1147,7 @@
             this.slideValidExt1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.slideValidExt1.BorderShow = true;
             this.slideValidExt1.CausesValidation = false;
-            this.slideValidExt1.Location = new System.Drawing.Point(494, 1483);
+            this.slideValidExt1.Location = new System.Drawing.Point(516, 1598);
             this.slideValidExt1.Name = "slideValidExt1";
             this.slideValidExt1.Size = new System.Drawing.Size(300, 200);
             this.slideValidExt1.TabIndex = 0;
@@ -1214,7 +1189,7 @@
             this.imageWhirligigExt1.Images.Add(imageItem5);
             this.imageWhirligigExt1.Images.Add(imageItem6);
             this.imageWhirligigExt1.Images.Add(imageItem7);
-            this.imageWhirligigExt1.Location = new System.Drawing.Point(38, 1949);
+            this.imageWhirligigExt1.Location = new System.Drawing.Point(40, 2079);
             this.imageWhirligigExt1.Name = "imageWhirligigExt1";
             this.imageWhirligigExt1.ReflectionShow = true;
             this.imageWhirligigExt1.Size = new System.Drawing.Size(750, 330);
@@ -1246,9 +1221,9 @@
             this.chartExt1.HLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(171)))), ((int)(((byte)(207)))), ((int)(((byte)(158)))));
             this.chartExt1.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(123)))), ((int)(((byte)(91)))));
             this.chartExt1.LineDotColor = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(112)))), ((int)(((byte)(219)))));
-            this.chartExt1.Location = new System.Drawing.Point(38, 900);
+            this.chartExt1.Location = new System.Drawing.Point(40, 832);
             this.chartExt1.Name = "chartExt1";
-            this.chartExt1.Size = new System.Drawing.Size(429, 165);
+            this.chartExt1.Size = new System.Drawing.Size(319, 193);
             this.chartExt1.TabIndex = 0;
             this.chartExt1.TabStop = false;
             this.chartExt1.Text = "chartExt1";
@@ -1357,7 +1332,7 @@
             this.radianMenuExt1.Items.Add(radianMenuItem3);
             this.radianMenuExt1.Items.Add(radianMenuItem4);
             this.radianMenuExt1.Items.Add(radianMenuItem5);
-            this.radianMenuExt1.Location = new System.Drawing.Point(38, 1483);
+            this.radianMenuExt1.Location = new System.Drawing.Point(40, 1598);
             this.radianMenuExt1.Name = "radianMenuExt1";
             this.radianMenuExt1.Size = new System.Drawing.Size(450, 450);
             this.radianMenuExt1.TabIndex = 59;
@@ -1423,7 +1398,7 @@
             this.fisheyeBarExt2.Items.Add(fisheyeMenuItem7);
             this.fisheyeBarExt2.Items.Add(fisheyeMenuItem8);
             this.fisheyeBarExt2.Items.Add(fisheyeMenuItem9);
-            this.fisheyeBarExt2.Location = new System.Drawing.Point(38, 2529);
+            this.fisheyeBarExt2.Location = new System.Drawing.Point(40, 2647);
             this.fisheyeBarExt2.Name = "fisheyeBarExt2";
             this.fisheyeBarExt2.Size = new System.Drawing.Size(722, 230);
             this.fisheyeBarExt2.TabIndex = 60;
@@ -1460,7 +1435,7 @@
             this.imageCarouselExt3.Images.Add(imageItem12);
             this.imageCarouselExt3.Images.Add(imageItem13);
             this.imageCarouselExt3.Images.Add(imageItem14);
-            this.imageCarouselExt3.Location = new System.Drawing.Point(38, 2303);
+            this.imageCarouselExt3.Location = new System.Drawing.Point(40, 2415);
             this.imageCarouselExt3.Name = "imageCarouselExt3";
             this.imageCarouselExt3.NavigationBarBtnEnterBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(165)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.imageCarouselExt3.Size = new System.Drawing.Size(800, 209);
@@ -1482,12 +1457,12 @@
             this.tabControlExt1.Controls.Add(this.tabPage3);
             this.tabControlExt1.ImageList = this.imageList1;
             this.tabControlExt1.ItemSize = new System.Drawing.Size(100, 30);
-            this.tabControlExt1.Location = new System.Drawing.Point(698, 224);
+            this.tabControlExt1.Location = new System.Drawing.Point(581, 224);
             this.tabControlExt1.Margin = new System.Windows.Forms.Padding(0);
             this.tabControlExt1.Name = "tabControlExt1";
             this.tabControlExt1.Padding = new System.Drawing.Point(0, 0);
             this.tabControlExt1.SelectedIndex = 0;
-            this.tabControlExt1.Size = new System.Drawing.Size(318, 211);
+            this.tabControlExt1.Size = new System.Drawing.Size(318, 220);
             this.tabControlExt1.TabBackNormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
             this.tabControlExt1.TabBackSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(153)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
             this.tabControlExt1.TabCloseBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
@@ -1505,7 +1480,7 @@
             this.tabPage1.ImageIndex = 0;
             this.tabPage1.Location = new System.Drawing.Point(4, 34);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(310, 173);
+            this.tabPage1.Size = new System.Drawing.Size(310, 182);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "标题一";
             // 
@@ -1567,7 +1542,7 @@
             this.menuPanelExt1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.menuPanelExt1.Drag.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(210)))));
             this.menuPanelExt1.Drag.Enabled = false;
-            this.menuPanelExt1.Location = new System.Drawing.Point(38, 1084);
+            this.menuPanelExt1.Location = new System.Drawing.Point(40, 1043);
             this.menuPanelExt1.Menu.ContentOrientation = WinformControlLibraryExtension.SlideMenuPanelExt.NodeContentOrientations.Right;
             this.menuPanelExt1.Menu.DisableBackColor = System.Drawing.Color.Empty;
             this.menuPanelExt1.Menu.DisableTextColor = System.Drawing.Color.Empty;
@@ -1590,7 +1565,7 @@
             this.menuPanelExt1.NodeBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.menuPanelExt1.NodeBorderStyle = WinformControlLibraryExtension.SlideMenuPanelExt.NodeBorderStyles.BottomBorder;
             this.menuPanelExt1.Scroll.SlideDisableBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.menuPanelExt1.Size = new System.Drawing.Size(200, 360);
+            this.menuPanelExt1.Size = new System.Drawing.Size(200, 516);
             this.menuPanelExt1.TabIndex = 65;
             this.menuPanelExt1.Tool.FixedBtn.Enabled = false;
             this.menuPanelExt1.Tool.MinBtn.Enabled = false;
@@ -1680,9 +1655,9 @@
             this.navigationBarExt5.Items.Add(navigationBarItem4);
             this.navigationBarExt5.Items.Add(navigationBarItem5);
             this.navigationBarExt5.ItemStyle = WinformControlLibraryExtension.NavigationBarExt.ItemStyles.Leaf;
-            this.navigationBarExt5.Location = new System.Drawing.Point(40, 690);
+            this.navigationBarExt5.Location = new System.Drawing.Point(430, 661);
             this.navigationBarExt5.Name = "navigationBarExt5";
-            this.navigationBarExt5.Size = new System.Drawing.Size(570, 24);
+            this.navigationBarExt5.Size = new System.Drawing.Size(532, 24);
             this.navigationBarExt5.SymbolColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.navigationBarExt5.TabIndex = 67;
             this.navigationBarExt5.Text = "navigationBarExt5";
@@ -1769,9 +1744,9 @@
             this.navigationBarExt2.Items.Add(navigationBarItem8);
             this.navigationBarExt2.Items.Add(navigationBarItem9);
             this.navigationBarExt2.Items.Add(navigationBarItem10);
-            this.navigationBarExt2.Location = new System.Drawing.Point(40, 649);
+            this.navigationBarExt2.Location = new System.Drawing.Point(430, 630);
             this.navigationBarExt2.Name = "navigationBarExt2";
-            this.navigationBarExt2.Size = new System.Drawing.Size(570, 24);
+            this.navigationBarExt2.Size = new System.Drawing.Size(532, 24);
             this.navigationBarExt2.SymbolColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.navigationBarExt2.TabIndex = 66;
             this.navigationBarExt2.Text = "navigationBarExt1";
@@ -1805,11 +1780,11 @@
             multidropSlideBarItem1.TipNormalBackColor = System.Drawing.Color.Empty;
             multidropSlideBarItem1.TipNormalTextColor = System.Drawing.Color.Empty;
             multidropSlideBarItem1.TipPoint = ((System.Drawing.PointF)(resources.GetObject("multidropSlideBarItem1.TipPoint")));
-            multidropSlideBarItem1.TipRect = new System.Drawing.Rectangle(207, 6, 42, 16);
+            multidropSlideBarItem1.TipRect = new System.Drawing.Rectangle(136, 23, 42, 16);
             this.multidropSlideBarExt2.Items.Add(multidropSlideBarItem1);
-            this.multidropSlideBarExt2.Location = new System.Drawing.Point(47, 573);
+            this.multidropSlideBarExt2.Location = new System.Drawing.Point(38, 367);
             this.multidropSlideBarExt2.Name = "multidropSlideBarExt2";
-            this.multidropSlideBarExt2.Size = new System.Drawing.Size(563, 60);
+            this.multidropSlideBarExt2.Size = new System.Drawing.Size(386, 77);
             this.multidropSlideBarExt2.SlideDisableBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.multidropSlideBarExt2.SlideLockDisableBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.multidropSlideBarExt2.SlideProgressDisableBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -1835,7 +1810,7 @@
             multidropSlideBarItem2.TipNormalBackColor = System.Drawing.Color.Empty;
             multidropSlideBarItem2.TipNormalTextColor = System.Drawing.Color.Empty;
             multidropSlideBarItem2.TipPoint = ((System.Drawing.PointF)(resources.GetObject("multidropSlideBarItem2.TipPoint")));
-            multidropSlideBarItem2.TipRect = new System.Drawing.Rectangle(42, 6, 42, 16);
+            multidropSlideBarItem2.TipRect = new System.Drawing.Rectangle(24, 22, 42, 16);
             multidropSlideBarItem3.DefaultValue = 30F;
             multidropSlideBarItem3.DefaultValueInit = true;
             multidropSlideBarItem3.SlideDisableBackColor = System.Drawing.Color.Empty;
@@ -1847,7 +1822,7 @@
             multidropSlideBarItem3.TipNormalBackColor = System.Drawing.Color.Empty;
             multidropSlideBarItem3.TipNormalTextColor = System.Drawing.Color.Empty;
             multidropSlideBarItem3.TipPoint = ((System.Drawing.PointF)(resources.GetObject("multidropSlideBarItem3.TipPoint")));
-            multidropSlideBarItem3.TipRect = new System.Drawing.Rectangle(156, 6, 42, 16);
+            multidropSlideBarItem3.TipRect = new System.Drawing.Rectangle(103, 22, 42, 16);
             multidropSlideBarItem4.DefaultValue = 58F;
             multidropSlideBarItem4.DefaultValueInit = true;
             multidropSlideBarItem4.SlideDisableBackColor = System.Drawing.Color.Empty;
@@ -1859,7 +1834,7 @@
             multidropSlideBarItem4.TipNormalBackColor = System.Drawing.Color.Empty;
             multidropSlideBarItem4.TipNormalTextColor = System.Drawing.Color.Empty;
             multidropSlideBarItem4.TipPoint = ((System.Drawing.PointF)(resources.GetObject("multidropSlideBarItem4.TipPoint")));
-            multidropSlideBarItem4.TipRect = new System.Drawing.Rectangle(308, 6, 42, 16);
+            multidropSlideBarItem4.TipRect = new System.Drawing.Rectangle(205, 22, 42, 16);
             multidropSlideBarItem5.DefaultValue = 80F;
             multidropSlideBarItem5.DefaultValueInit = true;
             multidropSlideBarItem5.SlideDisableBackColor = System.Drawing.Color.Empty;
@@ -1872,14 +1847,14 @@
             multidropSlideBarItem5.TipNormalBackColor = System.Drawing.Color.Empty;
             multidropSlideBarItem5.TipNormalTextColor = System.Drawing.Color.Empty;
             multidropSlideBarItem5.TipPoint = ((System.Drawing.PointF)(resources.GetObject("multidropSlideBarItem5.TipPoint")));
-            multidropSlideBarItem5.TipRect = new System.Drawing.Rectangle(431, 6, 42, 16);
+            multidropSlideBarItem5.TipRect = new System.Drawing.Rectangle(290, 22, 42, 16);
             this.multidropSlideBarExt1.Items.Add(multidropSlideBarItem2);
             this.multidropSlideBarExt1.Items.Add(multidropSlideBarItem3);
             this.multidropSlideBarExt1.Items.Add(multidropSlideBarItem4);
             this.multidropSlideBarExt1.Items.Add(multidropSlideBarItem5);
-            this.multidropSlideBarExt1.Location = new System.Drawing.Point(45, 507);
+            this.multidropSlideBarExt1.Location = new System.Drawing.Point(38, 285);
             this.multidropSlideBarExt1.Name = "multidropSlideBarExt1";
-            this.multidropSlideBarExt1.Size = new System.Drawing.Size(563, 60);
+            this.multidropSlideBarExt1.Size = new System.Drawing.Size(386, 76);
             this.multidropSlideBarExt1.SlideDisableBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.multidropSlideBarExt1.SlideLockDisableBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.multidropSlideBarExt1.SlideProgressDisableBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -1909,7 +1884,7 @@
             this.colorExt1.ColorTextAlign = WinformControlLibraryExtension.ColorExt.ColorTextAligns.Left;
             this.colorExt1.Font = new System.Drawing.Font("微软雅黑", 9F);
             this.colorExt1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
-            this.colorExt1.Location = new System.Drawing.Point(522, 1084);
+            this.colorExt1.Location = new System.Drawing.Point(248, 1198);
             this.colorExt1.Name = "colorExt1";
             this.colorExt1.Size = new System.Drawing.Size(130, 24);
             this.colorExt1.TabIndex = 56;
@@ -1924,7 +1899,7 @@
             this.colorPickerExt1.ColorValue = System.Drawing.Color.Empty;
             this.colorPickerExt1.CurrentTextForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
             this.colorPickerExt1.CustomSelectLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(142)))), ((int)(((byte)(35)))));
-            this.colorPickerExt1.Location = new System.Drawing.Point(522, 1114);
+            this.colorPickerExt1.Location = new System.Drawing.Point(248, 1228);
             this.colorPickerExt1.Name = "colorPickerExt1";
             this.colorPickerExt1.Size = new System.Drawing.Size(465, 330);
             this.colorPickerExt1.TabIndex = 0;
@@ -1949,7 +1924,7 @@
             this.datePickerExt1.DateForeSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.datePickerExt1.DateTitleForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
             this.datePickerExt1.DateValue = new System.DateTime(1753, 1, 1, 0, 0, 0, 0);
-            this.datePickerExt1.Location = new System.Drawing.Point(285, 1116);
+            this.datePickerExt1.Location = new System.Drawing.Point(716, 1230);
             this.datePickerExt1.Name = "datePickerExt1";
             this.datePickerExt1.Size = new System.Drawing.Size(226, 298);
             this.datePickerExt1.TabIndex = 61;
@@ -2000,7 +1975,7 @@
             this.dateExt6.DateTextAlign = WinformControlLibraryExtension.DateExt.DataTextAligns.Left;
             this.dateExt6.Font = new System.Drawing.Font("微软雅黑", 9F);
             this.dateExt6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
-            this.dateExt6.Location = new System.Drawing.Point(285, 1084);
+            this.dateExt6.Location = new System.Drawing.Point(716, 1198);
             this.dateExt6.Name = "dateExt6";
             this.dateExt6.Size = new System.Drawing.Size(156, 24);
             this.dateExt6.TabIndex = 62;
@@ -2012,7 +1987,7 @@
             this.animationImageExt1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.animationImageExt1.BorderShow = true;
             this.animationImageExt1.CausesValidation = false;
-            this.animationImageExt1.Location = new System.Drawing.Point(431, 224);
+            this.animationImageExt1.Location = new System.Drawing.Point(133, 13);
             this.animationImageExt1.Name = "animationImageExt1";
             this.animationImageExt1.Size = new System.Drawing.Size(120, 50);
             this.animationImageExt1.TabIndex = 0;
@@ -2024,7 +1999,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(247)))), ((int)(((byte)(240)))));
-            this.ClientSize = new System.Drawing.Size(1151, 728);
+            this.ClientSize = new System.Drawing.Size(1493, 728);
             this.Controls.Add(this.multidropSlideBarExt2);
             this.Controls.Add(this.multidropSlideBarExt1);
             this.Controls.Add(this.navigationBarExt5);
@@ -2045,7 +2020,6 @@
             this.Controls.Add(this.meterBarExt3);
             this.Controls.Add(this.meterBarExt4);
             this.Controls.Add(this.meterBarExt6);
-            this.Controls.Add(this.animationImageExt1);
             this.Controls.Add(this.radarChartExt1);
             this.Controls.Add(this.halvingLineExt6);
             this.Controls.Add(this.halvingLineExt4);
@@ -2060,7 +2034,6 @@
             this.Controls.Add(this.switchExt4);
             this.Controls.Add(this.switchExt3);
             this.Controls.Add(this.switchExt2);
-            this.Controls.Add(this.switchExt1);
             this.Controls.Add(this.switchExt6);
             this.Controls.Add(this.timeExt1);
             this.Controls.Add(this.textCarouselExt7);
@@ -2081,7 +2054,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "AllForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "DemoForm";
+            this.Text = "AllForm";
             this.Load += new System.EventHandler(this.DemoForm_Load);
             this.groupPanelExt1.ResumeLayout(false);
             this.groupPanelExt1.PerformLayout();
@@ -2120,7 +2093,6 @@
         private WinformControlLibraryExtension.SwitchButtonExt switchExt4;
         private WinformControlLibraryExtension.SwitchButtonExt switchExt3;
         private WinformControlLibraryExtension.SwitchButtonExt switchExt2;
-        private WinformControlLibraryExtension.SwitchButtonExt switchExt1;
         private WinformControlLibraryExtension.SwitchButtonExt switchExt6;
         private WinformControlLibraryExtension.RadioButtonExt radioButtonExt2;
         private WinformControlLibraryExtension.RadarScanExt radarExt2;
