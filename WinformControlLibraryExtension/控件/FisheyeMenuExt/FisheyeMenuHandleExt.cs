@@ -66,7 +66,7 @@ namespace WinformControlLibraryExtension
     [Description("鱼眼菜单(窗体版)")]
     [DefaultProperty("Items")]
     [DefaultEvent("ItemClick")]
-    public partial class FisheyeMenuComponentExt : Component
+    public class FisheyeMenuHandleExt : Component
     {
         #region 新增事件
 
@@ -1154,15 +1154,13 @@ namespace WinformControlLibraryExtension
 
         #endregion
 
-        public FisheyeMenuComponentExt(IContainer container)
+        public FisheyeMenuHandleExt(IContainer container)
         {
             this.CreateFisheyeMenuLayer();
             this.CalculateCharSize();
             this.CalculateImageSize();
             this.CreateFisheyeMenuHandleMask();
             this.CreateFisheyeMenuTimer();
-
-            this.InitializeComponent();
 
             this.UpdateFisheyeMenuLayerRectangle();
             this.UpdateFisheyeMenuHandleMask();
@@ -1192,11 +1190,6 @@ namespace WinformControlLibraryExtension
         /// <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-
             if (disposing)
             {
                 this.FisheyeMenuExtLayerRemoveEvent();
@@ -2449,9 +2442,9 @@ namespace WinformControlLibraryExtension
         public sealed class FisheyeMenuItemCollection : IList, ICollection, IEnumerable
         {
             private ArrayList fisheyeMenuItemList = new ArrayList();
-            private FisheyeMenuComponentExt owner;
+            private FisheyeMenuHandleExt owner;
 
-            public FisheyeMenuItemCollection(FisheyeMenuComponentExt owner)
+            public FisheyeMenuItemCollection(FisheyeMenuHandleExt owner)
             {
                 this.owner = owner;
             }
@@ -3081,11 +3074,11 @@ namespace WinformControlLibraryExtension
             /// <summary>
             /// 鱼眼菜单
             /// </summary>
-            private FisheyeMenuComponentExt fmce = null;
+            private FisheyeMenuHandleExt fmce = null;
 
             #endregion
 
-            public FisheyeMenuLayer(FisheyeMenuComponentExt fmce)
+            public FisheyeMenuLayer(FisheyeMenuHandleExt fmce)
             {
                 this.fmce = fmce;
                 this.FormBorderStyle = FormBorderStyle.None;
@@ -3469,11 +3462,11 @@ namespace WinformControlLibraryExtension
             /// <summary>
             /// 鱼眼菜单
             /// </summary>
-            private FisheyeMenuComponentExt fmce = null;
+            private FisheyeMenuHandleExt fmce = null;
 
             #endregion
 
-            public FisheyeMenuHandleMask(FisheyeMenuComponentExt fmce)
+            public FisheyeMenuHandleMask(FisheyeMenuHandleExt fmce)
             {
                 this.fmce = fmce;
                 this.FormBorderStyle = FormBorderStyle.None;

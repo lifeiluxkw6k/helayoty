@@ -63,17 +63,41 @@ namespace WinformControlLibraryExtension
     [Description("日期选择美化控件")]
     [DefaultProperty("DatePicker")]
     [Designer(typeof(DateExtDesigner))]
-    public partial class DateExt : Control
+    public class DateExt : Control
     {
         #region 停用事件
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler PaddingChanged;
+        public new event EventHandler PaddingChanged
+        {
+            add { base.PaddingChanged += value; }
+            remove { base.PaddingChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler RightToLeftChanged;
+        public new event EventHandler TextChanged
+        {
+            add { base.TextChanged += value; }
+            remove { base.TextChanged -= value; }
+        }
+
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public new event EventHandler RightToLeftChanged
+        {
+            add { base.RightToLeftChanged += value; }
+            remove { base.RightToLeftChanged -= value; }
+        }
+
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public new event EventHandler ImeModeChanged
+        {
+            add { base.ImeModeChanged += value; }
+            remove { base.ImeModeChanged -= value; }
+        }
 
         #endregion
 
@@ -277,6 +301,14 @@ namespace WinformControlLibraryExtension
             }
         }
 
+        protected override ImeMode DefaultImeMode
+        {
+            get
+            {
+                return System.Windows.Forms.ImeMode.Disable;
+            }
+        }
+
         #endregion
 
         #region 停用属性
@@ -320,6 +352,20 @@ namespace WinformControlLibraryExtension
             set
             {
                 base.RightToLeft = value;
+            }
+        }
+
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public new ImeMode ImeMode
+        {
+            get
+            {
+                return base.ImeMode;
+            }
+            set
+            {
+                base.ImeMode = value;
             }
         }
 
@@ -779,7 +825,7 @@ namespace WinformControlLibraryExtension
 
         private void dateTextBox_MouseDown(object sender, MouseEventArgs e)
         {
-          WindowNavigate.HideCaret(this.dateTextBox.Handle);
+            WindowNavigate.HideCaret(this.dateTextBox.Handle);
 
             if (this.DesignMode)
                 return;
@@ -1275,7 +1321,7 @@ namespace WinformControlLibraryExtension
                         this.UpdateSelect();
                         break;
                     }
-                #endregion
+                    #endregion
             }
 
         suppress:
@@ -1988,7 +2034,7 @@ namespace WinformControlLibraryExtension
     [DefaultEvent("BottomBarConfirmClick")]
     [Designer(typeof(DatePickerExtDesigner))]
     [TypeConverter(typeof(EmptyConverter))]
-    public partial class DatePickerExt : Control
+    public class DatePickerExt : Control
     {
         #region 新增事件
         #region 顶部工具栏
@@ -2225,24 +2271,67 @@ namespace WinformControlLibraryExtension
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler PaddingChanged;
+        public new event EventHandler PaddingChanged
+        {
+            add { base.PaddingChanged += value; }
+            remove { base.PaddingChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler TextChanged;
+        public new event EventHandler BackgroundImageChanged
+        {
+            add { base.BackgroundImageChanged += value; }
+            remove { base.BackgroundImageChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler FontChanged;
+        public new event EventHandler BackgroundImageLayoutChanged
+        {
+            add { base.BackgroundImageLayoutChanged += value; }
+            remove { base.BackgroundImageLayoutChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler ForeColorChanged;
+        public new event EventHandler TextChanged
+        {
+            add { base.TextChanged += value; }
+            remove { base.TextChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler RightToLeftChanged;
+        public new event EventHandler FontChanged
+        {
+            add { base.FontChanged += value; }
+            remove { base.FontChanged -= value; }
+        }
 
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public new event EventHandler ForeColorChanged
+        {
+            add { base.ForeColorChanged += value; }
+            remove { base.ForeColorChanged -= value; }
+        }
+
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public new event EventHandler RightToLeftChanged
+        {
+            add { base.RightToLeftChanged += value; }
+            remove { base.RightToLeftChanged -= value; }
+        }
+
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public new event EventHandler ImeModeChanged
+        {
+            add { base.ImeModeChanged += value; }
+            remove { base.ImeModeChanged -= value; }
+        }
 
         #endregion
 
@@ -3191,6 +3280,34 @@ namespace WinformControlLibraryExtension
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
+        public new Image BackgroundImage
+        {
+            get
+            {
+                return base.BackgroundImage;
+            }
+            set
+            {
+                base.BackgroundImage = value;
+            }
+        }
+
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public new ImageLayout BackgroundImageLayout
+        {
+            get
+            {
+                return base.BackgroundImageLayout;
+            }
+            set
+            {
+                base.BackgroundImageLayout = value;
+            }
+        }
+
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override string Text
         {
             get
@@ -3230,6 +3347,7 @@ namespace WinformControlLibraryExtension
                 base.ForeColor = value;
             }
         }
+
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override RightToLeft RightToLeft
@@ -3241,6 +3359,20 @@ namespace WinformControlLibraryExtension
             set
             {
                 base.RightToLeft = value;
+            }
+        }
+
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public new ImeMode ImeMode
+        {
+            get
+            {
+                return base.ImeMode;
+            }
+            set
+            {
+                base.ImeMode = value;
             }
         }
 

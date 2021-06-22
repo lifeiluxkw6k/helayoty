@@ -64,17 +64,41 @@ namespace WinformControlLibraryExtension
     [Description("颜色选择美化控件")]
     [DefaultProperty("ColorPicker")]
     [Designer(typeof(ColorExtDesigner))]
-    public partial class ColorExt : Control
+    public class ColorExt : Control
     {
         #region 停用事件
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler PaddingChanged;
+        public new event EventHandler PaddingChanged
+        {
+            add { base.PaddingChanged += value; }
+            remove { base.PaddingChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler RightToLeftChanged;
+        public new event EventHandler TextChanged
+        {
+            add { base.TextChanged += value; }
+            remove { base.TextChanged -= value; }
+        }
+
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public new event EventHandler RightToLeftChanged
+        {
+            add { base.RightToLeftChanged += value; }
+            remove { base.RightToLeftChanged -= value; }
+        }
+
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public new event EventHandler ImeModeChanged
+        {
+            add { base.ImeModeChanged += value; }
+            remove { base.ImeModeChanged -= value; }
+        }
 
         #endregion
 
@@ -274,6 +298,14 @@ namespace WinformControlLibraryExtension
             }
         }
 
+        protected override ImeMode DefaultImeMode
+        {
+            get
+            {
+                return System.Windows.Forms.ImeMode.Disable;
+            }
+        }
+
         #endregion
 
         #region 停用属性
@@ -317,6 +349,20 @@ namespace WinformControlLibraryExtension
             set
             {
                 base.RightToLeft = value;
+            }
+        }
+
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public new ImeMode ImeMode
+        {
+            get
+            {
+                return base.ImeMode;
+            }
+            set
+            {
+                base.ImeMode = value;
             }
         }
 
@@ -850,7 +896,7 @@ namespace WinformControlLibraryExtension
     [DefaultEvent("BottomBarConfirmClick")]
     [Designer(typeof(ColorPickerExtDesigner))]
     [TypeConverter(typeof(EmptyConverter))]
-    public partial class ColorPickerExt : Control
+    public class ColorPickerExt : Control
     {
         #region 新增事件
 
@@ -959,51 +1005,83 @@ namespace WinformControlLibraryExtension
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler PaddingChanged;
+        public new event EventHandler BackgroundImageChanged
+        {
+            add { base.BackgroundImageChanged += value; }
+            remove { base.BackgroundImageChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler BackgroundImageChanged;
+        public new event EventHandler BackgroundImageLayoutChanged
+        {
+            add { base.BackgroundImageLayoutChanged += value; }
+            remove { base.BackgroundImageLayoutChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler BackgroundImageLayoutChanged;
+        public new event EventHandler TabIndexChanged
+        {
+            add { base.TabIndexChanged += value; }
+            remove { base.TabIndexChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler TabIndexChanged;
+        public new event EventHandler TabStopChanged
+        {
+            add { base.TabStopChanged += value; }
+            remove { base.TabStopChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler TabStopChanged;
+        public new event EventHandler DockChanged
+        {
+            add { base.DockChanged += value; }
+            remove { base.DockChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler DockChanged;
+        public new event EventHandler TextChanged
+        {
+            add { base.TextChanged += value; }
+            remove { base.TextChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler TextChanged;
+        public new event EventHandler FontChanged
+        {
+            add { base.FontChanged += value; }
+            remove { base.FontChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler FontChanged;
+        public new event EventHandler ForeColorChanged
+        {
+            add { base.ForeColorChanged += value; }
+            remove { base.ForeColorChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler ForeColorChanged;
+        public new event EventHandler RightToLeftChanged
+        {
+            add { base.RightToLeftChanged += value; }
+            remove { base.RightToLeftChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler RightToLeftChanged;
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler ContextMenuStripChanged;
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event MouseEventHandler ImeModeChanged;
+        public new event EventHandler ImeModeChanged
+        {
+            add { base.ImeModeChanged += value; }
+            remove { base.ImeModeChanged -= value; }
+        }
 
         #endregion
 
@@ -1425,20 +1503,6 @@ namespace WinformControlLibraryExtension
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new Padding Padding
-        {
-            get
-            {
-                return base.Padding;
-            }
-            set
-            {
-                base.Padding = value;
-            }
-        }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public new Image BackgroundImage
         {
             get
@@ -1593,6 +1657,7 @@ namespace WinformControlLibraryExtension
                 base.ImeMode = value;
             }
         }
+
         #endregion
 
         #region 字段
@@ -4063,7 +4128,7 @@ namespace WinformControlLibraryExtension
     /// </summary>
     [ToolboxItem(false)]
     [Description("颜色文本输入框")]
-    public partial class ColorTextBox : TextBox
+    public class ColorTextBox : TextBox
     {
         #region 重写属性
 

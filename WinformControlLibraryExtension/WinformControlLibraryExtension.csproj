@@ -80,92 +80,47 @@
     <Compile Include="控件\SlideMenuExt\SlideMenuPanelExt.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="控件\SlideMenuExt\SlideMenuPanelExt.designer.cs">
-      <DependentUpon>SlideMenuPanelExt.cs</DependentUpon>
-    </Compile>
     <Compile Include="控件\SlideMenuExt\SlideMenuExt.cs">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="控件\SlideMenuExt\SlideMenuExt.designer.cs">
-      <DependentUpon>SlideMenuExt.cs</DependentUpon>
     </Compile>
     <Compile Include="控件\RadioButtonExt.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="控件\RadioButtonExt.designer.cs">
-      <DependentUpon>RadioButtonExt.cs</DependentUpon>
-    </Compile>
     <Compile Include="控件\FisheyeMenuExt\FisheyeMenuExt.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="控件\FisheyeMenuExt\FisheyeMenuExt.designer.cs">
-      <DependentUpon>FisheyeMenuExt.cs</DependentUpon>
-    </Compile>
-    <Compile Include="控件\FisheyeMenuExt\FisheyeMenuComponentExt.cs">
+    <Compile Include="控件\FisheyeMenuExt\FisheyeMenuHandleExt.cs">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="控件\FisheyeMenuExt\FisheyeMenuComponentExt.Designer.cs">
-      <DependentUpon>FisheyeMenuComponentExt.cs</DependentUpon>
     </Compile>
     <Compile Include="控件\HalvingLineExt.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="控件\HalvingLineExt.Designer.cs">
-      <DependentUpon>HalvingLineExt.cs</DependentUpon>
-    </Compile>
-    <Compile Include="控件\RadianMenuExt\RadianMenuComponentExt.cs">
+    <Compile Include="控件\RadianMenuExt\RadianMenuHandleExt.cs">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="控件\RadianMenuExt\RadianMenuComponentExt.Designer.cs">
-      <DependentUpon>RadianMenuComponentExt.cs</DependentUpon>
     </Compile>
     <Compile Include="控件\CheckBoxExt.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="控件\CheckBoxExt.designer.cs">
-      <DependentUpon>CheckBoxExt.cs</DependentUpon>
-    </Compile>
     <Compile Include="控件\TimerExt.cs">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="控件\TimerExt.Designer.cs">
-      <DependentUpon>TimerExt.cs</DependentUpon>
     </Compile>
     <Compile Include="控件\AnimationComponent.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="控件\AnimationComponent.Designer.cs">
-      <DependentUpon>AnimationComponent.cs</DependentUpon>
-    </Compile>
     <Compile Include="控件\ImageExt.cs">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="控件\ImageExt.Designer.cs">
-      <DependentUpon>ImageExt.cs</DependentUpon>
     </Compile>
     <Compile Include="控件\ButtonExt.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="控件\ButtonExt.Designer.cs">
-      <DependentUpon>ButtonExt.cs</DependentUpon>
-    </Compile>
     <Compile Include="控件\ChartExt.cs">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="控件\ChartExt.designer.cs">
-      <DependentUpon>ChartExt.cs</DependentUpon>
     </Compile>
     <Compile Include="控件\ColorExt.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="控件\ColorExt.designer.cs">
-      <DependentUpon>ColorExt.cs</DependentUpon>
-    </Compile>
     <Compile Include="控件\DateExt.cs">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="控件\DateExt.designer.cs">
-      <DependentUpon>DateExt.cs</DependentUpon>
     </Compile>
     <Compile Include="控件\AlertFormExt.cs">
       <SubType>Form</SubType>
@@ -176,134 +131,68 @@
     <Compile Include="控件\ImageWhirligigExt.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="控件\ImageWhirligigExt.designer.cs">
-      <DependentUpon>ImageWhirligigExt.cs</DependentUpon>
-    </Compile>
     <Compile Include="控件\ImageCarouselExt.cs">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="控件\ImageCarouselExt.designer.cs">
-      <DependentUpon>ImageCarouselExt.cs</DependentUpon>
     </Compile>
     <Compile Include="控件\JigsawValidExt.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="控件\JigsawValidExt.designer.cs">
-      <DependentUpon>JigsawValidExt.cs</DependentUpon>
-    </Compile>
     <Compile Include="控件\LoadExt.cs">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="控件\LoadExt.Designer.cs">
-      <DependentUpon>LoadExt.cs</DependentUpon>
     </Compile>
     <Compile Include="控件\MeterExt.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="控件\MeterExt.designer.cs">
-      <DependentUpon>MeterExt.cs</DependentUpon>
-    </Compile>
     <Compile Include="控件\NavigationBarExt.cs">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="控件\NavigationBarExt.Designer.cs">
-      <DependentUpon>NavigationBarExt.cs</DependentUpon>
     </Compile>
     <Compile Include="控件\PatternLockExt.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="控件\PatternLockExt.designer.cs">
-      <DependentUpon>PatternLockExt.cs</DependentUpon>
-    </Compile>
     <Compile Include="控件\PercentageProgressExt.cs">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="控件\PercentageProgressExt.designer.cs">
-      <DependentUpon>PercentageProgressExt.cs</DependentUpon>
     </Compile>
     <Compile Include="控件\GradualProgressExt.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="控件\GradualProgressExt.designer.cs">
-      <DependentUpon>GradualProgressExt.cs</DependentUpon>
-    </Compile>
     <Compile Include="控件\RadarChartExt.cs">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="控件\RadarChartExt.designer.cs">
-      <DependentUpon>RadarChartExt.cs</DependentUpon>
     </Compile>
     <Compile Include="控件\RadarScanExt.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="控件\RadarScanExt.Designer.cs">
-      <DependentUpon>RadarScanExt.cs</DependentUpon>
-    </Compile>
     <Compile Include="控件\RadianMenuExt\RadianMenuExt.cs">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="控件\RadianMenuExt\RadianMenuExt.designer.cs">
-      <DependentUpon>RadianMenuExt.cs</DependentUpon>
     </Compile>
     <Compile Include="控件\MultidropSlideBarExt.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="控件\MultidropSlideBarExt.designer.cs">
-      <DependentUpon>MultidropSlideBarExt.cs</DependentUpon>
-    </Compile>
     <Compile Include="控件\ProcedureExt.cs">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="控件\ProcedureExt.designer.cs">
-      <DependentUpon>ProcedureExt.cs</DependentUpon>
     </Compile>
     <Compile Include="控件\SwitchButtonExt.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="控件\SwitchButtonExt.designer.cs">
-      <DependentUpon>SwitchButtonExt.cs</DependentUpon>
-    </Compile>
     <Compile Include="控件\TabControlExt.cs">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="控件\TabControlExt.Designer.cs">
-      <DependentUpon>TabControlExt.cs</DependentUpon>
     </Compile>
     <Compile Include="控件\TextCarouselExt.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="控件\TextCarouselExt.designer.cs">
-      <DependentUpon>TextCarouselExt.cs</DependentUpon>
-    </Compile>
     <Compile Include="控件\ThermometerExt.cs">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="控件\ThermometerExt.Designer.cs">
-      <DependentUpon>ThermometerExt.cs</DependentUpon>
     </Compile>
     <Compile Include="控件\NumberTimeExt.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="控件\NumberTimeExt.Designer.cs">
-      <DependentUpon>NumberTimeExt.cs</DependentUpon>
-    </Compile>
     <Compile Include="控件\ToolTipExt.cs">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="控件\ToolTipExt.Designer.cs">
-      <DependentUpon>ToolTipExt.cs</DependentUpon>
     </Compile>
     <Compile Include="控件\WaveProgressExt.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="控件\WaveProgressExt.designer.cs">
-      <DependentUpon>WaveProgressExt.cs</DependentUpon>
-    </Compile>
     <Compile Include="控件\GroupPanelExt.cs">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="控件\GroupPanelExt.designer.cs">
-      <DependentUpon>GroupPanelExt.cs</DependentUpon>
     </Compile>
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
@@ -314,30 +203,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="控件\AlertFormExt.resx">
       <DependentUpon>AlertFormExt.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="控件\FisheyeMenuExt\FisheyeMenuComponentExt.resx">
-      <DependentUpon>FisheyeMenuComponentExt.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="控件\ImageWhirligigExt.resx">
-      <DependentUpon>ImageWhirligigExt.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="控件\ImageCarouselExt.resx">
-      <DependentUpon>ImageCarouselExt.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="控件\HalvingLineExt.resx">
-      <DependentUpon>HalvingLineExt.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="控件\RadianMenuExt\RadianMenuComponentExt.resx">
-      <DependentUpon>RadianMenuComponentExt.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="控件\RadianMenuExt\RadianMenuExt.resx">
-      <DependentUpon>RadianMenuExt.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="控件\TabControlExt.resx">
-      <DependentUpon>TabControlExt.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="控件\ToolTipExt.resx">
-      <DependentUpon>ToolTipExt.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

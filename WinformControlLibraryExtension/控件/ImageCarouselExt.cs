@@ -65,7 +65,7 @@ namespace WinformControlLibraryExtension
     [DefaultProperty("Images")]
     [DefaultEvent("NavigationBarBtnClick")]
     [Designer(typeof(ImageCarouselExtDesigner))]
-    public partial class ImageCarouselExt : Control
+    public class ImageCarouselExt : Control
     {
         #region 新增事件
 
@@ -101,35 +101,51 @@ namespace WinformControlLibraryExtension
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler PaddingChanged;
+        public new event EventHandler PaddingChanged
+        {
+            add { base.PaddingChanged += value; }
+            remove { base.PaddingChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler TabIndexChanged;
+        public new event EventHandler TextChanged
+        {
+            add { base.TextChanged += value; }
+            remove { base.TextChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler TabStopChanged;
+        public new event EventHandler FontChanged
+        {
+            add { base.FontChanged += value; }
+            remove { base.FontChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler TextChanged;
+        public new event EventHandler ForeColorChanged
+        {
+            add { base.ForeColorChanged += value; }
+            remove { base.ForeColorChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler FontChanged;
+        public new event EventHandler RightToLeftChanged
+        {
+            add { base.RightToLeftChanged += value; }
+            remove { base.RightToLeftChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler ForeColorChanged;
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler RightToLeftChanged;
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event MouseEventHandler ImeModeChanged;
+        public new event EventHandler ImeModeChanged
+        {
+            add { base.ImeModeChanged += value; }
+            remove { base.ImeModeChanged -= value; }
+        }
 
         #endregion
 
@@ -803,22 +819,6 @@ namespace WinformControlLibraryExtension
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new int TabIndex
-        {
-            get { return 0; }
-            set { base.TabIndex = 0; }
-        }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new bool TabStop
-        {
-            get { return false; }
-            set { base.TabStop = false; }
-        }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public override string Text
         {
             get
@@ -858,6 +858,7 @@ namespace WinformControlLibraryExtension
                 base.ForeColor = value;
             }
         }
+
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override RightToLeft RightToLeft

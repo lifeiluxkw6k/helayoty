@@ -17,22 +17,22 @@ namespace WinformDemo
             InitializeComponent();
         }
 
-        private void 桌面_ItemClick(object sender, FisheyeMenuComponentExt.ItemClickEventArgs e)
+        private void 桌面_ItemClick(object sender, FisheyeMenuHandleExt.ItemClickEventArgs e)
         {
             MessageBox.Show(e.Item.Text);
         }
 
-        private void 窗体_ItemClick(object sender, FisheyeMenuComponentExt.ItemClickEventArgs e)
+        private void 窗体_ItemClick(object sender, FisheyeMenuHandleExt.ItemClickEventArgs e)
         {
             MessageBox.Show(e.Item.Char);
         }
 
-        private void 窗体_IndexChanged(object sender, FisheyeMenuComponentExt.IndexChangedEventArgs e)
+        private void 窗体_IndexChanged(object sender, FisheyeMenuHandleExt.IndexChangedEventArgs e)
         {
             this.label1.Text = e.Item.Char;
         }
 
-        private void 窗体_Selected(object sender, FisheyeMenuComponentExt.SelectedEventArgs e)
+        private void 窗体_Selected(object sender, FisheyeMenuHandleExt.SelectedEventArgs e)
         {
             this.label2.Text = e.Item.Char;
         }

@@ -56,7 +56,7 @@ namespace WinformControlLibraryExtension
     [Description("毫秒级别计时器扩展")]
     [DefaultProperty("Interval")]
     [DefaultEvent("Tick")]
-    public partial class TimerExt : Component
+    public class TimerExt : Component
     {
         #region 新增事件
 
@@ -236,7 +236,6 @@ namespace WinformControlLibraryExtension
         public TimerExt()
         {
             this.timerExtCallback = new TimerExtCallback(this.TimerExtCallbackFun);
-            InitializeComponent();
         }
 
         public TimerExt(IContainer container)
@@ -244,7 +243,6 @@ namespace WinformControlLibraryExtension
             this.timerExtCallback = new TimerExtCallback(this.TimerExtCallbackFun);
 
             container.Add(this);
-            InitializeComponent();
         }
 
         #region 重写
@@ -255,11 +253,6 @@ namespace WinformControlLibraryExtension
         /// <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-
             if (this.timerID != 0)
             {
                 timeKillEvent(this.timerID);

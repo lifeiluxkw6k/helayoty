@@ -60,30 +60,49 @@ namespace WinformControlLibraryExtension
     [Description("分割线控件")]
     [DefaultProperty("Text")]
     [DefaultEvent("TextChanged")]
-    public partial class HalvingLineExt : Control
+    public class HalvingLineExt : Control
     {
-
         #region 停用事件
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler PaddingChanged;
+        public new event EventHandler PaddingChanged
+        {
+            add { base.PaddingChanged += value; }
+            remove { base.PaddingChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler TabIndexChanged;
+        public new event EventHandler TabIndexChanged
+        {
+            add { base.TabIndexChanged += value; }
+            remove { base.TabIndexChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler TabStopChanged;
+        public new event EventHandler TabStopChanged
+        {
+            add { base.TabStopChanged += value; }
+            remove { base.TabStopChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler RightToLeftChanged;
+        public new event EventHandler RightToLeftChanged
+        {
+            add { base.RightToLeftChanged += value; }
+            remove { base.RightToLeftChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event MouseEventHandler ImeModeChanged;
+        public new event EventHandler ImeModeChanged
+        {
+            add { base.ImeModeChanged += value; }
+            remove { base.ImeModeChanged -= value; }
+        }
 
         #endregion
 

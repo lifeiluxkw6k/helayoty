@@ -60,7 +60,7 @@ namespace WinformControlLibraryExtension
     [Category("动画定时器组件")]
     [DefaultProperty("Options")]
     [DefaultEvent("Animationing")]
-    public partial class AnimationComponent : Component
+    public class AnimationComponent : Component
     {
         #region 新增事件
 

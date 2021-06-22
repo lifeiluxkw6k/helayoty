@@ -58,7 +58,7 @@ namespace WinformControlLibraryExtension
     [Description("ToolTip美化扩展")]
     [DefaultProperty("TitleShow")]
     [DefaultEvent("Popup")]
-    public partial class ToolTipExt : ToolTip
+    public class ToolTipExt : ToolTip
     {
         #region 新增属性
 

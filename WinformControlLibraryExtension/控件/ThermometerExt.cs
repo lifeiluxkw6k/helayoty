@@ -61,7 +61,7 @@ namespace WinformControlLibraryExtension
     [DefaultProperty("Value")]
     [DefaultEvent("ValueChanged")]
     [Designer(typeof(DottedLineBorderExtDesigner))]
-    public partial class ThermometerExt : Control, IAnimationStaticTimer
+    public class ThermometerExt : Control, IAnimationStaticTimer
     {
         #region 新增事件
 
@@ -84,23 +84,43 @@ namespace WinformControlLibraryExtension
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler PaddingChanged;
+        public new event EventHandler PaddingChanged
+        {
+            add { base.PaddingChanged += value; }
+            remove { base.PaddingChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler TabIndexChanged;
+        public new event EventHandler TabIndexChanged
+        {
+            add { base.TabIndexChanged += value; }
+            remove { base.TabIndexChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler TabStopChanged;
+        public new event EventHandler TabStopChanged
+        {
+            add { base.TabStopChanged += value; }
+            remove { base.TabStopChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler RightToLeftChanged;
+        public new event EventHandler RightToLeftChanged
+        {
+            add { base.RightToLeftChanged += value; }
+            remove { base.RightToLeftChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event MouseEventHandler ImeModeChanged;
+        public new event EventHandler ImeModeChanged
+        {
+            add { base.ImeModeChanged += value; }
+            remove { base.ImeModeChanged -= value; }
+        }
 
         #endregion
 

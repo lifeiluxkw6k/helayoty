@@ -42,7 +42,6 @@ D:\Git\花木兰控件库\WinformDemo\obj\x86\Debug\WinformDemo.TabControlExtFor
 D:\Git\花木兰控件库\WinformDemo\obj\x86\Debug\WinformDemo.GradualProgressExtForm.resources
 D:\Git\花木兰控件库\WinformDemo\obj\x86\Debug\WinformDemo.ImageCarouselExtForm.resources
 D:\Git\花木兰控件库\WinformDemo\obj\x86\Debug\WinformDemo.ImageWhirligigExtForm.resources
-D:\Git\花木兰控件库\WinformDemo\obj\x86\Debug\WinformDemo.AnimationLibraryForm.resources
 D:\Git\花木兰控件库\WinformDemo\obj\x86\Debug\WinformDemo.Properties.Resources.resources
 D:\Git\花木兰控件库\WinformDemo\obj\x86\Debug\WinformDemo.csproj.GenerateResource.cache
 D:\Git\花木兰控件库\WinformDemo\obj\x86\Debug\WinformDemo.csproj.CoreCompileInputs.cache

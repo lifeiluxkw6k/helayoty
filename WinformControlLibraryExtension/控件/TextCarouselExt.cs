@@ -65,7 +65,7 @@ namespace WinformControlLibraryExtension
     [DefaultProperty("Items")]
     [DefaultEvent("IndexChanged")]
     [Designer(typeof(TextCarouselExtDesigner))]
-    public partial class TextCarouselExt : Control
+    public class TextCarouselExt : Control
     {
         #region 新增事件
 
@@ -88,31 +88,59 @@ namespace WinformControlLibraryExtension
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler TabIndexChanged;
+        public new event EventHandler TabIndexChanged
+        {
+            add { base.TabIndexChanged += value; }
+            remove { base.TabIndexChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler TabStopChanged;
+        public new event EventHandler TabStopChanged
+        {
+            add { base.TabStopChanged += value; }
+            remove { base.TabStopChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler TextChanged;
+        public new event EventHandler TextChanged
+        {
+            add { base.TextChanged += value; }
+            remove { base.TextChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler FontChanged;
+        public new event EventHandler FontChanged
+        {
+            add { base.FontChanged += value; }
+            remove { base.FontChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler ForeColorChanged;
+        public new event EventHandler ForeColorChanged
+        {
+            add { base.ForeColorChanged += value; }
+            remove { base.ForeColorChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler RightToLeftChanged;
+        public new event EventHandler RightToLeftChanged
+        {
+            add { base.RightToLeftChanged += value; }
+            remove { base.RightToLeftChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event MouseEventHandler ImeModeChanged;
+        public new event EventHandler ImeModeChanged
+        {
+            add { base.ImeModeChanged += value; }
+            remove { base.ImeModeChanged -= value; }
+        }
 
         #endregion
 

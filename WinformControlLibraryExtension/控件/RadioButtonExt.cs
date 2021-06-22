@@ -62,7 +62,7 @@ namespace WinformControlLibraryExtension
     [DefaultProperty("Checked")]
     [DefaultEvent("CheckedChanged")]
     [Designer(typeof(RadioButtonExtDesigner))]
-    public partial class RadioButtonExt : Control
+    public class RadioButtonExt : Control
     {
         #region 新增事件
 
@@ -85,15 +85,27 @@ namespace WinformControlLibraryExtension
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler ForeColorChanged;
+        public new event EventHandler ForeColorChanged
+        {
+            add { base.ForeColorChanged += value; }
+            remove { base.ForeColorChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler RightToLeftChanged;
+        public new event EventHandler RightToLeftChanged
+        {
+            add { base.RightToLeftChanged += value; }
+            remove { base.RightToLeftChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event MouseEventHandler ImeModeChanged;
+        public new event EventHandler ImeModeChanged
+        {
+            add { base.ImeModeChanged += value; }
+            remove { base.ImeModeChanged -= value; }
+        }
 
         #endregion
 

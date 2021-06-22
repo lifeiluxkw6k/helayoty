@@ -63,7 +63,7 @@ namespace WinformControlLibraryExtension
     [DefaultEvent("ItemClick")]
     [Description("鱼眼菜单(控件版)(废弃)")]
     [Designer(typeof(FisheyeMenuExtDesigner))]
-    public partial class FisheyeMenuExt : Control
+    public class FisheyeMenuExt : Control
     {
         #region 新增事件
 
@@ -112,79 +112,43 @@ namespace WinformControlLibraryExtension
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler MarginChanged;
+        public new event EventHandler MarginChanged
+        {
+            add { base.MarginChanged += value; }
+            remove { base.MarginChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler PaddingChanged;
+        public new event EventHandler PaddingChanged
+        {
+            add { base.PaddingChanged += value; }
+            remove { base.PaddingChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event KeyEventHandler BackgroundImageChanged;
+        public new event EventHandler TextChanged
+        {
+            add { base.TextChanged += value; }
+            remove { base.TextChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event KeyEventHandler BackgroundImageLayoutChanged;
+        public new event EventHandler RightToLeftChanged
+        {
+            add { base.RightToLeftChanged += value; }
+            remove { base.RightToLeftChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event UICuesEventHandler ChangeUICues;
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event MouseEventHandler ImeModeChanged;
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler Validated;
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event CancelEventHandler Validating;
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event DragEventHandler DragDrop;
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event DragEventHandler DragEnter;
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler DragLeave;
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event DragEventHandler DragOver;
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event GiveFeedbackEventHandler GiveFeedback;
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event QueryContinueDragEventHandler QueryContinueDrag;
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler RightToLeftChanged;
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler TextChanged;
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler FontChanged;
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler ForeColorChanged;
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler ContextMenuStripChanged;
+        public new event EventHandler ImeModeChanged
+        {
+            add { base.ImeModeChanged += value; }
+            remove { base.ImeModeChanged -= value; }
+        }
 
         #endregion
 
@@ -567,14 +531,6 @@ namespace WinformControlLibraryExtension
 
         #region 重写属性
 
-        protected override Padding DefaultPadding
-        {
-            get
-            {
-                return new Padding(0);
-            }
-        }
-
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         protected new bool DesignMode
@@ -592,11 +548,29 @@ namespace WinformControlLibraryExtension
             }
         }
 
+        protected override Padding DefaultPadding
+        {
+            get
+            {
+                return new Padding(0);
+            }
+        }
+
         protected override Size DefaultSize
         {
             get
             {
                 return new Size(600, 128);
+            }
+        }
+
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected override ImeMode DefaultImeMode
+        {
+            get
+            {
+                return System.Windows.Forms.ImeMode.Disable;
             }
         }
 
@@ -606,49 +580,29 @@ namespace WinformControlLibraryExtension
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new Padding Padding { get; set; }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new Padding Margin { get; set; }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new Image BackgroundImage { get; set; }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new ImageLayout BackgroundImageLayout { get; set; }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new bool CausesValidation { get; set; }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool AllowDrop
+        public new Padding Margin
         {
             get
             {
-                return base.AllowDrop;
+                return base.Margin;
             }
             set
             {
-                base.AllowDrop = value;
+                base.Margin = value;
             }
         }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override Cursor Cursor
+        public new Padding Padding
         {
             get
             {
-                return base.Cursor;
+                return base.Padding;
             }
             set
             {
-                base.Cursor = value;
+                base.Padding = value;
             }
         }
 
@@ -668,34 +622,6 @@ namespace WinformControlLibraryExtension
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override Font Font
-        {
-            get
-            {
-                return base.Font;
-            }
-            set
-            {
-                base.Font = value;
-            }
-        }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override Color ForeColor
-        {
-            get
-            {
-                return base.ForeColor;
-            }
-            set
-            {
-                base.ForeColor = value;
-            }
-        }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public override RightToLeft RightToLeft
         {
             get
@@ -710,31 +636,17 @@ namespace WinformControlLibraryExtension
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override ContextMenuStrip ContextMenuStrip
+        public new ImeMode ImeMode
         {
             get
             {
-                return base.ContextMenuStrip;
+                return base.ImeMode;
             }
             set
             {
-                base.ContextMenuStrip = value;
+                base.ImeMode = value;
             }
         }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        protected override ImeMode DefaultImeMode
-        {
-            get
-            {
-                return System.Windows.Forms.ImeMode.Disable;
-            }
-        }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new ImeMode ImeMode { get; set; }
 
         #endregion
 

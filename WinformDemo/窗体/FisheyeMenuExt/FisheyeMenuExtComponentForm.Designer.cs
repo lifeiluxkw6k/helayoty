@@ -30,33 +30,33 @@ namespace WinformDemo
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem fisheyeBarItem1 = new WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem();
-            WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem fisheyeBarItem2 = new WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem();
-            WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem fisheyeBarItem3 = new WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem();
-            WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem fisheyeBarItem4 = new WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem();
-            WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem fisheyeBarItem5 = new WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem();
-            WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem fisheyeBarItem6 = new WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem();
-            WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem fisheyeBarItem7 = new WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem();
-            WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem fisheyeBarItem8 = new WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem();
-            WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem fisheyeBarItem9 = new WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem();
-            WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem fisheyeBarItem10 = new WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem();
-            WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem fisheyeBarItem11 = new WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem();
-            WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem fisheyeBarItem12 = new WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem();
-            WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem fisheyeBarItem13 = new WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem();
-            WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem fisheyeBarItem14 = new WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem();
-            WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem fisheyeBarItem15 = new WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem();
-            WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem fisheyeBarItem16 = new WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem();
-            WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem fisheyeBarItem17 = new WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem();
-            WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem fisheyeBarItem18 = new WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem();
-            WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem fisheyeBarItem19 = new WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem();
-            WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem fisheyeBarItem20 = new WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem();
-            WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem fisheyeBarItem21 = new WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem();
-            WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem fisheyeBarItem22 = new WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem();
-            WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem fisheyeBarItem23 = new WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuItem();
+            WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem fisheyeBarItem1 = new WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem();
+            WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem fisheyeBarItem2 = new WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem();
+            WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem fisheyeBarItem3 = new WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem();
+            WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem fisheyeBarItem4 = new WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem();
+            WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem fisheyeBarItem5 = new WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem();
+            WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem fisheyeBarItem6 = new WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem();
+            WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem fisheyeBarItem7 = new WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem();
+            WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem fisheyeBarItem8 = new WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem();
+            WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem fisheyeBarItem9 = new WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem();
+            WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem fisheyeBarItem10 = new WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem();
+            WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem fisheyeBarItem11 = new WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem();
+            WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem fisheyeBarItem12 = new WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem();
+            WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem fisheyeBarItem13 = new WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem();
+            WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem fisheyeBarItem14 = new WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem();
+            WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem fisheyeBarItem15 = new WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem();
+            WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem fisheyeBarItem16 = new WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem();
+            WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem fisheyeBarItem17 = new WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem();
+            WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem fisheyeBarItem18 = new WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem();
+            WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem fisheyeBarItem19 = new WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem();
+            WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem fisheyeBarItem20 = new WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem();
+            WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem fisheyeBarItem21 = new WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem();
+            WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem fisheyeBarItem22 = new WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem();
+            WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem fisheyeBarItem23 = new WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuItem();
             this.propertyGrid2 = new System.Windows.Forms.PropertyGrid();
-            this.桌面 = new WinformControlLibraryExtension.FisheyeMenuComponentExt(this.components);
+            this.桌面 = new WinformControlLibraryExtension.FisheyeMenuHandleExt(this.components);
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
-            this.窗体 = new WinformControlLibraryExtension.FisheyeMenuComponentExt(this.components);
+            this.窗体 = new WinformControlLibraryExtension.FisheyeMenuHandleExt(this.components);
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
@@ -110,9 +110,9 @@ namespace WinformDemo
             this.桌面.Items.Add(fisheyeBarItem7);
             this.桌面.Items.Add(fisheyeBarItem8);
             this.桌面.Items.Add(fisheyeBarItem9);
-            this.桌面.ShowWay = WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuShowWays.Always;
+            this.桌面.ShowWay = WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuShowWays.Always;
             this.桌面.TextCharDisableColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.桌面.ItemClick += new WinformControlLibraryExtension.FisheyeMenuComponentExt.ItemClickEventHandler(this.桌面_ItemClick);
+            this.桌面.ItemClick += new WinformControlLibraryExtension.FisheyeMenuHandleExt.ItemClickEventHandler(this.桌面_ItemClick);
             // 
             // propertyGrid1
             // 
@@ -170,12 +170,12 @@ namespace WinformDemo
             this.窗体.Items.Add(fisheyeBarItem22);
             this.窗体.Items.Add(fisheyeBarItem23);
             this.窗体.OwnerForm = this;
-            this.窗体.ShowOrientation = WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuShowOrientation.Right;
-            this.窗体.ShowType = WinformControlLibraryExtension.FisheyeMenuComponentExt.FisheyeMenuShowTypes.Char;
+            this.窗体.ShowOrientation = WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuShowOrientation.Right;
+            this.窗体.ShowType = WinformControlLibraryExtension.FisheyeMenuHandleExt.FisheyeMenuShowTypes.Char;
             this.窗体.TextCharDisableColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.窗体.IndexChanged += new WinformControlLibraryExtension.FisheyeMenuComponentExt.IndexChangedEventHandler(this.窗体_IndexChanged);
-            this.窗体.ItemClick += new WinformControlLibraryExtension.FisheyeMenuComponentExt.ItemClickEventHandler(this.窗体_ItemClick);
-            this.窗体.Selected += new WinformControlLibraryExtension.FisheyeMenuComponentExt.SelectedEventHandler(this.窗体_Selected);
+            this.窗体.IndexChanged += new WinformControlLibraryExtension.FisheyeMenuHandleExt.IndexChangedEventHandler(this.窗体_IndexChanged);
+            this.窗体.ItemClick += new WinformControlLibraryExtension.FisheyeMenuHandleExt.ItemClickEventHandler(this.窗体_ItemClick);
+            this.窗体.Selected += new WinformControlLibraryExtension.FisheyeMenuHandleExt.SelectedEventHandler(this.窗体_Selected);
             // 
             // label1
             // 
@@ -218,8 +218,8 @@ namespace WinformDemo
         #endregion
 
         private System.Windows.Forms.PropertyGrid propertyGrid1;
-        private FisheyeMenuComponentExt 窗体;
-        private FisheyeMenuComponentExt 桌面;
+        private FisheyeMenuHandleExt 窗体;
+        private FisheyeMenuHandleExt 桌面;
         private System.Windows.Forms.PropertyGrid propertyGrid2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;

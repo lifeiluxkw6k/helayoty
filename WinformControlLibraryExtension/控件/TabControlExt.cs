@@ -57,7 +57,7 @@ namespace WinformControlLibraryExtension
     /// </summary>
     [ToolboxItem(true)]
     [Description("TabControl美化扩展")]
-    public partial class TabControlExt : TabControl
+    public class TabControlExt : TabControl
     {
 
         #region 新增属性
@@ -437,8 +437,6 @@ namespace WinformControlLibraryExtension
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             SetStyle(ControlStyles.ResizeRedraw, true);
             SetStyle(ControlStyles.SupportsTransparentBackColor, true);
-
-            InitializeComponent();
 
             this.DrawMode = TabDrawMode.OwnerDrawFixed;
             this.SizeMode = TabSizeMode.Fixed;

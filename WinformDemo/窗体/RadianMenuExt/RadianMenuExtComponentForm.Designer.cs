@@ -51,7 +51,7 @@
             WinformControlLibraryExtension.RadianMenuExt.RadianMenuItem radianMenuItem15 = new WinformControlLibraryExtension.RadianMenuExt.RadianMenuItem();
             System.Drawing.Drawing2D.GraphicsPath graphicsPath5 = new System.Drawing.Drawing2D.GraphicsPath();
             this.button1 = new System.Windows.Forms.Button();
-            this.radianMenuExtView1 = new WinformControlLibraryExtension.RadianMenuComponentButtonExt();
+            this.radianMenuExtView1 = new WinformControlLibraryExtension.RadianMenuHandleButtonExt();
             this.radianMenuExtComponent1 = new WinformControlLibraryExtension.RadianMenuComponentExt(this.components);
             this.radianMenuExtComponent2 = new WinformControlLibraryExtension.RadianMenuComponentExt(this.components);
             this.label1 = new System.Windows.Forms.Label();
@@ -284,7 +284,7 @@
         #endregion
 
         private WinformControlLibraryExtension.RadianMenuComponentExt radianMenuExtComponent1;
-        private WinformControlLibraryExtension.RadianMenuComponentButtonExt radianMenuExtView1;
+        private WinformControlLibraryExtension.RadianMenuHandleButtonExt radianMenuExtView1;
         private System.Windows.Forms.Button button1;
         private WinformControlLibraryExtension.RadianMenuComponentExt radianMenuExtComponent2;
         private System.Windows.Forms.Label label1;

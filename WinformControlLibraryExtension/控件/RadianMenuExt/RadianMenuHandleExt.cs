@@ -66,7 +66,7 @@ namespace WinformControlLibraryExtension
     [Description("GDI不规则圆弧菜单控件(窗体版)句柄")]
     [DefaultProperty("Rmec")]
     [Designer(typeof(DottedLineBorderExtDesigner))]
-    public partial class RadianMenuComponentButtonExt : Control
+    public class RadianMenuHandleButtonExt : Control
     {
         #region 新增事件
 
@@ -89,67 +89,59 @@ namespace WinformControlLibraryExtension
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler MarginChanged;
+        public new event EventHandler MarginChanged
+        {
+            add { base.MarginChanged += value; }
+            remove { base.MarginChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler TextChanged;
+        public new event EventHandler PaddingChanged
+        {
+            add { base.PaddingChanged += value; }
+            remove { base.PaddingChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event UICuesEventHandler ChangeUICues;
+        public new event EventHandler TabIndexChanged
+        {
+            add { base.TabIndexChanged += value; }
+            remove { base.TabIndexChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event MouseEventHandler ImeModeChanged;
+        public new event EventHandler TabStopChanged
+        {
+            add { base.TabStopChanged += value; }
+            remove { base.TabStopChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler Validated;
+        public new event EventHandler TextChanged
+        {
+            add { base.TextChanged += value; }
+            remove { base.TextChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event CancelEventHandler Validating;
+        public new event EventHandler RightToLeftChanged
+        {
+            add { base.RightToLeftChanged += value; }
+            remove { base.RightToLeftChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event DragEventHandler DragDrop;
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event DragEventHandler DragEnter;
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler DragLeave;
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event DragEventHandler DragOver;
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event GiveFeedbackEventHandler GiveFeedback;
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event QueryContinueDragEventHandler QueryContinueDrag;
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler RightToLeftChanged;
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler FontChanged;
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler ForeColorChanged;
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler ContextMenuStripChanged;
+        public new event EventHandler ImeModeChanged
+        {
+            add { base.ImeModeChanged += value; }
+            remove { base.ImeModeChanged -= value; }
+        }
 
         #endregion
 
@@ -228,15 +220,72 @@ namespace WinformControlLibraryExtension
 
         #endregion
 
+        #region 重写属性
+
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        protected new bool DesignMode
+        {
+            get
+            {
+                if (this.GetService(typeof(IDesignerHost)) != null || System.ComponentModel.LicenseManager.UsageMode == System.ComponentModel.LicenseUsageMode.Designtime)
+                {
+                    return true;   //界面设计模式
+                }
+                else
+                {
+                    return false;//运行时模式
+                }
+            }
+        }
+
+        protected override Size DefaultSize
+        {
+            get
+            {
+                return new Size(100, 100);
+            }
+        }
+
+        protected override ImeMode DefaultImeMode
+        {
+            get
+            {
+                return System.Windows.Forms.ImeMode.Disable;
+            }
+        }
+
+        #endregion
+
         #region 停用属性
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new Padding Margin { get; set; }
+        public new Padding Margin
+        {
+            get
+            {
+                return base.Margin;
+            }
+            set
+            {
+                base.Margin = value;
+            }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new Padding Padding { get; set; }
+        public new Padding Padding
+        {
+            get
+            {
+                return base.Padding;
+            }
+            set
+            {
+                base.Padding = value;
+            }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -249,24 +298,6 @@ namespace WinformControlLibraryExtension
             set
             {
                 base.Text = value;
-            }
-        }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new bool CausesValidation { get; set; }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool AllowDrop
-        {
-            get
-            {
-                return base.AllowDrop;
-            }
-            set
-            {
-                base.AllowDrop = value;
             }
         }
 
@@ -314,58 +345,15 @@ namespace WinformControlLibraryExtension
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override ContextMenuStrip ContextMenuStrip
+        public new ImeMode ImeMode
         {
             get
             {
-                return base.ContextMenuStrip;
+                return base.ImeMode;
             }
             set
             {
-                base.ContextMenuStrip = value;
-            }
-        }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        protected override ImeMode DefaultImeMode
-        {
-            get
-            {
-                return System.Windows.Forms.ImeMode.Disable;
-            }
-        }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new ImeMode ImeMode { get; set; }
-
-        #endregion
-
-        #region 重写属性
-
-        [Browsable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        protected new bool DesignMode
-        {
-            get
-            {
-                if (this.GetService(typeof(IDesignerHost)) != null || System.ComponentModel.LicenseManager.UsageMode == System.ComponentModel.LicenseUsageMode.Designtime)
-                {
-                    return true;   //界面设计模式
-                }
-                else
-                {
-                    return false;//运行时模式
-                }
-            }
-        }
-
-        protected override Size DefaultSize
-        {
-            get
-            {
-                return new Size(100, 100);
+                base.ImeMode = value;
             }
         }
 
@@ -385,7 +373,7 @@ namespace WinformControlLibraryExtension
 
         #endregion
 
-        public RadianMenuComponentButtonExt()
+        public RadianMenuHandleButtonExt()
         {
             SetStyle(ControlStyles.UserPaint, true);
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
@@ -603,7 +591,7 @@ namespace WinformControlLibraryExtension
     [Description("不规则圆弧菜单控件(窗体版)")]
     [DefaultProperty("Items")]
     [DefaultEvent("ItemClick")]
-    public partial class RadianMenuComponentExt : Component
+    public class RadianMenuComponentExt : Component
     {
         #region 新增事件
 

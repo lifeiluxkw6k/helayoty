@@ -62,7 +62,7 @@ namespace WinformControlLibraryExtension
     [Description("Switch开关按钮控件")]
     [DefaultProperty("Status")]
     [DefaultEvent("StatusChanged")]
-    public partial class SwitchButtonExt : Control, IAnimationStaticTimer
+    public class SwitchButtonExt : Control, IAnimationStaticTimer
     {
         #region 新增事件
 
@@ -85,27 +85,51 @@ namespace WinformControlLibraryExtension
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler PaddingChanged;
+        public new event EventHandler PaddingChanged
+        {
+            add { base.PaddingChanged += value; }
+            remove { base.PaddingChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler BackColorChanged;
+        public new event EventHandler BackColorChanged
+        {
+            add { base.BackColorChanged += value; }
+            remove { base.BackColorChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler TextChanged;
+        public new event EventHandler TextChanged
+        {
+            add { base.TextChanged += value; }
+            remove { base.TextChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler ForeColorChanged;
+        public new event EventHandler ForeColorChanged
+        {
+            add { base.ForeColorChanged += value; }
+            remove { base.ForeColorChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler RightToLeftChanged;
+        public new event EventHandler RightToLeftChanged
+        {
+            add { base.RightToLeftChanged += value; }
+            remove { base.RightToLeftChanged -= value; }
+        }
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event MouseEventHandler ImeModeChanged;
+        public new event EventHandler ImeModeChanged
+        {
+            add { base.ImeModeChanged += value; }
+            remove { base.ImeModeChanged -= value; }
+        }
 
         #endregion
 
@@ -639,7 +663,17 @@ namespace WinformControlLibraryExtension
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new ImeMode ImeMode { get; set; }
+        public new ImeMode ImeMode
+        {
+            get
+            {
+                return base.ImeMode;
+            }
+            set
+            {
+                base.ImeMode = value;
+            }
+        }
 
         #endregion
 

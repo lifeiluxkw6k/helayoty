@@ -340,7 +340,7 @@ namespace WcleAnimationLibrary
                     result = AnimationCore.ElasticOutCore(_usedTime / _options.AllTransformTime, _options.Oscillations, _options.Springiness);
                     break;
                 case AnimationTypes.ElasticBoth:
-                    return AnimationCore.ElasticBothCore(_usedTime / _options.AllTransformTime, _options.Oscillations, _options.Springiness);
+                    result = AnimationCore.ElasticBothCore(_usedTime / _options.AllTransformTime, _options.Oscillations, _options.Springiness);
                     break;
                 case AnimationTypes.QuadraticIn:
                     result = AnimationCore.QuadraticInCore(_usedTime / _options.AllTransformTime);

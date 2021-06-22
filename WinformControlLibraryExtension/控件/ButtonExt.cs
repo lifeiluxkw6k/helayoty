@@ -57,7 +57,7 @@ namespace WinformControlLibraryExtension
     /// Button缩放动画扩展
     /// </summary>
     [Description("Button缩放动画扩展")]
-    public partial class ButtonExt : Button, IAnimationStaticTimer
+    public class ButtonExt : Button, IAnimationStaticTimer
     {
         #region 新增属性
 
