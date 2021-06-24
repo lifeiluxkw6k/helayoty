@@ -76,6 +76,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="窗体\MaskingExt\MaskingExtForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="窗体\MaskingExt\MaskingExtForm.Designer.cs">
+      <DependentUpon>MaskingExtForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="窗体\RadioButtonExtForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -305,6 +311,9 @@
     <EmbeddedResource Include="DemoForm.resx">
       <DependentUpon>DemoForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="窗体\MaskingExt\MaskingExtForm.resx">
+      <DependentUpon>MaskingExtForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="窗体\RadioButtonExtForm.resx">
       <DependentUpon>RadioButtonExtForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -506,6 +515,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
+    <None Include="Resources\demomenu_masking.png" />
     <None Include="Resources\demomenu_textcarousel.png" />
     <None Include="Resources\demomenu_fisheyebar.png" />
     <None Include="Resources\demomenu_color.png" />

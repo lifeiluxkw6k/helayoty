@@ -184,11 +184,13 @@ namespace WinformDemo
 
             WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem5 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(null) { ItemType = SlideMenuPanelExt.NodeTypes.Menu, Text = "组件" };
             WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem51 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(menuItem5) { ItemType = SlideMenuPanelExt.NodeTypes.MenuTab, Text = "右下角弹窗美化", Data = typeof(AlertWindowExtForm), Image = global::WinformDemo.Properties.Resources.demomenu_windowalert };
-            WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem52 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(menuItem5) { ItemType = SlideMenuPanelExt.NodeTypes.MenuTab, Text = "ToolTip美化", Data = typeof(ToolTipExtForm), Image = global::WinformDemo.Properties.Resources.demomenu_tooltip };
-            WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem53 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(menuItem5) { ItemType = SlideMenuPanelExt.NodeTypes.MenuTab, Text = "毫秒级别计时器", Data = typeof(TimerExtForm), Image = global::WinformDemo.Properties.Resources.demomenu_timer };
+            WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem52 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(menuItem5) { ItemType = SlideMenuPanelExt.NodeTypes.MenuTab, Text = "加载等待蒙版", Data = typeof(MaskingExtForm), Image = global::WinformDemo.Properties.Resources.demomenu_masking };
+            WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem53 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(menuItem5) { ItemType = SlideMenuPanelExt.NodeTypes.MenuTab, Text = "ToolTip美化", Data = typeof(ToolTipExtForm), Image = global::WinformDemo.Properties.Resources.demomenu_tooltip };
+            WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem54 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(menuItem5) { ItemType = SlideMenuPanelExt.NodeTypes.MenuTab, Text = "毫秒级别计时器", Data = typeof(TimerExtForm), Image = global::WinformDemo.Properties.Resources.demomenu_timer };
             menuItem5.Children.Add(menuItem51);
             menuItem5.Children.Add(menuItem52);
             menuItem5.Children.Add(menuItem53);
+            menuItem5.Children.Add(menuItem54);
             menuPanel.Nodes.Add(menuItem5);
 
             WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem6 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(null) { ItemType = SlideMenuPanelExt.NodeTypes.Menu, Text = "分析" };
