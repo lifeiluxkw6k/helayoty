@@ -76,6 +76,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="窗体\Form\FormExtForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="窗体\Form\FormExtForm.Designer.cs">
+      <DependentUpon>FormExtForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="窗体\MaskingExt\MaskingExtForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -310,6 +316,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DemoForm.resx">
       <DependentUpon>DemoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="窗体\Form\FormExtForm.resx">
+      <DependentUpon>FormExtForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="窗体\MaskingExt\MaskingExtForm.resx">
       <DependentUpon>MaskingExtForm.cs</DependentUpon>

@@ -39,9 +39,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(247)))), ((int)(((byte)(240)))));
-            this.panel1.Location = new System.Drawing.Point(200, 0);
+            this.panel1.Location = new System.Drawing.Point(200, 24);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1071, 534);
+            this.panel1.Size = new System.Drawing.Size(1071, 509);
             this.panel1.TabIndex = 1;
             // 
             // menuExt1
@@ -51,8 +51,8 @@
             this.menuExt1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(176)))), ((int)(((byte)(197)))), ((int)(((byte)(175)))));
             this.menuExt1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.menuExt1.CausesValidation = false;
-            this.menuExt1.Location = new System.Drawing.Point(0, 0);
-            this.menuExt1.MenuHeight = 534;
+            this.menuExt1.Location = new System.Drawing.Point(1, 24);
+            this.menuExt1.MenuHeight = 509;
             // 
             // 
             // 
@@ -81,20 +81,37 @@
             this.menuExt1.MenuPanel.NodeBorderStyle = WinformControlLibraryExtension.SlideMenuPanelExt.NodeBorderStyles.BottomBorder;
             this.menuExt1.MenuPanel.NodeImagePaddingRight = 18;
             this.menuExt1.MenuPanel.Scroll.SlideDisableBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.menuExt1.MenuPanel.Size = new System.Drawing.Size(200, 534);
+            this.menuExt1.MenuPanel.Size = new System.Drawing.Size(200, 509);
             this.menuExt1.MenuPanel.TabIndex = 0;
+            this.menuExt1.MenuPanel.TabStop = false;
             this.menuExt1.MenuPanel.Tool.Search = false;
             this.menuExt1.MinimumSize = new System.Drawing.Size(5, 0);
             this.menuExt1.Name = "menuExt1";
-            this.menuExt1.Size = new System.Drawing.Size(200, 534);
+            this.menuExt1.Size = new System.Drawing.Size(200, 509);
             this.menuExt1.TabIndex = 0;
-            this.menuExt1.Text = null;
+            this.menuExt1.TabStop = false;
             // 
             // DemoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.White;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(176)))), ((int)(((byte)(197)))), ((int)(((byte)(175)))));
+            this.CaptionBox.BackColor = System.Drawing.Color.Empty;
+            this.CaptionBox.CloseBtn.EnterForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.CaptionBox.CloseBtn.NormalBackColor = System.Drawing.Color.Empty;
+            this.CaptionBox.CloseBtn.NormalForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.CaptionBox.CloseBtn.TipText1 = "关闭";
+            this.CaptionBox.CloseBtn.TipText2 = "关闭";
+            this.CaptionBox.MaxBtn.EnterForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.CaptionBox.MaxBtn.NormalBackColor = System.Drawing.Color.Empty;
+            this.CaptionBox.MaxBtn.NormalForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.CaptionBox.MaxBtn.TipText1 = "最大化";
+            this.CaptionBox.MaxBtn.TipText2 = "向下还原";
+            this.CaptionBox.MinBtn.EnterForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.CaptionBox.MinBtn.NormalBackColor = System.Drawing.Color.Empty;
+            this.CaptionBox.MinBtn.NormalForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.CaptionBox.MinBtn.TipText1 = "最小化";
+            this.CaptionBox.MinBtn.TipText2 = "最小化";
             this.ClientSize = new System.Drawing.Size(1272, 534);
             this.Controls.Add(this.menuExt1);
             this.Controls.Add(this.panel1);

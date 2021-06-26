@@ -56,7 +56,7 @@ using WinformControlLibraryExtension;
 
 namespace WinformDemo
 {
-    public partial class DemoForm : Form
+    public partial class DemoForm : FormExt
     {
         public DemoForm()
         {
@@ -75,13 +75,13 @@ namespace WinformDemo
         private void Draw_Drawing(object sender, SlideMenuPanelExt.DragingEventArgs e)
         {
             this.menuExt1.MenuWidth += e.X;
-            this.panel1.Width = this.ClientRectangle.Width - this.menuExt1.Width;
+            this.panel1.Width = this.ClientRectangle.Width - this.menuExt1.Width - this.BorderWidth * 2;
             this.panel1.Location = new Point(this.menuExt1.Right, this.panel1.Location.Y);
         }
 
         private void menuExt1_PatternChanged(object sender, SlideMenuExt.PatternChangedEventArgs e)
         {
-            this.panel1.Width = this.ClientRectangle.Width - this.menuExt1.Width;
+            this.panel1.Width = this.ClientRectangle.Width - this.menuExt1.Width - this.BorderWidth *2;
             this.panel1.Location = new Point(this.menuExt1.Right, this.panel1.Location.Y);
         }
 

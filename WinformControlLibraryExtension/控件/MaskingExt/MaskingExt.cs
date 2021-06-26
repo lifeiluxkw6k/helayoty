@@ -133,8 +133,8 @@ namespace WinformControlLibraryExtension
                 maskingClassList.Add(mc);
             }
             mp.Show(form);
-            Size size = mc.owner_form.ClientRectangle.Size;
-            Point point = mc.owner_form.PointToScreen(mc.owner_form.ClientRectangle.Location);
+            Size size = MaskingForm.GetMaskingSize(mc.owner_form);
+            Point point = MaskingForm.GetMaskingLocation(mc.owner_form);
             mp.SetBounds(point.X, point.Y, size.Width, size.Height);
 
             maskingKeyHook.HookStart();
@@ -1218,8 +1218,8 @@ namespace WinformControlLibraryExtension
             List<MaskingExt.MaskingClass> mcList = MaskingExt.GetMaskingClass((Control)sender);
             for (int i = 0; i < mcList.Count; i++)
             {
-                Size size = mcList[i].owner_form.ClientRectangle.Size;
-                Point point = mcList[i].owner_form.PointToScreen(mcList[i].owner_form.ClientRectangle.Location);
+                Size size = GetMaskingSize(mcList[i].owner_form);
+                Point point = GetMaskingLocation(mcList[i].owner_form);
                 mcList[i].masking_form.SetBounds(point.X, point.Y, size.Width, size.Height);
             }
         }
@@ -1229,7 +1229,7 @@ namespace WinformControlLibraryExtension
             List<MaskingExt.MaskingClass> mcList = MaskingExt.GetMaskingClass((Control)sender);
             for (int i = 0; i < mcList.Count; i++)
             {
-                mcList[i].masking_form.Location = mcList[i].owner_form.PointToScreen(mcList[i].owner_form.ClientRectangle.Location);
+                mcList[i].masking_form.Location =GetMaskingLocation(mcList[i].owner_form);
             }
         }
 
@@ -1282,6 +1282,46 @@ namespace WinformControlLibraryExtension
                     mcList[i].event_control = controlList;
                 }
             }
+        }
+
+        /// <summary>
+        /// 获取蒙版Size
+        /// </summary>
+        /// <param name="form"></param>
+        /// <returns></returns>
+        public static Size GetMaskingSize(Form form)
+        {
+            Size size = Size.Empty;
+            if (form is IFormExt)
+            {
+                FormExt fe = (FormExt)form;
+                size = new Size(form.ClientRectangle.Size.Width - fe.BorderWidth * 2, fe.ClientRectangle.Size.Height - fe.BorderWidth * 2 - fe.CaptionBox.Height);
+            }
+            else
+            {
+                size = form.ClientRectangle.Size;
+            }
+            return size;
+        }
+
+        /// <summary>
+        /// 获取蒙版Location
+        /// </summary>
+        /// <param name="form"></param>
+        /// <returns></returns>
+        public static Point GetMaskingLocation(Form form)
+        {
+            Point point = Point.Empty;
+            if (form is IFormExt)
+            {
+                FormExt fe = (FormExt)form;
+                point = form.PointToScreen(new Point(form.ClientRectangle.X + fe.BorderWidth, fe.ClientRectangle.Y + fe.BorderWidth + fe.CaptionBox.Height));
+            }
+            else
+            {
+                point = form.PointToScreen(form.ClientRectangle.Location);
+            }
+            return point;
         }
 
         #endregion

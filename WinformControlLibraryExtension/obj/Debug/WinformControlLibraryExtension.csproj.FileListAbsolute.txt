@@ -10,3 +10,4 @@ D:\Git\花木兰控件库\WinformControlLibraryExtension\obj\Debug\WinformContro
 D:\Git\花木兰控件库\WinformControlLibraryExtension\obj\Debug\WinformControlLibraryExtension.csproj.CopyComplete
 D:\Git\花木兰控件库\WinformControlLibraryExtension\obj\Debug\WinformControlLibraryExtension.dll
 D:\Git\花木兰控件库\WinformControlLibraryExtension\obj\Debug\WinformControlLibraryExtension.pdb
+D:\Git\花木兰控件库\WinformControlLibraryExtension\obj\Debug\WinformControlLibraryExtension.FormExt.resources
