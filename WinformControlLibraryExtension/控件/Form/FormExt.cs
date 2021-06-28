@@ -63,6 +63,28 @@ namespace WinformControlLibraryExtension
     {
         #region 新增属性
 
+        private ResizeTypes resizeType = ResizeTypes.CaptionDrag;
+        /// <summary>
+        /// 放大缩小模式
+        /// </summary>
+        [Description("放大缩小模式")]
+        [DefaultValue(ResizeTypes.CaptionDrag)]
+        [Browsable(true)]
+        public ResizeTypes ResizeType
+        {
+            get
+            {
+                return this.resizeType;
+            }
+            set
+            {
+                if (this.resizeType == value)
+                    return;
+
+                this.resizeType = value;
+            }
+        }
+
         private bool moveEnabled = false;
         /// <summary>
         /// 是否启用界面移动功能
@@ -85,6 +107,53 @@ namespace WinformControlLibraryExtension
             }
         }
 
+        private bool captionEnabled = true;
+        /// <summary>
+        /// 是否启用标题栏和工具
+        /// </summary>
+        [Description("是否启用标题栏和工具")]
+        [DefaultValue(true)]
+        [Browsable(true)]
+        public bool CaptionEnabled
+        {
+            get
+            {
+                return this.captionEnabled;
+            }
+            set
+            {
+                if (this.captionEnabled == value)
+                    return;
+
+                this.captionEnabled = value;
+                this.CaptionBox.InitializeControlBox();
+                this.UpdateChildrenControls();
+            }
+        }
+
+        private bool backgroundImageCaption = true;
+        /// <summary>
+        /// 标题栏是否包含背景图片
+        /// </summary>
+        [Description("标题栏是否包含背景图片")]
+        [DefaultValue(true)]
+        [Browsable(true)]
+        public bool BackgroundImageCaption
+        {
+            get
+            {
+                return this.backgroundImageCaption;
+            }
+            set
+            {
+                if (this.backgroundImageCaption == value)
+                    return;
+
+                this.backgroundImageCaption = value;
+                this.Invalidate();
+            }
+        }
+
         private int borderWidth = 1;
         /// <summary>
         /// 边框宽度
@@ -100,7 +169,7 @@ namespace WinformControlLibraryExtension
             }
             set
             {
-                if (this.borderWidth == value)
+                if (this.borderWidth == value || value < 0)
                     return;
 
                 this.borderWidth = value;
@@ -362,7 +431,14 @@ namespace WinformControlLibraryExtension
         #endregion
 
         #region 扩展
-
+        /// <summary>
+        /// 当用户选择窗口菜单的一条命令或//当用户选择最大化或最小化时那个窗口会收到此消息
+        /// </summary>
+        private const int WM_SYSCOMMAND = 0x112;
+        /// <summary>
+        /// 最大最小化
+        /// </summary>
+        private const int SC_MAXIMIZE2 = 0xF032;
         /// <summary>
         /// 允许最小化操作
         /// </summary>
@@ -591,39 +667,42 @@ namespace WinformControlLibraryExtension
 
             if (e.Button == MouseButtons.Left)
             {
-                if (this.CaptionBox.CloseBtn.Enabled)
+                if (this.CaptionEnabled)
                 {
-                    if (this.CaptionBox.CloseBtn.Rect.Contains(e.Location))
+                    if (this.CaptionBox.CloseBtn.Enabled)
                     {
-                        this.CaptionBox.CloseBtn.OperateStatus = ControlBoxOperateStatus.Down;
+                        if (this.CaptionBox.CloseBtn.Rect.Contains(e.Location))
+                        {
+                            this.CaptionBox.CloseBtn.OperateStatus = ControlBoxOperateStatus.Down;
+                        }
+                        else
+                        {
+                            this.CaptionBox.CloseBtn.OperateStatus = ControlBoxOperateStatus.Normal;
+                        }
                     }
-                    else
-                    {
-                        this.CaptionBox.CloseBtn.OperateStatus = ControlBoxOperateStatus.Normal;
-                    }
-                }
 
-                if (this.CaptionBox.MaxBtn.Enabled)
-                {
-                    if (this.CaptionBox.MaxBtn.Rect.Contains(e.Location))
+                    if (this.CaptionBox.MaxBtn.Enabled)
                     {
-                        this.CaptionBox.MaxBtn.OperateStatus = ControlBoxOperateStatus.Down;
+                        if (this.CaptionBox.MaxBtn.Rect.Contains(e.Location))
+                        {
+                            this.CaptionBox.MaxBtn.OperateStatus = ControlBoxOperateStatus.Down;
+                        }
+                        else
+                        {
+                            this.CaptionBox.MaxBtn.OperateStatus = ControlBoxOperateStatus.Normal;
+                        }
                     }
-                    else
-                    {
-                        this.CaptionBox.MaxBtn.OperateStatus = ControlBoxOperateStatus.Normal;
-                    }
-                }
 
-                if (this.CaptionBox.MinBtn.Enabled)
-                {
-                    if (this.CaptionBox.MinBtn.Rect.Contains(e.Location))
+                    if (this.CaptionBox.MinBtn.Enabled)
                     {
-                        this.CaptionBox.MinBtn.OperateStatus = ControlBoxOperateStatus.Down;
-                    }
-                    else
-                    {
-                        this.CaptionBox.MinBtn.OperateStatus = ControlBoxOperateStatus.Normal;
+                        if (this.CaptionBox.MinBtn.Rect.Contains(e.Location))
+                        {
+                            this.CaptionBox.MinBtn.OperateStatus = ControlBoxOperateStatus.Down;
+                        }
+                        else
+                        {
+                            this.CaptionBox.MinBtn.OperateStatus = ControlBoxOperateStatus.Normal;
+                        }
                     }
                 }
 
@@ -647,33 +726,37 @@ namespace WinformControlLibraryExtension
 
             if (e.Button == MouseButtons.Left)
             {
-                if (this.CaptionBox.CloseBtn.Enabled && this.CaptionBox.CloseBtn.OperateStatus == ControlBoxOperateStatus.Down && this.CaptionBox.CloseBtn.Rect.Contains(e.Location))
+                if (this.CaptionEnabled)
                 {
-                    this.Close();
-                    this.CaptionBox.CloseBtn.OperateStatus = ControlBoxOperateStatus.Normal;
-                    return;
-                }
+                    if (this.CaptionBox.CloseBtn.Enabled && this.CaptionBox.CloseBtn.OperateStatus == ControlBoxOperateStatus.Down && this.CaptionBox.CloseBtn.Rect.Contains(e.Location))
+                    {
+                        this.HideTip();
+                        this.Close();
+                        this.CaptionBox.CloseBtn.OperateStatus = ControlBoxOperateStatus.Normal;
+                        return;
+                    }
 
-                if (this.CaptionBox.MaxBtn.Enabled && this.CaptionBox.MaxBtn.OperateStatus == ControlBoxOperateStatus.Down && this.CaptionBox.MaxBtn.Rect.Contains(e.Location))
-                {
-                    if (this.WindowState != FormWindowState.Maximized)
+                    if (this.CaptionBox.MaxBtn.Enabled && this.CaptionBox.MaxBtn.OperateStatus == ControlBoxOperateStatus.Down && this.CaptionBox.MaxBtn.Rect.Contains(e.Location))
                     {
-                        this.WindowState = FormWindowState.Maximized;
+                        if (this.WindowState != FormWindowState.Maximized)
+                        {
+                            this.WindowState = FormWindowState.Maximized;
+                        }
+                        else
+                        {
+                            this.WindowState = FormWindowState.Normal;
+                        }
+                        this.CaptionBox.MaxBtn.OperateStatus = ControlBoxOperateStatus.Normal;
                     }
-                    else
-                    {
-                        this.WindowState = FormWindowState.Normal;
-                    }
-                    this.CaptionBox.MaxBtn.OperateStatus = ControlBoxOperateStatus.Normal;
-                }
 
-                if (this.CaptionBox.MinBtn.Enabled && this.CaptionBox.MinBtn.OperateStatus == ControlBoxOperateStatus.Down && this.CaptionBox.MinBtn.Rect.Contains(e.Location))
-                {
-                    if (this.WindowState != FormWindowState.Minimized)
+                    if (this.CaptionBox.MinBtn.Enabled && this.CaptionBox.MinBtn.OperateStatus == ControlBoxOperateStatus.Down && this.CaptionBox.MinBtn.Rect.Contains(e.Location))
                     {
-                        this.WindowState = FormWindowState.Minimized;
+                        if (this.WindowState != FormWindowState.Minimized)
+                        {
+                            this.WindowState = FormWindowState.Minimized;
+                        }
+                        this.CaptionBox.MinBtn.OperateStatus = ControlBoxOperateStatus.Normal;
                     }
-                    this.CaptionBox.MinBtn.OperateStatus = ControlBoxOperateStatus.Normal;
                 }
 
                 if (this.MoveEnabled)
@@ -694,89 +777,92 @@ namespace WinformControlLibraryExtension
             string text = "";
             Point tip_point = Point.Empty;
 
-            if (this.CaptionBox.CloseBtn.Enabled)
+            if (this.CaptionEnabled)
             {
-                if (this.CaptionBox.CloseBtn.Rect.Contains(e.Location))
+                if (this.CaptionBox.CloseBtn.Enabled)
                 {
-                    if (this.CaptionBox.CloseBtn.MouseStatus == ControlBoxMouseStatus.Normal)
+                    if (this.CaptionBox.CloseBtn.Rect.Contains(e.Location))
                     {
-                        this.CaptionBox.CloseBtn.MouseStatus = ControlBoxMouseStatus.Enter;
-                        reset = true;
-                        text = this.CaptionBox.CloseBtn.TipText1;
-                        tip_point = new Point(this.CaptionBox.CloseBtn.Rect.X, this.CaptionBox.CloseBtn.Rect.Bottom + 12);
-
-                    }
-                }
-                else
-                {
-                    if (this.CaptionBox.CloseBtn.MouseStatus == ControlBoxMouseStatus.Enter)
-                    {
-                        this.CaptionBox.CloseBtn.MouseStatus = ControlBoxMouseStatus.Normal;
-                        reset = true;
-                        tte.Hide(this);
-                    }
-                }
-            }
-
-            if (this.CaptionBox.MaxBtn.Enabled)
-            {
-                if (this.CaptionBox.MaxBtn.Rect.Contains(e.Location))
-                {
-                    if (this.CaptionBox.MaxBtn.MouseStatus == ControlBoxMouseStatus.Normal)
-                    {
-                        this.CaptionBox.MaxBtn.MouseStatus = ControlBoxMouseStatus.Enter;
-                        reset = true;
-                        if (this.WindowState != FormWindowState.Maximized)
+                        if (this.CaptionBox.CloseBtn.MouseStatus == ControlBoxMouseStatus.Normal)
                         {
-                            text = this.CaptionBox.MaxBtn.TipText1;
+                            this.CaptionBox.CloseBtn.MouseStatus = ControlBoxMouseStatus.Enter;
+                            reset = true;
+                            text = this.CaptionBox.CloseBtn.TipText1;
+                            tip_point = new Point(this.CaptionBox.CloseBtn.Rect.X, this.CaptionBox.CloseBtn.Rect.Bottom + 12);
+
                         }
-                        else
+                    }
+                    else
+                    {
+                        if (this.CaptionBox.CloseBtn.MouseStatus == ControlBoxMouseStatus.Enter)
                         {
-                            text = this.CaptionBox.MaxBtn.TipText2;
+                            this.CaptionBox.CloseBtn.MouseStatus = ControlBoxMouseStatus.Normal;
+                            reset = true;
+                            tte.Hide(this);
                         }
-                        tip_point = new Point(this.CaptionBox.MaxBtn.Rect.X, this.CaptionBox.MaxBtn.Rect.Bottom + 12);
-
                     }
                 }
-                else
+
+                if (this.CaptionBox.MaxBtn.Enabled)
                 {
-                    if (this.CaptionBox.MaxBtn.MouseStatus == ControlBoxMouseStatus.Enter)
+                    if (this.CaptionBox.MaxBtn.Rect.Contains(e.Location))
                     {
-                        this.CaptionBox.MaxBtn.MouseStatus = ControlBoxMouseStatus.Normal;
-                        reset = true;
-                        tte.Hide(this);
+                        if (this.CaptionBox.MaxBtn.MouseStatus == ControlBoxMouseStatus.Normal)
+                        {
+                            this.CaptionBox.MaxBtn.MouseStatus = ControlBoxMouseStatus.Enter;
+                            reset = true;
+                            if (this.WindowState != FormWindowState.Maximized)
+                            {
+                                text = this.CaptionBox.MaxBtn.TipText1;
+                            }
+                            else
+                            {
+                                text = this.CaptionBox.MaxBtn.TipText2;
+                            }
+                            tip_point = new Point(this.CaptionBox.MaxBtn.Rect.X, this.CaptionBox.MaxBtn.Rect.Bottom + 12);
+
+                        }
+                    }
+                    else
+                    {
+                        if (this.CaptionBox.MaxBtn.MouseStatus == ControlBoxMouseStatus.Enter)
+                        {
+                            this.CaptionBox.MaxBtn.MouseStatus = ControlBoxMouseStatus.Normal;
+                            reset = true;
+                            tte.Hide(this);
+                        }
                     }
                 }
-            }
 
-            if (this.CaptionBox.MinBtn.Enabled)
-            {
-                if (this.CaptionBox.MinBtn.Rect.Contains(e.Location))
+                if (this.CaptionBox.MinBtn.Enabled)
                 {
-                    if (this.CaptionBox.MinBtn.MouseStatus == ControlBoxMouseStatus.Normal)
+                    if (this.CaptionBox.MinBtn.Rect.Contains(e.Location))
                     {
-                        this.CaptionBox.MinBtn.MouseStatus = ControlBoxMouseStatus.Enter;
-                        reset = true;
-                        text = this.CaptionBox.MinBtn.TipText1;
-                        tip_point = new Point(this.CaptionBox.MinBtn.Rect.X, this.CaptionBox.MinBtn.Rect.Bottom + 12);
+                        if (this.CaptionBox.MinBtn.MouseStatus == ControlBoxMouseStatus.Normal)
+                        {
+                            this.CaptionBox.MinBtn.MouseStatus = ControlBoxMouseStatus.Enter;
+                            reset = true;
+                            text = this.CaptionBox.MinBtn.TipText1;
+                            tip_point = new Point(this.CaptionBox.MinBtn.Rect.X, this.CaptionBox.MinBtn.Rect.Bottom + 12);
 
+                        }
+                    }
+                    else
+                    {
+                        if (this.CaptionBox.MinBtn.MouseStatus == ControlBoxMouseStatus.Enter)
+                        {
+                            this.CaptionBox.MinBtn.MouseStatus = ControlBoxMouseStatus.Normal;
+                            reset = true;
+                            tte.Hide(this);
+                        }
                     }
                 }
-                else
+
+                if (reset)
                 {
-                    if (this.CaptionBox.MinBtn.MouseStatus == ControlBoxMouseStatus.Enter)
-                    {
-                        this.CaptionBox.MinBtn.MouseStatus = ControlBoxMouseStatus.Normal;
-                        reset = true;
-                        tte.Hide(this);
-                    }
+                    this.Invalidate();
+                    tte.Show(text, this, tip_point);
                 }
-            }
-
-            if (reset)
-            {
-                this.Invalidate();
-                tte.Show(text, this, tip_point);
             }
 
             if (this.MoveEnabled && this.isdown)
@@ -818,6 +904,14 @@ namespace WinformControlLibraryExtension
                 case WM_NCPAINT:
                 case WM_NCCALCSIZE:
                     break;
+                //禁止双击标题栏
+                case WM_SYSCOMMAND:
+                    if ((int)m.WParam == SC_MAXIMIZE2 && ResizeType == ResizeTypes.NoResize)
+                    {
+                        m.WParam = IntPtr.Zero;
+                    }
+                    base.WndProc(ref m);
+                    break;
                 default:
                     base.WndProc(ref m);
                     break;
@@ -853,10 +947,69 @@ namespace WinformControlLibraryExtension
 
             if (this.BackgroundImage != null)
             {
-                TextureBrush back_tb = new TextureBrush(this.BackgroundImage);
-                g.FillRectangle(back_tb, this.ClientRectangle);
-                back_tb.Dispose();
+                int border = this.CaptionEnabled ? this.BorderWidth : 0;
+                int caption = this.CaptionEnabled ? this.CaptionBox.Height : 0;
+                Rectangle rect = new Rectangle(this.ClientRectangle.X + border, this.ClientRectangle.Y + border, this.ClientRectangle.Width - border * 2, this.ClientRectangle.Height - border * 2);
+                if (this.BackgroundImageCaption == false)
+                {
+                    rect = new Rectangle(this.ClientRectangle.X + border, this.ClientRectangle.Y + border + caption, this.ClientRectangle.Width - border * 2, this.ClientRectangle.Height - border * 2 - caption);
+                }
+
+                if (this.BackgroundImageLayout == ImageLayout.Zoom)
+                {
+                    Rectangle image_rect = new Rectangle(0, 0, this.BackgroundImage.Width, this.BackgroundImage.Height);
+                    int new_width = image_rect.Width;
+                    int new_height = image_rect.Height;
+
+                    if (image_rect.Width < rect.Width && image_rect.Height < rect.Height)
+                    {
+                        new_width = rect.Width;
+                        new_height = (int)(new_width * ((float)image_rect.Height) / (float)image_rect.Width);
+                    }
+                    if (new_height > rect.Height)
+                    {
+                        new_height = rect.Height;
+                        new_width = (int)(new_height * ((float)image_rect.Width) / (float)image_rect.Height);
+                    }
+                    if (new_width > rect.Width)
+                    {
+                        new_width = rect.Width;
+                        new_height = (int)(new_width * ((float)image_rect.Height) / (float)image_rect.Width);
+                    }
+                    if (new_height > rect.Height)
+                    {
+                        new_height = rect.Height;
+                        new_width = (int)(new_height * ((float)image_rect.Width) / (float)image_rect.Height);
+                    }
+                    image_rect = new Rectangle(0, 0, new_width, new_height);
+                    Rectangle rect_tmp = new Rectangle(rect.X + (rect.Width - image_rect.Width) / 2, rect.Y + (rect.Height - image_rect.Height) / 2, image_rect.Width, image_rect.Height);
+                    g.DrawImage(this.BackgroundImage, rect_tmp);
+                }
+                else if (this.BackgroundImageLayout == ImageLayout.Center)
+                {
+                    Rectangle image_rect = new Rectangle(0, 0, this.BackgroundImage.Width, this.BackgroundImage.Height);
+                    Rectangle rect_tmp = new Rectangle(rect.X + (rect.Width - image_rect.Width) / 2, rect.Y + (rect.Height - image_rect.Height) / 2, image_rect.Width, image_rect.Height);
+                    g.DrawImage(this.BackgroundImage, rect_tmp);
+                }
+                else if (this.BackgroundImageLayout == ImageLayout.Tile)
+                {
+                    Rectangle image_rect = new Rectangle(0, 0, this.BackgroundImage.Width, this.BackgroundImage.Height);
+                    TextureBrush back_tb = new TextureBrush(this.BackgroundImage, image_rect);
+                    g.FillRectangle(back_tb, rect);
+                    back_tb.Dispose();
+                }
+                else if (this.BackgroundImageLayout == ImageLayout.Stretch)
+                {
+                    Rectangle image_rect = new Rectangle(0, 0, this.BackgroundImage.Width, this.BackgroundImage.Height);
+                    g.DrawImage(this.BackgroundImage, rect, image_rect, GraphicsUnit.Pixel);
+                }
+                else if (this.BackgroundImageLayout == ImageLayout.None)
+                {
+                    g.DrawImage(this.BackgroundImage, rect.Location);
+                }
+
             }
+
         }
 
         /// <summary>
@@ -865,10 +1018,13 @@ namespace WinformControlLibraryExtension
         /// <param name="g"></param>
         private void DrawBorder(Graphics g)
         {
-            Pen border_pen = new Pen(this.BorderColor);
-            Rectangle rect = new Rectangle(this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Width - 1, this.ClientRectangle.Height - 1);
-            g.DrawRectangle(border_pen, rect);
-            border_pen.Dispose();
+            if (this.CaptionEnabled)
+            {
+                Pen border_pen = new Pen(this.BorderColor);
+                Rectangle rect = new Rectangle(this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Width - 1, this.ClientRectangle.Height - 1);
+                g.DrawRectangle(border_pen, rect);
+                border_pen.Dispose();
+            }
         }
 
         /// <summary>
@@ -877,60 +1033,65 @@ namespace WinformControlLibraryExtension
         /// <param name="g"></param>
         private void DrawCaption(Graphics g)
         {
-            if (this.CaptionBox.BackColor != Color.Empty)
+            if (this.CaptionEnabled)
             {
-                SolidBrush border_sb = new SolidBrush(this._active || this.DesignMode ? this.CaptionBox.BackColor : Color.FromArgb(100, this.CaptionBox.BackColor));
-                Rectangle rect = new Rectangle(this.ClientRectangle.X + this.BorderWidth, this.ClientRectangle.Y + this.BorderWidth, this.ClientRectangle.Width - this.BorderWidth * 2, this.CaptionBox.Height);
-                g.FillRectangle(border_sb, rect);
-                border_sb.Dispose();
-            }
-
-            DrawControlBox(g);
-
-            InterpolationMode interpolationMode = g.InterpolationMode;
-            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            g.DrawIcon(this.Icon, this.CaptionBox.IconRect);
-            g.InterpolationMode = interpolationMode;
-
-            if (!String.IsNullOrEmpty(this.Text))
-            {
-                StringFormat text_sf = new StringFormat() { Trimming = StringTrimming.EllipsisCharacter, FormatFlags = StringFormatFlags.NoWrap };
-                SolidBrush text_sb = new SolidBrush(this.ForeColor);
-                SizeF text_size = g.MeasureString(this.Text, this.Font, 1000, text_sf);
-
-                int w = (int)text_size.Width + 2;
-                if (w > (int)(this.ClientRectangle.Width - (this.ShowIcon ? this.CaptionBox.IconRect.Right : 2) - this.CaptionBox.ControlBoxRect.Width - 2))
+                if (this.CaptionBox.BackColor != Color.Empty)
                 {
-                    w = (int)(this.ClientRectangle.Width - (this.ShowIcon ? this.CaptionBox.IconRect.Right : 2) - this.CaptionBox.ControlBoxRect.Width - 2);
+                    SolidBrush border_sb = new SolidBrush(this._active || this.DesignMode ? this.CaptionBox.BackColor : Color.FromArgb(100, this.CaptionBox.BackColor));
+                    Rectangle rect = new Rectangle(this.ClientRectangle.X + this.BorderWidth, this.ClientRectangle.Y + this.BorderWidth, this.ClientRectangle.Width - this.BorderWidth * 2, this.CaptionBox.Height);
+                    g.FillRectangle(border_sb, rect);
+                    border_sb.Dispose();
                 }
 
-                int x = 0;
-                int y = (int)(this.ClientRectangle.Y + this.BorderWidth + (this.CaptionBox.Height - text_size.Height) / 2);
-                Rectangle text_rect = Rectangle.Empty;
-                if (this.TextOrientation == TextOrientations.Left)
+                DrawControlBox(g);
+
+                if (this.ShowIcon && this.Icon != null)
                 {
-                    x = (int)(this.ShowIcon ? this.CaptionBox.IconRect.Right : this.ClientRectangle.X + 2);
+                    InterpolationMode interpolationMode = g.InterpolationMode;
+                    g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                    g.DrawIcon(this.Icon, this.CaptionBox.IconRect);
+                    g.InterpolationMode = interpolationMode;
                 }
-                else if (this.TextOrientation == TextOrientations.Center)
+
+                if (!String.IsNullOrEmpty(this.Text))
                 {
-                    x = (int)(this.ClientRectangle.Width - text_size.Width) / 2;
-                    if (x + text_size.Width > this.CaptionBox.ControlBoxRect.Left)
+                    StringFormat text_sf = new StringFormat() { Trimming = StringTrimming.EllipsisCharacter, FormatFlags = StringFormatFlags.NoWrap };
+                    SolidBrush text_sb = new SolidBrush(this.ForeColor);
+                    SizeF text_size = g.MeasureString(this.Text, this.Font, 1000, text_sf);
+
+                    int w = (int)text_size.Width + 2;
+                    if (w > (int)(this.ClientRectangle.Width - (this.ShowIcon ? this.CaptionBox.IconRect.Right : 2) - this.CaptionBox.ControlBoxRect.Width - 2))
+                    {
+                        w = (int)(this.ClientRectangle.Width - (this.ShowIcon ? this.CaptionBox.IconRect.Right : 2) - this.CaptionBox.ControlBoxRect.Width - 2);
+                    }
+
+                    int x = 0;
+                    int y = (int)(this.ClientRectangle.Y + this.BorderWidth + (this.CaptionBox.Height - text_size.Height) / 2);
+                    Rectangle text_rect = Rectangle.Empty;
+                    if (this.TextOrientation == TextOrientations.Left)
+                    {
+                        x = (int)(this.ShowIcon ? this.CaptionBox.IconRect.Right : this.ClientRectangle.X + 2);
+                    }
+                    else if (this.TextOrientation == TextOrientations.Center)
+                    {
+                        x = (int)(this.ClientRectangle.Width - text_size.Width) / 2;
+                        if (x + text_size.Width > this.CaptionBox.ControlBoxRect.Left)
+                        {
+                            x = (int)(this.CaptionBox.ControlBoxRect.Left - text_size.Width);
+                        }
+                    }
+                    else if (this.TextOrientation == TextOrientations.Right)
                     {
                         x = (int)(this.CaptionBox.ControlBoxRect.Left - text_size.Width);
                     }
-                }
-                else if (this.TextOrientation == TextOrientations.Right)
-                {
-                    x = (int)(this.CaptionBox.ControlBoxRect.Left - text_size.Width);
-                }
-                text_rect = new Rectangle(x, y, w, (int)text_size.Width);
+                    text_rect = new Rectangle(x, y, w, (int)text_size.Width);
 
-                g.DrawString(this.Text, this.Font, text_sb, text_rect, text_sf);
+                    g.DrawString(this.Text, this.Font, text_sb, text_rect, text_sf);
 
-                text_sb.Dispose();
-                text_sf.Dispose();
+                    text_sb.Dispose();
+                    text_sf.Dispose();
+                }
             }
-
         }
 
         /// <summary>
@@ -1057,6 +1218,19 @@ namespace WinformControlLibraryExtension
         }
 
         /// <summary>
+        /// 更新所有子控件坐标
+        /// </summary>
+        private void UpdateChildrenControls()
+        {
+            int x = this.CaptionEnabled ? this.BorderWidth : this.BorderWidth;
+            int y = this.CaptionEnabled ? this.BorderWidth + this.CaptionBox.Height : -(this.BorderWidth + this.CaptionBox.Height);
+            foreach (Control control in this.Controls)
+            {
+                control.Location = new Point(control.Location.X + x, control.Location.Y + y);
+            }
+        }
+
+        /// <summary>
         /// 设置窗体鼠标NCHITTEST状态
         /// </summary>
         /// <param name="m"></param>
@@ -1066,61 +1240,70 @@ namespace WinformControlLibraryExtension
             Point point = new Point(LOWORD(wparam), HIWORD(wparam));
             point = PointToClient(point);
 
-            if (point.X < 5 && point.Y < 5)
+            if (this.CaptionEnabled)
             {
-                m.Result = new IntPtr(NCHITTEST.HTTOPLEFT);
-                return;
-            }
-
-            if (point.X > Width - 5 && point.Y < 5)
-            {
-                m.Result = new IntPtr(NCHITTEST.HTTOPRIGHT);
-                return;
-            }
-
-            if (point.X < 5 && point.Y > Height - 5)
-            {
-                m.Result = new IntPtr(NCHITTEST.HTBOTTOMLEFT);
-                return;
-            }
-
-            if (point.X > Width - 5 && point.Y > Height - 5)
-            {
-                m.Result = new IntPtr(NCHITTEST.HTBOTTOMRIGHT);
-                return;
-            }
-
-            if (point.Y < 5)
-            {
-                m.Result = new IntPtr(NCHITTEST.HTTOP);
-                return;
-            }
-
-            if (point.Y > Height - 5)
-            {
-                m.Result = new IntPtr(NCHITTEST.HTBOTTOM);
-                return;
-            }
-
-            if (point.X < 5)
-            {
-                m.Result = new IntPtr(NCHITTEST.HTLEFT);
-                return;
-            }
-
-            if (point.X > Width - 5)
-            {
-                m.Result = new IntPtr(NCHITTEST.HTRIGHT);
-                return;
-            }
-
-            if (point.Y < this.CaptionBox.Height)
-            {
-                if (!this.CaptionBox.ControlBoxRect.Contains(point))
+                if (this.WindowState != FormWindowState.Maximized)
                 {
-                    this.CaptionBox.RecoverControlBoxStatus();
-                    m.Result = new IntPtr(NCHITTEST.HTCAPTION);
-                    return;
+                    if (this.ResizeType == ResizeTypes.Drag || this.ResizeType == ResizeTypes.CaptionDrag)
+                    {
+                        if (point.X < 5 && point.Y < 5)
+                        {
+                            m.Result = new IntPtr(NCHITTEST.HTTOPLEFT);
+                            return;
+                        }
+
+                        if (point.X > Width - 5 && point.Y < 5)
+                        {
+                            m.Result = new IntPtr(NCHITTEST.HTTOPRIGHT);
+                            return;
+                        }
+
+                        if (point.X < 5 && point.Y > Height - 5)
+                        {
+                            m.Result = new IntPtr(NCHITTEST.HTBOTTOMLEFT);
+                            return;
+                        }
+
+                        if (point.X > Width - 5 && point.Y > Height - 5)
+                        {
+                            m.Result = new IntPtr(NCHITTEST.HTBOTTOMRIGHT);
+                            return;
+                        }
+
+                        if (point.Y < 5)
+                        {
+                            m.Result = new IntPtr(NCHITTEST.HTTOP);
+                            return;
+                        }
+
+                        if (point.Y > Height - 5)
+                        {
+                            m.Result = new IntPtr(NCHITTEST.HTBOTTOM);
+                            return;
+                        }
+
+                        if (point.X < 5)
+                        {
+                            m.Result = new IntPtr(NCHITTEST.HTLEFT);
+                            return;
+                        }
+
+                        if (point.X > Width - 5)
+                        {
+                            m.Result = new IntPtr(NCHITTEST.HTRIGHT);
+                            return;
+                        }
+                    }
+                }
+
+                if (point.Y < this.CaptionBox.Height)
+                {
+                    if (!this.CaptionBox.ControlBoxRect.Contains(point))
+                    {
+                        this.CaptionBox.RecoverControlBoxStatus();
+                        m.Result = new IntPtr(NCHITTEST.HTCAPTION);
+                        return;
+                    }
                 }
             }
 
@@ -1141,10 +1324,40 @@ namespace WinformControlLibraryExtension
             }
             else
             {
-                Rectangle rect = Screen.GetWorkingArea(this);
-                minmax.maxTrackSize = new Size(rect.Width + BorderWidth * 2, rect.Height + BorderWidth * 2);
-                minmax.maxPosition = new Point(rect.X - BorderWidth, rect.Y - BorderWidth);
-                minmax.maxSize = new Size(rect.Width + BorderWidth * 2, rect.Height + BorderWidth * 2);
+                if (this.CaptionEnabled)
+                {
+                    if (this.Parent == null)
+                    {
+                        Rectangle rect = Screen.GetWorkingArea(this);
+                        minmax.maxTrackSize = new Size(rect.Width + this.BorderWidth * 2, rect.Height + this.BorderWidth * 2);
+                        minmax.maxPosition = new Point(rect.X - this.BorderWidth, rect.Y - this.BorderWidth);
+                        minmax.maxSize = new Size(rect.Width + this.BorderWidth * 2, rect.Height + this.BorderWidth * 2);
+                    }
+                    else
+                    {
+                        Rectangle rect = this.Parent.ClientRectangle;
+                        minmax.maxTrackSize = new Size(rect.Width + this.BorderWidth * 2, rect.Height + this.BorderWidth * 2);
+                        minmax.maxPosition = new Point(rect.X - this.BorderWidth, rect.Y - this.BorderWidth);
+                        minmax.maxSize = new Size(rect.Width + this.BorderWidth * 2, rect.Height + this.BorderWidth * 2);
+                    }
+                }
+                else
+                {
+                    if (this.Parent == null)
+                    {
+                        Rectangle rect = Screen.GetWorkingArea(this);
+                        minmax.maxTrackSize = new Size(rect.Width, rect.Height);
+                        minmax.maxPosition = new Point(rect.X, rect.Y);
+                        minmax.maxSize = new Size(rect.Width, rect.Height);
+                    }
+                    else if (this.Parent != null)
+                    {
+                        Rectangle rect = this.Parent.ClientRectangle;
+                        minmax.maxTrackSize = new Size(rect.Width, rect.Height);
+                        minmax.maxPosition = new Point(rect.X, rect.Y);
+                        minmax.maxSize = new Size(rect.Width, rect.Height);
+                    }
+                }
             }
 
             if (MinimumSize != Size.Empty)
@@ -1371,6 +1584,9 @@ namespace WinformControlLibraryExtension
             /// </summary>
             public void InitializeControlBox()
             {
+                if (this.owner.CaptionEnabled == false)
+                    return;
+
                 int right = 2;
                 Rectangle rect = this.owner.ClientRectangle;
                 Rectangle controlBox_rect = new Rectangle(rect.X + this.owner.BorderWidth, rect.Y + this.owner.BorderWidth, rect.Width - this.owner.BorderWidth * 2, this.Height);
@@ -1743,6 +1959,31 @@ namespace WinformControlLibraryExtension
             /// </summary>
             Right
         }
+
+        /// <summary>
+        /// 放大缩小模式
+        /// </summary>
+        [Description("放大缩小模式")]
+        public enum ResizeTypes
+        {
+            /// <summary>
+            /// 无缩放
+            /// </summary>
+            NoResize,
+            /// <summary>
+            /// 鼠标拖动
+            /// </summary>
+            Drag,
+            /// <summary>
+            /// 标题栏双击
+            /// </summary>
+            Caption,
+            /// <summary>
+            /// 鼠标拖动、标题栏双击
+            /// </summary>
+            CaptionDrag
+        }
+
         #endregion
     }
 

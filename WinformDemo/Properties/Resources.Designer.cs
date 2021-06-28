@@ -393,6 +393,16 @@ namespace WinformDemo.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap demomenu_message {
+            get {
+                object obj = ResourceManager.GetObject("demomenu_message", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap demomenu_meterbar {
             get {
                 object obj = ResourceManager.GetObject("demomenu_meterbar", resourceCulture);
@@ -646,6 +656,16 @@ namespace WinformDemo.Properties {
         internal static System.Drawing.Bitmap menutab {
             get {
                 object obj = ResourceManager.GetObject("menutab", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap message_custom {
+            get {
+                object obj = ResourceManager.GetObject("message_custom", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

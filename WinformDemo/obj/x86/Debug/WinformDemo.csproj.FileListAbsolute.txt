@@ -53,3 +53,4 @@ D:\Git\花木兰控件库\WinformDemo\obj\x86\Debug\WinformDemo.SlideMenuExtForm
 D:\Git\花木兰控件库\WinformDemo\obj\x86\Debug\WinformDemo.SlideMenuPanelExtForm.resources
 D:\Git\花木兰控件库\WinformDemo\obj\x86\Debug\WinformDemo.MaskingExtForm.resources
 D:\Git\花木兰控件库\WinformDemo\obj\x86\Debug\WinformDemo.FormExtForm.resources
+D:\Git\花木兰控件库\WinformDemo\obj\x86\Debug\WinformDemo.MessageBoxExtForm.resources

@@ -81,7 +81,7 @@ namespace WinformDemo
 
         private void menuExt1_PatternChanged(object sender, SlideMenuExt.PatternChangedEventArgs e)
         {
-            this.panel1.Width = this.ClientRectangle.Width - this.menuExt1.Width - this.BorderWidth *2;
+            this.panel1.Width = this.ClientRectangle.Width - this.menuExt1.Width - this.BorderWidth * 2;
             this.panel1.Location = new Point(this.menuExt1.Right, this.panel1.Location.Y);
         }
 
@@ -97,8 +97,13 @@ namespace WinformDemo
                 ConstructorInfo _constructor = ((Type)e.Node.Data).GetConstructor(BindingFlags.Public | BindingFlags.Instance, null, new Type[] { }, null);
                 Form _constructor_obj = (Form)_constructor.Invoke(new object[] { });
                 _constructor_obj.Dock = DockStyle.Fill;
+                if (_constructor_obj is IFormExt)
+                {
+                    FormExt fe = (FormExt)_constructor_obj;
+                    fe.CaptionEnabled = false;
+                }
                 _constructor_obj.TopLevel = false;
-                _constructor_obj.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+                _constructor_obj.FormBorderStyle = FormBorderStyle.None;
                 foreach (Form form in this.panel1.Controls)
                 {
                     form.Dispose();
@@ -184,13 +189,15 @@ namespace WinformDemo
 
             WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem5 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(null) { ItemType = SlideMenuPanelExt.NodeTypes.Menu, Text = "组件" };
             WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem51 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(menuItem5) { ItemType = SlideMenuPanelExt.NodeTypes.MenuTab, Text = "右下角弹窗美化", Data = typeof(AlertWindowExtForm), Image = global::WinformDemo.Properties.Resources.demomenu_windowalert };
-            WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem52 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(menuItem5) { ItemType = SlideMenuPanelExt.NodeTypes.MenuTab, Text = "加载等待蒙版", Data = typeof(MaskingExtForm), Image = global::WinformDemo.Properties.Resources.demomenu_masking };
-            WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem53 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(menuItem5) { ItemType = SlideMenuPanelExt.NodeTypes.MenuTab, Text = "ToolTip美化", Data = typeof(ToolTipExtForm), Image = global::WinformDemo.Properties.Resources.demomenu_tooltip };
-            WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem54 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(menuItem5) { ItemType = SlideMenuPanelExt.NodeTypes.MenuTab, Text = "毫秒级别计时器", Data = typeof(TimerExtForm), Image = global::WinformDemo.Properties.Resources.demomenu_timer };
+            WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem52 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(menuItem5) { ItemType = SlideMenuPanelExt.NodeTypes.MenuTab, Text = "提示框美化", Data = typeof(MessageBoxExtForm), Image = global::WinformDemo.Properties.Resources.demomenu_message };
+            WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem53 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(menuItem5) { ItemType = SlideMenuPanelExt.NodeTypes.MenuTab, Text = "加载等待蒙版", Data = typeof(MaskingExtForm), Image = global::WinformDemo.Properties.Resources.demomenu_masking };
+            WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem54 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(menuItem5) { ItemType = SlideMenuPanelExt.NodeTypes.MenuTab, Text = "ToolTip美化", Data = typeof(ToolTipExtForm), Image = global::WinformDemo.Properties.Resources.demomenu_tooltip };
+            WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem55 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(menuItem5) { ItemType = SlideMenuPanelExt.NodeTypes.MenuTab, Text = "毫秒级别计时器", Data = typeof(TimerExtForm), Image = global::WinformDemo.Properties.Resources.demomenu_timer };
             menuItem5.Children.Add(menuItem51);
             menuItem5.Children.Add(menuItem52);
             menuItem5.Children.Add(menuItem53);
             menuItem5.Children.Add(menuItem54);
+            menuItem5.Children.Add(menuItem55);
             menuPanel.Nodes.Add(menuItem5);
 
             WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem6 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(null) { ItemType = SlideMenuPanelExt.NodeTypes.Menu, Text = "分析" };

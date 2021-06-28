@@ -84,6 +84,7 @@
       <DependentUpon>FormExt.cs</DependentUpon>
     </Compile>
     <Compile Include="控件\MaskingExt\MaskingExt.cs" />
+    <Compile Include="控件\MessageBoxExt\MessageBoxExt.cs" />
     <Compile Include="控件\SlideMenuExt\SlideMenuPanelExt.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -293,12 +294,20 @@
   <ItemGroup>
     <None Include="Resources\expandfirstbtn.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\message_warning.png" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WcleAnimationLibrary\WcleAnimationLibrary.csproj">
       <Project>{bca4d193-8e66-4335-b553-d8778e950688}</Project>
       <Name>WcleAnimationLibrary</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\message_error.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\message_question.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

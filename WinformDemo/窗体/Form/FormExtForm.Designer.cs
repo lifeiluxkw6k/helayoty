@@ -35,6 +35,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImageCaption = false;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.CaptionBox.BackColor = System.Drawing.Color.Empty;
             this.CaptionBox.CloseBtn.EnterForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.CaptionBox.CloseBtn.NormalBackColor = System.Drawing.Color.Empty;
@@ -51,7 +53,7 @@
             this.CaptionBox.MinBtn.NormalForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.CaptionBox.MinBtn.TipText1 = "最小化";
             this.CaptionBox.MinBtn.TipText2 = "最小化";
-            this.ClientSize = new System.Drawing.Size(374, 261);
+            this.ClientSize = new System.Drawing.Size(582, 485);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormExtForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
