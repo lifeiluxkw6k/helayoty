@@ -202,6 +202,9 @@
     <Compile Include="控件\GroupPanelExt.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="控件\工具栏\ContextMenuStripExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
@@ -211,9 +214,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="控件\AlertFormExt.resx">
       <DependentUpon>AlertFormExt.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="控件\Form\FormExt.resx">
-      <DependentUpon>FormExt.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

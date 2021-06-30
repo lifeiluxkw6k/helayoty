@@ -101,6 +101,8 @@ namespace WinformDemo
                 {
                     FormExt fe = (FormExt)_constructor_obj;
                     fe.CaptionEnabled = false;
+                    fe.ResizeType = ResizeTypes.NoResize;
+                    fe.SizeGripStyle = SizeGripStyle.Hide;
                 }
                 _constructor_obj.TopLevel = false;
                 _constructor_obj.FormBorderStyle = FormBorderStyle.None;
@@ -199,6 +201,11 @@ namespace WinformDemo
             menuItem5.Children.Add(menuItem54);
             menuItem5.Children.Add(menuItem55);
             menuPanel.Nodes.Add(menuItem5);
+
+            WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem5a = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(null) { ItemType = SlideMenuPanelExt.NodeTypes.Menu, Text = "工具栏" };
+            WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem5a1 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(null) { ItemType = SlideMenuPanelExt.NodeTypes.MenuTab, Text = "右键菜单", Data = typeof(ContextMenuStripExtForm), Image = global::WinformDemo.Properties.Resources.demomenu_contextmenustrip };
+            menuItem5a.Children.Add(menuItem5a1);
+            menuPanel.Nodes.Add(menuItem5a);
 
             WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem6 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(null) { ItemType = SlideMenuPanelExt.NodeTypes.Menu, Text = "分析" };
             WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem61 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(menuItem6) { ItemType = SlideMenuPanelExt.NodeTypes.MenuTab, Text = "仪表", Data = typeof(MeterExtForm), Image = global::WinformDemo.Properties.Resources.demomenu_meterbar };

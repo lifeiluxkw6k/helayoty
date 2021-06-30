@@ -317,6 +317,12 @@
       <DependentUpon>TabControlExtForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="窗体\工具栏\ContextMenuStripExtForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="窗体\工具栏\ContextMenuStripExtForm.Designer.cs">
+      <DependentUpon>ContextMenuStripExtForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="AllForm.resx">
       <DependentUpon>AllForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -448,6 +454,9 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="窗体\工具栏\ContextMenuStripExtForm.resx">
+      <DependentUpon>ContextMenuStripExtForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -533,6 +542,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
+    <None Include="Resources\demomenu_contextmenustrip.png" />
     <None Include="Resources\demomenu_message.png" />
     <None Include="Resources\message_custom.png" />
     <None Include="Resources\demomenu_masking.png" />

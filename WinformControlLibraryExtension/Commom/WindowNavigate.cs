@@ -70,5 +70,24 @@ namespace WinformControlLibraryExtension
         [DllImport("user32", EntryPoint = "HideCaret")]
         public static extern bool HideCaret(IntPtr hWnd);
 
+        public static int HIWORD(int n)
+        {
+            return (n >> 16) & 0xffff;
+        }
+
+        public static int HIWORD(IntPtr n)
+        {
+            return HIWORD(unchecked((int)(long)n));
+        }
+
+        public static int LOWORD(int n)
+        {
+            return n & 0xffff;
+        }
+
+        public static int LOWORD(IntPtr n)
+        {
+            return LOWORD(unchecked((int)(long)n));
+        }
     }
 }
