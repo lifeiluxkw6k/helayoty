@@ -154,6 +154,30 @@ namespace WinformControlLibraryExtension
             }
         }
 
+        private bool borderEnabled = true;
+        /// <summary>
+        /// 是否启用边框宽度
+        /// </summary>
+        [Description("是否启用边框宽度")]
+        [DefaultValue(true)]
+        [Browsable(true)]
+        public bool BorderEnabled
+        {
+            get
+            {
+                return this.borderEnabled;
+            }
+            set
+            {
+                if (this.borderEnabled == value)
+                    return;
+
+                this.borderEnabled = value;
+                this.CaptionBox.InitializeControlBox();
+                this.UpdateChildrenControls();
+            }
+        }
+
         private int borderWidth = 1;
         /// <summary>
         /// 边框宽度
@@ -165,7 +189,7 @@ namespace WinformControlLibraryExtension
         {
             get
             {
-                return this.borderWidth;
+                return this.BorderEnabled ? this.borderWidth : 0;
             }
             set
             {
@@ -530,7 +554,6 @@ namespace WinformControlLibraryExtension
             InitializeComponent();
 
             this.FormBorderStyle = FormBorderStyle.None;
-            base.Padding = DefaultPadding;
             this.BackColor = Color.FromArgb(176, 197, 175);
             this.ForeColor = Color.FromArgb(255, 255, 255);
 

@@ -323,6 +323,24 @@
     <Compile Include="窗体\工具栏\ContextMenuStripExtForm.Designer.cs">
       <DependentUpon>ContextMenuStripExtForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="窗体\工具栏\MenuStripExtForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="窗体\工具栏\MenuStripExtForm.Designer.cs">
+      <DependentUpon>MenuStripExtForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="窗体\工具栏\StatusStripExtForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="窗体\工具栏\StatusStripExtForm.Designer.cs">
+      <DependentUpon>StatusStripExtForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="窗体\工具栏\ToolStripExtForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="窗体\工具栏\ToolStripExtForm.Designer.cs">
+      <DependentUpon>ToolStripExtForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="AllForm.resx">
       <DependentUpon>AllForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -457,6 +475,15 @@
     <EmbeddedResource Include="窗体\工具栏\ContextMenuStripExtForm.resx">
       <DependentUpon>ContextMenuStripExtForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="窗体\工具栏\MenuStripExtForm.resx">
+      <DependentUpon>MenuStripExtForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="窗体\工具栏\StatusStripExtForm.resx">
+      <DependentUpon>StatusStripExtForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="窗体\工具栏\ToolStripExtForm.resx">
+      <DependentUpon>ToolStripExtForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -542,6 +569,35 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
+    <None Include="Resources\toolstrip_text_italic.png" />
+    <None Include="Resources\toolstrip_shape_align_top.png" />
+    <None Include="Resources\toolstrip_shape_align_right.png" />
+    <None Include="Resources\toolstrip_shape_align_middle.png" />
+    <None Include="Resources\toolstrip_shape_align_left.png" />
+    <None Include="Resources\toolstrip_shape_align_center.png" />
+    <None Include="Resources\toolstrip_shape_align_bottom.png" />
+    <None Include="Resources\toolstrip_save.png" />
+    <None Include="Resources\toolstrip_right.png" />
+    <None Include="Resources\toolstrip_paste.png" />
+    <None Include="Resources\toolstrip_othersave.png" />
+    <None Include="Resources\toolstrip_open.png" />
+    <None Include="Resources\toolstrip_new.png" />
+    <None Include="Resources\toolstrip_left.png" />
+    <None Include="Resources\toolstrip_cut.png" />
+    <None Include="Resources\toolstrip_copy.png" />
+    <None Include="Resources\toolstrip_center.png" />
+    <None Include="Resources\statusstrip_versions.png" />
+    <None Include="Resources\toolstrip_window3.png" />
+    <None Include="Resources\toolstrip_window2.png" />
+    <None Include="Resources\toolstrip_window1.png" />
+    <None Include="Resources\toolstrip_text_lowercase_a.png" />
+    <None Include="Resources\toolstrip_text_list_numbers.png" />
+    <None Include="Resources\toolstrip_text_list_bullets.png" />
+    <None Include="Resources\toolstrip_text_linespacing.png" />
+    <None Include="Resources\toolstrip_text_letterspacing.png" />
+    <None Include="Resources\toolstrip_text_letter_omega.png" />
+    <None Include="Resources\toolstrip_text_left_to_right.png" />
+    <None Include="Resources\toolstrip_text_kerning.png" />
     <None Include="Resources\demomenu_contextmenustrip.png" />
     <None Include="Resources\demomenu_message.png" />
     <None Include="Resources\message_custom.png" />

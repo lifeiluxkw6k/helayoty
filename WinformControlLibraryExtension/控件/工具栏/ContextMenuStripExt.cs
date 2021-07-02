@@ -61,9 +61,23 @@ namespace WinformControlLibraryExtension
     [ToolboxItem(true)]
     public class ContextMenuStripExt : ContextMenuStrip
     {
+        #region 停用属性
+
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public ToolStripRenderMode RenderMode { get { return ToolStripRenderMode.Professional; } set { base.RenderMode = ToolStripRenderMode.Professional; } }
+        public new ToolStripRenderMode RenderMode
+        {
+            get
+            {
+                return ToolStripRenderMode.Professional;
+            }
+            set
+            {
+                base.RenderMode = ToolStripRenderMode.Professional;
+            }
+        }
+
+        #endregion
 
         public ContextMenuStripExt()
         {
@@ -85,14 +99,14 @@ namespace WinformControlLibraryExtension
     [Description("ContextMenuStripExt渲染器")]
     public class ContextMenuStripExtRenderer : ToolStripProfessionalRenderer
     {
-        #region
+        #region 属性
 
         private ContextMenuStripExtColorTable colorTable;
         /// <summary>
         /// 用于绘制的调色板
         /// </summary>
         [Description("用于绘制的调色板")]
-        public ContextMenuStripExtColorTable ColorTable
+        public new ContextMenuStripExtColorTable ColorTable
         {
             get
             {
@@ -112,7 +126,7 @@ namespace WinformControlLibraryExtension
 
         #endregion
 
-        #region
+        #region 构造器
 
         public ContextMenuStripExtRenderer() : base()
         {
@@ -126,7 +140,7 @@ namespace WinformControlLibraryExtension
 
         #endregion
 
-        #region
+        #region 重写
 
         protected override void OnRenderArrow(ToolStripArrowRenderEventArgs e)
         {
@@ -150,7 +164,7 @@ namespace WinformControlLibraryExtension
             }
             base.OnRenderItemText(e);
         }
-      
+
         #endregion
     }
 
@@ -165,7 +179,7 @@ namespace WinformControlLibraryExtension
 
         }
 
-        #region MenuStrip //===
+        #region MenuStrip 
 
         /// <summary>
         /// ContextMenuStripExt边框颜色
@@ -175,12 +189,12 @@ namespace WinformControlLibraryExtension
         /// <summary>
         /// ContextMenuStripExt背景色
         /// </summary>
-        public override Color ToolStripDropDownBackground { get { return Color.FromArgb(240, 240, 240); } }//===
+        public override Color ToolStripDropDownBackground { get { return Color.FromArgb(240, 240, 240); } }
 
         /// <summary>
         ///  ContextMenuStripExt箭头的颜色
         /// </summary>
-        public virtual Color ArrowColor { get { return Color.FromArgb(109, 109, 109); } }//===
+        public virtual Color ArrowColor { get { return Color.FromArgb(109, 109, 109); } }
 
         #endregion
 
@@ -189,124 +203,124 @@ namespace WinformControlLibraryExtension
         /// <summary>
         /// ToolStripMenuItem边框颜色(选中)
         /// </summary>
-        public override Color MenuItemBorder { get { return Color.FromArgb(176, 197, 175); } }//===
+        public override Color MenuItemBorder { get { return Color.FromArgb(176, 197, 175); } }
         /// <summary>
         /// ToolStripMenuItem背景颜色(选中)
         /// </summary>
-        public override Color MenuItemSelected { get { return Color.FromArgb(189, 208, 188); } }//===
+        public override Color MenuItemSelected { get { return Color.FromArgb(189, 208, 188); } }
 
         /// <summary>
         /// ToolStripMenuItem控件边框颜色(选中)
         /// </summary>
-        public override Color ButtonSelectedHighlightBorder { get { return Color.FromArgb(50, 109, 109, 109); } }//===
+        public override Color ButtonSelectedHighlightBorder { get { return Color.FromArgb(50, 109, 109, 109); } }
         /// <summary>
         /// ToolStripMenuItem控件背景色渐变的开始颜色(选中)
         /// </summary>
-        public override Color MenuItemSelectedGradientBegin { get { return Color.FromArgb(240, 240, 240); } }//===
+        public override Color MenuItemSelectedGradientBegin { get { return Color.FromArgb(240, 240, 240); } }
         /// <summary>
         /// ToolStripMenuItem控件背景色渐变的结束颜色(选中)
         /// </summary>
-        public override Color MenuItemSelectedGradientEnd { get { return Color.FromArgb(240, 240, 240); } }//===
+        public override Color MenuItemSelectedGradientEnd { get { return Color.FromArgb(240, 240, 240); } }
 
         /// <summary>
         ///  ToolStripMenuItem 文本颜色
         /// </summary>
-        public virtual Color MenuItemText { get { return Color.FromArgb(109, 109, 109); } }//===
+        public virtual Color MenuItemText { get { return Color.FromArgb(109, 109, 109); } }
         /// <summary>
         ///  ToolStripMenuItem 文本颜色(选中)
         /// </summary>
-        public virtual Color MenuItemSelectedText { get { return Color.FromArgb(109, 109, 109); } }//===
+        public virtual Color MenuItemSelectedText { get { return Color.FromArgb(109, 109, 109); } }
         /// <summary>
         ///  ToolStripMenuItem 文本颜色(按下)
         /// </summary>
-        public virtual Color MenuItemPressedText { get { return Color.FromArgb(109, 109, 109); } }//===
+        public virtual Color MenuItemPressedText { get { return Color.FromArgb(109, 109, 109); } }
 
         #endregion
 
-        #region 下拉列表选项左边状态Checked、UnCheck  //===
+        #region 下拉列表选项左边状态Checked、UnCheck  
 
         /// <summary>
         /// 下拉列表选项左边状态边框颜色
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override Color ButtonSelectedBorder { get { return Color.Empty; } }//===
+        public override Color ButtonSelectedBorder { get { return Color.Empty; } }
 
         /// <summary>
         /// 下拉列表选项左边状态背景颜色
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override Color CheckBackground { get { return Color.Empty; } }//===
+        public override Color CheckBackground { get { return Color.Empty; } }
 
         /// <summary>
         /// 下拉列表选项左边状态背景颜色(选中)
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override Color CheckSelectedBackground { get { return Color.Empty; } }//===
+        public override Color CheckSelectedBackground { get { return Color.Empty; } }
 
         /// <summary>
         /// 下拉列表选项左边状态背景颜色(按下)
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override Color CheckPressedBackground { get { return Color.Empty; } }//===
+        public override Color CheckPressedBackground { get { return Color.Empty; } }
 
         #endregion
 
-        #region ToolStripDropDownMenu图像背景色 //===
+        #region ToolStripDropDownMenu图像背景色 
 
         /// <summary>
         /// 获取在 System.Windows.Forms.ToolStripDropDownMenu 的图像边距中使用的渐变的开始颜色。
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override Color ImageMarginGradientBegin { get { return Color.Empty; } }//===
+        public override Color ImageMarginGradientBegin { get { return Color.Empty; } }
 
         /// <summary>
         /// 获取在 System.Windows.Forms.ToolStripDropDownMenu 的图像边距中使用的渐变的中间颜色。
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override Color ImageMarginGradientMiddle { get { return Color.Empty; } }//===
+        public override Color ImageMarginGradientMiddle { get { return Color.Empty; } }
 
         /// <summary>
         /// 获取在 System.Windows.Forms.ToolStripDropDownMenu 的图像边距中使用的渐变的结束颜色。
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override Color ImageMarginGradientEnd { get { return Color.Empty; } }//===
+        public override Color ImageMarginGradientEnd { get { return Color.Empty; } }
 
         #endregion
 
-        #region ToolStripDropDownMenu图像边距背景色 //===
+        #region ToolStripDropDownMenu图像边距背景色 
 
         /// <summary>
         /// 在显示项时在 System.Windows.Forms.ToolStripDropDownMenu 的图像边距中使用的渐变的开始颜色。
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override Color ImageMarginRevealedGradientBegin { get { return Color.Empty; } } //===
+        public override Color ImageMarginRevealedGradientBegin { get { return Color.Empty; } } 
 
         /// <summary>
         /// 在显示项时在 System.Windows.Forms.ToolStripDropDownMenu 的图像边距中使用的渐变的中间颜色。
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override Color ImageMarginRevealedGradientMiddle { get { return Color.Empty; } } //===
+        public override Color ImageMarginRevealedGradientMiddle { get { return Color.Empty; } } 
 
         /// <summary>
         /// 在显示项时在 System.Windows.Forms.ToolStripDropDownMenu 的图像边距中使用的渐变的结束颜色。
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override Color ImageMarginRevealedGradientEnd { get { return Color.Empty; } } //===
+        public override Color ImageMarginRevealedGradientEnd { get { return Color.Empty; } } 
 
         #endregion
 
-        #region 分割线ToolStripSeparator //===
+        #region 分割线ToolStripSeparator 
 
         /// <summary>
         /// 分割线上的阴影效果的颜色。
         /// </summary>
-        public override Color SeparatorDark { get { return Color.FromArgb(140, 140, 140); } }//===
+        public override Color SeparatorDark { get { return Color.FromArgb(140, 140, 140); } }
 
         /// <summary>
         /// 分割线上的突出显示效果的颜色。
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override Color SeparatorLight { get { return Color.Transparent; } }//===
+        public override Color SeparatorLight { get { return Color.Transparent; } }
 
         #endregion
 

@@ -205,6 +205,15 @@
     <Compile Include="控件\工具栏\ContextMenuStripExt.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="控件\工具栏\MenuStripExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="控件\工具栏\StatusStripExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="控件\工具栏\ToolStripExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>

@@ -233,6 +233,7 @@
             this.CaptionBox.MinBtn.TipText1 = "最小化";
             this.CaptionBox.MinBtn.TipText2 = "最小化";
             this.ClientSize = new System.Drawing.Size(500, 300);
+            this.ContextMenuStrip = this.contextMenuStripExt1;
             this.Controls.Add(this.button1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ContextMenuStripExtForm";

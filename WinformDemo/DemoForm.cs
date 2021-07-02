@@ -100,6 +100,8 @@ namespace WinformDemo
                 if (_constructor_obj is IFormExt)
                 {
                     FormExt fe = (FormExt)_constructor_obj;
+                    fe.Padding =new Padding(0);
+                    fe.BorderEnabled = false;
                     fe.CaptionEnabled = false;
                     fe.ResizeType = ResizeTypes.NoResize;
                     fe.SizeGripStyle = SizeGripStyle.Hide;
@@ -204,7 +206,13 @@ namespace WinformDemo
 
             WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem5a = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(null) { ItemType = SlideMenuPanelExt.NodeTypes.Menu, Text = "工具栏" };
             WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem5a1 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(null) { ItemType = SlideMenuPanelExt.NodeTypes.MenuTab, Text = "右键菜单", Data = typeof(ContextMenuStripExtForm), Image = global::WinformDemo.Properties.Resources.demomenu_contextmenustrip };
+            WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem5a2 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(null) { ItemType = SlideMenuPanelExt.NodeTypes.MenuTab, Text = "菜单栏", Data = typeof(MenuStripExtForm), Image = global::WinformDemo.Properties.Resources.demomenu_contextmenustrip };
+            WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem5a3 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(null) { ItemType = SlideMenuPanelExt.NodeTypes.MenuTab, Text = "工具栏", Data = typeof(ToolStripExtForm), Image = global::WinformDemo.Properties.Resources.demomenu_contextmenustrip };
+            WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem5a4 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(null) { ItemType = SlideMenuPanelExt.NodeTypes.MenuTab, Text = "状态栏", Data = typeof(StatusStripExtForm), Image = global::WinformDemo.Properties.Resources.demomenu_contextmenustrip };
             menuItem5a.Children.Add(menuItem5a1);
+            menuItem5a.Children.Add(menuItem5a2);
+            menuItem5a.Children.Add(menuItem5a3);
+            menuItem5a.Children.Add(menuItem5a4);
             menuPanel.Nodes.Add(menuItem5a);
 
             WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem6 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(null) { ItemType = SlideMenuPanelExt.NodeTypes.Menu, Text = "分析" };

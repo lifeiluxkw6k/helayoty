@@ -55,3 +55,6 @@ D:\Git\花木兰控件库\WinformDemo\obj\x86\Debug\WinformDemo.MaskingExtForm.r
 D:\Git\花木兰控件库\WinformDemo\obj\x86\Debug\WinformDemo.FormExtForm.resources
 D:\Git\花木兰控件库\WinformDemo\obj\x86\Debug\WinformDemo.MessageBoxExtForm.resources
 D:\Git\花木兰控件库\WinformDemo\obj\x86\Debug\WinformDemo.ContextMenuStripExtForm.resources
+D:\Git\花木兰控件库\WinformDemo\obj\x86\Debug\WinformDemo.MenuStripExtForm.resources
+D:\Git\花木兰控件库\WinformDemo\obj\x86\Debug\WinformDemo.StatusStripExtForm.resources
+D:\Git\花木兰控件库\WinformDemo\obj\x86\Debug\WinformDemo.ToolStripExtForm.resources
