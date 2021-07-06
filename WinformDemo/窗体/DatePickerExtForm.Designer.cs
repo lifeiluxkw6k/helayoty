@@ -28,17 +28,106 @@
     /// </summary>
     private void InitializeComponent()
     {
+            this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
+            this.datePickerExt3 = new WinformControlLibraryExtension.DatePickerExt();
+            this.dateExt6 = new WinformControlLibraryExtension.DateExt();
             this.dateExt5 = new WinformControlLibraryExtension.DateExt();
             this.dateExt4 = new WinformControlLibraryExtension.DateExt();
-            this.datePickerExt3 = new WinformControlLibraryExtension.DatePickerExt();
             this.datePickerExt2 = new WinformControlLibraryExtension.DatePickerExt();
             this.datePickerExt1 = new WinformControlLibraryExtension.DatePickerExt();
             this.dateExt3 = new WinformControlLibraryExtension.DateExt();
             this.dateExt2 = new WinformControlLibraryExtension.DateExt();
             this.dateExt1 = new WinformControlLibraryExtension.DateExt();
-            this.dateExt6 = new WinformControlLibraryExtension.DateExt();
-            this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
             this.SuspendLayout();
+            // 
+            // propertyGrid1
+            // 
+            this.propertyGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.propertyGrid1.Location = new System.Drawing.Point(0, 0);
+            this.propertyGrid1.Name = "propertyGrid1";
+            this.propertyGrid1.SelectedObject = this.datePickerExt3;
+            this.propertyGrid1.Size = new System.Drawing.Size(350, 572);
+            this.propertyGrid1.TabIndex = 9;
+            // 
+            // datePickerExt3
+            // 
+            this.datePickerExt3.ActivateColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.datePickerExt3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.datePickerExt3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.datePickerExt3.BottomBarBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.datePickerExt3.BottomBarBtnBackDisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(204)))), ((int)(((byte)(102)))), ((int)(((byte)(153)))));
+            this.datePickerExt3.BottomBarBtnBackEnterColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(204)))), ((int)(((byte)(102)))), ((int)(((byte)(153)))));
+            this.datePickerExt3.BottomBarBtnBackNormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(102)))), ((int)(((byte)(153)))));
+            this.datePickerExt3.BottomBarBtnForeNormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.datePickerExt3.BottomBarClockDotColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.datePickerExt3.CausesValidation = false;
+            this.datePickerExt3.DateBackDisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.datePickerExt3.DateBackNormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.datePickerExt3.DateBackSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(102)))), ((int)(((byte)(153)))));
+            this.datePickerExt3.DateDisplayType = WinformControlLibraryExtension.DatePickerExt.DateDisplayTypes.Year;
+            this.datePickerExt3.DateForeDisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.datePickerExt3.DateForeFutureColor = System.Drawing.Color.FromArgb(((int)(((byte)(135)))), ((int)(((byte)(206)))), ((int)(((byte)(235)))));
+            this.datePickerExt3.DateForeNormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(102)))), ((int)(((byte)(153)))));
+            this.datePickerExt3.DateForePastColor = System.Drawing.Color.FromArgb(((int)(((byte)(135)))), ((int)(((byte)(206)))), ((int)(((byte)(235)))));
+            this.datePickerExt3.DateForeSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.datePickerExt3.DateTitleForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
+            this.datePickerExt3.DateValue = new System.DateTime(1753, 1, 1, 0, 0, 0, 0);
+            this.datePickerExt3.Location = new System.Drawing.Point(383, 124);
+            this.datePickerExt3.Name = "datePickerExt3";
+            this.datePickerExt3.Size = new System.Drawing.Size(226, 298);
+            this.datePickerExt3.TabIndex = 5;
+            this.datePickerExt3.Text = "datePickerExt3";
+            this.datePickerExt3.TimeForeNormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.datePickerExt3.TimeForeSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.datePickerExt3.TopBarBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(102)))), ((int)(((byte)(153)))));
+            this.datePickerExt3.TopBarBtnForeNormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            // 
+            // dateExt6
+            // 
+            this.dateExt6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.dateExt6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.dateExt6.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.dateExt6.CausesValidation = false;
+            this.dateExt6.DataImageAlign = WinformControlLibraryExtension.DateExt.DataImageAligns.Left;
+            // 
+            // 
+            // 
+            this.dateExt6.DatePicker.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.dateExt6.DatePicker.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.dateExt6.DatePicker.BottomBarBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.dateExt6.DatePicker.BottomBarBtnBackDisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(204)))), ((int)(((byte)(102)))), ((int)(((byte)(153)))));
+            this.dateExt6.DatePicker.BottomBarBtnBackEnterColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(204)))), ((int)(((byte)(102)))), ((int)(((byte)(153)))));
+            this.dateExt6.DatePicker.BottomBarBtnBackNormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(102)))), ((int)(((byte)(153)))));
+            this.dateExt6.DatePicker.BottomBarBtnForeNormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.dateExt6.DatePicker.CausesValidation = false;
+            this.dateExt6.DatePicker.DateBackDisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.dateExt6.DatePicker.DateBackNormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.dateExt6.DatePicker.DateBackSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(102)))), ((int)(((byte)(153)))));
+            this.dateExt6.DatePicker.DateDisplayType = WinformControlLibraryExtension.DatePickerExt.DateDisplayTypes.YearMonthDayHourMinuteSecond;
+            this.dateExt6.DatePicker.DateForeDisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.dateExt6.DatePicker.DateForeFutureColor = System.Drawing.Color.FromArgb(((int)(((byte)(135)))), ((int)(((byte)(206)))), ((int)(((byte)(235)))));
+            this.dateExt6.DatePicker.DateForeNormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(102)))), ((int)(((byte)(153)))));
+            this.dateExt6.DatePicker.DateForePastColor = System.Drawing.Color.FromArgb(((int)(((byte)(135)))), ((int)(((byte)(206)))), ((int)(((byte)(235)))));
+            this.dateExt6.DatePicker.DateForeSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.dateExt6.DatePicker.DateTitleForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
+            this.dateExt6.DatePicker.DateValue = new System.DateTime(2019, 9, 1, 0, 0, 0, 0);
+            this.dateExt6.DatePicker.Location = new System.Drawing.Point(0, 0);
+            this.dateExt6.DatePicker.Name = "";
+            this.dateExt6.DatePicker.TabIndex = 0;
+            this.dateExt6.DatePicker.TimeBackSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(102)))), ((int)(((byte)(153)))));
+            this.dateExt6.DatePicker.TimeForeNormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(102)))), ((int)(((byte)(153)))));
+            this.dateExt6.DatePicker.TopBarBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(102)))), ((int)(((byte)(153)))));
+            this.dateExt6.DatePicker.TopBarBtnForeNormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.dateExt6.DateStyle = WinformControlLibraryExtension.DateExt.DateStyles.DataPanel;
+            this.dateExt6.DateTextAlign = WinformControlLibraryExtension.DateExt.DataTextAligns.Left;
+            this.dateExt6.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.dateExt6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
+            this.dateExt6.Location = new System.Drawing.Point(968, 33);
+            this.dateExt6.Name = "dateExt6";
+            this.dateExt6.Size = new System.Drawing.Size(156, 24);
+            this.dateExt6.TabIndex = 8;
+            this.dateExt6.Text = "dateExt6";
             // 
             // dateExt5
             // 
@@ -72,6 +161,8 @@
             this.dateExt5.DatePicker.Location = new System.Drawing.Point(0, 0);
             this.dateExt5.DatePicker.Name = "";
             this.dateExt5.DatePicker.TabIndex = 0;
+            this.dateExt5.DatePicker.TimeBackSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(86)))), ((int)(((byte)(195)))), ((int)(((byte)(191)))));
+            this.dateExt5.DatePicker.TimeForeNormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(86)))), ((int)(((byte)(195)))), ((int)(((byte)(191)))));
             this.dateExt5.DatePicker.TopBarBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(86)))), ((int)(((byte)(195)))), ((int)(((byte)(191)))));
             this.dateExt5.DatePicker.TopBarBtnForeNormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.dateExt5.DateTextAlign = WinformControlLibraryExtension.DateExt.DataTextAligns.Left;
@@ -116,7 +207,6 @@
             this.dateExt4.DatePicker.Name = "";
             this.dateExt4.DatePicker.TabIndex = 0;
             this.dateExt4.DatePicker.TimeBackSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(86)))), ((int)(((byte)(195)))), ((int)(((byte)(191)))));
-            this.dateExt4.DatePicker.TimeCrossLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(86)))), ((int)(((byte)(195)))), ((int)(((byte)(191)))));
             this.dateExt4.DatePicker.TimeForeNormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(86)))), ((int)(((byte)(195)))), ((int)(((byte)(191)))));
             this.dateExt4.DatePicker.TopBarBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(86)))), ((int)(((byte)(195)))), ((int)(((byte)(191)))));
             this.dateExt4.DatePicker.TopBarBtnForeNormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
@@ -129,39 +219,6 @@
             this.dateExt4.Size = new System.Drawing.Size(140, 24);
             this.dateExt4.TabIndex = 4;
             this.dateExt4.Text = "dateExt4";
-            // 
-            // datePickerExt3
-            // 
-            this.datePickerExt3.ActivateColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.datePickerExt3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.datePickerExt3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.datePickerExt3.BottomBarBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.datePickerExt3.BottomBarBtnBackDisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(204)))), ((int)(((byte)(102)))), ((int)(((byte)(153)))));
-            this.datePickerExt3.BottomBarBtnBackEnterColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(204)))), ((int)(((byte)(102)))), ((int)(((byte)(153)))));
-            this.datePickerExt3.BottomBarBtnBackNormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(102)))), ((int)(((byte)(153)))));
-            this.datePickerExt3.BottomBarBtnForeNormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.datePickerExt3.BottomBarClockDotColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.datePickerExt3.CausesValidation = false;
-            this.datePickerExt3.DateBackDisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.datePickerExt3.DateBackNormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.datePickerExt3.DateBackSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(102)))), ((int)(((byte)(153)))));
-            this.datePickerExt3.DateDisplayType = WinformControlLibraryExtension.DatePickerExt.DateDisplayTypes.Year;
-            this.datePickerExt3.DateForeDisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.datePickerExt3.DateForeFutureColor = System.Drawing.Color.FromArgb(((int)(((byte)(135)))), ((int)(((byte)(206)))), ((int)(((byte)(235)))));
-            this.datePickerExt3.DateForeNormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(102)))), ((int)(((byte)(153)))));
-            this.datePickerExt3.DateForePastColor = System.Drawing.Color.FromArgb(((int)(((byte)(135)))), ((int)(((byte)(206)))), ((int)(((byte)(235)))));
-            this.datePickerExt3.DateForeSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.datePickerExt3.DateTitleForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
-            this.datePickerExt3.DateValue = new System.DateTime(1753, 1, 1, 0, 0, 0, 0);
-            this.datePickerExt3.Location = new System.Drawing.Point(383, 124);
-            this.datePickerExt3.Name = "datePickerExt3";
-            this.datePickerExt3.Size = new System.Drawing.Size(226, 298);
-            this.datePickerExt3.TabIndex = 5;
-            this.datePickerExt3.Text = "datePickerExt3";
-            this.datePickerExt3.TimeForeNormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.datePickerExt3.TimeForeSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.datePickerExt3.TopBarBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(102)))), ((int)(((byte)(153)))));
-            this.datePickerExt3.TopBarBtnForeNormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             // 
             // datePickerExt2
             // 
@@ -221,7 +278,6 @@
             this.datePickerExt1.Text = "datePickerExt1";
             this.datePickerExt1.TimeForeNormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.datePickerExt1.TimeForeSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.datePickerExt1.TimeScrollSlideColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.datePickerExt1.TopBarBtnForeNormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             // 
             // dateExt3
@@ -350,63 +406,6 @@
             this.dateExt1.Size = new System.Drawing.Size(62, 24);
             this.dateExt1.TabIndex = 0;
             this.dateExt1.Text = "dateExt1";
-            // 
-            // dateExt6
-            // 
-            this.dateExt6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.dateExt6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.dateExt6.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.dateExt6.CausesValidation = false;
-            this.dateExt6.DataImageAlign = WinformControlLibraryExtension.DateExt.DataImageAligns.Left;
-            // 
-            // 
-            // 
-            this.dateExt6.DatePicker.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.dateExt6.DatePicker.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.dateExt6.DatePicker.BottomBarBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.dateExt6.DatePicker.BottomBarBtnBackDisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(204)))), ((int)(((byte)(102)))), ((int)(((byte)(153)))));
-            this.dateExt6.DatePicker.BottomBarBtnBackEnterColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(204)))), ((int)(((byte)(102)))), ((int)(((byte)(153)))));
-            this.dateExt6.DatePicker.BottomBarBtnBackNormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(102)))), ((int)(((byte)(153)))));
-            this.dateExt6.DatePicker.BottomBarBtnForeNormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.dateExt6.DatePicker.CausesValidation = false;
-            this.dateExt6.DatePicker.DateBackDisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.dateExt6.DatePicker.DateBackNormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.dateExt6.DatePicker.DateBackSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(102)))), ((int)(((byte)(153)))));
-            this.dateExt6.DatePicker.DateDisplayType = WinformControlLibraryExtension.DatePickerExt.DateDisplayTypes.YearMonthDayHourMinuteSecond;
-            this.dateExt6.DatePicker.DateForeDisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.dateExt6.DatePicker.DateForeFutureColor = System.Drawing.Color.FromArgb(((int)(((byte)(135)))), ((int)(((byte)(206)))), ((int)(((byte)(235)))));
-            this.dateExt6.DatePicker.DateForeNormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(102)))), ((int)(((byte)(153)))));
-            this.dateExt6.DatePicker.DateForePastColor = System.Drawing.Color.FromArgb(((int)(((byte)(135)))), ((int)(((byte)(206)))), ((int)(((byte)(235)))));
-            this.dateExt6.DatePicker.DateForeSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.dateExt6.DatePicker.DateTitleForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
-            this.dateExt6.DatePicker.DateValue = new System.DateTime(2019, 9, 1, 0, 0, 0, 0);
-            this.dateExt6.DatePicker.Location = new System.Drawing.Point(0, 0);
-            this.dateExt6.DatePicker.Name = "";
-            this.dateExt6.DatePicker.TabIndex = 0;
-            this.dateExt6.DatePicker.TimeBackSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(102)))), ((int)(((byte)(153)))));
-            this.dateExt6.DatePicker.TimeCrossLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(102)))), ((int)(((byte)(153)))));
-            this.dateExt6.DatePicker.TimeForeNormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(102)))), ((int)(((byte)(153)))));
-            this.dateExt6.DatePicker.TopBarBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(102)))), ((int)(((byte)(153)))));
-            this.dateExt6.DatePicker.TopBarBtnForeNormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.dateExt6.DateStyle = WinformControlLibraryExtension.DateExt.DateStyles.DataPanel;
-            this.dateExt6.DateTextAlign = WinformControlLibraryExtension.DateExt.DataTextAligns.Left;
-            this.dateExt6.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.dateExt6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
-            this.dateExt6.Location = new System.Drawing.Point(968, 33);
-            this.dateExt6.Name = "dateExt6";
-            this.dateExt6.Size = new System.Drawing.Size(156, 24);
-            this.dateExt6.TabIndex = 8;
-            this.dateExt6.Text = "dateExt6";
-            // 
-            // propertyGrid1
-            // 
-            this.propertyGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.propertyGrid1.Location = new System.Drawing.Point(0, 0);
-            this.propertyGrid1.Name = "propertyGrid1";
-            this.propertyGrid1.SelectedObject = this.datePickerExt3;
-            this.propertyGrid1.Size = new System.Drawing.Size(350, 572);
-            this.propertyGrid1.TabIndex = 9;
             // 
             // DatePickerExtForm
             // 

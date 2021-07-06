@@ -60,6 +60,7 @@
             // 
             // button1
             // 
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.button1.Location = new System.Drawing.Point(790, 209);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(119, 56);

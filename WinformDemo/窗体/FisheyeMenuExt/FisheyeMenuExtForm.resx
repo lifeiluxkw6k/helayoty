@@ -117,14 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="fisheyeBarItem1.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem1.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJh
         d2luZy5Qb2ludEYCAAAAAXgBeQAACwsCAAAAAAAsQgAAtUIL
 </value>
   </data>
-  <data name="fisheyeBarItem1.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem1.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABlTeXN0ZW0uRHJh
@@ -132,14 +132,14 @@
         AACAQgs=
 </value>
   </data>
-  <data name="fisheyeBarItem2.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem2.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJh
         d2luZy5Qb2ludEYCAAAAAXgBeQAACwsCAAAAAAAsQgCAGkML
 </value>
   </data>
-  <data name="fisheyeBarItem2.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem2.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABlTeXN0ZW0uRHJh
@@ -147,14 +147,14 @@
         AACAQgs=
 </value>
   </data>
-  <data name="fisheyeBarItem3.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem3.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJh
         d2luZy5Qb2ludEYCAAAAAXgBeQAACwsCAAAAAAAsQgCAWkML
 </value>
   </data>
-  <data name="fisheyeBarItem3.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem3.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABlTeXN0ZW0uRHJh
@@ -162,14 +162,14 @@
         AACAQgs=
 </value>
   </data>
-  <data name="fisheyeBarItem4.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem4.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJh
         d2luZy5Qb2ludEYCAAAAAXgBeQAACwsCAAAAAAAsQgBAjUML
 </value>
   </data>
-  <data name="fisheyeBarItem4.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem4.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABlTeXN0ZW0uRHJh
@@ -177,14 +177,14 @@
         AACAQgs=
 </value>
   </data>
-  <data name="fisheyeBarItem5.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem5.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJh
         d2luZy5Qb2ludEYCAAAAAXgBeQAACwsCAAAAAAAsQgBArUML
 </value>
   </data>
-  <data name="fisheyeBarItem5.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem5.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABlTeXN0ZW0uRHJh
@@ -192,14 +192,14 @@
         AACAQgs=
 </value>
   </data>
-  <data name="fisheyeBarItem6.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem6.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJh
         d2luZy5Qb2ludEYCAAAAAXgBeQAACwsCAAAAAAAsQgBAzUML
 </value>
   </data>
-  <data name="fisheyeBarItem6.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem6.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABlTeXN0ZW0uRHJh
@@ -207,14 +207,14 @@
         AACAQgs=
 </value>
   </data>
-  <data name="fisheyeBarItem7.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem7.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJh
         d2luZy5Qb2ludEYCAAAAAXgBeQAACwsCAAAAAADQQlVVJUML
 </value>
   </data>
-  <data name="fisheyeBarItem7.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem7.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABlTeXN0ZW0uRHJh
@@ -222,14 +222,14 @@
         q6qqQgs=
 </value>
   </data>
-  <data name="fisheyeBarItem8.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem8.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJh
         d2luZy5Qb2ludEYCAAAAAXgBeQAACwsCAAAAAAAoQ1VVJUML
 </value>
   </data>
-  <data name="fisheyeBarItem8.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem8.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABlTeXN0ZW0uRHJh
@@ -237,14 +237,14 @@
         q6qqQgs=
 </value>
   </data>
-  <data name="fisheyeBarItem9.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem9.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJh
         d2luZy5Qb2ludEYCAAAAAXgBeQAACwsCAAAAAABoQ1VVJUML
 </value>
   </data>
-  <data name="fisheyeBarItem9.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem9.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABlTeXN0ZW0uRHJh
@@ -252,14 +252,14 @@
         q6qqQgs=
 </value>
   </data>
-  <data name="fisheyeBarItem10.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem10.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJh
         d2luZy5Qb2ludEYCAAAAAXgBeQAACwsCAAAAAACUQ1VVJUML
 </value>
   </data>
-  <data name="fisheyeBarItem10.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem10.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABlTeXN0ZW0uRHJh
@@ -267,14 +267,14 @@
         q6qqQgs=
 </value>
   </data>
-  <data name="fisheyeBarItem11.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem11.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJh
         d2luZy5Qb2ludEYCAAAAAXgBeQAACwsCAAAAAAC0Q1VVJUML
 </value>
   </data>
-  <data name="fisheyeBarItem11.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem11.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABlTeXN0ZW0uRHJh
@@ -282,14 +282,14 @@
         q6qqQgs=
 </value>
   </data>
-  <data name="fisheyeBarItem12.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem12.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJh
         d2luZy5Qb2ludEYCAAAAAXgBeQAACwsCAAAAAADUQ1VVJUML
 </value>
   </data>
-  <data name="fisheyeBarItem12.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem12.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABlTeXN0ZW0uRHJh
@@ -297,14 +297,14 @@
         q6qqQgs=
 </value>
   </data>
-  <data name="fisheyeBarItem13.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem13.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJh
         d2luZy5Qb2ludEYCAAAAAXgBeQAACwsCAAAAAAD0Q1VVJUML
 </value>
   </data>
-  <data name="fisheyeBarItem13.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem13.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABlTeXN0ZW0uRHJh
@@ -312,14 +312,14 @@
         q6qqQgs=
 </value>
   </data>
-  <data name="fisheyeBarItem14.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem14.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJh
         d2luZy5Qb2ludEYCAAAAAXgBeQAACwsCAAAAAAAKRFVVJUML
 </value>
   </data>
-  <data name="fisheyeBarItem14.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem14.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABlTeXN0ZW0uRHJh
@@ -327,14 +327,14 @@
         q6qqQgs=
 </value>
   </data>
-  <data name="fisheyeBarItem15.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem15.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJh
         d2luZy5Qb2ludEYCAAAAAXgBeQAACwsCAAAAAAAaRFVVJUML
 </value>
   </data>
-  <data name="fisheyeBarItem15.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem15.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABlTeXN0ZW0uRHJh
@@ -342,14 +342,14 @@
         q6qqQgs=
 </value>
   </data>
-  <data name="fisheyeBarItem16.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem16.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJh
         d2luZy5Qb2ludEYCAAAAAXgBeQAACwsCAAAAAAAOQwAAXkIL
 </value>
   </data>
-  <data name="fisheyeBarItem16.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem16.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABlTeXN0ZW0uRHJh
@@ -357,14 +357,14 @@
         AADwQQs=
 </value>
   </data>
-  <data name="fisheyeBarItem17.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem17.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJh
         d2luZy5Qb2ludEYCAAAAAXgBeQAACwsCAAAAAAAOQwAAq0IL
 </value>
   </data>
-  <data name="fisheyeBarItem17.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem17.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABlTeXN0ZW0uRHJh
@@ -372,14 +372,14 @@
         AADwQQs=
 </value>
   </data>
-  <data name="fisheyeBarItem18.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem18.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJh
         d2luZy5Qb2ludEYCAAAAAXgBeQAACwsCAAAAAAAOQwAA50IL
 </value>
   </data>
-  <data name="fisheyeBarItem18.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem18.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABlTeXN0ZW0uRHJh
@@ -387,14 +387,14 @@
         AADwQQs=
 </value>
   </data>
-  <data name="fisheyeBarItem19.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem19.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJh
         d2luZy5Qb2ludEYCAAAAAXgBeQAACwsCAAAAAAAOQwCAEUML
 </value>
   </data>
-  <data name="fisheyeBarItem19.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem19.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABlTeXN0ZW0uRHJh
@@ -402,14 +402,14 @@
         AADwQQs=
 </value>
   </data>
-  <data name="fisheyeBarItem20.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem20.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJh
         d2luZy5Qb2ludEYCAAAAAXgBeQAACwsCAAAAAAAOQwCAL0ML
 </value>
   </data>
-  <data name="fisheyeBarItem20.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem20.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABlTeXN0ZW0uRHJh
@@ -417,14 +417,14 @@
         AADwQQs=
 </value>
   </data>
-  <data name="fisheyeBarItem21.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem21.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJh
         d2luZy5Qb2ludEYCAAAAAXgBeQAACwsCAAAAAAAOQwCATUML
 </value>
   </data>
-  <data name="fisheyeBarItem21.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem21.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABlTeXN0ZW0uRHJh
@@ -432,14 +432,14 @@
         AADwQQs=
 </value>
   </data>
-  <data name="fisheyeBarItem22.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem22.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJh
         d2luZy5Qb2ludEYCAAAAAXgBeQAACwsCAAAAAAAOQwCAa0ML
 </value>
   </data>
-  <data name="fisheyeBarItem22.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem22.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABlTeXN0ZW0uRHJh
@@ -447,14 +447,14 @@
         AADwQQs=
 </value>
   </data>
-  <data name="fisheyeBarItem23.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem23.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJh
         d2luZy5Qb2ludEYCAAAAAXgBeQAACwsCAAAAAAAOQwDAhEML
 </value>
   </data>
-  <data name="fisheyeBarItem23.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem23.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABlTeXN0ZW0uRHJh
@@ -462,14 +462,14 @@
         AADwQQs=
 </value>
   </data>
-  <data name="fisheyeBarItem24.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem24.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJh
         d2luZy5Qb2ludEYCAAAAAXgBeQAACwsCAAAAAAAOQwDAk0ML
 </value>
   </data>
-  <data name="fisheyeBarItem24.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem24.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABlTeXN0ZW0uRHJh
@@ -477,14 +477,14 @@
         AADwQQs=
 </value>
   </data>
-  <data name="fisheyeBarItem25.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem25.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJh
         d2luZy5Qb2ludEYCAAAAAXgBeQAACwsCAAAAAAAOQwDAokML
 </value>
   </data>
-  <data name="fisheyeBarItem25.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem25.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABlTeXN0ZW0uRHJh
@@ -492,14 +492,14 @@
         AADwQQs=
 </value>
   </data>
-  <data name="fisheyeBarItem26.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem26.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJh
         d2luZy5Qb2ludEYCAAAAAXgBeQAACwsCAAAAAAAOQwDAsUML
 </value>
   </data>
-  <data name="fisheyeBarItem26.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem26.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABlTeXN0ZW0uRHJh
@@ -507,14 +507,14 @@
         AADwQQs=
 </value>
   </data>
-  <data name="fisheyeBarItem27.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem27.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJh
         d2luZy5Qb2ludEYCAAAAAXgBeQAACwsCAAAAAAAOQwDAwEML
 </value>
   </data>
-  <data name="fisheyeBarItem27.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem27.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABlTeXN0ZW0uRHJh
@@ -522,14 +522,14 @@
         AADwQQs=
 </value>
   </data>
-  <data name="fisheyeBarItem28.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem28.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJh
         d2luZy5Qb2ludEYCAAAAAXgBeQAACwsCAAAAAAAOQwDAz0ML
 </value>
   </data>
-  <data name="fisheyeBarItem28.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem28.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABlTeXN0ZW0uRHJh
@@ -537,14 +537,14 @@
         AADwQQs=
 </value>
   </data>
-  <data name="fisheyeBarItem29.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem29.now_centerpointf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABVTeXN0ZW0uRHJh
         d2luZy5Qb2ludEYCAAAAAXgBeQAACwsCAAAAAAAOQwDA3kML
 </value>
   </data>
-  <data name="fisheyeBarItem29.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="fisheyeMenuItem29.now_rectf" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABlTeXN0ZW0uRHJh

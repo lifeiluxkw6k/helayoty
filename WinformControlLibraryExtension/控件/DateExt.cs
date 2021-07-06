@@ -2844,11 +2844,11 @@ namespace WinformControlLibraryExtension
 
         #region 时间
 
-        private Color timeCrossLineColor = Color.FromArgb(153, 204, 153);
+        private Color timeCrossLineColor = Color.FromArgb(40, 128, 128, 128);
         /// <summary>
         /// 时间选项分割线颜色
         /// </summary>
-        [DefaultValue(typeof(Color), "153, 204, 153")]
+        [DefaultValue(typeof(Color), "40, 128, 128, 128")]
         [Description("时间选项分割线颜色")]
         [Editor(typeof(ColorEditorExt), typeof(UITypeEditor))]
         public Color TimeCrossLineColor
@@ -2935,11 +2935,11 @@ namespace WinformControlLibraryExtension
             }
         }
 
-        private Color timeScrollSlideColor = Color.FromArgb(100, 64, 64, 64);
+        private Color timeScrollSlideColor = Color.FromArgb(150, 128, 128, 128);
         /// <summary>
         /// 时间滚动条滑块颜色
         /// </summary>
-        [DefaultValue(typeof(Color), "100, 64, 64, 64")]
+        [DefaultValue(typeof(Color), "150,128, 128, 128")]
         [Description("时间滚动条滑块颜色")]
         [Editor(typeof(ColorEditorExt), typeof(UITypeEditor))]
         public Color TimeScrollSlideColor
@@ -3435,6 +3435,12 @@ namespace WinformControlLibraryExtension
         /// 日面板月选项高度
         /// </summary>
         private readonly int day_rectf_item_height = 30;
+
+        /// <summary>
+        /// 时间面板顶部工具栏高度
+        /// </summary>
+        private readonly int time_topbar_rect_height = 36;
+
         /// <summary>
         /// 时间面板选项高度
         /// </summary>
@@ -3442,7 +3448,7 @@ namespace WinformControlLibraryExtension
         /// <summary>
         /// 滚动条厚度
         /// </summary>
-        private int timeScrollThickness = 6;
+        private int timeScrollThickness = 8;
 
         /// <summary>
         /// 底部工具栏高度
@@ -5627,7 +5633,8 @@ namespace WinformControlLibraryExtension
             this.DateObject.YearMain.Rect = new Rectangle(this.ClientRectangle.X, this.ClientRectangle.Y + this.topbar_rect_height, this.date_rect_width, this.date_rect_height);
             this.DateObject.MonthMain.Rect = this.DateObject.YearMain.Rect;
             this.DateObject.DayMain.Rect = this.DateObject.YearMain.Rect;
-            this.DateObject.TimeMain.Rect = new Rectangle(this.ClientRectangle.X, this.ClientRectangle.Y, this.date_rect_width, this.ClientRectangle.Height - this.bottombar_rect_height);
+            this.DateObject.TimeMain.TopBarRect = new Rectangle(this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Width, this.time_topbar_rect_height);
+            this.DateObject.TimeMain.Rect = new Rectangle(this.ClientRectangle.X, this.ClientRectangle.Y + this.time_topbar_rect_height, this.date_rect_width, this.ClientRectangle.Height - this.time_topbar_rect_height - this.bottombar_rect_height);
             this.DateObject.BottomBar.Rect = new Rectangle(this.ClientRectangle.X, this.ClientRectangle.Bottom - this.bottombar_rect_height, this.ClientRectangle.Width, this.bottombar_rect_height);
 
             #region 顶部工具栏
@@ -5792,6 +5799,7 @@ namespace WinformControlLibraryExtension
         /// </summary>
         private void InitializeTimeRectangle()
         {
+
             #region 选项信息
             int item_w = 0;
             int item_y = this.DateObject.TimeMain.Rect.Y;
@@ -5851,8 +5859,8 @@ namespace WinformControlLibraryExtension
         /// <param name="item_height"></param>
         private void InitializeTimeScrollRectangle(VerticalScroll scroll_obj, RectangleF display_rect, int item_count, int item_height)
         {
-            scroll_obj.DisplayRect = new RectangleF(display_rect.Location.X, display_rect.Location.Y, display_rect.Size.Width, display_rect.Height);
-            scroll_obj.ContentRect = new RectangleF(display_rect.Location.X, display_rect.Location.Y, display_rect.Size.Width, item_count * item_height);
+            scroll_obj.DisplayRect = new RectangleF(display_rect.X, display_rect.Y, display_rect.Width, display_rect.Height);
+            scroll_obj.ContentRect = new RectangleF(display_rect.X, display_rect.Y, display_rect.Width, item_count * item_height);
 
             scroll_obj.ScrollBack.Rect = new RectangleF(display_rect.Right, display_rect.Y, this.timeScrollThickness, display_rect.Height);
             float slide_h = scroll_obj.DisplayRect.Height * scroll_obj.ScrollBack.Rect.Height / scroll_obj.ContentRect.Height;
@@ -6334,9 +6342,6 @@ namespace WinformControlLibraryExtension
         /// <param name="g"></param>
         private void DrawTime(Graphics g)
         {
-            SmoothingMode sm = g.SmoothingMode;
-            g.SmoothingMode = SmoothingMode.AntiAlias;
-
             #region
             if (this.DateDisplayType == DateDisplayTypes.YearMonthDayHour || this.DateDisplayType == DateDisplayTypes.YearMonthDayHourMinute || this.DateDisplayType == DateDisplayTypes.YearMonthDayHourMinuteSecond)
             {
@@ -6406,7 +6411,38 @@ namespace WinformControlLibraryExtension
             }
             #endregion
 
-            g.SmoothingMode = sm;
+            #region 绘制时间面板顶部工具栏
+            g.FillRectangle(this.SolidBrushManageObject.topbarback_sb, this.DateObject.TimeMain.TopBarRect);
+            g.DrawLine(this.SolidBrushManageObject.timecrossline_pen, new PointF(this.DateObject.TimeMain.TopBarRect.X, this.DateObject.TimeMain.TopBarRect.Bottom), new PointF(this.DateObject.TimeMain.TopBarRect.Right, this.DateObject.TimeMain.TopBarRect.Bottom));
+
+            string time_text = "";
+            if (this.DateDisplayType == DateDisplayTypes.YearMonthDayHour)
+            {
+                time_text = string.Format("{0}时", this.DateObject.display_hour.ToString().PadLeft(2,'0'));
+            }
+            else
+            if (this.DateDisplayType == DateDisplayTypes.YearMonthDayHourMinute)
+            {
+                time_text = string.Format("{0}时:{1}分", this.DateObject.display_hour.ToString().PadLeft(2, '0'), this.DateObject.display_minute.ToString().PadLeft(2, '0'));
+            }
+            else
+            if (this.DateDisplayType == DateDisplayTypes.YearMonthDayHourMinuteSecond)
+            {
+                time_text = string.Format("{0}时:{1}分:{2}秒", this.DateObject.display_hour.ToString().PadLeft(2, '0'), this.DateObject.display_minute.ToString().PadLeft(2, '0'), this.DateObject.display_second.ToString().PadLeft(2, '0'));
+            }
+
+            Size time_size = Size.Ceiling(g.MeasureString(time_text, this.Font, 1000));
+
+            Rectangle time_rect = new Rectangle(
+                (int)(this.DateObject.TimeMain.TopBarRect.X + (this.DateObject.TimeMain.TopBarRect.Width - time_size.Width) / 2f),
+                (int)(this.DateObject.TimeMain.TopBarRect.Y + (this.DateObject.TimeMain.TopBarRect.Height - time_size.Height) / 2f),
+                time_size.Width,
+                time_size.Height);
+
+            g.DrawString(time_text, this.Font, this.SolidBrushManageObject.topbarbtnfore_sb, time_rect);
+            #endregion
+
+
         }
 
         /// <summary>
@@ -6420,14 +6456,17 @@ namespace WinformControlLibraryExtension
             if (scroll_obj.ScrollBack.Rect.Height > scroll_obj.ScrollSlide.Rect.Height)
             {
                 #region 滚动条背景
-                PointF scroll_start_point = new PointF(scroll_obj.ScrollBack.Rect.X + scroll_obj.ScrollBack.Rect.Width / 2f, scroll_obj.ScrollBack.Rect.Y + this.timeScrollThickness / 2f);
-                PointF scroll_end_point = new PointF(scroll_obj.ScrollBack.Rect.X + scroll_obj.ScrollBack.Rect.Width / 2f, scroll_obj.ScrollBack.Rect.Bottom - this.timeScrollThickness / 2f);
+
+                PointF scroll_start_point = new PointF(scroll_obj.ScrollBack.Rect.X + this.timeScrollThickness / 2f, scroll_obj.ScrollBack.Rect.Y);
+                PointF scroll_end_point = new PointF(scroll_obj.ScrollBack.Rect.X + this.timeScrollThickness / 2f, scroll_obj.ScrollBack.Rect.Bottom);
+
                 g.DrawLine(this.SolidBrushManageObject.timescrollback_pen, scroll_start_point, scroll_end_point);
                 #endregion
 
                 #region  滚动条滑块
-                PointF scroll_slide_start_point = new PointF(scroll_obj.ScrollSlide.Rect.X + scroll_obj.ScrollSlide.Rect.Width / 2f, scroll_obj.ScrollSlide.Rect.Y + this.timeScrollThickness / 2f);
-                PointF scroll_slide_end_point = new PointF(scroll_obj.ScrollSlide.Rect.X + scroll_obj.ScrollSlide.Rect.Width / 2f, scroll_obj.ScrollSlide.Rect.Bottom - this.timeScrollThickness / 2f);
+                PointF scroll_slide_start_point = new PointF(scroll_obj.ScrollSlide.Rect.X + this.timeScrollThickness / 2f, scroll_obj.ScrollSlide.Rect.Y);
+                PointF scroll_slide_end_point = new PointF(scroll_obj.ScrollSlide.Rect.X + this.timeScrollThickness / 2f, scroll_obj.ScrollSlide.Rect.Bottom);
+
                 g.DrawLine(this.SolidBrushManageObject.timescrollslide_pen, scroll_slide_start_point, scroll_slide_end_point);
                 #endregion
 
@@ -7480,7 +7519,7 @@ namespace WinformControlLibraryExtension
                 get
                 {
                     if (this._timescrollback_pen == null)
-                        this._timescrollback_pen = new Pen(this.ower.TimeScrollBackColor, this.ower.DateObject.TimeMain.HourArea.verticalScroll.ScrollBack.Rect.Width) { StartCap = LineCap.Round, EndCap = LineCap.Round };
+                        this._timescrollback_pen = new Pen(this.ower.TimeScrollBackColor, this.ower.DateObject.TimeMain.HourArea.verticalScroll.ScrollBack.Rect.Width);
                     return this._timescrollback_pen;
                 }
             }
@@ -7491,7 +7530,7 @@ namespace WinformControlLibraryExtension
                 get
                 {
                     if (this._timescrollslide_pen == null)
-                        this._timescrollslide_pen = new Pen(this.ower.TimeScrollSlideColor, this.ower.DateObject.TimeMain.HourArea.verticalScroll.ScrollBack.Rect.Width) { StartCap = LineCap.Round, EndCap = LineCap.Round };
+                        this._timescrollslide_pen = new Pen(this.ower.TimeScrollSlideColor, this.ower.DateObject.TimeMain.HourArea.verticalScroll.ScrollBack.Rect.Width);
                     return this._timescrollslide_pen;
                 }
             }
@@ -8775,6 +8814,17 @@ namespace WinformControlLibraryExtension
         [Description("时间面板")]
         public class TimeMainClass
         {
+            private Rectangle topBarRect = Rectangle.Empty;
+            /// <summary>
+            ///  时间面板顶部rect
+            /// </summary>
+            [Description("时间面板顶部rect")]
+            public Rectangle TopBarRect
+            {
+                get { return this.topBarRect; }
+                set { this.topBarRect = value; }
+            }
+
             private Rectangle rect = Rectangle.Empty;
             /// <summary>
             ///  时间面板rect
