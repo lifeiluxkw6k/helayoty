@@ -49,12 +49,22 @@
             WinformControlLibraryExtension.ProcedureExt.ProcedureItem procedureItem18 = new WinformControlLibraryExtension.ProcedureExt.ProcedureItem();
             WinformControlLibraryExtension.ProcedureExt.ProcedureItem procedureItem19 = new WinformControlLibraryExtension.ProcedureExt.ProcedureItem();
             WinformControlLibraryExtension.ProcedureExt.ProcedureItem procedureItem20 = new WinformControlLibraryExtension.ProcedureExt.ProcedureItem();
+            this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
             this.stepProgressExt1 = new WinformControlLibraryExtension.ProcedureExt();
             this.stepProgressExt2 = new WinformControlLibraryExtension.ProcedureExt();
             this.stepProgressExt3 = new WinformControlLibraryExtension.ProcedureExt();
             this.stepProgressExt4 = new WinformControlLibraryExtension.ProcedureExt();
-            this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
             this.SuspendLayout();
+            // 
+            // propertyGrid1
+            // 
+            this.propertyGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.propertyGrid1.Location = new System.Drawing.Point(0, 0);
+            this.propertyGrid1.Name = "propertyGrid1";
+            this.propertyGrid1.SelectedObject = this.stepProgressExt1;
+            this.propertyGrid1.Size = new System.Drawing.Size(350, 630);
+            this.propertyGrid1.TabIndex = 13;
             // 
             // stepProgressExt1
             // 
@@ -154,8 +164,8 @@
             this.stepProgressExt1.Items.Add(procedureItem5);
             this.stepProgressExt1.Location = new System.Drawing.Point(378, 28);
             this.stepProgressExt1.Name = "stepProgressExt1";
+            this.stepProgressExt1.SelectIndex = 4;
             this.stepProgressExt1.Size = new System.Drawing.Size(372, 97);
-            this.stepProgressExt1.SlelectIndex = 4;
             this.stepProgressExt1.TabIndex = 0;
             this.stepProgressExt1.TabStop = false;
             this.stepProgressExt1.Text = "stepProgressExt1";
@@ -373,8 +383,8 @@
             this.stepProgressExt3.Location = new System.Drawing.Point(424, 250);
             this.stepProgressExt3.Name = "stepProgressExt3";
             this.stepProgressExt3.Orientation = WinformControlLibraryExtension.ProcedureExt.Orientations.VerticalLeft;
+            this.stepProgressExt3.SelectIndex = 4;
             this.stepProgressExt3.Size = new System.Drawing.Size(124, 359);
-            this.stepProgressExt3.SlelectIndex = 4;
             this.stepProgressExt3.TabIndex = 0;
             this.stepProgressExt3.TabStop = false;
             this.stepProgressExt3.Text = "stepProgressExt3";
@@ -483,8 +493,8 @@
             this.stepProgressExt4.Location = new System.Drawing.Point(577, 250);
             this.stepProgressExt4.Name = "stepProgressExt4";
             this.stepProgressExt4.Orientation = WinformControlLibraryExtension.ProcedureExt.Orientations.VerticalRight;
+            this.stepProgressExt4.SelectIndex = 3;
             this.stepProgressExt4.Size = new System.Drawing.Size(124, 359);
-            this.stepProgressExt4.SlelectIndex = 3;
             this.stepProgressExt4.TabIndex = 0;
             this.stepProgressExt4.TabStop = false;
             this.stepProgressExt4.Text = "stepProgressExt4";
@@ -492,16 +502,6 @@
             this.stepProgressExt4.TipTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(168)))), ((int)(((byte)(154)))));
             this.stepProgressExt4.TipTextFont = new System.Drawing.Font("宋体", 11F);
             this.stepProgressExt4.TipTitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            // 
-            // propertyGrid1
-            // 
-            this.propertyGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.propertyGrid1.Location = new System.Drawing.Point(0, 0);
-            this.propertyGrid1.Name = "propertyGrid1";
-            this.propertyGrid1.SelectedObject = this.stepProgressExt1;
-            this.propertyGrid1.Size = new System.Drawing.Size(350, 630);
-            this.propertyGrid1.TabIndex = 13;
             // 
             // ProcedureExtForm
             // 

@@ -937,7 +937,7 @@
             this.stepProgressExt1.Location = new System.Drawing.Point(425, 1301);
             this.stepProgressExt1.Name = "stepProgressExt1";
             this.stepProgressExt1.Size = new System.Drawing.Size(385, 97);
-            this.stepProgressExt1.SlelectIndex = 4;
+            this.stepProgressExt1.SelectIndex = 4;
             this.stepProgressExt1.TabIndex = 0;
             this.stepProgressExt1.TabStop = false;
             this.stepProgressExt1.Text = "stepProgressExt1";

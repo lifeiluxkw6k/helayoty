@@ -220,23 +220,23 @@ namespace WinformControlLibraryExtension
             }
         }
 
-        private int slelectIndex = 0;
+        private int selectIndex = 0;
         /// <summary>
         /// 当前步骤流程选项的索引
         /// </summary>
         [DefaultValue(0)]
         [Description("当前步骤流程选项的索引")]
-        public int SlelectIndex
+        public int SelectIndex
         {
-            get { return this.slelectIndex; }
+            get { return this.selectIndex; }
             set
             {
-                if (this.slelectIndex == value || value >= Items.Count)
+                if (this.selectIndex == value || value < 0 || value > Items.Count + 1)
                     return;
-                this.slelectIndex = value;
+                this.selectIndex = value;
                 this.Invalidate();
 
-                this.OnIndexChanged(new IndexChangedEventArgs() { Item = this.Items[this.slelectIndex] });
+                this.OnIndexChanged(new IndexChangedEventArgs() { Item = (value == 0 || value == Items.Count + 1) ? null : this.Items[this.selectIndex - 1] });
             }
         }
 
@@ -725,7 +725,7 @@ namespace WinformControlLibraryExtension
                 base.ForeColor = value;
             }
         }
-    
+
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override RightToLeft RightToLeft
@@ -861,7 +861,7 @@ namespace WinformControlLibraryExtension
                 if (this.Enabled)
                 {
                     #region
-                    if (i < this.SlelectIndex - 1)
+                    if (i < this.SelectIndex - 1)
                     {
                         if (this.Items[i].ItemFinishBorderColor == Color.Empty)
                         {
@@ -874,7 +874,7 @@ namespace WinformControlLibraryExtension
                             commom_border_pen = new Pen(this.Items[i].ItemFinishBorderColor, this.Line);
                         }
                     }
-                    else if (i == this.SlelectIndex - 1)
+                    else if (i == this.SelectIndex - 1)
                     {
                         if (this.Items[i].ItemProceedBorderColor == Color.Empty)
                         {
@@ -905,7 +905,7 @@ namespace WinformControlLibraryExtension
                 else
                 {
                     #region
-                    if (i < this.SlelectIndex - 1)
+                    if (i < this.SelectIndex - 1)
                     {
                         if (this.Items[i].ItemDisableFinishBorderColor == Color.Empty)
                         {
@@ -918,7 +918,7 @@ namespace WinformControlLibraryExtension
                             commom_border_pen = new Pen(this.Items[i].ItemDisableFinishBorderColor, this.Line);
                         }
                     }
-                    else if (i == this.SlelectIndex - 1)
+                    else if (i == this.SelectIndex - 1)
                     {
                         if (this.Items[i].ItemDisableProceedBorderColor == Color.Empty)
                         {
@@ -956,7 +956,7 @@ namespace WinformControlLibraryExtension
                 if (this.Enabled)
                 {
                     #region
-                    if (i < this.SlelectIndex - 1)
+                    if (i < this.SelectIndex - 1)
                     {
                         if (this.Items[i].ItemFinishBackColor == Color.Empty)
                         {
@@ -969,7 +969,7 @@ namespace WinformControlLibraryExtension
                             commom_back_sb = new SolidBrush(this.Items[i].ItemFinishBackColor);
                         }
                     }
-                    else if (i == this.SlelectIndex - 1)
+                    else if (i == this.SelectIndex - 1)
                     {
                         if (this.Items[i].ItemProceedBackColor == Color.Empty)
                         {
@@ -1000,7 +1000,7 @@ namespace WinformControlLibraryExtension
                 else
                 {
                     #region
-                    if (i < this.SlelectIndex - 1)
+                    if (i < this.SelectIndex - 1)
                     {
                         if (this.Items[i].ItemDisableFinishBackColor == Color.Empty)
                         {
@@ -1013,7 +1013,7 @@ namespace WinformControlLibraryExtension
                             commom_back_sb = new SolidBrush(this.Items[i].ItemDisableFinishBackColor);
                         }
                     }
-                    else if (i == this.SlelectIndex - 1)
+                    else if (i == this.SelectIndex - 1)
                     {
                         if (this.Items[i].ItemDisableProceedBackColor == Color.Empty)
                         {
@@ -1045,14 +1045,14 @@ namespace WinformControlLibraryExtension
                 #endregion
 
                 #region 选项边框
-                if (i <= this.SlelectIndex - 1)
+                if (i <= this.SelectIndex - 1)
                 {
                     g.DrawEllipse(commom_border_pen, ControlCommom.TransformRectangleF(this.Items[i].RectF, this.Line));
                 }
                 #endregion
 
                 #region 选项圆心
-                if (i < this.SlelectIndex - 1)
+                if (i < this.SelectIndex - 1)
                 {
                     if (this.Enabled)
                     {
@@ -1280,6 +1280,25 @@ namespace WinformControlLibraryExtension
         }
 
         #endregion
+
+
+        #region 公开方法
+
+        /// <summary>
+        /// 步骤是否完成
+        /// </summary>
+        /// <returns></returns>
+        public bool IsComplete()
+        {
+            if (this.Items.Count > 0 && this.SelectIndex > this.Items.Count)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        #endregion
+
 
         #region 私有方法
 
