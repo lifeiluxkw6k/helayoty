@@ -1195,31 +1195,34 @@ namespace WinformControlLibraryExtension
             int index = this.GetSelectedItemIndex(this.PointToClient(Control.MousePosition));
             if (index > -1)
             {
-                if (!this.tipShowStatus)
+                if (this.TipShow)
                 {
-                    ToolTipExt.ToolTipAnchor anchor = ToolTipExt.ToolTipAnchor.TopCenter;
-                    if (this.Orientation == Orientations.HorizontalBottom)
+                    if (!this.tipShowStatus)
                     {
-                        anchor = ToolTipExt.ToolTipAnchor.BottomCenter;
+                        ToolTipExt.ToolTipAnchor anchor = ToolTipExt.ToolTipAnchor.TopCenter;
+                        if (this.Orientation == Orientations.HorizontalBottom)
+                        {
+                            anchor = ToolTipExt.ToolTipAnchor.BottomCenter;
+                        }
+                        else if (this.Orientation == Orientations.VerticalLeft)
+                        {
+                            anchor = ToolTipExt.ToolTipAnchor.LeftCenter;
+                        }
+                        else if (this.Orientation == Orientations.VerticalRight)
+                        {
+                            anchor = ToolTipExt.ToolTipAnchor.RightCenter;
+                        }
+                        Rectangle rect = new Rectangle((int)this.Items[index].RectF.X, (int)this.Items[index].RectF.Y, (int)this.Items[index].RectF.Width, (int)this.Items[index].RectF.Height);
+                        this.tooltip.ToolTipTitle = this.Items[index].Text;
+                        string str = this.Items[index].Description == String.Empty ? " " : this.Items[index].Description;
+                        this.tooltip.Show(str, this, rect, anchor);
+                        this.tipShowStatus = true;
                     }
-                    else if (this.Orientation == Orientations.VerticalLeft)
-                    {
-                        anchor = ToolTipExt.ToolTipAnchor.LeftCenter;
-                    }
-                    else if (this.Orientation == Orientations.VerticalRight)
-                    {
-                        anchor = ToolTipExt.ToolTipAnchor.RightCenter;
-                    }
-                    Rectangle rect = new Rectangle((int)this.Items[index].RectF.X, (int)this.Items[index].RectF.Y, (int)this.Items[index].RectF.Width, (int)this.Items[index].RectF.Height);
-                    this.tooltip.ToolTipTitle = this.Items[index].Text;
-                    string str = this.Items[index].Description == String.Empty ? " " : this.Items[index].Description;
-                    this.tooltip.Show(str, this, rect, anchor);
-                    this.tipShowStatus = true;
-                }
 
-                if (this.Cursor != Cursors.Hand)
-                {
-                    this.Cursor = Cursors.Hand;
+                    if (this.Cursor != Cursors.Hand)
+                    {
+                        this.Cursor = Cursors.Hand;
+                    }
                 }
             }
             else

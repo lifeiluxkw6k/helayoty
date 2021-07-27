@@ -6,6 +6,10 @@
 
 #### 版本更新历史：
 
+**4.5.0.4       [2020-11-24]**  
+WinformControlLibraryExtension  
+修复ProcedureExt.cs步骤控件TipShow属性问题。 
+
 **4.5.0.3       [2020-11-23]**  
 WinformControlLibraryExtension  
 WinformDemo   
