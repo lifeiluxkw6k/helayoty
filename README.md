@@ -1,6 +1,7 @@
 博客：[https://www.cnblogs.com/tlmbem/](https://www.cnblogs.com/tlmbem/)控件的介绍。
 
 邮箱：1252578118@qq.com,有问题可以发到这个邮箱，我有空会回复你。
+交流群：180744253
 
 # 花木兰控件库(开源)
 
