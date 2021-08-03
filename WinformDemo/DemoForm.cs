@@ -139,6 +139,7 @@ namespace WinformDemo
             WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem213 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(menuItem2) { ItemType = SlideMenuPanelExt.NodeTypes.MenuTab, Text = "CheckBox美化", Data = typeof(CheckBoxExtForm), Image = global::WinformDemo.Properties.Resources.demomenu_checkbox };
             WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem214 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(menuItem2) { ItemType = SlideMenuPanelExt.NodeTypes.MenuTab, Text = "RadioButton美化", Data = typeof(RadioButtonExtForm), Image = global::WinformDemo.Properties.Resources.demomenu_radio };
             WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem215 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(menuItem2) { ItemType = SlideMenuPanelExt.NodeTypes.MenuTab, Text = "Switch开关按钮", Data = typeof(SwitchButtonExtForm), Image = global::WinformDemo.Properties.Resources.demomenu_toggleswitch };
+            WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem2151 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(menuItem2) { ItemType = SlideMenuPanelExt.NodeTypes.MenuTab, Text = "ListBox列表", Data = typeof(ListBoxExtForm), Image = global::WinformDemo.Properties.Resources.demomenu_listbox };
             WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem216 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(menuItem2) { ItemType = SlideMenuPanelExt.NodeTypes.MenuTab, Text = "Button动画", Data = typeof(ButtonExtForm), Image = global::WinformDemo.Properties.Resources.demomenu_button };
             WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem217 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(menuItem2) { ItemType = SlideMenuPanelExt.NodeTypes.MenuTab, Text = "百分比进度", Data = typeof(PercentageProgressExtForm), Image = global::WinformDemo.Properties.Resources.demomenu_percentagebar };
             WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem218 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(menuItem2) { ItemType = SlideMenuPanelExt.NodeTypes.MenuTab, Text = "水波纹进度", Data = typeof(WaveProgressExtForm), Image = global::WinformDemo.Properties.Resources.demomenu_waveprogress };
@@ -158,6 +159,7 @@ namespace WinformDemo
             menuItem2.Children.Add(menuItem213);
             menuItem2.Children.Add(menuItem214);
             menuItem2.Children.Add(menuItem215);
+            menuItem2.Children.Add(menuItem2151);
             menuItem2.Children.Add(menuItem216);
             menuItem2.Children.Add(menuItem217);
             menuItem2.Children.Add(menuItem218);
