@@ -568,7 +568,7 @@ namespace WinformControlLibraryExtension
         {
             if (!this.DesignMode)
             {
-                if (e.Button == System.Windows.Forms.MouseButtons.Left)
+                if (this.TabCloseShow&& e.Button == System.Windows.Forms.MouseButtons.Left)
                 {
                     #region 关闭
                     Rectangle tab_rect = this.GetTabRectangle();

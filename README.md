@@ -9,6 +9,12 @@ qq交流群： **180744253**
 
 #### 版本更新历史：
 
+**4.6.0.5       [2021-02-02]**  
+WinformControlLibraryExtension   
+修复 TabControlExt.cs 点击关闭情况  
+修复 ImageExt.cs 没有对图片加锁导致绘制出错问题
+
+
 **4.6.0.4       [2021-01-08]**  
 WinformControlLibraryExtension   
 WinformDemo   

@@ -488,7 +488,10 @@ namespace WinformControlLibraryExtension
 
             if (this.Image != null)
             {
-                g.DrawImage(this.Image, new Point(0, 0));
+                lock (this.Image)
+                {
+                    g.DrawImage(this.Image, new Point(0, 0));
+                }
             }
 
             #region 边框
