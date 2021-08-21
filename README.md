@@ -9,6 +9,12 @@ qq交流群： **180744253**
 
 #### 版本更新历史：
 
+**4.6.1.5       [2021-02-13]**  
+WinformControlLibraryExtension   
+WinformDemo
+ CheckBoxExt.cs 添加第三种选择状态功能
+
+
 **4.6.0.5       [2021-02-02]**  
 WinformControlLibraryExtension   
 修复 TabControlExt.cs 点击关闭情况  

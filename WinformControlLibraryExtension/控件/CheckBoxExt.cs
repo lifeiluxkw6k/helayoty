@@ -79,6 +79,19 @@ namespace WinformControlLibraryExtension
             remove { this.checkedChanged -= value; }
         }
 
+        public delegate void CheckStateChangedEventHandler(object sender, CheckStateChangedEventArgs e);
+
+        private event CheckStateChangedEventHandler checkStateChanged;
+        /// <summary>
+        /// 控件状态更改事件
+        /// </summary>
+        [Description("控件状态更改事件")]
+        public event CheckStateChangedEventHandler CheckStateChanged
+        {
+            add { this.checkStateChanged += value; }
+            remove { this.checkStateChanged -= value; }
+        }
+
         #endregion
 
         #region 停用事件
@@ -227,6 +240,56 @@ namespace WinformControlLibraryExtension
                 }
             }
         }
+
+        private bool threeState = false;
+        /// <summary>
+        /// 控件是否为三种选择状态（否则为两种选择状态）
+        /// </summary>
+        [DefaultValue(false)]
+        [Description("控件是否为三种选择状态（否则为两种选择状态）")]
+        public bool ThreeState
+        {
+            get { return this.threeState; }
+            set
+            {
+                if (this.threeState == value)
+                    return;
+
+                this.threeState = value;
+                if (this.threeState)
+                {
+                    this.Invalidate();
+                }
+            }
+        }
+
+        private CheckStates checkState = CheckStates.UnChecked;
+        /// <summary>
+        /// 控件状态
+        /// </summary>
+        [DefaultValue(CheckStates.UnChecked)]
+        [Description("控件状态")]
+        public CheckStates CheckState
+        {
+            get { return this.checkState; }
+            set
+            {
+                if (this.checkState == value)
+                    return;
+
+                this.checkState = value;
+
+                if (this.ThreeState == true)
+                {
+                    this.Invalidate();
+                }
+                if (!this.DesignMode)
+                {
+                    this.OnCheckStateChanged(new CheckStateChangedEventArgs() { CheckState = value });
+                }
+            }
+        }
+
 
         private bool _checked = false;
         /// <summary>
@@ -436,6 +499,7 @@ namespace WinformControlLibraryExtension
             }
         }
 
+        #region 已选中
         private Image customCheckedImage = null;
         /// <summary>
         /// 已选中状态图标图片
@@ -526,7 +590,102 @@ namespace WinformControlLibraryExtension
             }
         }
 
+        #endregion
 
+        #region 部分选中
+        private Image customPartCheckedImage = null;
+        /// <summary>
+        /// 部分选中状态图标图片
+        /// </summary>
+        [DefaultValue(null)]
+        [Description("部分选中状态图标图片")]
+        public Image CustomPartCheckedImage
+        {
+            get
+            {
+                if (this.customPartCheckedImage != null)
+                {
+                    return this.customPartCheckedImage;
+                }
+                else
+                {
+                    if (this.imageList != null)
+                    {
+                        int index = this.customPartCheckedImageIndex.ActualIndex;
+                        if (index >= this.imageList.Images.Count)
+                            return null;
+                        if (index >= 0)
+                            return this.imageList.Images[index];
+                    }
+                    return null;
+                }
+            }
+            set
+            {
+                if (this.customPartCheckedImage == value)
+                    return;
+
+                this.customPartCheckedImage = value;
+                this.customPartCheckedImageIndex.Index = -1;
+                this.customPartCheckedImageIndex.Key = string.Empty;
+                this.Invalidate();
+            }
+        }
+
+        private Indexer customPartCheckedImageIndex = new Indexer();
+        /// <summary>
+        /// 部分选中状态图标图片Index
+        /// </summary>
+        [Description("部分选中状态图标图片Index")]
+        [DefaultValue(-1)]
+        [Localizable(true)]
+        [RefreshProperties(RefreshProperties.Repaint)]
+        [TypeConverter(typeof(ImageIndexConverter))]
+        public int CustomPartCheckedImageIndex
+        {
+            get
+            {
+                if (this.customPartCheckedImageIndex.Index != -1 && this.imageList != null && this.customPartCheckedImageIndex.Index >= this.imageList.Images.Count)
+                    return this.imageList.Images.Count - 1;
+                return this.customPartCheckedImageIndex.Index;
+            }
+            set
+            {
+                if (this.customPartCheckedImageIndex.Index == value || value < -1)
+                    return;
+
+                this.customPartCheckedImageIndex.Index = value;
+                this.Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// 部分选中状态图标图片Key
+        /// </summary>
+        [Description("部分选中状态图标图片Key")]
+        [DefaultValue("")]
+        [Localizable(true)]
+        [RefreshProperties(RefreshProperties.Repaint)]
+        [TypeConverter(typeof(ImageKeyConverter))]
+        public string CustomPartCheckedImageKey
+        {
+            get
+            {
+                return this.customPartCheckedImageIndex.Key;
+            }
+            set
+            {
+                if (this.customPartCheckedImageIndex.Key == value)
+                    return;
+
+                this.customPartCheckedImageIndex.Key = value;
+                this.Invalidate();
+            }
+        }
+
+        #endregion
+
+        #region 未选中
 
         private Image customUnCheckedImage = null;
         /// <summary>
@@ -617,11 +776,16 @@ namespace WinformControlLibraryExtension
                 this.Invalidate();
             }
         }
+
+        #endregion
+
         #endregion
 
         #endregion
 
         #endregion
+
+        #region 颜色
 
         #region（未选中）
 
@@ -722,6 +886,111 @@ namespace WinformControlLibraryExtension
                     return;
 
                 this.unCheckedBoxCharColor = value;
+                this.Invalidate();
+            }
+        }
+
+        #endregion
+
+        #region（部分选中）
+
+        private Color partCheckedBackColor = Color.Empty;
+        /// <summary>
+        /// 背景颜色（部分选中）
+        /// </summary>
+        [DefaultValue(typeof(Color), "Empty")]
+        [Description("背景颜色（部分选中）")]
+        [Editor(typeof(ColorEditorExt), typeof(UITypeEditor))]
+        public Color PartCheckedBackColor
+        {
+            get { return this.partCheckedBackColor; }
+            set
+            {
+                if (this.partCheckedBackColor == value)
+                    return;
+
+                this.partCheckedBackColor = value;
+                this.Invalidate();
+            }
+        }
+
+        private Color partCheckedTextColor = Color.FromArgb(64, 64, 64);
+        /// <summary>
+        /// 文本颜色（部分选中）
+        /// </summary>
+        [DefaultValue(typeof(Color), "64, 64, 64")]
+        [Description("文本颜色（部分选中）")]
+        [Editor(typeof(ColorEditorExt), typeof(UITypeEditor))]
+        public Color PartCheckedTextColor
+        {
+            get { return this.partCheckedTextColor; }
+            set
+            {
+                if (this.partCheckedTextColor == value)
+                    return;
+
+                this.partCheckedTextColor = value;
+                this.Invalidate();
+            }
+        }
+
+
+        private Color partCheckedBoxBackColor = Color.FromArgb(255, 255, 255);
+        /// <summary>
+        /// 图标颜色（部分选中）
+        /// </summary>
+        [DefaultValue(typeof(Color), "255, 255, 255")]
+        [Description("图标颜色（部分选中）")]
+        [Editor(typeof(ColorEditorExt), typeof(UITypeEditor))]
+        public Color PartCheckedBoxBackColor
+        {
+            get { return this.partCheckedBoxBackColor; }
+            set
+            {
+                if (this.partCheckedBoxBackColor == value)
+                    return;
+
+                this.partCheckedBoxBackColor = value;
+                this.Invalidate();
+            }
+        }
+
+        private Color partCheckedBoxBorderColor = Color.FromArgb(192, 192, 192);
+        /// <summary>
+        /// 图标边框颜色（部分选中）
+        /// </summary>
+        [DefaultValue(typeof(Color), "192, 192, 192")]
+        [Description("图标边框颜色（部分选中）")]
+        [Editor(typeof(ColorEditorExt), typeof(UITypeEditor))]
+        public Color PartCheckedBoxBorderColor
+        {
+            get { return this.partCheckedBoxBorderColor; }
+            set
+            {
+                if (this.partCheckedBoxBorderColor == value)
+                    return;
+
+                this.partCheckedBoxBorderColor = value;
+                this.Invalidate();
+            }
+        }
+
+        private Color partCheckedBoxCharColor = Color.FromArgb(205, 220, 57);
+        /// <summary>
+        /// 图标符号颜色（部分选中）
+        /// </summary>
+        [DefaultValue(typeof(Color), "205, 220, 57")]
+        [Description("图标符号颜色（部分选中）")]
+        [Editor(typeof(ColorEditorExt), typeof(UITypeEditor))]
+        public Color PartCheckedBoxCharColor
+        {
+            get { return this.partCheckedBoxCharColor; }
+            set
+            {
+                if (this.partCheckedBoxCharColor == value)
+                    return;
+
+                this.partCheckedBoxCharColor = value;
                 this.Invalidate();
             }
         }
@@ -982,6 +1251,8 @@ namespace WinformControlLibraryExtension
 
         #endregion
 
+        #endregion
+
         #region 重写属性
 
         [Browsable(false)]
@@ -1176,20 +1447,70 @@ namespace WinformControlLibraryExtension
 
             if (this.Enabled)
             {
-                back_color = this.Checked == true ? this.CheckedBackColor : this.UnCheckedBackColor;
-                if (this.Style == Styles.Button && this.mouseEnter)
+                if (this.ThreeState == false)
                 {
-                    back_color = this.EnterBackColor;
-                }
-                text_color = this.Checked == true ? this.CheckedTextColor : this.UnCheckedTextColor;
+                    back_color = this.Checked == true ? this.CheckedBackColor : this.UnCheckedBackColor;
+                    if (this.Style == Styles.Button && this.mouseEnter)
+                    {
+                        back_color = this.EnterBackColor;
+                    }
+                    text_color = this.Checked == true ? this.CheckedTextColor : this.UnCheckedTextColor;
 
-                box_back_color = this.Checked == true ? this.CheckedBoxBackColor : this.UnCheckedBoxBackColor;
-                box_border_color = this.Checked == true ? this.CheckedBoxBorderColor : this.UnCheckedBoxBorderColor;
-                if (this.Style == Styles.Default && this.mouseEnter)
-                {
-                    box_border_color = this.EnterBoxBorderColor;
+                    box_back_color = this.Checked == true ? this.CheckedBoxBackColor : this.UnCheckedBoxBackColor;
+                    box_border_color = this.Checked == true ? this.CheckedBoxBorderColor : this.UnCheckedBoxBorderColor;
+                    if (this.Style == Styles.Default && this.mouseEnter)
+                    {
+                        box_border_color = this.EnterBoxBorderColor;
+                    }
+                    box_char_color = this.Checked == true ? this.CheckedBoxCharColor : this.UnCheckedBoxCharColor;
                 }
-                box_char_color = this.Checked == true ? this.CheckedBoxCharColor : this.UnCheckedBoxCharColor;
+                else
+                {
+                    if (this.CheckState == CheckStates.Checked)
+                        back_color = this.CheckedBackColor;
+                    else if (this.CheckState == CheckStates.PartChecked)
+                        back_color = this.PartCheckedBackColor;
+                    else
+                        back_color = this.UnCheckedBackColor;
+                    if (this.Style == Styles.Button && this.mouseEnter)
+                    {
+                        back_color = this.EnterBackColor;
+                    }
+
+                    if (this.CheckState == CheckStates.Checked)
+                        text_color = this.CheckedTextColor;
+                    else if (this.CheckState == CheckStates.PartChecked)
+                        text_color = this.PartCheckedTextColor;
+                    else
+                        text_color = this.UnCheckedTextColor;
+
+
+                    if (this.CheckState == CheckStates.Checked)
+                        box_back_color = this.CheckedBoxBackColor;
+                    else if (this.CheckState == CheckStates.PartChecked)
+                        box_back_color = this.PartCheckedBoxBackColor;
+                    else
+                        box_back_color = this.UnCheckedBoxBackColor;
+
+                    if (this.CheckState == CheckStates.Checked)
+                        box_border_color = this.CheckedBoxBorderColor;
+                    else if (this.CheckState == CheckStates.PartChecked)
+                        box_border_color = this.PartCheckedBoxBorderColor;
+                    else
+                        box_border_color = this.UnCheckedBoxBorderColor;
+                    if (this.Style == Styles.Default && this.mouseEnter)
+                    {
+                        box_border_color = this.EnterBoxBorderColor;
+                    }
+
+
+                    if (this.CheckState == CheckStates.Checked)
+                        box_char_color = this.CheckedBoxCharColor;
+                    else if (this.CheckState == CheckStates.PartChecked)
+                        box_char_color = this.PartCheckedBoxCharColor;
+                    else
+                        box_char_color = this.UnCheckedBoxCharColor;
+                }
             }
             else
             {
@@ -1288,49 +1609,119 @@ namespace WinformControlLibraryExtension
                 if (box_char_color != Color.Empty)
                 {
                     float min_grid = (this.BoxRadius * 2) / 8f;
-                    Pen box_char_pen = new Pen(box_char_color, this.BoxRadius / 4f - 0.3f);
-                    if (this.Checked)
+                    if (this.ThreeState == false)
                     {
-                        PointF[] box_char_line = new PointF[] {
+                        Pen box_char_pen = new Pen(box_char_color, this.BoxRadius / 4f - 0.3f);
+                        if (this.Checked)
+                        {
+                            PointF[] box_char_line = new PointF[] {
                         new PointF(this.box_rect.X+min_grid,this.box_rect.Y+ min_grid * 3),
                         new PointF(this.box_rect.X+min_grid *3,this.box_rect.Y+  min_grid * 5),
                         new PointF(this.box_rect.X+min_grid*6 ,this.box_rect.Y+  min_grid*2)
                         };
 
-                        g.DrawLines(box_char_pen, box_char_line);
+                            g.DrawLines(box_char_pen, box_char_line);
+                        }
+                        else
+                        {
+                            if (this.Style == Styles.Button)
+                            {
+                                PointF line_left_s = new PointF(this.box_rect.X + min_grid * 2, this.box_rect.Y + min_grid * 2);
+                                PointF line_left_e = new PointF(this.box_rect.X + min_grid * 6, this.box_rect.Y + min_grid * 6);
+
+                                PointF line_right_s = new PointF(this.box_rect.X + min_grid * 6, this.box_rect.Y + min_grid * 2);
+                                PointF line_right_e = new PointF(this.box_rect.X + min_grid * 2, this.box_rect.Y + min_grid * 6);
+                                g.DrawLine(box_char_pen, line_left_s, line_left_e);
+                                g.DrawLine(box_char_pen, line_right_s, line_right_e);
+                            }
+                        }
+                        box_char_pen.Dispose();
                     }
                     else
                     {
-                        if (this.Style == Styles.Button)
+                        if (this.CheckState == CheckStates.Checked)
                         {
-                            PointF line_left_s = new PointF(this.box_rect.X + min_grid * 2, this.box_rect.Y + min_grid * 2);
-                            PointF line_left_e = new PointF(this.box_rect.X + min_grid * 6, this.box_rect.Y + min_grid * 6);
+                            Pen box_char_pen = new Pen(box_char_color, this.BoxRadius / 4f - 0.3f);
 
-                            PointF line_right_s = new PointF(this.box_rect.X + min_grid * 6, this.box_rect.Y + min_grid * 2);
-                            PointF line_right_e = new PointF(this.box_rect.X + min_grid * 2, this.box_rect.Y + min_grid * 6);
-                            g.DrawLine(box_char_pen, line_left_s, line_left_e);
-                            g.DrawLine(box_char_pen, line_right_s, line_right_e);
+                            PointF[] box_char_line = new PointF[] {
+                                       new PointF(this.box_rect.X+min_grid,this.box_rect.Y+ min_grid * 3),
+                                       new PointF(this.box_rect.X+min_grid *3,this.box_rect.Y+  min_grid * 5),
+                                       new PointF(this.box_rect.X+min_grid*6 ,this.box_rect.Y+  min_grid*2)
+                                       };
+
+                            g.DrawLines(box_char_pen, box_char_line);
+                            box_char_pen.Dispose();
+                        }
+                        else if (this.CheckState == CheckStates.UnChecked)
+                        {
+                            if (this.Style == Styles.Button)
+                            {
+                                Pen box_char_pen = new Pen(box_char_color, this.BoxRadius / 4f - 0.3f);
+
+                                PointF line_left_s = new PointF(this.box_rect.X + min_grid * 2, this.box_rect.Y + min_grid * 2);
+                                PointF line_left_e = new PointF(this.box_rect.X + min_grid * 6, this.box_rect.Y + min_grid * 6);
+
+                                PointF line_right_s = new PointF(this.box_rect.X + min_grid * 6, this.box_rect.Y + min_grid * 2);
+                                PointF line_right_e = new PointF(this.box_rect.X + min_grid * 2, this.box_rect.Y + min_grid * 6);
+                                g.DrawLine(box_char_pen, line_left_s, line_left_e);
+                                g.DrawLine(box_char_pen, line_right_s, line_right_e);
+                                box_char_pen.Dispose();
+                            }
+                        }
+                        else
+                        {
+                            SolidBrush box_char_sb = new SolidBrush(box_char_color);
+                            RectangleF box_char_rect = new RectangleF(this.box_rect.X + 4, this.box_rect.Y + 4, this.box_rect.Width - 8, this.box_rect.Height - 8);
+                            g.FillRectangle(box_char_sb, box_char_rect);
+                            box_char_sb.Dispose();
+
                         }
                     }
-                    box_char_pen.Dispose();
                 }
             }
             #endregion
             #region 自定义图案
             else
             {
-                if (this.Checked)
+                if (this.ThreeState == false)
                 {
-                    if (this.CustomCheckedImage != null)
+                    if (this.Checked)
                     {
-                        g.DrawImage(this.CustomCheckedImage, this.box_rect);
+                        if (this.CustomCheckedImage != null)
+                        {
+                            g.DrawImage(this.CustomCheckedImage, this.box_rect);
+                        }
+                    }
+                    else
+                    {
+                        if (this.CustomUnCheckedImage != null)
+                        {
+                            g.DrawImage(this.CustomUnCheckedImage, this.box_rect);
+                        }
                     }
                 }
                 else
                 {
-                    if (this.CustomUnCheckedImage != null)
+                    if (this.CheckState == CheckStates.Checked)
                     {
-                        g.DrawImage(this.CustomUnCheckedImage, this.box_rect);
+                        if (this.CustomCheckedImage != null)
+                        {
+                            g.DrawImage(this.CustomCheckedImage, this.box_rect);
+                        }
+                    }
+                    else if (this.CheckState == CheckStates.UnChecked)
+                    {
+                        if (this.CustomUnCheckedImage != null)
+                        {
+                            g.DrawImage(this.CustomUnCheckedImage, this.box_rect);
+                        }
+                    }
+                    else
+                    {
+                        if (this.CustomPartCheckedImage != null)
+                        {
+                            g.DrawImage(this.CustomPartCheckedImage, this.box_rect);
+                        }
                     }
                 }
             }
@@ -1406,7 +1797,7 @@ namespace WinformControlLibraryExtension
 
             if (this.Style == Styles.Button)
             {
-                this.Checked = !this.Checked;
+                this.SetState();
             }
             else
             {
@@ -1414,14 +1805,14 @@ namespace WinformControlLibraryExtension
                 {
                     if (this.box_rect.Contains(e.Location))
                     {
-                        this.Checked = !this.Checked;
+                        this.SetState();
                     }
                 }
                 else
                 {
                     if (this.box_rect.Contains(e.Location) || this.text_rect.Contains(e.Location))
                     {
-                        this.Checked = !this.Checked;
+                        this.SetState();
                     }
                 }
             }
@@ -1510,7 +1901,7 @@ namespace WinformControlLibraryExtension
                 #region Space
                 if (keyData == Keys.Space)
                 {
-                    this.Checked = !this.Checked;
+                    this.SetState();
                     return false;
                 }
                 #endregion
@@ -1536,6 +1927,14 @@ namespace WinformControlLibraryExtension
             if (this.checkedChanged != null)
             {
                 this.checkedChanged(this, e);
+            }
+        }
+
+        protected virtual void OnCheckStateChanged(CheckStateChangedEventArgs e)
+        {
+            if (this.checkStateChanged != null)
+            {
+                this.checkStateChanged(this, e);
             }
         }
 
@@ -1694,6 +2093,32 @@ namespace WinformControlLibraryExtension
             this.ImageList = (ImageList)null;
         }
 
+        /// <summary>
+        /// 设置控件状态
+        /// </summary>
+        private void SetState()
+        {
+            if (this.ThreeState == false)
+            {
+                this.Checked = !this.Checked;
+            }
+            else
+            {
+                if (this.CheckState == CheckStates.UnChecked)
+                {
+                    this.CheckState = CheckStates.PartChecked;
+                }
+                else if (this.CheckState == CheckStates.PartChecked)
+                {
+                    this.CheckState = CheckStates.Checked;
+                }
+                else if (this.CheckState == CheckStates.Checked)
+                {
+                    this.CheckState = CheckStates.UnChecked;
+                }
+            }
+        }
+
         #endregion
 
         #region 类
@@ -1775,6 +2200,19 @@ namespace WinformControlLibraryExtension
             public bool Checked { get; set; }
         }
 
+        /// <summary>
+        /// 控件状态更改事件参数
+        /// </summary>
+        [Description("控件状态更改事件参数")]
+        public class CheckStateChangedEventArgs : EventArgs
+        {
+            /// <summary>
+            /// 控件状态
+            /// </summary>
+            [Description("控件状态")]
+            public CheckStates CheckState { get; set; }
+        }
+
         #endregion
 
         #region 枚举
@@ -1849,6 +2287,26 @@ namespace WinformControlLibraryExtension
             /// (图标和文本)范围
             /// </summary>
             BoxText
+        }
+
+        /// <summary>
+        /// 控件选中状态
+        /// </summary>
+        [Description("控件选中状态")]
+        public enum CheckStates
+        {
+            /// <summary>
+            /// 选中
+            /// </summary>
+            Checked,
+            /// <summary>
+            /// 未选中
+            /// </summary>
+            UnChecked,
+            /// <summary>
+            /// 部分选中
+            /// </summary>
+            PartChecked
         }
 
         #endregion
