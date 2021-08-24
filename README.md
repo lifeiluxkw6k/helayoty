@@ -11,21 +11,18 @@ qq交流群： **180744253**
 
 **4.6.1.5       [2021-02-13]**  
 WinformControlLibraryExtension   
-WinformDemo
- CheckBoxExt.cs 添加第三种选择状态功能
-
+WinformDemo   
+ CheckBoxExt.cs 添加第三种选择状态功能   
 
 **4.6.0.5       [2021-02-02]**  
 WinformControlLibraryExtension   
 修复 TabControlExt.cs 点击关闭情况  
-修复 ImageExt.cs 没有对图片加锁导致绘制出错问题
-
+修复 ImageExt.cs 没有对图片加锁导致绘制出错问题   
 
 **4.6.0.4       [2021-01-08]**  
 WinformControlLibraryExtension   
 WinformDemo   
-添加 ListBoxExt.cs 列表控件 
-
+添加 ListBoxExt.cs 列表控件   
 
 **4.5.0.4       [2020-11-24]**  
 WinformControlLibraryExtension  
