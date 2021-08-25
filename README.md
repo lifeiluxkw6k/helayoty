@@ -9,6 +9,11 @@ qq交流群： **180744253**
 
 #### 版本更新历史：
 
+**4.7.1.5       [2021-02-13]**  
+WinformControlLibraryExtension   
+WinformDemo   
+ 添加   ValidCodeExt.cs验证码控件   
+
 **4.6.1.5       [2021-02-13]**  
 WinformControlLibraryExtension   
 WinformDemo   

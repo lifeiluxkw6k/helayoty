@@ -150,6 +150,7 @@ namespace WinformDemo
             WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem2113 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(menuItem2) { ItemType = SlideMenuPanelExt.NodeTypes.MenuTab, Text = "GroupPanel美化", Data = typeof(GroupPanelExtForm), Image = global::WinformDemo.Properties.Resources.demomenu_grouppanel };
             WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem2114 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(menuItem2) { ItemType = SlideMenuPanelExt.NodeTypes.MenuTab, Text = "步骤流程", Data = typeof(ProcedureExtForm), Image = global::WinformDemo.Properties.Resources.demomenu_sepprocess };
             WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem2115 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(menuItem2) { ItemType = SlideMenuPanelExt.NodeTypes.MenuTab, Text = "动态图片", Data = typeof(ImageExtForm), Image = global::WinformDemo.Properties.Resources.demomenu_image };
+            WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem21151 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(menuItem2) { ItemType = SlideMenuPanelExt.NodeTypes.MenuTab, Text = "验证码", Data = typeof(ValidCodeExtForm), Image = global::WinformDemo.Properties.Resources.demomenu_validcode };
             WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem2116 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(menuItem2) { ItemType = SlideMenuPanelExt.NodeTypes.MenuTab, Text = "分割线", Data = typeof(HalvingLineExtForm), Image = global::WinformDemo.Properties.Resources.demomenu_halvingline };
             WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem2117 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(menuItem2) { ItemType = SlideMenuPanelExt.NodeTypes.MenuTab, Text = "雷达扫描", Data = typeof(RadarScanExtForm), Image = global::WinformDemo.Properties.Resources.demomenu_radar };
             WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem2118 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(menuItem2) { ItemType = SlideMenuPanelExt.NodeTypes.MenuTab, Text = "加载等待", Data = typeof(LoadExtForm), Image = global::WinformDemo.Properties.Resources.demomenu_loadprogress };
@@ -170,6 +171,7 @@ namespace WinformDemo
             menuItem2.Children.Add(menuItem2113);
             menuItem2.Children.Add(menuItem2114);
             menuItem2.Children.Add(menuItem2115);
+            menuItem2.Children.Add(menuItem21151);
             menuItem2.Children.Add(menuItem2116);
             menuItem2.Children.Add(menuItem2117);
             menuItem2.Children.Add(menuItem2118);

@@ -172,6 +172,12 @@
     <Compile Include="窗体\PercentageProgressExtForm.Designer.cs">
       <DependentUpon>PercentageProgressExtForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="窗体\ValidCodeExtForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="窗体\ValidCodeExtForm.designer.cs">
+      <DependentUpon>ValidCodeExtForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="窗体\WaveProgressExtForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -401,6 +407,9 @@
     <EmbeddedResource Include="窗体\PercentageProgressExtForm.resx">
       <DependentUpon>PercentageProgressExtForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="窗体\ValidCodeExtForm.resx">
+      <DependentUpon>ValidCodeExtForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="窗体\WaveProgressExtForm.resx">
       <DependentUpon>WaveProgressExtForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -578,6 +587,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
+    <None Include="Resources\demomenu_validcode.png" />
     <None Include="Resources\demomenu_listbox.png" />
     <None Include="Resources\toolstrip_text_italic.png" />
     <None Include="Resources\toolstrip_shape_align_top.png" />

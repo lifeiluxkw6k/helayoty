@@ -199,6 +199,9 @@
     <Compile Include="控件\ToolTipExt.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="控件\ValidCodeExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="控件\WaveProgressExt.cs">
       <SubType>Component</SubType>
     </Compile>
