@@ -9,6 +9,10 @@ qq交流群： **180744253**
 
 #### 版本更新历史：
 
+**4.7.1.6       [2021-04-07]**  
+WinformControlLibraryExtension  
+ 修复   TabControlExt控件删除按钮只删除最后一个的问题      
+
 **4.7.1.5       [2021-02-13]**  
 WinformControlLibraryExtension   
 WinformDemo   

@@ -592,7 +592,7 @@ namespace WinformControlLibraryExtension
                                     index = i + 1;
                                 }
                                 this.SelectedIndex = index;
-                                this.TabPages.RemoveAt(i);
+                                this.TabPages.Remove(this.TabPages[i]);
                                 return;
                             }
                         }
