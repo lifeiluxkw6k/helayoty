@@ -51,6 +51,7 @@ using System.ComponentModel.Design;
 using System.Drawing;
 using System.Drawing.Design;
 using System.Drawing.Drawing2D;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WcleAnimationLibrary;
 using WinformControlLibraryExtension.Design;
@@ -421,6 +422,16 @@ namespace WinformControlLibraryExtension
 
         #endregion
 
+        #region 扩展
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
+        private static extern IntPtr GetWindowDC(IntPtr hwnd);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
+        private static extern int ReleaseDC(IntPtr hwnd, IntPtr hdc);
+
+        #endregion
+
         public TextCarouselExt()
         {
             SetStyle(ControlStyles.UserPaint, true);
@@ -464,7 +475,7 @@ namespace WinformControlLibraryExtension
                 if (textItem.TextColorItems.Count < 1)
                 {
                     SolidBrush text_sb = new SolidBrush(textItem.TextColor);
-                    g.DrawString(textItem.Text, textItem.TextFont, text_sb, textItem.current_rectf);
+                    g.DrawString(textItem.Text, textItem.TextFont, text_sb, textItem.current_rectf.X, textItem.current_rectf.Y, StringFormat.GenericTypographic);
                     text_sb.Dispose();
                 }
                 else
@@ -489,7 +500,7 @@ namespace WinformControlLibraryExtension
 
                     LinearGradientBrush text_lgb = new LinearGradientBrush(textItem.current_rectf, Color.Transparent, Color.Transparent, textItem.ShadeAngle);
                     text_lgb.InterpolationColors = new ColorBlend() { Colors = colors, Positions = interval };
-                    g.DrawString(textItem.Text, textItem.TextFont, text_lgb, textItem.current_rectf);
+                    g.DrawString(textItem.Text, textItem.TextFont, text_lgb, textItem.current_rectf.X, textItem.current_rectf.Y, StringFormat.GenericTypographic);
                     text_lgb.Dispose();
                 }
             }
@@ -502,7 +513,7 @@ namespace WinformControlLibraryExtension
                     SolidBrush text_sb = new SolidBrush(textItem.TextColor);
                     for (int i = 0; i < textItem.TextChar.Length; i++)
                     {
-                        g.DrawString(textItem.TextChar[i], textItem.TextFont, text_sb, textItem.current_char_rectf[i]);
+                        g.DrawString(textItem.TextChar[i], textItem.TextFont, text_sb, textItem.current_char_rectf[i].X, textItem.current_char_rectf[i].Y, StringFormat.GenericTypographic);
                     }
                     text_sb.Dispose();
                 }
@@ -531,7 +542,7 @@ namespace WinformControlLibraryExtension
                         interval[textItem.TextColorItems.Count - 1] = 1.0f;
                         text_lgb.InterpolationColors = new ColorBlend() { Colors = colors, Positions = interval };
 
-                        g.DrawString(textItem.TextChar[k], textItem.TextFont, text_lgb, textItem.current_char_rectf[k]);
+                        g.DrawString(textItem.TextChar[k], textItem.TextFont, text_lgb, textItem.current_char_rectf[k].X, textItem.current_char_rectf[k].Y, StringFormat.GenericTypographic);
                     }
                     text_lgb.Dispose();
                 }
@@ -831,22 +842,44 @@ namespace WinformControlLibraryExtension
         /// </summary>
         private void InitializeTextRectangles()
         {
+            IntPtr hDC = GetWindowDC(this.Handle);
+            Graphics g = Graphics.FromHdc(hDC);
+
             for (int i = 0; i < this.enableTextList.Count; i++)
             {
-                this.InitializeTextRectangle(this.Items[this.enableTextList[i]]);
+                this.InitializeTextRectangle(this.Items[this.enableTextList[i]], g);
             }
-        }
 
+            g.Dispose();
+            ReleaseDC(this.Handle, hDC);
+        }
         /// <summary>
         /// 初始化文本rect
         /// </summary>
         /// <param name="textItem"></param>
         private void InitializeTextRectangle(TextItem textItem)
         {
+            IntPtr hDC = GetWindowDC(this.Handle);
+            Graphics g = Graphics.FromHdc(hDC);
+
+            this.InitializeTextRectangle(textItem, g);
+
+            g.Dispose();
+            ReleaseDC(this.Handle, hDC);
+        }
+
+        /// <summary>
+        /// 初始化文本rect
+        /// </summary>
+        /// <param name="textItem"></param>
+        /// <param name="g"></param>
+        private void InitializeTextRectangle(TextItem textItem, Graphics g)
+        {
             Rectangle rect = this.ClientRectangle;
-            Size text_size = TextRenderer.MeasureText(textItem.Text, textItem.TextFont, new Size(), TextFormatFlags.ExternalLeading);
+            SizeF text_size = g.MeasureString(textItem.Text, textItem.TextFont, 1000, StringFormat.GenericTypographic);
             int len = textItem.Text.Length;
-            int avg_w = len == 0 ? 0 : text_size.Width / len;
+            int avg_w = len == 0 ? 0 : (int)(text_size.Width / len);
+            float sum_w = 0;
 
             #region  Scroll
             if (textItem.Style == AnimationStyle.Scroll)
@@ -900,13 +933,22 @@ namespace WinformControlLibraryExtension
             #region Speed
             else if (textItem.Style == AnimationStyle.Speed)
             {
-                textItem.TextCharAvgWidth = text_size.Width / len;
+               // textItem.TextCharAvgWidth = text_size.Width / len;
 
                 textItem.TextChar = new string[len];
+                textItem.TextCharSize = new SizeF[len];
+                for (int i = 0; i < textItem.TextChar.Length; i++)
+                {
+                    textItem.TextChar[i] = textItem.Text.Substring(i, 1);
+                    textItem.TextCharSize[i] = g.MeasureString(textItem.TextChar[i], textItem.TextFont, 1000, StringFormat.GenericTypographic);
+                    sum_w += textItem.TextCharSize[i].Width;
+                }
                 textItem.prev_char_rectf = new RectangleF[len];
                 textItem.current_char_rectf = new RectangleF[len];
                 textItem.target_char_rectf = new RectangleF[len];
-                for (int i = 0; i < len; i++)
+
+                float sum_x = 0;
+                for (int i = 0; i < textItem.TextChar.Length; i++)
                 {
                     float x = 0;
                     float y = 0;
@@ -914,11 +956,11 @@ namespace WinformControlLibraryExtension
                     float target_y = 0;
                     if (textItem.Orientation == AnimationOrientation.Top)
                     {
-                        float tmp_x = rect.X + i * avg_w;
+                        float tmp_x = rect.X + sum_x;
                         x = tmp_x;
                         if (textItem.TextCenter)
                         {
-                            x = tmp_x + (rect.Width - text_size.Width) / 2;
+                            x = tmp_x + (rect.Width - sum_w) / 2;
                             if (x < tmp_x)
                                 x = tmp_x;
                         }
@@ -926,14 +968,16 @@ namespace WinformControlLibraryExtension
 
                         target_x = x;
                         target_y = (rect.Height - text_size.Height) / 2;
+
+                        sum_x += textItem.TextCharSize[i].Width;
                     }
                     else if (textItem.Orientation == AnimationOrientation.Bottom)
                     {
-                        float tmp_x = rect.X + i * avg_w;
+                        float tmp_x = rect.X + sum_x;
                         x = tmp_x;
                         if (textItem.TextCenter)
                         {
-                            x = tmp_x + (rect.Width - text_size.Width) / 2;
+                            x = tmp_x + (rect.Width - sum_w) / 2;
                             if (x < tmp_x)
                                 x = tmp_x;
                         }
@@ -941,32 +985,44 @@ namespace WinformControlLibraryExtension
 
                         target_x = x;
                         target_y = (rect.Height - text_size.Height) / 2;
+
+                        sum_x += textItem.TextCharSize[i].Width;
                     }
                     else if (textItem.Orientation == AnimationOrientation.Right)
                     {
                         x = rect.Right + i * rect.Width;
                         y = (rect.Height - text_size.Height) / 2;
 
-                        target_x = rect.X + i * avg_w;
+                        target_x = rect.X + sum_x;
+
+                        sum_x += textItem.TextCharSize[i].Width;
                         target_y = y;
                     }
 
-                    textItem.TextChar[i] = textItem.Text.Substring(i, 1);
-                    textItem.prev_char_rectf[i] = new RectangleF(x, y, avg_w, text_size.Height);
+                    textItem.prev_char_rectf[i] = new RectangleF(x, y, textItem.TextCharSize[i].Width, textItem.TextCharSize[i].Height);
                     textItem.current_char_rectf[i] = textItem.prev_char_rectf[i];
-                    textItem.target_char_rectf[i] = new RectangleF(target_x, target_y, avg_w, text_size.Height);
+                    textItem.target_char_rectf[i] = new RectangleF(target_x, target_y, textItem.TextCharSize[i].Width, textItem.TextCharSize[i].Height);
                 }
             }
             #endregion
             #region SpeedSpringback
             else if (textItem.Style == AnimationStyle.SpeedSpringback)
             {
-                textItem.TextCharAvgWidth = text_size.Width / len;
+              //  textItem.TextCharAvgWidth = sum_w / len;
 
                 textItem.TextChar = new string[len];
+                textItem.TextCharSize = new SizeF[len];
+                for (int i = 0; i < textItem.TextChar.Length; i++)
+                {
+                    textItem.TextChar[i] = textItem.Text.Substring(i, 1);
+                    textItem.TextCharSize[i] = g.MeasureString(textItem.TextChar[i], textItem.TextFont, 1000, StringFormat.GenericTypographic);
+                    sum_w += textItem.TextCharSize[i].Width;
+                }
                 textItem.prev_char_rectf = new RectangleF[len];
                 textItem.current_char_rectf = new RectangleF[len];
                 textItem.target_char_rectf = new RectangleF[len];
+
+                float sum_x = 0;
                 for (int i = 0; i < len; i++)
                 {
                     float x = 0;
@@ -975,11 +1031,11 @@ namespace WinformControlLibraryExtension
                     float target_y = 0;
                     if (textItem.Orientation == AnimationOrientation.Top)
                     {
-                        float tmp_x = rect.X + i * avg_w;
+                        float tmp_x = rect.X + sum_x;
                         x = tmp_x;
                         if (textItem.TextCenter)
                         {
-                            x = tmp_x + (rect.Width - text_size.Width) / 2;
+                            x = tmp_x + (rect.Width - sum_w) / 2;
                             if (x < tmp_x)
                                 x = tmp_x;
                         }
@@ -987,14 +1043,16 @@ namespace WinformControlLibraryExtension
 
                         target_x = x;
                         target_y = (rect.Height - text_size.Height) / 2;
+
+                        sum_x += textItem.TextCharSize[i].Width;
                     }
                     else if (textItem.Orientation == AnimationOrientation.Bottom)
                     {
-                        float tmp_x = rect.X + i * avg_w;
+                        float tmp_x = rect.X + sum_x;
                         x = tmp_x;
                         if (textItem.TextCenter)
                         {
-                            x = tmp_x + (rect.Width - text_size.Width) / 2;
+                            x = tmp_x + (rect.Width - sum_w) / 2;
                             if (x < tmp_x)
                                 x = tmp_x;
                         }
@@ -1002,20 +1060,23 @@ namespace WinformControlLibraryExtension
 
                         target_x = x;
                         target_y = (rect.Height - text_size.Height) / 2;
+
+                        sum_x += textItem.TextCharSize[i].Width;
                     }
                     else if (textItem.Orientation == AnimationOrientation.Right)
                     {
                         x = rect.Right + i * avg_w * 3;
                         y = (rect.Height - text_size.Height) / 2;
 
-                        target_x = rect.X + i * avg_w;
+                        target_x = rect.X + sum_x;
                         target_y = y;
+
+                        sum_x += textItem.TextCharSize[i].Width;
                     }
 
-                    textItem.TextChar[i] = textItem.Text.Substring(i, 1);
-                    textItem.prev_char_rectf[i] = new RectangleF(x, y, avg_w, text_size.Height);
+                    textItem.prev_char_rectf[i] = new RectangleF(x, y, textItem.TextCharSize[i].Width, textItem.TextCharSize[i].Height);
                     textItem.current_char_rectf[i] = textItem.prev_char_rectf[i];
-                    textItem.target_char_rectf[i] = new RectangleF(target_x, target_y, avg_w, text_size.Height);
+                    textItem.target_char_rectf[i] = new RectangleF(target_x, target_y, textItem.TextCharSize[i].Width, textItem.TextCharSize[i].Height);
                 }
             }
             #endregion
@@ -1560,6 +1621,22 @@ namespace WinformControlLibraryExtension
                 set
                 {
                     this.textChar = value;
+                }
+            }
+
+            private SizeF[] textCharSize = null;
+            /// <summary>
+            /// 文本每个字符Size
+            [Browsable(false)]
+            [DefaultValue(null)]
+            [Description("文本每个字符Size")]
+            [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+            public SizeF[] TextCharSize
+            {
+                get { return this.textCharSize; }
+                set
+                {
+                    this.textCharSize = value;
                 }
             }
 
