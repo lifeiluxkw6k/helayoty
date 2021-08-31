@@ -9,6 +9,10 @@ qq交流群： **180744253**
 
 #### 版本更新历史：
 
+**4.7.1.7       [2021-04-07]**  
+WinformControlLibraryExtension  
+ 修复   TextCarouselExt.cs 文本显示不全问题     
+
 **4.7.1.6       [2021-04-07]**  
 WinformControlLibraryExtension  
  修复   TabControlExt控件删除按钮只删除最后一个的问题      
