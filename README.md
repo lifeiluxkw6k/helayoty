@@ -9,6 +9,10 @@ qq交流群： **180744253**
 
 #### 版本更新历史：
 
+**4.7.1.8       [2021-04-012]**  
+WinformControlLibraryExtension  
+ 修复   TextCarouselExt.cs 文本显示位置问题       
+
 **4.7.1.7       [2021-04-09]**  
 WinformControlLibraryExtension  
  修复   TextCarouselExt.cs 文本显示不全问题     

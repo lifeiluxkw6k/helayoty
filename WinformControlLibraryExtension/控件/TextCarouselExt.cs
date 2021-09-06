@@ -835,6 +835,7 @@ namespace WinformControlLibraryExtension
             }
             this.enableTextList = new_enableImageList;
             old_enableImageList.Clear();
+            InitializeTextRectangles();
         }
 
         /// <summary>
