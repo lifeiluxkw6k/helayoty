@@ -8,7 +8,12 @@ qq交流群： **180744253**
 # 花木兰控件库(开源)
 
 #### 版本更新历史：
-
+  
+**4.7.1.9       [2021-05-07]**   
+WinformControlLibraryExtension   
+WinformDemo    
+修改了TabControlExt.cs 部分选项可以不显示关闭按钮，这个只是临时做法。  
+  
 **4.7.1.8       [2021-04-012]**  
 WinformControlLibraryExtension  
  修复   TextCarouselExt.cs 文本显示位置问题       

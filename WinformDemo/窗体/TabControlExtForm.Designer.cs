@@ -406,6 +406,7 @@
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Size = new System.Drawing.Size(322, 136);
             this.tabPage2.TabIndex = 1;
+            this.tabPage2.Tag = "不显示关闭按钮";
             this.tabPage2.Text = "标题二";
             // 
             // label1
