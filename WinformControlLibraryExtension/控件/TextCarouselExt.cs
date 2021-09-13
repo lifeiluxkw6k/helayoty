@@ -83,6 +83,27 @@ namespace WinformControlLibraryExtension
             remove { this.indexChanged -= value; }
         }
 
+
+        /// <summary>
+        /// 当前正在播放文本选项索引更改事件参数
+        /// </summary>
+        [Description("当前正在播放文本选项索引更改事件参数")]
+        public class AdddeleteEventArgs : EventArgs
+        {
+            public string Index { get; set; }
+        }
+        public delegate void AdddeleteEventHandler(object sender, AdddeleteEventArgs e);
+
+        private event AdddeleteEventHandler adddelete;
+        /// <summary>
+        /// 当前正在播放文本选项索引更改事件
+        /// </summary>
+        [Description("当前正在播放文本选项索引更改事件")]
+        public event AdddeleteEventHandler Adddelete
+        {
+            add { this.adddelete += value; }
+            remove { this.adddelete -= value; }
+        }
         #endregion
 
         #region 停用事件
@@ -201,27 +222,16 @@ namespace WinformControlLibraryExtension
             }
         }
 
-        int currentIndex = -1;
+        int currentEnableIndex = -1;
         /// <summary>
         ///当前正在播放文本选项索引 
         /// </summary>
         [Browsable(false)]
         [DefaultValue(-1)]
         [Description("当前正在播放文本选项索引")]
-        public int CurrentIndex
+        public int CurrentEnableIndex
         {
-            get { return this.currentIndex; }
-            set
-            {
-                if (this.currentIndex == value || value < 0 || value >= this.enableTextList.Count)
-                    return;
-                this.currentIndex = value;
-
-                if (!this.DesignMode)
-                {
-                    this.OnIndexChanged(new IndexChangedEventArgs() { Index = this.currentIndex, Item = this.Items[this.GetEnableTextRealityIndex(this.currentIndex)] });
-                }
-            }
+            get { return this.currentEnableIndex; }
         }
 
         private TextItemCollection textItemCollection;
@@ -393,32 +403,25 @@ namespace WinformControlLibraryExtension
         #region 字段
 
         /// <summary>
-        /// 文本选项轮播的时间间隔累计(-1为动画正在切换中)(-2出现后停留中)
+        /// 动画播放器状态
         /// </summary>
-        private int intervalTimeValue = 0;
+        private AnimationStatuss AnimationStatus = AnimationStatuss.None;
+        /// <summary>
+        /// 存放已启用Item索引集合
+        /// </summary>
+        private List<int> enableList = new List<int>();
         /// <summary>
         /// 文本选项播放时间间隔定时器
         /// </summary>
-        private Timer intervalTimer;
-        /// <summary>
-        /// 文本选项出现后停留时间累计
-        /// </summary>
-        private int remainTimeValue = 0;
+        private Timer itemTimer;
         /// <summary>
         /// 动画播放定时器
         /// </summary>
-        private AnimationTimer animation;
-
+        private AnimationTimer animationTimer;
         /// <summary>
-        /// 已启用文本索引集合
+        /// 文本选项出现后停留时间累计
         /// </summary>
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        private List<int> enableTextList = new List<int>();
-
-        /// <summary>
-        /// 控件是否开始播放功能
-        /// </summary>
-        private bool allowPlay = false;
+        private int awaitTimeValue = 0;
 
         #endregion
 
@@ -440,18 +443,17 @@ namespace WinformControlLibraryExtension
             SetStyle(ControlStyles.ResizeRedraw, true);
             SetStyle(ControlStyles.SupportsTransparentBackColor, true);
 
-            this.LoadEnableTextIndex();
-            this.InitializeTextRectangles();
+            this.InitializeEnableItemIndex();
 
             if (!this.DesignMode)
             {
-                this.intervalTimer = new Timer();
-                this.intervalTimer.Interval = 50;
-                this.intervalTimer.Tick += new EventHandler(this.intervalTimer_Tick);
+                this.itemTimer = new Timer();
+                this.itemTimer.Interval = 50;
+                this.itemTimer.Tick += new EventHandler(this.itemTimer_Tick);
 
-                this.animation = new AnimationTimer(this, new AnimationOptions() { EveryNewTimer = false });
-                this.animation.Animationing += new AnimationTimer.AnimationEventHandler(this.animationTimer_Animationing);
-                this.animation.AnimationEnding += new AnimationTimer.AnimationEventHandler(this.animationTimer_AnimationEnding);
+                this.animationTimer = new AnimationTimer(this, new AnimationOptions() { EveryNewTimer = false });
+                this.animationTimer.Animationing += new AnimationTimer.AnimationEventHandler(this.animationTimer_Animationing);
+                this.animationTimer.AnimationEnding += new AnimationTimer.AnimationEventHandler(this.animationTimer_AnimationEnding);
             }
         }
 
@@ -460,14 +462,22 @@ namespace WinformControlLibraryExtension
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
+
+            if (this.DesignMode)
+                return;
+
             Graphics g = e.Graphics;
 
-            if (this.enableTextList.Count < 0 || this.CurrentIndex < 0)
+            if (this.AnimationStatus == AnimationStatuss.Stop || this.AnimationStatus == AnimationStatuss.None || this.enableList.Count < 0 || this.currentEnableIndex < 0 || this.currentEnableIndex < 0)
             {
                 goto border;
             }
 
-            TextItem textItem = this.Items[this.GetEnableTextRealityIndex(this.CurrentIndex)];
+            TextItem textItem = this.GetItemByEnableIndex(this.currentEnableIndex);
+            if (textItem == null)
+            {
+                goto border;
+            }
 
             #region Scroll
             if (textItem.Style == AnimationStyle.Scroll)
@@ -561,13 +571,14 @@ namespace WinformControlLibraryExtension
             }
 
             #endregion
+
         }
 
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
 
-            this.InitializeTextRectangles();
+            this.InitializeTextRectangle(this.GetItemByEnableIndex(this.currentEnableIndex));
         }
 
         /// <summary> 
@@ -578,10 +589,10 @@ namespace WinformControlLibraryExtension
         {
             if (disposing)
             {
-                if (this.intervalTimer != null)
-                    this.intervalTimer.Dispose();
-                if (this.animation != null)
-                    this.animation.Dispose();
+                if (this.itemTimer != null)
+                    this.itemTimer.Dispose();
+                if (this.animationTimer != null)
+                    this.animationTimer.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -607,27 +618,30 @@ namespace WinformControlLibraryExtension
         /// </summary>
         public void Play()
         {
-            if (!this.Enabled)
-                return;
-
-            if (this.CurrentIndex == -1)
-                this.CurrentIndex = 0;
-
-            this.StartIntervalTimer();
+            if (this.enableList.Count > 0)
+            {
+                this.currentEnableIndex = 0;
+                this.Play(this.currentEnableIndex);
+            }
+            else
+            {
+                this.currentEnableIndex = -1;
+            }
         }
 
         /// <summary>
         /// 指定索引开始播放
         /// </summary>
-        /// <param name="index"></param>
-        public void Play(int index)
+        /// <param name="enableIndex">启用列表中的Enable索引</param>
+        public void Play(int enableIndex)
         {
-            if (!this.Enabled)
+            if (this.Enabled == false || this.DesignMode)
                 return;
 
-            this.allowPlay = true;
-            this.intervalTimer.Enabled = true;
-            this.CurrentIndex = index;
+            this.itemTimer.Enabled = true;
+            this.AnimationStatus = AnimationStatuss.Prepare;
+            this.currentEnableIndex = enableIndex;
+            this.UpdateEnableIndexPlay(this.currentEnableIndex);
         }
 
         /// <summary>
@@ -635,29 +649,97 @@ namespace WinformControlLibraryExtension
         /// </summary>
         public void Stop()
         {
-            this.StopIntervalTimer();
+            this.AnimationStatus = AnimationStatuss.Stop;
+            if (this.itemTimer != null)
+            {
+                this.itemTimer.Enabled = false;
+            }
+            this.animationTimer.Stop();
         }
 
         /// <summary>
-        /// 获取启用的文本列表中文本真实索引值
+        /// 获取Item索引根据Enable索引从启用列表中查找
         /// </summary>
-        /// <param name="index">在启用的文本列表中的索引</param>
-        /// <returns></returns>
-        public int GetEnableTextRealityIndex(int index)
+        /// <param name="enableIndex">启用列表中的Enable索引</param>
+        /// <returns>找不到返回-1</returns>
+        public int GetItemIndexByEnableIndex(int enableIndex)
         {
-            if (index < 0 || index >= this.enableTextList.Count)
+            if (enableIndex < 0 || enableIndex >= this.enableList.Count)
                 return -1;
-            return this.enableTextList[index];
+            return this.enableList[enableIndex];
         }
 
         /// <summary>
-        /// 获取所有已启用的文本列表索引
+        /// 获取Item根据Enable索引从启用列表中查找
         /// </summary>
-        public List<int> GetEnableTextsIndex()
+        /// <param name="enableIndex"></param>
+        /// <returns></returns>
+        public TextItem GetItemByEnableIndex(int enableIndex)
+        {
+            TextItem item = null;
+            if (enableIndex > -1)
+            {
+                item = this.Items[this.GetItemIndexByEnableIndex(enableIndex)];
+            }
+            return item;
+        }
+
+        /// <summary>
+        /// 获取所有Item索引从启用列表中查找
+        /// </summary>
+        public List<int> GetAllItemIndex()
         {
             List<int> resultList = new List<int>();
-            this.enableTextList.ForEach(a => resultList.Add(a));
+            this.enableList.ForEach(a => resultList.Add(a));
             return resultList;
+        }
+
+        /// <summary>
+        /// 获取Enable索引根据Item索引从启用列表中查找
+        /// </summary>
+        /// <param name="itemIndex">启用列表中Item索引</param>
+        /// <returns>找不到返回-1</returns>
+        public int GetEnableIndexByItemIndex(int itemIndex)
+        {
+            for (int i = 0; i < this.enableList.Count; i++)
+            {
+                if (this.enableList[i] == itemIndex)
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        /// <summary>
+        /// 获取所有Enable索引从启用列表中查找
+        /// </summary>
+        public List<int> GetAllEnableIndex()
+        {
+            List<int> resultList = new List<int>();
+            for (int i = 0; i < this.enableList.Count; i++)
+            {
+                resultList.Add(i);
+            }
+            return resultList;
+        }
+
+        /// <summary>
+        /// 获取验证后文本在已启用文本列表的索引
+        /// </summary>
+        /// <param name="enableIndex">已启用图片列表的索引</param>
+        /// <returns></returns>
+        public int ValidTextEnableIndex(int enableIndex)
+        {
+            while (enableIndex >= this.enableList.Count)
+            {
+                enableIndex -= this.enableList.Count;
+            }
+            while (enableIndex < 0)
+            {
+                enableIndex += this.enableList.Count;
+            }
+            return enableIndex;
         }
 
         #endregion
@@ -665,87 +747,62 @@ namespace WinformControlLibraryExtension
         #region 私有方法
 
         /// <summary>
-        /// 动画开始事件
+        /// 选项轮播定时器事件
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void intervalTimer_Tick(object sender, EventArgs e)
+        private void itemTimer_Tick(object sender, EventArgs e)
         {
-            if (this.CurrentIndex < 0)
+            if (this.DesignMode)
                 return;
 
-            #region 第一步检查动画是否为进行中
-            if (this.intervalTimeValue == -1)//动画进行中
-                return;
-            #endregion
-
-            int index = this.GetEnableTextRealityIndex(this.CurrentIndex);
-
-            #region 第二步检查文本是否为动画完成后停留中
-            if (this.intervalTimeValue == -2)//停留中
+            //没有要播放的内容时停止所有的定时器
+            if (this.AnimationStatus == AnimationStatuss.Stop || this.AnimationStatus == AnimationStatuss.None || this.enableList.Count < 1 || this.currentEnableIndex < 0)
             {
-                this.remainTimeValue += this.intervalTimer.Interval;
-                if (this.remainTimeValue < this.Items[index].RemainTime * 1000)
+                this.itemTimer.Enabled = false;
+                animationTimer.Stop();
+                return;
+            }
+
+            //进入播放
+            if (this.AnimationStatus == AnimationStatuss.Prepare)
+            {
+                int index = this.GetItemIndexByEnableIndex(this.currentEnableIndex);
+                this.StartPlayItem(this.currentEnableIndex, 1);
+            }
+
+            //动画进行中
+            if (this.AnimationStatus == AnimationStatuss.Paly)
+            {
+                return;
+            }
+
+            //静止中
+            if (this.AnimationStatus == AnimationStatuss.Await)
+            {
+                this.awaitTimeValue += this.itemTimer.Interval;
+                int index = this.GetItemIndexByEnableIndex(this.currentEnableIndex);
+                if (this.awaitTimeValue < this.Items[index].AwaitTime * 1000)
                 {
                     return;
                 }
-                this.remainTimeValue = 0;
-                this.intervalTimeValue = 0;
-            }
-            #endregion
+                else
+                {
+                    this.awaitTimeValue = 0;
+                    if (this.Items[index].CurrentRepetition < this.Items[index].Repetition)//重复播放
+                    {
+                        StartPlayItem(this.currentEnableIndex, this.Items[index].CurrentRepetition + 1);
+                        return;
+                    }
+                    else//播放下一个选项
+                    {
+                        this.UpdateEnableIndexPlay(this.ValidTextEnableIndex(this.currentEnableIndex + 1));
+                    }
+                }
 
-            #region 第三步检查是否要进行重复播放
-            if (this.Items[index].CurrentRepetition < this.Items[index].Repetition)
-            {
-                this.Items[index].CurrentRepetition += 1;
-                goto DH;
-            }
-            else
-            {
-                this.Items[index].CurrentRepetition = 0;
-                this.CurrentIndex = this.ValidTextEnableIndex(this.CurrentIndex + 1);
-            }
-            #endregion
 
-            #region  第四步检查是否是时间进入下一个文本选项动画播放
-            this.intervalTimeValue += this.intervalTimer.Interval;
-            if (this.intervalTimeValue < this.IntervalTime)
-            {
-                return;
-            }
-            else
-            {
-                this.Items[this.GetEnableTextRealityIndex(this.CurrentIndex)].CurrentRepetition += 1;
-            }
-        #endregion
-
-        #region 播放动画
-        DH:
-            this.intervalTimeValue = -1;
-            TextItem textItem = this.Items[this.GetEnableTextRealityIndex(this.CurrentIndex)];
-            this.animation.Options.Data = textItem;
-
-            if (textItem.Style == AnimationStyle.Scroll)
-            {
-                this.animation.AnimationType = AnimationTypes.UniformMotion;
-                this.animation.Options.Power = 3;
-                this.animation.Options.AllTransformTime = 100f * (textItem.Orientation == AnimationOrientation.Right ? (float)textItem.prev_rectf.Width : (float)textItem.prev_rectf.Height);//动画时间由文字长度决定，速度为每个像素使用50毫秒
-            }
-            else if (textItem.Style == AnimationStyle.Speed)
-            {
-                this.animation.AnimationType = AnimationTypes.EaseOut;
-                this.animation.Options.AllTransformTime = textItem.TextChar.Length * 100;
-                this.animation.Options.AllTransformTime = 1000d;
-            }
-            else if (textItem.Style == AnimationStyle.SpeedSpringback)
-            {
-                this.animation.AnimationType = AnimationTypes.BackOut;
-                this.animation.Options.Power = 1;
-                this.animation.Options.AllTransformTime = 1000d;
             }
 
-            this.animation.Start(AnimationIntervalTypes.Add, 0);
-            #endregion
         }
 
         /// <summary>
@@ -755,6 +812,12 @@ namespace WinformControlLibraryExtension
         /// <param name="e"></param>
         protected void animationTimer_Animationing(object sender, AnimationEventArgs e)
         {
+            if (this.AnimationStatus == AnimationStatuss.None)
+            {
+                this.animationTimer.Stop();
+                return;
+            }
+
             TextItem textItem = (TextItem)e.Data;
 
             if (textItem.Style == AnimationStyle.Scroll)
@@ -816,48 +879,102 @@ namespace WinformControlLibraryExtension
         /// <param name="e"></param>
         protected void animationTimer_AnimationEnding(object sender, AnimationEventArgs e)
         {
-            this.intervalTimeValue = -2;
+            if (this.enableList.Count < 1 || this.currentEnableIndex < 0)
+            {
+                this.AnimationStatus = AnimationStatuss.None;
+            }
+            else
+            {
+                this.AnimationStatus = AnimationStatuss.Await;
+            }
         }
 
         /// <summary>
-        /// 加载已启用文本索引集合
+        /// 开始播放指定选项
         /// </summary>
-        internal void LoadEnableTextIndex()
+        /// <param name="enableIndex">启用列表中Item索引</param>
+        /// <param name="currentRepetition">文本选项在单次循环轮播中当前的重复次数</param>
+        private void StartPlayItem(int enableIndex, int currentRepetition)
         {
-            List<int> old_enableImageList = this.enableTextList;
-            List<int> new_enableImageList = new List<int>();
+            if (this.Enabled == false || this.AnimationStatus == AnimationStatuss.Stop || this.DesignMode)
+                return;
+
+            if (this.AnimationStatus == AnimationStatuss.None)
+            {
+                this.itemTimer.Enabled = true;
+                this.AnimationStatus = AnimationStatuss.Prepare;
+            }
+
+            this.animationTimer.Stop();
+            this.AnimationStatus = AnimationStatuss.Paly;
+
+            TextItem textItem = this.Items[this.GetItemIndexByEnableIndex(enableIndex)];
+            textItem.CurrentRepetition = currentRepetition;
+            this.InitializeTextRectangle(textItem);
+
+            this.animationTimer.Options.Data = textItem;
+
+            if (textItem.Style == AnimationStyle.Scroll)
+            {
+                this.animationTimer.AnimationType = AnimationTypes.UniformMotion;
+                this.animationTimer.Options.Power = 3;
+                this.animationTimer.Options.AllTransformTime = 100f * (textItem.Orientation == AnimationOrientation.Right ? (float)textItem.prev_rectf.Width : (float)textItem.prev_rectf.Height);//动画时间由文字长度决定，速度为每个像素使用50毫秒
+            }
+            else if (textItem.Style == AnimationStyle.Speed)
+            {
+                this.animationTimer.AnimationType = AnimationTypes.EaseOut;
+                this.animationTimer.Options.AllTransformTime = textItem.TextChar.Length * 100;
+                this.animationTimer.Options.AllTransformTime = 1000d;
+            }
+            else if (textItem.Style == AnimationStyle.SpeedSpringback)
+            {
+                this.animationTimer.AnimationType = AnimationTypes.BackOut;
+                this.animationTimer.Options.Power = 1;
+                this.animationTimer.Options.AllTransformTime = 1000d;
+            }
+
+            this.animationTimer.Start(AnimationIntervalTypes.Add, 0);
+        }
+
+        /// <summary>
+        /// 初始化所有已启用的Item索引到启用列表中
+        /// </summary>
+        private void InitializeEnableItemIndex()
+        {
+            List<int> old_enableList = this.enableList;
+            List<int> new_enableList = new List<int>();
             for (int i = 0; i < this.Items.Count; i++)
             {
                 if (this.Items[i].Enable)
                 {
-                    new_enableImageList.Add(i);
+                    new_enableList.Add(i);
                 }
             }
-            this.enableTextList = new_enableImageList;
-            old_enableImageList.Clear();
-            InitializeTextRectangles();
+            this.enableList = new_enableList;
+            old_enableList.Clear();
         }
 
         /// <summary>
-        /// 初始化播放前每一段文本rect
+        /// 初始化所有选项文本rect
         /// </summary>
         private void InitializeTextRectangles()
         {
             IntPtr hDC = GetWindowDC(this.Handle);
             Graphics g = Graphics.FromHdc(hDC);
 
-            for (int i = 0; i < this.enableTextList.Count; i++)
+            for (int i = 0; i < this.enableList.Count; i++)
             {
-                this.InitializeTextRectangle(this.Items[this.enableTextList[i]], g);
+                this.InitializeTextRectangle(this.Items[this.enableList[i]], g);
             }
 
             g.Dispose();
             ReleaseDC(this.Handle, hDC);
         }
+
         /// <summary>
-        /// 初始化文本rect
+        /// 初始化指定选项文本rect
         /// </summary>
-        /// <param name="textItem"></param>
+        /// <param name="textItem">指定选项</param>
         private void InitializeTextRectangle(TextItem textItem)
         {
             IntPtr hDC = GetWindowDC(this.Handle);
@@ -934,7 +1051,7 @@ namespace WinformControlLibraryExtension
             #region Speed
             else if (textItem.Style == AnimationStyle.Speed)
             {
-               // textItem.TextCharAvgWidth = text_size.Width / len;
+                // textItem.TextCharAvgWidth = text_size.Width / len;
 
                 textItem.TextChar = new string[len];
                 textItem.TextCharSize = new SizeF[len];
@@ -1009,7 +1126,7 @@ namespace WinformControlLibraryExtension
             #region SpeedSpringback
             else if (textItem.Style == AnimationStyle.SpeedSpringback)
             {
-              //  textItem.TextCharAvgWidth = sum_w / len;
+                //  textItem.TextCharAvgWidth = sum_w / len;
 
                 textItem.TextChar = new string[len];
                 textItem.TextCharSize = new SizeF[len];
@@ -1085,42 +1202,47 @@ namespace WinformControlLibraryExtension
         }
 
         /// <summary>
-        /// 获取验证后文本在已启用文本列表的索引
+        /// 通过设置启用列表中的Enable索引来播放(触发OnIndexChanged事件)
         /// </summary>
-        /// <param name="index">已启用图片列表的索引</param>
-        /// <returns></returns>
-        private int ValidTextEnableIndex(int index)
+        /// <param name="enableIndex">启用列表中的Enable索引</param>
+        private void UpdateEnableIndexPlay(int enableIndex)
         {
-            while (index >= this.enableTextList.Count)
-                index -= this.enableTextList.Count;
-            while (index < 0)
-                index += this.enableTextList.Count;
-            return index;
+            this.currentEnableIndex = enableIndex;
+            if (!this.DesignMode)
+            {
+                this.OnIndexChanged(new IndexChangedEventArgs() { Index = this.currentEnableIndex, Item = this.GetItemByEnableIndex(this.currentEnableIndex) });
+            }
+
+            if (this.AnimationStatus == AnimationStatuss.Stop)
+            {
+                return;
+            }
+
+            this.StartPlayItem(this.currentEnableIndex, 1);
         }
 
         /// <summary>
-        /// 开始动画间隔定时器
+        /// 执行OnIndexChanged方法
         /// </summary>
-        private void StartIntervalTimer()
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        private void ExecuteIndexChanged()
         {
-            if (!this.allowPlay)
+            if (!this.DesignMode)
             {
-                this.allowPlay = true;
-                this.intervalTimer.Enabled = true;
-                this.intervalTimeValue = -2;
+                this.OnIndexChanged(new IndexChangedEventArgs() { Index = this.currentEnableIndex, Item = this.GetItemByEnableIndex(this.currentEnableIndex) });
             }
         }
 
-        /// <summary>
-        /// 停止动画间隔定时器
-        /// </summary>
-        private void StopIntervalTimer()
+        private void test()
         {
-            if (this.allowPlay)
+            if (this.adddelete != null)
             {
-                this.allowPlay = false;
-                this.intervalTimer.Enabled = false;
-                this.intervalTimeValue = -2;
+                List<int> vv = new List<int>();
+                for (int i = 0; i < this.enableList.Count; i++)
+                {
+                    vv.Add(this.enableList[i] + 1);
+                }
+                this.adddelete(this, new AdddeleteEventArgs() { Index = String.Join("_", vv) });
             }
         }
 
@@ -1132,7 +1254,7 @@ namespace WinformControlLibraryExtension
         /// 文本选项集合
         /// </summary>
         [Description("文本选项集合")]
-        [Editor(typeof(CollectionEditorExt), typeof(UITypeEditor))]
+        [Editor(typeof(TextCarouselCollectionEditorExt), typeof(UITypeEditor))]
         public class TextItemCollection : IList, ICollection, IEnumerable
         {
             private ArrayList textItemList = new ArrayList();
@@ -1195,13 +1317,14 @@ namespace WinformControlLibraryExtension
 
             #region IList
 
-            public int Add(object value)
+            public int Add(object item)
             {
-                if (!(value is TextItem))
+                if (!(item is TextItem))
                 {
                     throw new ArgumentException("TextItem");
                 }
-                return this.Add((TextItem)value);
+
+                return this.Add((TextItem)item);
             }
 
             public int Add(TextItem item)
@@ -1210,36 +1333,84 @@ namespace WinformControlLibraryExtension
                 {
                     throw new ArgumentNullException("item");
                 }
+
                 item.owner = owner;
                 this.textItemList.Add(item);
-                if (item.Enable)
+
+                if (this.owner != null)
                 {
-                    this.owner.LoadEnableTextIndex();
+                    #region
+
+                    int _currentItemIndex = this.owner.GetItemIndexByEnableIndex(this.owner.currentEnableIndex);//当前Item索引
+                    int itemIndex = this.owner.Items.IndexOf(item);
+
+                    if (item.Enable)
+                    {
+                        if (this.owner.AnimationStatus == AnimationStatuss.None)//新增选项并播放
+                        {
+                            this.owner.InitializeEnableItemIndex();
+                            this.owner.currentEnableIndex = 0;
+                            this.owner.UpdateEnableIndexPlay(this.owner.currentEnableIndex);
+                        }
+
+                        if (itemIndex <= _currentItemIndex)//新选项插入到当前播放选项为值或前面时更新当前播放选项Enable索引
+                        {
+                            this.owner.InitializeEnableItemIndex();
+                            this.owner.currentEnableIndex += 1;
+                        }
+                        else//只把选项添加到启用列表中
+                        {
+                            this.owner.InitializeEnableItemIndex();
+                        }
+                    }
+                    else
+                    {
+                        if (itemIndex <= _currentItemIndex)//只更新当选播放选项Enable索引
+                        {
+                            this.owner.currentEnableIndex += 1;
+                        }
+                    }
+
+                    #endregion
+
+                    this.owner.test();
+                    this.owner.Invalidate();
                 }
-                this.owner.InitializeTextRectangle(item);
-                this.owner.Invalidate();
+
                 return this.Count - 1;
             }
 
             public void Clear()
             {
                 this.textItemList.Clear();
-                this.owner.LoadEnableTextIndex();
-                this.owner.Invalidate();
+                if (this.owner != null)
+                {
+                    this.owner.InitializeEnableItemIndex();
+                    this.owner.currentEnableIndex = -1;
+                    if (!this.owner.DesignMode)
+                    {
+                        this.owner.OnIndexChanged(new IndexChangedEventArgs() { Index = this.owner.currentEnableIndex, Item = this.owner.GetItemByEnableIndex(this.owner.currentEnableIndex) });
+                        this.owner.itemTimer.Enabled = false;
+                        this.owner.animationTimer.Stop();
+                    }
+                    this.owner.AnimationStatus = AnimationStatuss.None;
+                    this.owner.test();
+                    this.owner.Invalidate();
+                }
             }
 
-            public bool Contains(object value)
+            public bool Contains(object item)
             {
-                if (value == null)
+                if (item == null)
                     throw new ArgumentNullException("value");
-                return this.IndexOf(value) != -1;
+                return this.IndexOf(item) != -1;
             }
 
             bool IList.Contains(object item)
             {
                 if (item is TextItem)
                 {
-                    return this.Contains((TextItem)item);
+                    return this.Contains(item);
                 }
                 return false;
             }
@@ -1253,9 +1424,86 @@ namespace WinformControlLibraryExtension
                 return -1;
             }
 
-            public void Insert(int index, object value)
+            public void Insert(int index, object item)
             {
-                throw new NotImplementedException();
+                this.Insert(index, (TextItem)item);
+            }
+
+            public void Insert(int index, TextItem item)
+            {
+                ArrayList textItemList_tmp = new ArrayList();
+                if (index == 0)
+                {
+                    textItemList_tmp.Add(item);
+                    for (int i = 0; i < this.textItemList.Count; i++)
+                    {
+                        textItemList_tmp.Add(this.textItemList[i]);
+                    }
+                    this.textItemList = textItemList_tmp;
+                }
+                else if (index < this.textItemList.Count)
+                {
+                    for (int i = 0; i < index; i++)
+                    {
+                        textItemList_tmp.Add(this.textItemList[i]);
+                    }
+                    textItemList_tmp.Add(item);
+                    for (int i = index; i < this.textItemList.Count; i++)
+                    {
+                        textItemList_tmp.Add(this.textItemList[i]);
+                    }
+                    this.textItemList = textItemList_tmp;
+                }
+                else
+                {
+                    for (int i = 0; i < this.textItemList.Count; i++)
+                    {
+                        textItemList_tmp.Add(this.textItemList[i]);
+                    }
+                    textItemList_tmp.Add(item);
+                    this.textItemList = textItemList_tmp;
+                }
+
+                item.owner = owner;
+                if (this.owner != null)
+                {
+                    #region
+
+                    int _currentItemIndex = this.owner.GetItemIndexByEnableIndex(this.owner.currentEnableIndex);//当前Item索引
+                    int itemIndex = this.owner.Items.IndexOf(item);
+
+                    if (item.Enable)
+                    {
+                        if (this.owner.AnimationStatus == AnimationStatuss.None)//新增选项并播放
+                        {
+                            this.owner.InitializeEnableItemIndex();
+                            this.owner.currentEnableIndex = 0;
+                            this.owner.UpdateEnableIndexPlay(this.owner.currentEnableIndex);
+                        }
+
+                        if (itemIndex <= _currentItemIndex)//新选项插入到当前播放选项为值或前面时更新当前播放选项Enable索引
+                        {
+                            this.owner.InitializeEnableItemIndex();
+                            this.owner.currentEnableIndex += 1;
+                        }
+                        else//只把选项添加到启用列表中
+                        {
+                            this.owner.InitializeEnableItemIndex();
+                        }
+                    }
+                    else
+                    {
+                        if (itemIndex <= _currentItemIndex)//只更新当选播放选项Enable索引
+                        {
+                            this.owner.currentEnableIndex += 1;
+                        }
+                    }
+
+                    #endregion
+
+                    this.owner.test();
+                    this.owner.Invalidate();
+                }
             }
 
             public bool IsFixedSize
@@ -1268,27 +1516,112 @@ namespace WinformControlLibraryExtension
                 get { return false; }
             }
 
-            public void Remove(object value)
+            public void Remove(object item)
             {
-                if (!(value is TextItem))
+                if (!(item is TextItem))
                 {
                     throw new ArgumentException("TextItem");
                 }
-                this.Remove((TextItem)value);
+                this.Remove((TextItem)item);
             }
 
             public void Remove(TextItem item)
             {
-                this.textItemList.Remove((TextItem)item);
-                this.owner.LoadEnableTextIndex();
-                this.owner.Invalidate();
+                if (this.owner != null)
+                {
+                    #region
+
+                    int _currentItemIndex = this.owner.GetItemIndexByEnableIndex(this.owner.currentEnableIndex);//Item索引
+                    int itemIndex = this.owner.Items.IndexOf(item);
+
+                    this.textItemList.Remove(item);
+
+                    if (item.Enable)
+                    {
+                        if (itemIndex == _currentItemIndex)//移除正在播放选项
+                        {
+                            if (this.owner.enableList.Count > 1)//移除当前选项后列表还有其他选项等待播放
+                            {
+                                if (this.owner.currentEnableIndex == this.owner.enableList.Count - 1)//该选项为最后一个选项，接着播放第一个选项
+                                {
+                                    this.owner.InitializeEnableItemIndex();
+                                    this.owner.UpdateEnableIndexPlay(0);
+                                }
+                                else
+                                {
+                                    this.owner.InitializeEnableItemIndex();//接着播放下一个选项
+                                    this.owner.UpdateEnableIndexPlay(this.owner.ValidTextEnableIndex(this.owner.currentEnableIndex + 1));
+                                }
+                            }
+                            else//停止当前选项播放后停止播放器
+                            {
+                                this.owner.currentEnableIndex = -1;
+                                this.owner.InitializeEnableItemIndex();
+                                if (!this.owner.DesignMode)
+                                {
+                                    this.owner.OnIndexChanged(new IndexChangedEventArgs() { Index = this.owner.currentEnableIndex, Item = this.owner.GetItemByEnableIndex(this.owner.currentEnableIndex) });
+                                }
+
+                                this.owner.AnimationStatus = AnimationStatuss.None;
+                                if (!this.owner.DesignMode)
+                                {
+                                    this.owner.itemTimer.Enabled = false;
+                                    this.owner.animationTimer.Stop();
+                                }
+
+                                this.owner.Invalidate();
+                            }
+                        }
+                        else if (itemIndex < _currentItemIndex)//移除当前播放选项的前面选项，只更改当前选项的索引
+                        {
+                            this.owner.InitializeEnableItemIndex();
+                            this.owner.currentEnableIndex -= 1;
+                            if (this.owner.currentEnableIndex < -1)
+                            {
+                                this.owner.currentEnableIndex = -1;
+                            }
+                        }
+                        else//移除当前播放选项的后面选项，只更新启用列表选项
+                        {
+                            this.owner.InitializeEnableItemIndex();
+                        }
+                    }
+                    else
+                    {
+                        if (itemIndex < _currentItemIndex)//只更新当选播放选项Enable索引
+                        {
+                            this.owner.InitializeEnableItemIndex();
+                            this.owner.currentEnableIndex -= 1;
+                            if (this.owner.currentEnableIndex < -1)
+                            {
+                                this.owner.currentEnableIndex = -1;
+                            }
+                        }
+                        else//移除当前播放选项的后面选项，只更新启用列表选项
+                        {
+                            this.owner.InitializeEnableItemIndex();
+                        }
+                    }
+
+                    #endregion
+
+                    this.owner.test();
+                    this.owner.Invalidate();
+                }
+                else
+                {
+                    this.textItemList.Remove((TextItem)item);
+                }
+
             }
 
             public void RemoveAt(int index)
             {
-                this.textItemList.RemoveAt(index);
-                this.owner.LoadEnableTextIndex();
-                this.owner.Invalidate();
+                if (index < 0 || index >= this.textItemList.Count)
+                {
+                    return;
+                }
+                this.Remove(this.textItemList[index]);
             }
 
             public TextItem this[int index]
@@ -1320,10 +1653,10 @@ namespace WinformControlLibraryExtension
         }
 
         /// <summary>
-        /// 渐变颜色选项集合
+        /// 文本选项的渐变颜色选项集合
         /// </summary>
-        [Description("渐变颜色选项集合")]
-        [Editor(typeof(CollectionEditorExt), typeof(UITypeEditor))]
+        [Description("文本选项的渐变颜色选项集合")]
+        [Editor(typeof(TextCarouselColorItemCollectionEditorExt), typeof(UITypeEditor))]
         public class ColorItemCollection : IList, ICollection, IEnumerable
         {
             private ArrayList colorItemList = new ArrayList();
@@ -1385,13 +1718,13 @@ namespace WinformControlLibraryExtension
 
             #region IList
 
-            public int Add(object value)
+            public int Add(object item)
             {
-                if (!(value is ColorItem))
+                if (!(item is ColorItem))
                 {
                     throw new ArgumentException("ColorItem");
                 }
-                return this.Add((ColorItem)value);
+                return this.Add((ColorItem)item);
             }
 
             public int Add(ColorItem item)
@@ -1409,11 +1742,11 @@ namespace WinformControlLibraryExtension
                 this.colorItemList.Clear();
             }
 
-            public bool Contains(object value)
+            public bool Contains(object item)
             {
-                if (value == null)
+                if (item == null)
                     throw new ArgumentNullException("value");
-                return this.IndexOf(value) != -1;
+                return this.IndexOf(item) != -1;
             }
 
             bool IList.Contains(object item)
@@ -1434,7 +1767,7 @@ namespace WinformControlLibraryExtension
                 return -1;
             }
 
-            public void Insert(int index, object value)
+            public void Insert(int index, object item)
             {
                 throw new NotImplementedException();
             }
@@ -1449,18 +1782,18 @@ namespace WinformControlLibraryExtension
                 get { return false; }
             }
 
-            public void Remove(object value)
+            public void Remove(object item)
             {
-                if (!(value is ColorItem))
+                if (!(item is ColorItem))
                 {
                     throw new ArgumentException("ColorItem");
                 }
-                this.Remove((ColorItem)value);
+                this.Remove((ColorItem)item);
             }
 
             public void Remove(ColorItem item)
             {
-                this.colorItemList.Remove((ColorItem)item);
+                this.colorItemList.Remove(item);
             }
 
             public void RemoveAt(int index)
@@ -1506,10 +1839,10 @@ namespace WinformControlLibraryExtension
 
             private bool enable = true;
             /// <summary>
-            /// 文本选项是否参与轮播
+            /// 文本选项是否启用
             /// </summary>
             [DefaultValue(true)]
-            [Description("文本选项是否参与轮播")]
+            [Description("文本选项是否启用")]
             public bool Enable
             {
                 get { return this.enable; }
@@ -1517,11 +1850,125 @@ namespace WinformControlLibraryExtension
                 {
                     if (this.enable == value)
                         return;
-                    this.enable = value;
-                    if (this.owner != null)
+
+                    if (value == true)
                     {
-                        this.owner.LoadEnableTextIndex();
+                        if (this.owner != null)
+                        {
+                            int _currentItemIndex = this.owner.GetItemIndexByEnableIndex(this.owner.currentEnableIndex);//Item索引
+                            int _itemIndex = this.owner.Items.IndexOf(this);
+
+                            if (this.owner.enableList.Count > 0)//启用列表中有正在播放的选项
+                            {
+                                if (_itemIndex <= _currentItemIndex)//把当前播放选项前面的选项启用,只修改当前播放选索引
+                                {
+                                    this.enable = value;
+                                    this.owner.InitializeEnableItemIndex();
+                                    this.owner.currentEnableIndex += 1;
+
+                                    this.owner.test();
+                                    this.owner.Invalidate();
+                                }
+                                else//只修改选项状态
+                                {
+                                    this.enable = value;
+                                }
+                            }
+                            else//播放第一个选项
+                            {
+                                this.enable = value;
+                                this.owner.InitializeEnableItemIndex();
+                                this.owner.currentEnableIndex = 0;
+                                this.owner.Play(0);
+
+                                this.owner.test();
+                                this.owner.Invalidate();
+                            }
+                        }
+                        else
+                        {
+                            this.enable = value;
+                        }
                     }
+                    else
+                    {
+                        if (this.owner != null)
+                        {
+                            int _currentItemIndex = this.owner.GetItemIndexByEnableIndex(this.owner.currentEnableIndex);//Item索引
+                            int _itemIndex = this.owner.Items.IndexOf(this);
+
+                            if (_itemIndex == _currentItemIndex)//修改当前播放选项的状态
+                            {
+
+                                if (this.owner.enableList.Count > 1)//当前播放选项大于1
+                                {
+                                    if (this.owner.currentEnableIndex == this.owner.enableList.Count - 1)//修改选项状态并播放第一个选项
+                                    {
+                                        this.enable = value;
+                                        this.owner.InitializeEnableItemIndex();
+                                        this.owner.currentEnableIndex = 0;
+                                        this.owner.ExecuteIndexChanged();
+                                        this.owner.StartPlayItem(this.owner.currentEnableIndex, 1);
+
+                                        this.owner.test();
+                                        this.owner.Invalidate();
+                                    }
+                                    else//修改选项状态并播放下一个选项
+                                    {
+                                        this.enable = value;
+                                        this.owner.InitializeEnableItemIndex();
+                                        this.owner.currentEnableIndex = this.owner.ValidTextEnableIndex(this.owner.currentEnableIndex);
+                                        this.owner.ExecuteIndexChanged();
+                                        this.owner.StartPlayItem(this.owner.currentEnableIndex, 1);
+
+                                        this.owner.test();
+                                        this.owner.Invalidate();
+                                    }
+                                }
+                                else//改选项状态并停止播放器
+                                {
+                                    this.enable = value;
+                                    this.owner.InitializeEnableItemIndex();
+                                    this.owner.AnimationStatus = AnimationStatuss.None;
+                                    this.owner.currentEnableIndex = -1;
+                                    this.owner.ExecuteIndexChanged();
+
+                                    if (!this.owner.DesignMode)
+                                    {
+                                        this.owner.itemTimer.Enabled = false;
+                                        this.owner.animationTimer.Stop();
+                                    }
+
+                                    this.owner.test();
+                                    this.owner.Invalidate();
+                                }
+                            }
+                            else if (_itemIndex < _currentItemIndex)//修改当前播放选项前面选项的状态和修改当前播放选项索引
+                            {
+                                this.enable = value;
+                                this.owner.InitializeEnableItemIndex();
+                                this.owner.currentEnableIndex -= 1;
+                                if (this.owner.currentEnableIndex < -1)
+                                {
+                                    this.owner.currentEnableIndex = -1;
+                                }
+
+                                this.owner.test();
+                                this.owner.Invalidate();
+                            }
+                            else//修改选项状态
+                            {
+                                this.enable = value;
+                                this.owner.InitializeEnableItemIndex();
+
+                            }
+                        }
+                        else
+                        {
+                            this.enable = value;
+                        }
+                    }
+
                 }
             }
 
@@ -1559,20 +2006,20 @@ namespace WinformControlLibraryExtension
                 }
             }
 
-            private int remainTime = 0;
+            private int awaitTime = 0;
             /// <summary>
             /// 文本选项出现后停留时间(默认0秒)
             /// </summary>
             [DefaultValue(0)]
             [Description("文本选项出现后停留时间(默认0秒)")]
-            public int RemainTime
+            public int AwaitTime
             {
-                get { return this.remainTime; }
+                get { return this.awaitTime; }
                 set
                 {
-                    if (this.remainTime == value || value < 0)
+                    if (this.awaitTime == value || value < 0)
                         return;
-                    this.remainTime = value;
+                    this.awaitTime = value;
                 }
             }
 
@@ -1582,6 +2029,8 @@ namespace WinformControlLibraryExtension
             /// </summary>
             [DefaultValue(1)]
             [Description("文本选项在单次循环轮播中重复次数(默认1次)")]
+            [Localizable(false)]
+            [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
             public int Repetition
             {
                 get { return this.repetition; }
@@ -1610,54 +2059,7 @@ namespace WinformControlLibraryExtension
                 }
             }
 
-            private string[] textChar = null;
-            /// <summary>
-            /// 文本每个字符集合
-            [Browsable(false)]
-            [DefaultValue(null)]
-            [Description("文本每个字符集合")]
-            public string[] TextChar
-            {
-                get { return this.textChar; }
-                set
-                {
-                    this.textChar = value;
-                }
-            }
-
-            private SizeF[] textCharSize = null;
-            /// <summary>
-            /// 文本每个字符Size
-            [Browsable(false)]
-            [DefaultValue(null)]
-            [Description("文本每个字符Size")]
-            [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-            public SizeF[] TextCharSize
-            {
-                get { return this.textCharSize; }
-                set
-                {
-                    this.textCharSize = value;
-                }
-            }
-
-            private float textCharAvgWidth = 0f;
-            /// <summary>
-            /// 文本每个字符平均宽度
-            [Browsable(false)]
-            [DefaultValue(0f)]
-            [Description("文本每个字符平均宽度")]
-            public float TextCharAvgWidth
-            {
-                get { return this.textCharAvgWidth; }
-                set
-                {
-                    this.textCharAvgWidth = value;
-                }
-            }
-
             private bool textCenter = false;
-
             /// <summary>
             /// 文本是否水平居中(仅限垂直动画)
             /// </summary>
@@ -1741,13 +2143,70 @@ namespace WinformControlLibraryExtension
                 }
             }
 
+            private string[] textChar = null;
+            /// <summary>
+            /// 文本每个字符集合
+            [DefaultValue(null)]
+            [Description("文本每个字符集合")]
+            [Browsable(false)]
+            [EditorBrowsable(EditorBrowsableState.Never)]
+            [Localizable(false)]
+            [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+            public string[] TextChar
+            {
+                get { return this.textChar; }
+                set
+                {
+                    this.textChar = value;
+                }
+            }
+
+            private SizeF[] textCharSize = null;
+            /// <summary>
+            /// 文本每个字符Size
+            [DefaultValue(null)]
+            [Description("文本每个字符Size")]
+            [Browsable(false)]
+            [EditorBrowsable(EditorBrowsableState.Never)]
+            [Localizable(false)]
+            [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+            public SizeF[] TextCharSize
+            {
+                get { return this.textCharSize; }
+                set
+                {
+                    this.textCharSize = value;
+                }
+            }
+
+            private float textCharAvgWidth = 0f;
+            /// <summary>
+            /// 文本每个字符平均宽度
+            [DefaultValue(0f)]
+            [Description("文本每个字符平均宽度")]
+            [Browsable(false)]
+            [EditorBrowsable(EditorBrowsableState.Never)]
+            [Localizable(false)]
+            [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+            public float TextCharAvgWidth
+            {
+                get { return this.textCharAvgWidth; }
+                set
+                {
+                    this.textCharAvgWidth = value;
+                }
+            }
+
             private int currentRepetition = 0;
             /// <summary>
             /// 文本选项在单次循环轮播中当前的重复次数
             /// </summary>
-            [Browsable(false)]
             [DefaultValue(0)]
             [Description("文本选项在单次循环轮播中当前的重复次数")]
+            [Browsable(false)]
+            [EditorBrowsable(EditorBrowsableState.Never)]
+            [Localizable(false)]
+            [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
             public int CurrentRepetition
             {
                 get { return this.currentRepetition; }
@@ -1762,43 +2221,61 @@ namespace WinformControlLibraryExtension
             /// <summary>
             /// 运动前rectf
             /// </summary>
-            [Browsable(false)]
             [Description("运动前rectf")]
+            [Browsable(false)]
+            [EditorBrowsable(EditorBrowsableState.Never)]
+            [Localizable(false)]
+            [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
             public RectangleF prev_rectf { get; set; }
 
             /// <summary>
             /// 目标rectf
             /// </summary>
-            [Browsable(false)]
             [Description("目标rectf")]
+            [Browsable(false)]
+            [EditorBrowsable(EditorBrowsableState.Never)]
+            [Localizable(false)]
+            [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
             public RectangleF target_rectf { get; set; }
 
             /// <summary>
             /// 当前rectf
             /// </summary>
-            [Browsable(false)]
             [Description("当前rectf")]
+            [Browsable(false)]
+            [EditorBrowsable(EditorBrowsableState.Never)]
+            [Localizable(false)]
+            [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
             public RectangleF current_rectf { get; set; }
 
             /// <summary>
             /// 运动前每个字的rectf
             /// </summary>
-            [Browsable(false)]
             [Description("运动前rectf")]
+            [Browsable(false)]
+            [EditorBrowsable(EditorBrowsableState.Never)]
+            [Localizable(false)]
+            [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
             public RectangleF[] prev_char_rectf { get; set; }
 
             /// <summary>
             /// 目标每个字rectf
             /// </summary>
-            [Browsable(false)]
             [Description("目标每个字rectf")]
+            [Browsable(false)]
+            [EditorBrowsable(EditorBrowsableState.Never)]
+            [Localizable(false)]
+            [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
             public RectangleF[] target_char_rectf { get; set; }
 
             /// <summary>
             /// 当前每个字的rectf
             /// </summary>
-            [Browsable(false)]
             [Description("当前rectf")]
+            [Browsable(false)]
+            [EditorBrowsable(EditorBrowsableState.Never)]
+            [Localizable(false)]
+            [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
             public RectangleF[] current_char_rectf { get; set; }
 
         }
@@ -1807,6 +2284,7 @@ namespace WinformControlLibraryExtension
         /// 渐变颜色选项
         /// </summary>
         [Description("渐变颜色选项")]
+        [DefaultProperty("Color")]
         public class ColorItem
         {
 
@@ -1881,11 +2359,11 @@ namespace WinformControlLibraryExtension
             /// </summary>
             Scroll,
             /// <summary>
-            /// 减速
+            /// 减速滑动进入
             /// </summary>
             Speed,
             /// <summary>
-            /// 减速回弹
+            /// 减速回弹滑动进入
             /// </summary>
             SpeedSpringback
         }
@@ -1908,6 +2386,34 @@ namespace WinformControlLibraryExtension
             /// 从右边出现
             /// </summary>
             Right
+        }
+
+        /// <summary>
+        /// 动画播放器状态
+        /// </summary>
+        [Description("动画播放器状态")]
+        internal enum AnimationStatuss
+        {
+            /// <summary>
+            ///准备开始播放选项
+            /// </summary>
+            Prepare,
+            /// <summary>
+            /// 动画播放停止
+            /// </summary>
+            Stop,
+            /// <summary>
+            /// 动画选项播放中
+            /// </summary>
+            Paly,
+            /// <summary>
+            /// 动画播放中但没有要播放的内容
+            /// </summary>
+            None,
+            /// <summary>
+            /// 动画选项播放完进入静止状态
+            /// </summary>
+            Await
         }
 
         #endregion

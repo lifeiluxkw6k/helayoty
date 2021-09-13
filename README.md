@@ -9,6 +9,12 @@ qq交流群： **180744253**
 
 #### 版本更新历史：
   
+**4.7.2.9       [2021-06-06]**   
+WinformControlLibraryExtension   
+WinformDemo    
+修改了ThermometerExt.cs、TextCarouselExtDesigner.cs,新增TextCarouselCollectionEditorExt.cs、TextCarouselColorItemCollectionEditorExt.cs 
+修复文本跑马灯特效控件 关于动态修改选项的Enable属性和动态添加删除选项时导致播放出错问题。该次修改主要修改播放逻辑部分的代码，还有公开的方法名和属性名修改，要更新这个控件的人要注意下。   
+  
 **4.7.1.9       [2021-05-07]**   
 WinformControlLibraryExtension   
 WinformDemo    

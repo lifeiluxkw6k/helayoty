@@ -62,6 +62,8 @@
     <Compile Include="Design\ImageWhirligigExtDesigner.cs" />
     <Compile Include="Design\FisheyeBarExtDesigner.cs" />
     <Compile Include="Design\CheckBoxExtDesigner.cs" />
+    <Compile Include="Design\TextCarouselCollectionEditorExt.cs" />
+    <Compile Include="Design\TextCarouselColorItemCollectionEditorExt.cs" />
     <Compile Include="Design\TextCarouselExtDesigner.cs" />
     <Compile Include="Design\DateExtDesigner.cs" />
     <Compile Include="Design\DatePickerExtDesigner.cs" />

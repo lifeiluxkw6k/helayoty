@@ -44,8 +44,11 @@
 *********************************************************************/
 
 using System.ComponentModel;
+using System.ComponentModel.Design;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using System.Windows.Forms.Design;
 
 namespace WinformControlLibraryExtension.Design
 {
@@ -53,12 +56,37 @@ namespace WinformControlLibraryExtension.Design
     /// TextCarouselExt控件设计模式行为
     /// </summary>
     [Description("TextCarouselExt控件设计模式行为")]
-    public class TextCarouselExtDesigner : DottedLineBorderExtDesigner
+    public class TextCarouselExtDesigner : ControlDesigner
     {
         protected override void OnPaintAdornments(PaintEventArgs pe)
         {
-            this.DrawTipText(pe.Graphics);
             base.OnPaintAdornments(pe);
+            this.DrawTipText(pe.Graphics);
+            this.DrawBorder(pe.Graphics);
+        }
+
+        /// <summary>
+        /// 绘制虚线边框
+        /// </summary>
+        /// <param name="graphics"></param>
+        private void DrawBorder(Graphics graphics)
+        {
+            TextCarouselExt control = (TextCarouselExt)this.Control;
+            Pen pen = null;
+            if (control.BorderShow)
+            {
+                pen = new Pen(control.BorderColor);
+            }
+            else
+            {
+                pen = new Pen((double)control.BackColor.GetBrightness() >= 0.5 ? ControlPaint.Dark(control.BackColor) : ControlPaint.Light(control.BackColor));
+                pen.DashStyle = DashStyle.Dash;
+            }
+            Rectangle clientRectangle = control.ClientRectangle;
+            --clientRectangle.Width;
+            --clientRectangle.Height;
+            graphics.DrawRectangle(pen, clientRectangle);
+            pen.Dispose();
         }
 
         /// <summary>
@@ -69,15 +97,13 @@ namespace WinformControlLibraryExtension.Design
         {
             TextCarouselExt _control = (TextCarouselExt)this.Control;
             Control control = this.Control;
-            if (_control.Items.Count < 1)
-            {
-                string text = "请添加文本";
-                SizeF text_size = graphics.MeasureString(text, _control.Font);
-                SolidBrush text_sb = new SolidBrush((double)control.BackColor.GetBrightness() >= 0.5 ? ControlPaint.Dark(control.BackColor) : ControlPaint.Light(control.BackColor));
-                graphics.DrawString(text, _control.Font, text_sb, new RectangleF(control.ClientRectangle.X + (control.ClientRectangle.Width - text_size.Width) / 2f, control.ClientRectangle.Y + (control.ClientRectangle.Height - text_size.Height) / 2f, text_size.Width, text_size.Height));
-                text_sb.Dispose();
-            }
+            string text = "请添加选项";
+            SizeF text_size = graphics.MeasureString(text, _control.Font);
+            SolidBrush text_sb = new SolidBrush((double)control.BackColor.GetBrightness() >= 0.5 ? ControlPaint.Dark(control.BackColor) : ControlPaint.Light(control.BackColor));
+            graphics.DrawString(text, _control.Font, text_sb, new RectangleF(control.ClientRectangle.X + (control.ClientRectangle.Width - text_size.Width) / 2f, control.ClientRectangle.Y + (control.ClientRectangle.Height - text_size.Height) / 2f, text_size.Width, text_size.Height));
+            text_sb.Dispose();
         }
 
     }
+
 }
