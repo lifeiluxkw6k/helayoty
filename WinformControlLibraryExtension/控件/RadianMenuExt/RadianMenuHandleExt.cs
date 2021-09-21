@@ -587,7 +587,7 @@ namespace WinformControlLibraryExtension
     /// <summary>
     /// GDI不规则圆弧菜单控件(窗体版)
     /// </summary>
-    [ToolboxItem(false)]
+    [ToolboxItem(true)]
     [Description("不规则圆弧菜单控件(窗体版)")]
     [DefaultProperty("Items")]
     [DefaultEvent("ItemClick")]

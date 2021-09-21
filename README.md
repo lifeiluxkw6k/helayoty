@@ -8,6 +8,11 @@ qq交流群： **180744253**
 # 花木兰控件库(开源)
 
 #### 版本更新历史：
+    
+**4.7.3.9       [2021-06-06]**   
+WinformControlLibraryExtension   
+WinformDemo    
+修改了RadianMenuHandleExt.cs、 在工具栏公开RadianMenuComponentExtGDI不规则圆弧菜单控件(窗体版)组件，之前隐藏了导致工具箱找不到该控件 
   
 **4.7.2.9       [2021-06-06]**   
 WinformControlLibraryExtension   
