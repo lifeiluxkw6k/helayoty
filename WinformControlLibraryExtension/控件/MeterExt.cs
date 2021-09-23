@@ -111,30 +111,6 @@ namespace WinformControlLibraryExtension
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler TextChanged
-        {
-            add { base.TextChanged += value; }
-            remove { base.TextChanged -= value; }
-        }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler FontChanged
-        {
-            add { base.FontChanged += value; }
-            remove { base.FontChanged -= value; }
-        }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new event EventHandler ForeColorChanged
-        {
-            add { base.ForeColorChanged += value; }
-            remove { base.ForeColorChanged -= value; }
-        }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public new event EventHandler RightToLeftChanged
         {
             add { base.RightToLeftChanged += value; }
@@ -889,6 +865,46 @@ namespace WinformControlLibraryExtension
             }
         }
 
+        private int valueDistance = 10;
+        /// <summary>
+        /// 值文本距离底部距离
+        /// </summary>
+        [DefaultValue(10)]
+        [Description("值文本距离底部距离")]
+        public int ValueDistance
+        {
+            get { return this.valueDistance; }
+            set
+            {
+                if (this.valueDistance == value || value < 0)
+                    return;
+                this.valueDistance = value;
+                this.Invalidate();
+            }
+        }
+
+        #endregion
+
+        #region 文本
+
+        private int textDistance = 0;
+        /// <summary>
+        /// 文本距离底部距离
+        /// </summary>
+        [DefaultValue(0)]
+        [Description("文本距离底部距离")]
+        public int TextDistance
+        {
+            get { return this.textDistance; }
+            set
+            {
+                if (this.textDistance == value || value < 0)
+                    return;
+                this.textDistance = value;
+                this.Invalidate();
+            }
+        }
+
         #endregion
 
         #endregion
@@ -928,6 +944,13 @@ namespace WinformControlLibraryExtension
             }
         }
 
+        [DefaultValue(typeof(Color), "Black")]
+        protected new Color ForeColor
+        {
+            get { return base.ForeColor; }
+            set { base.ForeColor = value; }
+        }
+
         #endregion
 
         #region 停用属性
@@ -960,48 +983,6 @@ namespace WinformControlLibraryExtension
         {
             get { return false; }
             set { base.TabStop = false; }
-        }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string Text
-        {
-            get
-            {
-                return base.Text;
-            }
-            set
-            {
-                base.Text = value;
-            }
-        }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override Font Font
-        {
-            get
-            {
-                return base.Font;
-            }
-            set
-            {
-                base.Font = value;
-            }
-        }
-
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override Color ForeColor
-        {
-            get
-            {
-                return base.ForeColor;
-            }
-            set
-            {
-                base.ForeColor = value;
-            }
         }
 
         [Browsable(false)]
@@ -1061,6 +1042,7 @@ namespace WinformControlLibraryExtension
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             SetStyle(ControlStyles.ResizeRedraw, true);
             SetStyle(ControlStyles.SupportsTransparentBackColor, true);
+            this.ForeColor = Color.Black;
         }
 
         #region 重写
@@ -1369,14 +1351,26 @@ namespace WinformControlLibraryExtension
             pointer_heart_in_lgb.Dispose();
             #endregion
 
+            #region 文本
+            if (String.IsNullOrWhiteSpace(this.Text) == false)
+            {
+                SolidBrush text_sb = new SolidBrush(this.ForeColor);
+                StringFormat text_sf = new StringFormat(StringFormatFlags.NoClip);
+                SizeF text_size = g.MeasureString(this.Text, this.Font);
+                g.DrawString(this.Text, this.Font, text_sb, new RectangleF(this.ClientRectangle.X + (rect.Width - text_size.Width) / 2f, this.ClientRectangle.Bottom - text_size.Height - this.TextDistance, text_size.Width, text_size.Height), text_sf);
+                text_sb.Dispose();
+                text_sf.Dispose();
+            }
+            #endregion
+
             #region 值文本
             if (ValueShow)
             {
                 string valueText = this.Value.ToString();
                 SolidBrush text_sb = new SolidBrush(this.ValueColor);
                 StringFormat text_sf = new StringFormat(StringFormatFlags.NoClip);
-                SizeF text_size = g.MeasureString(valueText, this.Font);
-                g.DrawString(valueText, this.Font, text_sb, new RectangleF(this.ClientRectangle.X + (rect.Width - text_size.Width) / 2f, this.ClientRectangle.Bottom - text_size.Height, text_size.Width, text_size.Height), text_sf);
+                SizeF text_size = g.MeasureString(valueText, this.ValueFont);
+                g.DrawString(valueText, this.ValueFont, text_sb, new RectangleF(this.ClientRectangle.X + (rect.Width - text_size.Width) / 2f, this.ClientRectangle.Bottom - text_size.Height - this.ValueDistance, text_size.Width, text_size.Height), text_sf);
                 text_sb.Dispose();
                 text_sf.Dispose();
             }

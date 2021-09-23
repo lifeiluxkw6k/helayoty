@@ -29,30 +29,70 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            WinformControlLibraryExtension.MeterExt.ColorItem colorItem9 = new WinformControlLibraryExtension.MeterExt.ColorItem();
-            WinformControlLibraryExtension.MeterExt.ColorItem colorItem10 = new WinformControlLibraryExtension.MeterExt.ColorItem();
-            WinformControlLibraryExtension.MeterExt.ColorItem colorItem11 = new WinformControlLibraryExtension.MeterExt.ColorItem();
-            WinformControlLibraryExtension.MeterExt.ColorItem colorItem12 = new WinformControlLibraryExtension.MeterExt.ColorItem();
-            WinformControlLibraryExtension.MeterExt.ColorItem colorItem13 = new WinformControlLibraryExtension.MeterExt.ColorItem();
-            WinformControlLibraryExtension.MeterExt.ColorItem colorItem14 = new WinformControlLibraryExtension.MeterExt.ColorItem();
-            WinformControlLibraryExtension.MeterExt.ColorItem colorItem15 = new WinformControlLibraryExtension.MeterExt.ColorItem();
-            WinformControlLibraryExtension.MeterExt.ColorItem colorItem16 = new WinformControlLibraryExtension.MeterExt.ColorItem();
+            WinformControlLibraryExtension.MeterExt.ColorItem colorItem1 = new WinformControlLibraryExtension.MeterExt.ColorItem();
+            WinformControlLibraryExtension.MeterExt.ColorItem colorItem2 = new WinformControlLibraryExtension.MeterExt.ColorItem();
+            WinformControlLibraryExtension.MeterExt.ColorItem colorItem3 = new WinformControlLibraryExtension.MeterExt.ColorItem();
+            WinformControlLibraryExtension.MeterExt.ColorItem colorItem4 = new WinformControlLibraryExtension.MeterExt.ColorItem();
+            WinformControlLibraryExtension.MeterExt.ColorItem colorItem5 = new WinformControlLibraryExtension.MeterExt.ColorItem();
+            WinformControlLibraryExtension.MeterExt.ColorItem colorItem6 = new WinformControlLibraryExtension.MeterExt.ColorItem();
+            WinformControlLibraryExtension.MeterExt.ColorItem colorItem7 = new WinformControlLibraryExtension.MeterExt.ColorItem();
+            WinformControlLibraryExtension.MeterExt.ColorItem colorItem8 = new WinformControlLibraryExtension.MeterExt.ColorItem();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
+            this.meterBarExt5 = new WinformControlLibraryExtension.MeterExt();
             this.meterBarExt3 = new WinformControlLibraryExtension.MeterExt();
             this.meterBarExt4 = new WinformControlLibraryExtension.MeterExt();
             this.meterBarExt8 = new WinformControlLibraryExtension.MeterExt();
             this.meterBarExt7 = new WinformControlLibraryExtension.MeterExt();
-            this.meterBarExt5 = new WinformControlLibraryExtension.MeterExt();
             this.meterBarExt6 = new WinformControlLibraryExtension.MeterExt();
             this.meterBarExt2 = new WinformControlLibraryExtension.MeterExt();
             this.meterBarExt1 = new WinformControlLibraryExtension.MeterExt();
-            this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
             this.SuspendLayout();
             // 
             // timer1
             // 
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // propertyGrid1
+            // 
+            this.propertyGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.propertyGrid1.Location = new System.Drawing.Point(0, 0);
+            this.propertyGrid1.Name = "propertyGrid1";
+            this.propertyGrid1.SelectedObject = this.meterBarExt5;
+            this.propertyGrid1.Size = new System.Drawing.Size(350, 523);
+            this.propertyGrid1.TabIndex = 4;
+            // 
+            // meterBarExt5
+            // 
+            this.meterBarExt5.ArcBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.meterBarExt5.ArcValueColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
+            this.meterBarExt5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.meterBarExt5.BackInnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.meterBarExt5.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.meterBarExt5.CausesValidation = false;
+            this.meterBarExt5.ForeColor = System.Drawing.Color.Black;
+            colorItem1.Color = System.Drawing.Color.Blue;
+            colorItem2.Color = System.Drawing.Color.Red;
+            colorItem2.Position = 1F;
+            this.meterBarExt5.GradualColorItems.Add(colorItem1);
+            this.meterBarExt5.GradualColorItems.Add(colorItem2);
+            this.meterBarExt5.GradualShow = true;
+            this.meterBarExt5.Location = new System.Drawing.Point(365, 23);
+            this.meterBarExt5.Name = "meterBarExt5";
+            this.meterBarExt5.PointerCapColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(149)))), ((int)(((byte)(237)))));
+            this.meterBarExt5.PointerColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(149)))), ((int)(((byte)(237)))));
+            this.meterBarExt5.ScaleColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.meterBarExt5.ScaleInterval = 20F;
+            this.meterBarExt5.Size = new System.Drawing.Size(205, 222);
+            this.meterBarExt5.SplitScaleColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.meterBarExt5.TabIndex = 0;
+            this.meterBarExt5.TabStop = false;
+            this.meterBarExt5.Text = "meterBarExt5";
+            this.meterBarExt5.Value = 30F;
+            this.meterBarExt5.ValueDistance = 40;
+            this.meterBarExt5.ValueShow = true;
             // 
             // meterBarExt3
             // 
@@ -63,11 +103,12 @@
             this.meterBarExt3.BackShow = false;
             this.meterBarExt3.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.meterBarExt3.CausesValidation = false;
-            colorItem9.Color = System.Drawing.Color.Blue;
-            colorItem10.Color = System.Drawing.Color.Red;
-            colorItem10.Position = 1F;
-            this.meterBarExt3.GradualColorItems.Add(colorItem9);
-            this.meterBarExt3.GradualColorItems.Add(colorItem10);
+            this.meterBarExt3.ForeColor = System.Drawing.Color.Black;
+            colorItem3.Color = System.Drawing.Color.Blue;
+            colorItem4.Color = System.Drawing.Color.Red;
+            colorItem4.Position = 1F;
+            this.meterBarExt3.GradualColorItems.Add(colorItem3);
+            this.meterBarExt3.GradualColorItems.Add(colorItem4);
             this.meterBarExt3.GradualShow = true;
             this.meterBarExt3.Location = new System.Drawing.Point(777, 42);
             this.meterBarExt3.Name = "meterBarExt3";
@@ -75,7 +116,7 @@
             this.meterBarExt3.PointerColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(149)))), ((int)(((byte)(237)))));
             this.meterBarExt3.ScaleColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.meterBarExt3.ScaleInterval = 20F;
-            this.meterBarExt3.Size = new System.Drawing.Size(167, 165);
+            this.meterBarExt3.Size = new System.Drawing.Size(167, 169);
             this.meterBarExt3.SplitScaleColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.meterBarExt3.TabIndex = 0;
             this.meterBarExt3.TabStop = false;
@@ -93,11 +134,12 @@
             this.meterBarExt4.BackShow = false;
             this.meterBarExt4.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.meterBarExt4.CausesValidation = false;
-            colorItem11.Color = System.Drawing.Color.Blue;
-            colorItem12.Color = System.Drawing.Color.Red;
-            colorItem12.Position = 1F;
-            this.meterBarExt4.GradualColorItems.Add(colorItem11);
-            this.meterBarExt4.GradualColorItems.Add(colorItem12);
+            this.meterBarExt4.ForeColor = System.Drawing.Color.Black;
+            colorItem5.Color = System.Drawing.Color.Blue;
+            colorItem6.Color = System.Drawing.Color.Red;
+            colorItem6.Position = 1F;
+            this.meterBarExt4.GradualColorItems.Add(colorItem5);
+            this.meterBarExt4.GradualColorItems.Add(colorItem6);
             this.meterBarExt4.GradualShow = true;
             this.meterBarExt4.Location = new System.Drawing.Point(947, 67);
             this.meterBarExt4.Name = "meterBarExt4";
@@ -124,12 +166,13 @@
             this.meterBarExt8.BackShow = false;
             this.meterBarExt8.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.meterBarExt8.CausesValidation = false;
+            this.meterBarExt8.ForeColor = System.Drawing.Color.Black;
             this.meterBarExt8.Location = new System.Drawing.Point(947, 259);
             this.meterBarExt8.Name = "meterBarExt8";
             this.meterBarExt8.PointerCapColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(142)))), ((int)(((byte)(35)))));
             this.meterBarExt8.PointerColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(142)))), ((int)(((byte)(35)))));
             this.meterBarExt8.ScaleInterval = 20F;
-            this.meterBarExt8.Size = new System.Drawing.Size(145, 134);
+            this.meterBarExt8.Size = new System.Drawing.Size(145, 172);
             this.meterBarExt8.SplitScaleColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.meterBarExt8.SplitScaleCount = 2;
             this.meterBarExt8.TabIndex = 0;
@@ -147,45 +190,19 @@
             this.meterBarExt7.BackShow = false;
             this.meterBarExt7.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.meterBarExt7.CausesValidation = false;
+            this.meterBarExt7.ForeColor = System.Drawing.Color.Black;
             this.meterBarExt7.Location = new System.Drawing.Point(788, 250);
             this.meterBarExt7.Name = "meterBarExt7";
             this.meterBarExt7.PointerCapColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(142)))), ((int)(((byte)(35)))));
             this.meterBarExt7.PointerColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(142)))), ((int)(((byte)(35)))));
             this.meterBarExt7.ScaleInterval = 20F;
-            this.meterBarExt7.Size = new System.Drawing.Size(139, 143);
+            this.meterBarExt7.Size = new System.Drawing.Size(139, 181);
             this.meterBarExt7.SplitScaleColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.meterBarExt7.TabIndex = 0;
             this.meterBarExt7.TabStop = false;
             this.meterBarExt7.Text = "meterBarExt7";
             this.meterBarExt7.Value = 90F;
             this.meterBarExt7.ValueShow = true;
-            // 
-            // meterBarExt5
-            // 
-            this.meterBarExt5.ArcBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.meterBarExt5.ArcValueColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
-            this.meterBarExt5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.meterBarExt5.BackInnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.meterBarExt5.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.meterBarExt5.CausesValidation = false;
-            colorItem13.Color = System.Drawing.Color.Blue;
-            colorItem14.Color = System.Drawing.Color.Red;
-            colorItem14.Position = 1F;
-            this.meterBarExt5.GradualColorItems.Add(colorItem13);
-            this.meterBarExt5.GradualColorItems.Add(colorItem14);
-            this.meterBarExt5.GradualShow = true;
-            this.meterBarExt5.Location = new System.Drawing.Point(365, 23);
-            this.meterBarExt5.Name = "meterBarExt5";
-            this.meterBarExt5.PointerCapColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(149)))), ((int)(((byte)(237)))));
-            this.meterBarExt5.PointerColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(149)))), ((int)(((byte)(237)))));
-            this.meterBarExt5.ScaleColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.meterBarExt5.ScaleInterval = 20F;
-            this.meterBarExt5.Size = new System.Drawing.Size(205, 202);
-            this.meterBarExt5.SplitScaleColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.meterBarExt5.TabIndex = 0;
-            this.meterBarExt5.TabStop = false;
-            this.meterBarExt5.Text = "meterBarExt5";
-            this.meterBarExt5.Value = 30F;
             // 
             // meterBarExt6
             // 
@@ -196,11 +213,12 @@
             this.meterBarExt6.BackInnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.meterBarExt6.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.meterBarExt6.CausesValidation = false;
-            colorItem15.Color = System.Drawing.Color.Blue;
-            colorItem16.Color = System.Drawing.Color.Red;
-            colorItem16.Position = 1F;
-            this.meterBarExt6.GradualColorItems.Add(colorItem15);
-            this.meterBarExt6.GradualColorItems.Add(colorItem16);
+            this.meterBarExt6.ForeColor = System.Drawing.Color.Black;
+            colorItem7.Color = System.Drawing.Color.Blue;
+            colorItem8.Color = System.Drawing.Color.Red;
+            colorItem8.Position = 1F;
+            this.meterBarExt6.GradualColorItems.Add(colorItem7);
+            this.meterBarExt6.GradualColorItems.Add(colorItem8);
             this.meterBarExt6.GradualShow = true;
             this.meterBarExt6.Location = new System.Drawing.Point(572, 31);
             this.meterBarExt6.Name = "meterBarExt6";
@@ -208,7 +226,7 @@
             this.meterBarExt6.PointerColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(149)))), ((int)(((byte)(237)))));
             this.meterBarExt6.ScaleColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.meterBarExt6.ScaleInterval = 20F;
-            this.meterBarExt6.Size = new System.Drawing.Size(203, 173);
+            this.meterBarExt6.Size = new System.Drawing.Size(203, 180);
             this.meterBarExt6.SplitScaleColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.meterBarExt6.TabIndex = 0;
             this.meterBarExt6.TabStop = false;
@@ -224,12 +242,13 @@
             this.meterBarExt2.BackInnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.meterBarExt2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.meterBarExt2.CausesValidation = false;
-            this.meterBarExt2.Location = new System.Drawing.Point(572, 234);
+            this.meterBarExt2.ForeColor = System.Drawing.Color.Black;
+            this.meterBarExt2.Location = new System.Drawing.Point(572, 250);
             this.meterBarExt2.Name = "meterBarExt2";
             this.meterBarExt2.PointerCapColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(142)))), ((int)(((byte)(35)))));
             this.meterBarExt2.PointerColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(142)))), ((int)(((byte)(35)))));
             this.meterBarExt2.ScaleInterval = 20F;
-            this.meterBarExt2.Size = new System.Drawing.Size(180, 159);
+            this.meterBarExt2.Size = new System.Drawing.Size(180, 181);
             this.meterBarExt2.SplitScaleColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.meterBarExt2.TabIndex = 0;
             this.meterBarExt2.TabStop = false;
@@ -244,27 +263,18 @@
             this.meterBarExt1.BackInnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.meterBarExt1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.meterBarExt1.CausesValidation = false;
+            this.meterBarExt1.ForeColor = System.Drawing.Color.Black;
             this.meterBarExt1.Location = new System.Drawing.Point(372, 231);
             this.meterBarExt1.Name = "meterBarExt1";
             this.meterBarExt1.PointerCapColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(142)))), ((int)(((byte)(35)))));
             this.meterBarExt1.PointerColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(142)))), ((int)(((byte)(35)))));
             this.meterBarExt1.ScaleInterval = 20F;
-            this.meterBarExt1.Size = new System.Drawing.Size(180, 180);
+            this.meterBarExt1.Size = new System.Drawing.Size(180, 200);
             this.meterBarExt1.SplitScaleColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.meterBarExt1.TabIndex = 0;
             this.meterBarExt1.TabStop = false;
             this.meterBarExt1.Text = "meterBarExt1";
             this.meterBarExt1.Value = 30F;
-            // 
-            // propertyGrid1
-            // 
-            this.propertyGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.propertyGrid1.Location = new System.Drawing.Point(0, 0);
-            this.propertyGrid1.Name = "propertyGrid1";
-            this.propertyGrid1.SelectedObject = this.meterBarExt5;
-            this.propertyGrid1.Size = new System.Drawing.Size(350, 523);
-            this.propertyGrid1.TabIndex = 4;
             // 
             // MeterExtForm
             // 

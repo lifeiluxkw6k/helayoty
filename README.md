@@ -8,6 +8,11 @@ qq交流群： **180744253**
 # 花木兰控件库(开源)
 
 #### 版本更新历史：
+      
+**4.7.4.9       [2021-06-06]**   
+WinformControlLibraryExtension   
+WinformDemo    
+修改了MeterExt.cs、 修复仪表控件 值文本字体，和添加控制值文本距离底部距离属性，公开Text文本描述属性
     
 **4.7.3.9       [2021-06-06]**   
 WinformControlLibraryExtension   
