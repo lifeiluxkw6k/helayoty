@@ -245,6 +245,24 @@ namespace WinformControlLibraryExtension
             }
         }
 
+        private int moveWheelMagnify = 1;
+        /// <summary>
+        /// 鼠标滚轮旋转一格要移动多少个像素
+        /// </summary>
+        [DefaultValue(1)]
+        [Description("鼠标滚轮旋转一格要移动多少个像素")]
+        public int MoveWheelMagnify
+        {
+            get { return this.moveWheelMagnify; }
+            set
+            {
+                if (this.moveWheelMagnify == value || value < 1)
+                    return;
+
+                this.moveWheelMagnify = value;
+            }
+        }
+
         private int lrAnimationAllTimer = 200;
         /// <summary>
         /// 展左右滑动动画总时间(毫秒)
@@ -1404,7 +1422,7 @@ namespace WinformControlLibraryExtension
             if (this.DesignMode)
                 return;
 
-            int offset = e.Delta > 1 ? -1 : 1;
+            int offset = e.Delta > 1 ? -this.MoveWheelMagnify : this.MoveWheelMagnify;
             this.MouseMoveWheel(offset);
         }
 

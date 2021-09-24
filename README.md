@@ -8,7 +8,11 @@ qq交流群： **180744253**
 # 花木兰控件库(开源)
 
 #### 版本更新历史：
-      
+        
+**4.7.4.10       [2021-07-01]**   
+WinformControlLibraryExtension      
+修改了SlideMenuPanelExt.cs、 增加MoveWheelMagnify属性可以控制滚动条的快慢问题。 
+        
 **4.7.4.9       [2021-06-06]**   
 WinformControlLibraryExtension   
 WinformDemo    
