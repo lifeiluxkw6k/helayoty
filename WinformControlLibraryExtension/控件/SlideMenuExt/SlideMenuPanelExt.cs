@@ -561,7 +561,7 @@ namespace WinformControlLibraryExtension
         [DefaultValue(null)]
         [Description("节点集合")]
         [Browsable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public NodeCollection Nodes
         {
             get
@@ -1842,7 +1842,15 @@ namespace WinformControlLibraryExtension
         /// <returns></returns>
         private bool RecursionFilter(Node node, string text)
         {
-            bool current_include = node.Text.Contains(text);
+            bool current_include = false;
+            if (this.Tool.SearchLetterLower)
+            {
+                current_include = node.Text.Contains(text);
+            }
+            else
+            {
+                current_include = node.Text.ToLower().Contains(text.ToLower());
+            }
 
             bool children_include = false;
             for (int i = 0; i < node.Children.Count; i++)
@@ -1860,6 +1868,7 @@ namespace WinformControlLibraryExtension
 
             node.Display = (current_include || children_include) ? true : false;
             return node.Display;
+
         }
 
         /// <summary>
@@ -4988,6 +4997,25 @@ namespace WinformControlLibraryExtension
                     }
                     this.owner.InitializeRectangle();
                     this.owner.Invalidate();
+                }
+            }
+
+            private bool searchLetterLower = true;
+            /// <summary>
+            /// 过滤功能是否识别大小写
+            /// </summary>
+            [Description("过滤功能是否识别大小写")]
+            [DefaultValue(true)]
+            [NotifyParentProperty(true)]
+            public bool SearchLetterLower
+            {
+                get { return this.searchLetterLower; }
+                set
+                {
+                    if (this.searchLetterLower == value)
+                        return;
+
+                    this.searchLetterLower = value;
                 }
             }
 

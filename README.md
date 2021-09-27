@@ -8,8 +8,13 @@ qq交流群： **180744253**
 # 花木兰控件库(开源)
 
 #### 版本更新历史：
-        
-**4.7.4.10       [2021-07-01]**   
+         
+**4.7.4.11       [2021-07-03]**   
+WinformControlLibraryExtension      
+修改了SlideMenuPanelExt.cs、 增加SearchLetterLower属性可以查询时忽略大小写。  
+修复了TextCarouselExt.cs 在控件没有选项食缩放控件导致报错问题。 
+          
+**4.7.4.10       [2021-07-03]**   
 WinformControlLibraryExtension      
 修改了SlideMenuPanelExt.cs、 增加MoveWheelMagnify属性可以控制滚动条的快慢问题。 
         

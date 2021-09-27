@@ -578,6 +578,7 @@ namespace WinformControlLibraryExtension
         {
             base.OnResize(e);
 
+
             this.InitializeTextRectangle(this.GetItemByEnableIndex(this.currentEnableIndex));
         }
 
@@ -977,6 +978,9 @@ namespace WinformControlLibraryExtension
         /// <param name="textItem">指定选项</param>
         private void InitializeTextRectangle(TextItem textItem)
         {
+            if (textItem == null)
+                return;
+
             IntPtr hDC = GetWindowDC(this.Handle);
             Graphics g = Graphics.FromHdc(hDC);
 
