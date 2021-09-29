@@ -239,23 +239,7 @@ namespace WinformControlLibraryExtension
             get { return this._checked; }
             set
             {
-                if (this._checked == value)
-                    return;
-
-                if (value == false || this.Parent == null)
-                {
-                    this._checked = value;
-                    this.Invalidate();
-                }
-                else if (this.Parent != null)
-                {
-                    this.UpdateChecked(value);
-                }
-
-                if (!this.DesignMode)
-                {
-                    this.OnCheckedChanged(new CheckedChangedEventArgs() { Checked = value });
-                }
+                this.UpdateChecked(value);
             }
         }
 
@@ -1668,62 +1652,46 @@ namespace WinformControlLibraryExtension
         /// <param name="_checked"></param>
         private void UpdateChecked(bool _checked)
         {
-            #region 选中
-            if (_checked)
-            {
-                if (this.Parent != null)
-                {
-                    Type t = typeof(RadioButtonExt);
-                    ControlCollection cs = this.Parent.Controls;
-                    foreach (Control c in cs)
-                    {
-                        if (c.GetType() == t && !c.Equals(this))
-                        {
-                            RadioButtonExt rb = ((RadioButtonExt)c);
-                            if (rb._checked)
-                            {
-                                rb._checked = false;
-                                rb.Invalidate();
-                            }
-                        }
-                    }
-                    this._checked = _checked;
-                }
-                else
-                {
-                    this._checked = _checked;
-                }
-                this.Invalidate();
-            }
-            #endregion
-            #region 取消
-            else
-            {
-                if (this.Parent == null)
-                    return;
+            this._checked = _checked;
+            this.Invalidate();
 
+            if (!this.DesignMode)
+            {
+                this.OnCheckedChanged(new CheckedChangedEventArgs() { Checked = _checked });
+            }
+
+            if (this.Parent != null)
+            {
                 Type t = typeof(RadioButtonExt);
-                bool selected = false;
                 ControlCollection cs = this.Parent.Controls;
                 foreach (Control c in cs)
                 {
                     if (c.GetType() == t && !c.Equals(this))
                     {
-                        if (((RadioButtonExt)c).Checked)
+                        RadioButtonExt rb = ((RadioButtonExt)c);
+                        if (rb._checked!= !_checked)
                         {
-                            selected = true;
-                            break;
+                            rb.OnlyUpdateChecked(!_checked);
+                            rb.Invalidate();
                         }
                     }
                 }
-                if (selected)
-                {
-                    this._checked = _checked;
-                    this.Invalidate();
-                }
-
             }
-            #endregion
+        }
+
+        /// <summary>
+        /// 只更新自己checked状态，不更改同等级别的其他控件的状态
+        /// </summary>
+        /// <param name="_checked"></param>
+        internal void OnlyUpdateChecked(bool _checked)
+        {
+            this._checked = _checked;
+            this.Invalidate();
+
+            if (!this.DesignMode)
+            {
+                this.OnCheckedChanged(new CheckedChangedEventArgs() { Checked = _checked });
+            }
         }
 
         /// <summary>

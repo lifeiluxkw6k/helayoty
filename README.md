@@ -9,6 +9,10 @@ qq交流群： **180744253**
 
 #### 版本更新历史：
          
+**4.7.5.11       [2021-07-13]**   
+WinformControlLibraryExtension      
+修复了RadioButtonExt.cs CheckedChanged事件没有反应问题。 
+                
 **4.7.4.11       [2021-07-03]**   
 WinformControlLibraryExtension      
 修改了SlideMenuPanelExt.cs、 增加SearchLetterLower属性可以查询时忽略大小写。  
