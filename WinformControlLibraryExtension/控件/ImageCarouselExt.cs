@@ -1464,6 +1464,7 @@ namespace WinformControlLibraryExtension
 
             this.InitializeDisplayRectangle();
             this.InitializeImageFrameRectangleIndex();
+            this.Invalidate();
         }
 
         /// <summary> 
@@ -1731,10 +1732,13 @@ namespace WinformControlLibraryExtension
         /// <returns></returns>
         public void InitializeDisplayRectangle()
         {
+            int scale_imageFrameWidth =(int)(this.ImageFrameWidth * DotsPerInchHelper.DPIScale.XScale);
+            int scale_imageFrameHeight = (int)(this.ImageFrameHeight * DotsPerInchHelper.DPIScale.YScale);
+
             RectangleF rectf = RectangleF.Empty;
             if (this.IsHorizonta(this.Orientation))
             {
-                float width = this.ImageFrameWidth * this.ImageFrameCount;
+                float width = scale_imageFrameWidth * this.ImageFrameCount;
                 float x = this.ClientRectangle.X;
                 float y = this.ClientRectangle.Y;
 
@@ -1743,15 +1747,15 @@ namespace WinformControlLibraryExtension
                     x = (this.ClientRectangle.Width - width) / 2f;
                 }
 
-                if (this.ClientRectangle.Height != this.ImageFrameHeight)
+                if (this.ClientRectangle.Height != scale_imageFrameHeight)
                 {
-                    y = (this.ClientRectangle.Height - this.ImageFrameHeight) / 2f;
+                    y = (this.ClientRectangle.Height - scale_imageFrameHeight) / 2f;
                 }
-                rectf = new RectangleF(x, y, width, this.ImageFrameHeight);
+                rectf = new RectangleF(x, y, width, scale_imageFrameHeight);
             }
             else
             {
-                float height = this.ImageFrameHeight * this.ImageFrameCount;
+                float height = scale_imageFrameHeight * this.ImageFrameCount;
                 float x = this.ClientRectangle.X;
                 float y = this.ClientRectangle.Y;
 
@@ -1760,11 +1764,11 @@ namespace WinformControlLibraryExtension
                     y = (this.ClientRectangle.Height - height) / 2f;
                 }
 
-                if (this.ClientRectangle.Width != this.ImageFrameWidth)
+                if (this.ClientRectangle.Width != scale_imageFrameWidth)
                 {
-                    x = (this.ClientRectangle.Width - this.ImageFrameWidth) / 2f;
+                    x = (this.ClientRectangle.Width - scale_imageFrameWidth) / 2f;
                 }
-                rectf = new RectangleF(x, y, this.ImageFrameWidth, height);
+                rectf = new RectangleF(x, y, scale_imageFrameWidth, height);
             }
             this.display_rectf = rectf;
 
@@ -1779,12 +1783,15 @@ namespace WinformControlLibraryExtension
         {
             if (this.NavigationBarShowType != NavigationBarShowTypes.None)
             {
+                int scale_navigationBarBtnWidth = (int)(this.NavigationBarBtnWidth * DotsPerInchHelper.DPIScale.XScale);
+                int scale_navigationBarBtnHeight = (int)(this.NavigationBarBtnHeight * DotsPerInchHelper.DPIScale.YScale);
+
                 #region
                 if (this.IsHorizonta(this.Orientation))
                 {
-                    float padding = this.NavigationBarBtnWidth / 5f;
-                    this.navigationBar.pre_btn.btn_rectf = new RectangleF(this.display_rectf.X + padding, this.display_rectf.Y + (this.display_rectf.Height - this.NavigationBarBtnHeight) / 2f, this.NavigationBarBtnWidth, this.NavigationBarBtnHeight);
-                    this.navigationBar.next_btn.btn_rectf = new RectangleF(this.display_rectf.Right - this.NavigationBarBtnWidth - padding, this.display_rectf.Y + (this.display_rectf.Height - this.NavigationBarBtnHeight) / 2f, this.NavigationBarBtnWidth, this.NavigationBarBtnHeight);
+                    float padding = scale_navigationBarBtnWidth / 5f;
+                    this.navigationBar.pre_btn.btn_rectf = new RectangleF(this.display_rectf.X + padding, this.display_rectf.Y + (this.display_rectf.Height - scale_navigationBarBtnHeight) / 2f, scale_navigationBarBtnWidth, scale_navigationBarBtnHeight);
+                    this.navigationBar.next_btn.btn_rectf = new RectangleF(this.display_rectf.Right - scale_navigationBarBtnWidth - padding, this.display_rectf.Y + (this.display_rectf.Height - scale_navigationBarBtnHeight) / 2f, scale_navigationBarBtnWidth, scale_navigationBarBtnHeight);
 
                     float barbtn_avg_w = this.navigationBar.pre_btn.btn_rectf.Width / 4f;
                     float barbtn_avg_h = this.navigationBar.pre_btn.btn_rectf.Height / 6f;
@@ -1807,9 +1814,9 @@ namespace WinformControlLibraryExtension
                 #region
                 else if (this.IsVertical(this.Orientation))
                 {
-                    float padding = this.NavigationBarBtnWidth / 5f;
-                    this.navigationBar.pre_btn.btn_rectf = new RectangleF(this.display_rectf.X + (this.display_rectf.Width - this.NavigationBarBtnHeight) / 2f, this.display_rectf.Y + padding, this.NavigationBarBtnHeight, this.NavigationBarBtnWidth);
-                    this.navigationBar.next_btn.btn_rectf = new RectangleF(this.display_rectf.X + (this.display_rectf.Width - this.NavigationBarBtnHeight) / 2f, this.display_rectf.Bottom - this.NavigationBarBtnWidth - padding, this.NavigationBarBtnHeight, this.NavigationBarBtnWidth);
+                    float padding = scale_navigationBarBtnWidth / 5f;
+                    this.navigationBar.pre_btn.btn_rectf = new RectangleF(this.display_rectf.X + (this.display_rectf.Width - scale_navigationBarBtnHeight) / 2f, this.display_rectf.Y + padding, scale_navigationBarBtnHeight, scale_navigationBarBtnWidth);
+                    this.navigationBar.next_btn.btn_rectf = new RectangleF(this.display_rectf.X + (this.display_rectf.Width - scale_navigationBarBtnHeight) / 2f, this.display_rectf.Bottom - scale_navigationBarBtnWidth - padding, scale_navigationBarBtnHeight, scale_navigationBarBtnWidth);
 
                     float barbtn_avg_w = this.navigationBar.pre_btn.btn_rectf.Width / 6f;
                     float barbtn_avg_h = this.navigationBar.pre_btn.btn_rectf.Height / 4f;
@@ -1842,21 +1849,24 @@ namespace WinformControlLibraryExtension
         {
             if (this.StatusBarShow)
             {
+                int scale_statusBarDiameter = (int)(this.StatusBarDiameter * DotsPerInchHelper.DPIScale.XScale);
+                int scale_statusBarPadding = (int)(this.StatusBarPadding * DotsPerInchHelper.DPIScale.XScale);
+
                 for (int i = 0; i < this.statusBarList.Count; i++)
                 {
                     RectangleF statusbar_item_rectf = RectangleF.Empty;
-                    float interval = this.StatusBarDiameter / 2f;
-                    float statusbar_width = (this.StatusBarDiameter + interval) * this.enableImageList.Count - interval;
+                    float interval = scale_statusBarDiameter / 2f;
+                    float statusbar_width = (scale_statusBarDiameter + interval) * this.enableImageList.Count - interval;
                     float statusbar_item_start_x = (this.display_rectf.Width - statusbar_width) / 2f;
                     float statusbar_item_start_y = this.display_rectf.Y + (this.display_rectf.Height - statusbar_width) / 2f;
 
                     if (this.IsVertical(this.current_orientation))
                     {
-                        statusbar_item_rectf = new RectangleF(this.display_rectf.Right - this.StatusBarDiameter - this.statusBarPadding, this.display_rectf.Y + statusbar_item_start_y + i * this.StatusBarDiameter + (i - 1) * interval, this.StatusBarDiameter, this.StatusBarDiameter);
+                        statusbar_item_rectf = new RectangleF(this.display_rectf.Right - scale_statusBarDiameter - scale_statusBarPadding, this.display_rectf.Y + statusbar_item_start_y + i * scale_statusBarDiameter + (i - 1) * interval, scale_statusBarDiameter, scale_statusBarDiameter);
                     }
                     else
                     {
-                        statusbar_item_rectf = new RectangleF(this.display_rectf.X + statusbar_item_start_x + i * this.StatusBarDiameter + (i - 1) * interval, this.display_rectf.Bottom - this.StatusBarDiameter - this.statusBarPadding, this.StatusBarDiameter, this.StatusBarDiameter);
+                        statusbar_item_rectf = new RectangleF(this.display_rectf.X + statusbar_item_start_x + i * scale_statusBarDiameter + (i - 1) * interval, this.display_rectf.Bottom - scale_statusBarDiameter - scale_statusBarPadding, scale_statusBarDiameter, scale_statusBarDiameter);
                     }
                     this.statusBarList[i] = statusbar_item_rectf;
                 }
@@ -1868,26 +1878,29 @@ namespace WinformControlLibraryExtension
         /// </summary>
         private void InitializeSlideDirection()
         {
+            int scale_imageFrameWidth = (int)(this.ImageFrameWidth * DotsPerInchHelper.DPIScale.XScale);
+            int scale_imageFrameHeight = (int)(this.ImageFrameHeight * DotsPerInchHelper.DPIScale.YScale);
+
             switch (this.current_orientation)
             {
                 case Orientations.BottomToTop:
                     {
-                        this.distance = -this.ImageFrameHeight;
+                        this.distance = -scale_imageFrameHeight;
                         break;
                     }
                 case Orientations.TopToBottom:
                     {
-                        this.distance = this.ImageFrameHeight;
+                        this.distance = scale_imageFrameHeight;
                         break;
                     }
                 case Orientations.RightToLeft:
                     {
-                        this.distance = -this.ImageFrameWidth;
+                        this.distance = -scale_imageFrameWidth;
                         break;
                     }
                 case Orientations.LeftToRight:
                     {
-                        this.distance = this.ImageFrameWidth;
+                        this.distance = scale_imageFrameWidth;
                         break;
                     }
             }
@@ -1904,6 +1917,9 @@ namespace WinformControlLibraryExtension
             if (this.enableImageList.Count < 1)
                 return;
 
+            int scale_imageFrameWidth = (int)(this.ImageFrameWidth * DotsPerInchHelper.DPIScale.XScale);
+            int scale_imageFrameHeight = (int)(this.ImageFrameHeight * DotsPerInchHelper.DPIScale.YScale);
+
             #region 负方向
             if (this.IsNegative(this.current_orientation))
             {
@@ -1916,12 +1932,12 @@ namespace WinformControlLibraryExtension
                         if (this.current_orientation == Orientations.RightToLeft)
                         {
                             this.imageFrameList[i].before_point = this.display_rectf.X + (i * -this.distance);
-                            this.imageFrameList[i].current_rectf = new RectangleF(this.imageFrameList[i].before_point, this.display_rectf.Y, this.ImageFrameWidth, this.ImageFrameHeight);
+                            this.imageFrameList[i].current_rectf = new RectangleF(this.imageFrameList[i].before_point, this.display_rectf.Y, scale_imageFrameWidth, scale_imageFrameHeight);
                         }
                         else if (this.current_orientation == Orientations.BottomToTop)
                         {
                             this.imageFrameList[i].before_point = this.display_rectf.Y + (i * -this.distance);
-                            this.imageFrameList[i].current_rectf = new RectangleF(this.display_rectf.X, this.imageFrameList[i].before_point, this.ImageFrameWidth, this.ImageFrameHeight);
+                            this.imageFrameList[i].current_rectf = new RectangleF(this.display_rectf.X, this.imageFrameList[i].before_point, scale_imageFrameWidth, scale_imageFrameHeight);
                         }
                     }
                     #endregion
@@ -1943,12 +1959,12 @@ namespace WinformControlLibraryExtension
                         if (this.current_orientation == Orientations.RightToLeft)
                         {
                             this.imageFrameList[i].before_point = this.display_rectf.X + (i * -this.distance);
-                            this.imageFrameList[i].current_rectf = new RectangleF(this.imageFrameList[i].before_point, this.display_rectf.Y, this.ImageFrameWidth, this.ImageFrameHeight);
+                            this.imageFrameList[i].current_rectf = new RectangleF(this.imageFrameList[i].before_point, this.display_rectf.Y, scale_imageFrameWidth, scale_imageFrameHeight);
                         }
                         else if (this.current_orientation == Orientations.BottomToTop)
                         {
                             this.imageFrameList[i].before_point = this.display_rectf.Y + (i * -this.distance);
-                            this.imageFrameList[i].current_rectf = new RectangleF(this.display_rectf.X, this.imageFrameList[i].before_point, this.ImageFrameWidth, this.ImageFrameHeight);
+                            this.imageFrameList[i].current_rectf = new RectangleF(this.display_rectf.X, this.imageFrameList[i].before_point, scale_imageFrameWidth, scale_imageFrameHeight);
                         }
                         #endregion
 
@@ -1973,12 +1989,12 @@ namespace WinformControlLibraryExtension
                         if (this.current_orientation == Orientations.LeftToRight)
                         {
                             this.imageFrameList[i].before_point = this.display_rectf.X + (i - 1) * this.distance;
-                            this.imageFrameList[i].current_rectf = new RectangleF(this.imageFrameList[i].before_point, this.display_rectf.Y, this.ImageFrameWidth, this.ImageFrameHeight);
+                            this.imageFrameList[i].current_rectf = new RectangleF(this.imageFrameList[i].before_point, this.display_rectf.Y, scale_imageFrameWidth, scale_imageFrameHeight);
                         }
                         else if (this.current_orientation == Orientations.TopToBottom)
                         {
                             this.imageFrameList[i].before_point = this.display_rectf.Y + (i - 1) * this.distance;
-                            this.imageFrameList[i].current_rectf = new RectangleF(this.display_rectf.X, this.imageFrameList[i].before_point, this.ImageFrameWidth, this.ImageFrameHeight);
+                            this.imageFrameList[i].current_rectf = new RectangleF(this.display_rectf.X, this.imageFrameList[i].before_point, scale_imageFrameWidth, scale_imageFrameHeight);
                         }
                     }
                     #endregion
@@ -2000,12 +2016,12 @@ namespace WinformControlLibraryExtension
                         if (this.current_orientation == Orientations.LeftToRight)
                         {
                             this.imageFrameList[i].before_point = this.display_rectf.X + (i - 1) * this.distance;
-                            this.imageFrameList[i].current_rectf = new RectangleF(this.imageFrameList[i].before_point, this.display_rectf.Y, this.ImageFrameWidth, this.ImageFrameHeight);
+                            this.imageFrameList[i].current_rectf = new RectangleF(this.imageFrameList[i].before_point, this.display_rectf.Y, scale_imageFrameWidth, scale_imageFrameHeight);
                         }
                         else if (this.current_orientation == Orientations.TopToBottom)
                         {
                             this.imageFrameList[i].before_point = this.display_rectf.Y + (i - 1) * this.distance;
-                            this.imageFrameList[i].current_rectf = new RectangleF(this.display_rectf.X, this.imageFrameList[i].before_point, this.ImageFrameWidth, this.ImageFrameHeight);
+                            this.imageFrameList[i].current_rectf = new RectangleF(this.display_rectf.X, this.imageFrameList[i].before_point, scale_imageFrameWidth, scale_imageFrameHeight);
                         }
                         #endregion
 

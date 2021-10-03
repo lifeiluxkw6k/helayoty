@@ -473,6 +473,11 @@ namespace WinformControlLibraryExtension
             base.OnPaint(e);
 
             Graphics g = e.Graphics;
+
+            int scale_drawCircleRadius = (int)(this.DrawCircleRadius * DotsPerInchHelper.DPIScale.XScale);
+            int scale_thickness = (int)(this.Thickness * DotsPerInchHelper.DPIScale.XScale);
+            int scale_lineLenght = (int)(this.LineLenght * DotsPerInchHelper.DPIScale.XScale);
+
             g.SmoothingMode = SmoothingMode.AntiAlias;
             g.CompositingQuality = CompositingQuality.HighQuality;
 
@@ -486,10 +491,10 @@ namespace WinformControlLibraryExtension
                         for (int i = 0; i < this.LineDotNumber; i++)
                         {
                             node = node % this.LineDotNumber;
-                            PointF point1 = this.GetCoordinate(this.ClientRectangle, this.DrawCircleRadius - this.LineLenght, this.lineAngles[node]);
-                            PointF point2 = this.GetCoordinate(this.ClientRectangle, this.DrawCircleRadius, this.lineAngles[node]);
+                            PointF point1 = this.GetCoordinate(this.ClientRectangle, scale_drawCircleRadius - scale_lineLenght, this.lineAngles[node]);
+                            PointF point2 = this.GetCoordinate(this.ClientRectangle, scale_drawCircleRadius, this.lineAngles[node]);
 
-                            Pen line_pen = new Pen(this.lineColors[i], this.Thickness);
+                            Pen line_pen = new Pen(this.lineColors[i], scale_thickness);
                             line_pen.StartCap = LineCap.Round;
                             line_pen.EndCap = LineCap.Round;
                             g.DrawLine(line_pen, point1, point2);
@@ -507,10 +512,10 @@ namespace WinformControlLibraryExtension
                         for (int i = 0; i < this.LineDotNumber; i++)
                         {
                             node = node % this.LineDotNumber;
-                            PointF point = this.GetCoordinate(this.ClientRectangle, this.DrawCircleRadius, this.lineAngles[node]);
+                            PointF point = this.GetCoordinate(this.ClientRectangle, scale_drawCircleRadius, this.lineAngles[node]);
 
                             SolidBrush dot_sb = new SolidBrush(this.lineColors[i]);
-                            g.FillEllipse(dot_sb, point.X - this.Thickness / 2, point.Y - this.Thickness / 2, this.Thickness, this.Thickness);
+                            g.FillEllipse(dot_sb, point.X - scale_thickness / 2, point.Y - scale_thickness / 2, scale_thickness, scale_thickness);
                             dot_sb.Dispose();
 
                             node++;
@@ -521,11 +526,11 @@ namespace WinformControlLibraryExtension
                 case LoadProgressType.Arc:
                     {
                         #region
-                        int arc_w = this.DrawCircleRadius * 2;
-                        int arc_h = this.DrawCircleRadius * 2;
+                        int arc_w = scale_drawCircleRadius * 2;
+                        int arc_h = scale_drawCircleRadius * 2;
                         Rectangle arc_rect = new Rectangle((this.ClientRectangle.Width - arc_w) / 2, (this.ClientRectangle.Height - arc_h) / 2, arc_w, arc_h);
 
-                        Pen arc_pen = new Pen(this.ThicknessColor, this.Thickness);
+                        Pen arc_pen = new Pen(this.ThicknessColor, scale_thickness);
                         g.DrawArc(arc_pen, arc_rect, this.positiveProgress, 290);
                         arc_pen.Dispose();
                         break;
@@ -534,8 +539,8 @@ namespace WinformControlLibraryExtension
                 case LoadProgressType.MultiArc:
                     {
                         #region
-                        int multiArc_w = this.DrawCircleRadius * 2;
-                        int multiArc_h = this.DrawCircleRadius * 2;
+                        int multiArc_w = scale_drawCircleRadius * 2;
+                        int multiArc_h = scale_drawCircleRadius * 2;
                         Rectangle multiArc_rect = new Rectangle((this.ClientRectangle.Width - multiArc_w) / 2, (this.ClientRectangle.Height - multiArc_h) / 2, multiArc_w, multiArc_h);
 
                         Pen multiArc_pen = new Pen(this.ThicknessColor, this.thickness);
@@ -565,13 +570,13 @@ namespace WinformControlLibraryExtension
                     {
                         #region
                         int line_c = 9;//线条数量
-                        int bar_w = this.Thickness * line_c;
-                        int bar_h = this.Thickness * line_c;
+                        int bar_w = scale_thickness * line_c;
+                        int bar_h = scale_thickness * line_c;
                         int bar_x = (this.ClientRectangle.Width - bar_w) / 2;
                         int bar_y = (this.ClientRectangle.Height - bar_h) / 2;
                         int line_min_h = bar_h / 2;
 
-                        Pen bar_pen = new Pen(this.ThicknessColor, this.Thickness);
+                        Pen bar_pen = new Pen(this.ThicknessColor, scale_thickness);
                         for (int i = 0; i < line_c; i++)
                         {
                             if (i % 2 == 0)
@@ -583,7 +588,7 @@ namespace WinformControlLibraryExtension
                                 if (reality_h < line_min_h)
                                     reality_h = line_min_h;
 
-                                float line_x1 = bar_x + i * this.Thickness;
+                                float line_x1 = bar_x + i * scale_thickness;
                                 float line_y1 = bar_y + (bar_h - reality_h) / 2;
                                 float line_x2 = line_x1;
                                 float line_y2 = bar_y + (bar_h - reality_h) / 2 + reality_h;

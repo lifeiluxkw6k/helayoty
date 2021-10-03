@@ -69,9 +69,9 @@ namespace WinformControlLibraryExtension
         public delegate void ImageChangedEventHandler(object sender, ImageChangedEventArgs e);
         private event ImageChangedEventHandler imageChanged;
         /// <summary>
-        /// 图片引更改事件
+        /// 图片更改事件
         /// </summary>
-        [Description("图片引更改事件")]
+        [Description("图片更改事件")]
         public event ImageChangedEventHandler ImageChanged
         {
             add { this.imageChanged += value; }
@@ -490,7 +490,7 @@ namespace WinformControlLibraryExtension
             {
                 lock (this.Image)
                 {
-                    g.DrawImage(this.Image, new Point(0, 0));
+                    g.DrawImage(this.Image, new Rectangle(0, 0, this.ClientRectangle.Width, this.ClientRectangle.Height), new Rectangle(0, 0, this.Image.Width, this.Image.Height), GraphicsUnit.Pixel);
                 }
             }
 

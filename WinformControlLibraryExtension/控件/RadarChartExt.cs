@@ -698,9 +698,9 @@ namespace WinformControlLibraryExtension
             }
             set
             {
-                if (this.Padding == value)
+                if (base.Padding == value)
                     return;
-                this.Padding = value;
+                base.Padding = value;
                 this.InitializeRectangle();
                 this.Invalidate();
             }
@@ -864,6 +864,7 @@ namespace WinformControlLibraryExtension
                 return;
 
             Graphics g = e.Graphics;
+
             SmoothingMode sm = g.SmoothingMode;
             g.SmoothingMode = SmoothingMode.AntiAlias;
 
@@ -1083,15 +1084,18 @@ namespace WinformControlLibraryExtension
 
                 SolidBrush descitem_sb = new SolidBrush(Color.White);
                 SolidBrush desctext_sb = new SolidBrush(this.OptionTextColor);
+
+                Size option_bulk = new Size((int)(20* DotsPerInchHelper.DPIScale.XScale),(int)(10* DotsPerInchHelper.DPIScale.YScale));
+
                 for (int i = 0; i < this.ChartItemItems.Count; i++)
                 {
                     descitem_sb.Color = this.ChartItemItems[i].BackColor;
-                    SizeF desc_size = g.MeasureString(this.ChartItemItems[i].Text, this.Font);
-                    RectangleF desc_item_rect = new RectangleF(this.ChartMainRect.OptionRect.X + desc_padding, this.ChartMainRect.OptionRect.Y + descitem_height, 20, 10);
-                    RectangleF desctxt_rect = new RectangleF(this.ChartMainRect.OptionRect.X + desc_padding + desc_item_rect.Width + 5, this.ChartMainRect.OptionRect.Y + descitem_height, this.ChartMainRect.OptionRect.Width - desc_padding - desc_item_rect.Width - 5, desc_size.Height);
+                    SizeF desc_size = g.MeasureString(this.ChartItemItems[i].Text, this.Font,int.MaxValue,StringFormat.GenericTypographic);
+                    RectangleF desc_item_rect = new RectangleF(this.ChartMainRect.OptionRect.X + desc_padding, this.ChartMainRect.OptionRect.Y + descitem_height, option_bulk.Width, option_bulk.Height);
+                    RectangleF desctxt_rect = new RectangleF(this.ChartMainRect.OptionRect.X + desc_padding + desc_item_rect.Width + desc_padding, this.ChartMainRect.OptionRect.Y + descitem_height, this.ChartMainRect.OptionRect.Width - desc_padding - desc_item_rect.Width - desc_padding, desc_size.Height);
 
                     g.FillRectangle(descitem_sb, desc_item_rect);
-                    g.DrawString(this.ChartItemItems[i].Text, this.Font, desctext_sb, desctxt_rect);
+                    g.DrawString(this.ChartItemItems[i].Text, this.Font, desctext_sb, desctxt_rect.X, desctxt_rect.Y,StringFormat.GenericTypographic);
 
                     descitem_height += desc_size.Height + desc_padding;
                 }
@@ -1339,38 +1343,42 @@ namespace WinformControlLibraryExtension
             if (this.ChartLineItems.Count < 3)
                 return;
 
-            float now_radius = 0f;
+            Padding scale_padding = new Padding((int)(this.Padding.Left * DotsPerInchHelper.DPIScale.XScale), (int)(this.Padding.Top * DotsPerInchHelper.DPIScale.YScale), (int)(this.Padding.Right * DotsPerInchHelper.DPIScale.XScale), (int)(this.Padding.Bottom * DotsPerInchHelper.DPIScale.YScale));
+            Size scale_chartSize = new Size((int)(this.ChartSize.Width * DotsPerInchHelper.DPIScale.XScale), (int)(this.ChartSize.Height * DotsPerInchHelper.DPIScale.YScale));
+            int scale_titleAreaHeight = (int)(this.TitleAreaHeight * DotsPerInchHelper.DPIScale.YScale);
+
+            float scale_now_radius = 0f;
             float now_angle = this.DefaultAngle;
-            Rectangle rect = new Rectangle(this.ClientRectangle.X + this.Padding.Left, this.ClientRectangle.Y + this.Padding.Top, this.ClientRectangle.Width - this.Padding.Left - this.Padding.Right, this.ClientRectangle.Height - this.Padding.Top - this.Padding.Bottom);
-            Rectangle option_rect = new Rectangle();
-            int ptionarea_width = !this.OptionAreaShow ? 0 : this.OptionAreaWidth;
+            Rectangle scale_rect = new Rectangle(this.ClientRectangle.X + scale_padding.Left, this.ClientRectangle.Y + scale_padding.Top, this.ClientRectangle.Width - scale_padding.Left - scale_padding.Right, this.ClientRectangle.Height - scale_padding.Top - scale_padding.Bottom);
+            Rectangle scale_option_rect = new Rectangle();
+            int scale_ptionarea_width = !this.OptionAreaShow ? 0 : (int)(this.OptionAreaWidth* DotsPerInchHelper.DPIScale.XScale);
             #region Rect
             if (TitleAnchor == TitleAnchors.Top)
             {
-                this.ChartMainRect.TitleRect = new RectangleF(rect.X, rect.Y, rect.Width, this.TitleAreaHeight);
+                this.ChartMainRect.TitleRect = new RectangleF(scale_rect.X, scale_rect.Y, scale_rect.Width, scale_titleAreaHeight);
                 if (this.ChartAnchor == ChartAnchors.Left)
                 {
-                    this.ChartMainRect.OptionRect = !this.OptionAreaShow ? option_rect : new RectangleF(rect.Right - ptionarea_width, rect.Y + this.TitleAreaHeight, ptionarea_width, rect.Height - this.TitleAreaHeight);
-                    this.ChartMainRect.ChartRect = new RectangleF(rect.X + (rect.Width - ptionarea_width - this.ChartSize.Width) / 2, rect.Y + this.TitleAreaHeight + (rect.Height - this.ChartSize.Height) / 2, this.ChartSize.Width, this.ChartSize.Height);
+                    this.ChartMainRect.OptionRect = !this.OptionAreaShow ? scale_option_rect : new RectangleF(scale_rect.Right - scale_ptionarea_width, scale_rect.Y + scale_titleAreaHeight, scale_ptionarea_width, scale_rect.Height - scale_titleAreaHeight);
+                    this.ChartMainRect.ChartRect = new RectangleF(scale_rect.X + (scale_rect.Width - scale_ptionarea_width - scale_chartSize.Width) / 2, scale_rect.Y + scale_titleAreaHeight + (scale_rect.Height - scale_chartSize.Height) / 2, scale_chartSize.Width, scale_chartSize.Height);
                 }
                 else
                 {
-                    this.ChartMainRect.OptionRect = !this.OptionAreaShow ? option_rect : new RectangleF(rect.X, rect.Y + this.TitleAreaHeight, ptionarea_width, rect.Height - this.TitleAreaHeight);
-                    this.ChartMainRect.ChartRect = new RectangleF(rect.X + ptionarea_width + (rect.Width - ptionarea_width - this.ChartSize.Width) / 2, rect.Y + this.TitleAreaHeight + (rect.Height - this.ChartSize.Height) / 2, this.ChartSize.Width, this.ChartSize.Height);
+                    this.ChartMainRect.OptionRect = !this.OptionAreaShow ? scale_option_rect : new RectangleF(scale_rect.X, scale_rect.Y + scale_titleAreaHeight, scale_ptionarea_width, scale_rect.Height - scale_titleAreaHeight);
+                    this.ChartMainRect.ChartRect = new RectangleF(scale_rect.X + scale_ptionarea_width + (scale_rect.Width - scale_ptionarea_width - scale_chartSize.Width) / 2, scale_rect.Y + scale_titleAreaHeight + (scale_rect.Height - scale_chartSize.Height) / 2, scale_chartSize.Width, scale_chartSize.Height);
                 }
             }
             else
             {
-                this.ChartMainRect.TitleRect = new RectangleF(rect.X, rect.Bottom - this.TitleAreaHeight, rect.Width, this.TitleAreaHeight);
+                this.ChartMainRect.TitleRect = new RectangleF(scale_rect.X, scale_rect.Bottom - scale_titleAreaHeight, scale_rect.Width, scale_titleAreaHeight);
                 if (this.ChartAnchor == ChartAnchors.Left)
                 {
-                    this.ChartMainRect.OptionRect = !this.OptionAreaShow ? option_rect : new RectangleF(rect.Right - ptionarea_width, rect.Y, ptionarea_width, rect.Height - this.TitleAreaHeight);
-                    this.ChartMainRect.ChartRect = new RectangleF(rect.X + (rect.Width - ptionarea_width - this.ChartSize.Width) / 2, rect.Y + (rect.Height - this.ChartSize.Height) / 2, this.ChartSize.Width, this.ChartSize.Height);
+                    this.ChartMainRect.OptionRect = !this.OptionAreaShow ? scale_option_rect : new RectangleF(scale_rect.Right - scale_ptionarea_width, scale_rect.Y, scale_ptionarea_width, scale_rect.Height - scale_titleAreaHeight);
+                    this.ChartMainRect.ChartRect = new RectangleF(scale_rect.X + (scale_rect.Width - scale_ptionarea_width - scale_chartSize.Width) / 2, scale_rect.Y + (scale_rect.Height - scale_chartSize.Height) / 2, scale_chartSize.Width, scale_chartSize.Height);
                 }
                 else
                 {
-                    this.ChartMainRect.OptionRect = !this.OptionAreaShow ? option_rect : new RectangleF(rect.X, rect.Y, ptionarea_width, rect.Height - this.TitleAreaHeight);
-                    this.ChartMainRect.ChartRect = new RectangleF(rect.X + ptionarea_width + (rect.Width - ptionarea_width - this.ChartSize.Width) / 2, rect.Y + (rect.Height - this.ChartSize.Height) / 2, this.ChartSize.Width, this.ChartSize.Height);
+                    this.ChartMainRect.OptionRect = !this.OptionAreaShow ? scale_option_rect : new RectangleF(scale_rect.X, scale_rect.Y, scale_ptionarea_width, scale_rect.Height - scale_titleAreaHeight);
+                    this.ChartMainRect.ChartRect = new RectangleF(scale_rect.X + scale_ptionarea_width + (scale_rect.Width - scale_ptionarea_width - scale_chartSize.Width) / 2, scale_rect.Y + (scale_rect.Height - scale_chartSize.Height) / 2, scale_chartSize.Width, scale_chartSize.Height);
                 }
             }
             #endregion
@@ -1384,9 +1392,9 @@ namespace WinformControlLibraryExtension
                 this.ChartLoopItems[i].DataPoints = new PointF[this.ChartLineItems.Count];
 
                 now_angle = this.DefaultAngle;
-                now_radius = chart_radius / (this.ChartLoopItems.Count) * (i + 1);
+                scale_now_radius = chart_radius / (this.ChartLoopItems.Count) * (i + 1);
                 this.ChartLoopItems[i].LoopCenter = chart_center;
-                this.ChartLoopItems[i].LoopRadius = now_radius;
+                this.ChartLoopItems[i].LoopRadius = scale_now_radius;
 
                 for (int j = 0; j < this.ChartLineItems.Count; j++)
                 {
@@ -1394,7 +1402,7 @@ namespace WinformControlLibraryExtension
                     if (now_angle > 360)
                         now_angle -= 360;
 
-                    this.ChartLoopItems[i].DataPoints[j] = ControlCommom.CalculatePointForAngle(chart_center, now_radius, now_angle);
+                    this.ChartLoopItems[i].DataPoints[j] = ControlCommom.CalculatePointForAngle(chart_center, scale_now_radius, now_angle);
                 }
             }
 
@@ -1402,7 +1410,7 @@ namespace WinformControlLibraryExtension
 
             #region 角度线
             now_angle = this.DefaultAngle;
-            now_radius = chart_radius / (this.ChartLoopItems.Count) * this.ChartLoopItems.Count;
+            scale_now_radius = chart_radius / (this.ChartLoopItems.Count) * this.ChartLoopItems.Count;
 
             for (int j = 0; j < this.ChartLineItems.Count; j++)
             {
@@ -1411,9 +1419,9 @@ namespace WinformControlLibraryExtension
                     now_angle -= 360;
 
                 this.ChartLineItems[j].LoopCenter = chart_center;
-                this.ChartLineItems[j].LoopRadius = now_radius;
+                this.ChartLineItems[j].LoopRadius = scale_now_radius;
                 this.ChartLineItems[j].LineAngle = now_angle;
-                this.ChartLineItems[j].LineEndPoint = ControlCommom.CalculatePointForAngle(chart_center, now_radius, now_angle);
+                this.ChartLineItems[j].LineEndPoint = ControlCommom.CalculatePointForAngle(chart_center, scale_now_radius, now_angle);
             }
             #endregion
 

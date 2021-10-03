@@ -75,13 +75,13 @@ namespace WinformDemo
         private void Draw_Drawing(object sender, SlideMenuPanelExt.DragingEventArgs e)
         {
             this.menuExt1.MenuWidth += e.X;
-            this.panel1.Width = this.ClientRectangle.Width - this.menuExt1.Width - this.BorderWidth * 2;
+            this.panel1.Width = this.ClientRectangle.Width - this.menuExt1.Width;
             this.panel1.Location = new Point(this.menuExt1.Right, this.panel1.Location.Y);
         }
 
         private void menuExt1_PatternChanged(object sender, SlideMenuExt.PatternChangedEventArgs e)
         {
-            this.panel1.Width = this.ClientRectangle.Width - this.menuExt1.Width - this.BorderWidth * 2;
+            this.panel1.Width = this.ClientRectangle.Width - this.menuExt1.Width;
             this.panel1.Location = new Point(this.menuExt1.Right, this.panel1.Location.Y);
         }
 
@@ -100,7 +100,7 @@ namespace WinformDemo
                 if (_constructor_obj is IFormExt)
                 {
                     FormExt fe = (FormExt)_constructor_obj;
-                    fe.Padding =new Padding(0);
+                    fe.Padding = new Padding(0);
                     fe.BorderEnabled = false;
                     fe.CaptionEnabled = false;
                     fe.ResizeType = ResizeTypes.NoResize;
@@ -139,6 +139,8 @@ namespace WinformDemo
             WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem213 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(menuItem2) { ItemType = SlideMenuPanelExt.NodeTypes.MenuTab, Text = "CheckBox美化", Data = typeof(CheckBoxExtForm), Image = global::WinformDemo.Properties.Resources.demomenu_checkbox };
             WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem214 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(menuItem2) { ItemType = SlideMenuPanelExt.NodeTypes.MenuTab, Text = "RadioButton美化", Data = typeof(RadioButtonExtForm), Image = global::WinformDemo.Properties.Resources.demomenu_radio };
             WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem215 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(menuItem2) { ItemType = SlideMenuPanelExt.NodeTypes.MenuTab, Text = "Switch开关按钮", Data = typeof(SwitchButtonExtForm), Image = global::WinformDemo.Properties.Resources.demomenu_toggleswitch };
+            WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem21511 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(menuItem2) { ItemType = SlideMenuPanelExt.NodeTypes.MenuTab, Text = "带条滚动条文本", Data = typeof(LabelExtForm), Image = global::WinformDemo.Properties.Resources.demomenu_tooltip_label };
+            WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem215111 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(menuItem2) { ItemType = SlideMenuPanelExt.NodeTypes.MenuTab, Text = "尺子", Data = typeof(HRulerExtForm), Image = global::WinformDemo.Properties.Resources.demomenu_ruler };
             WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem2151 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(menuItem2) { ItemType = SlideMenuPanelExt.NodeTypes.MenuTab, Text = "ListBox列表", Data = typeof(ListBoxExtForm), Image = global::WinformDemo.Properties.Resources.demomenu_listbox };
             WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem216 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(menuItem2) { ItemType = SlideMenuPanelExt.NodeTypes.MenuTab, Text = "Button动画", Data = typeof(ButtonExtForm), Image = global::WinformDemo.Properties.Resources.demomenu_button };
             WinformControlLibraryExtension.SlideMenuPanelExt.Node menuItem217 = new WinformControlLibraryExtension.SlideMenuPanelExt.Node(menuItem2) { ItemType = SlideMenuPanelExt.NodeTypes.MenuTab, Text = "百分比进度", Data = typeof(PercentageProgressExtForm), Image = global::WinformDemo.Properties.Resources.demomenu_percentagebar };
@@ -160,6 +162,8 @@ namespace WinformDemo
             menuItem2.Children.Add(menuItem213);
             menuItem2.Children.Add(menuItem214);
             menuItem2.Children.Add(menuItem215);
+            menuItem2.Children.Add(menuItem21511);
+            menuItem2.Children.Add(menuItem215111);
             menuItem2.Children.Add(menuItem2151);
             menuItem2.Children.Add(menuItem216);
             menuItem2.Children.Add(menuItem217);

@@ -558,19 +558,21 @@ namespace WinformControlLibraryExtension
 
             this.InitializeNumberTimeRectangle();
 
-            this.highlight_hour_pen = new Pen(this.HourLineHighlightColor == Color.Empty ? this.LineHighlightColor : this.HourLineHighlightColor, this.LineWidth);
+            int scale_lineWidth = (int)((this.LineWidth * DotsPerInchHelper.DPIScale.XScale) - (this.LineWidth * DotsPerInchHelper.DPIScale.XScale % 2));
+
+            this.highlight_hour_pen = new Pen(this.HourLineHighlightColor == Color.Empty ? this.LineHighlightColor : this.HourLineHighlightColor, scale_lineWidth);
             this.highlight_hour_pen.StartCap = LineCap.Triangle;
             this.highlight_hour_pen.EndCap = LineCap.Triangle;
-            this.highlight_minute_pen = new Pen(this.MinuteLineHighlightColor == Color.Empty ? this.LineHighlightColor : this.MinuteLineHighlightColor, this.LineWidth);
+            this.highlight_minute_pen = new Pen(this.MinuteLineHighlightColor == Color.Empty ? this.LineHighlightColor : this.MinuteLineHighlightColor, scale_lineWidth);
             this.highlight_minute_pen.StartCap = LineCap.Triangle;
             this.highlight_minute_pen.EndCap = LineCap.Triangle;
-            this.highlight_second_pen = new Pen(this.SecondLineHighlightColor == Color.Empty ? this.LineHighlightColor : this.SecondLineHighlightColor, this.LineWidth);
+            this.highlight_second_pen = new Pen(this.SecondLineHighlightColor == Color.Empty ? this.LineHighlightColor : this.SecondLineHighlightColor, scale_lineWidth);
             this.highlight_second_pen.StartCap = LineCap.Triangle;
             this.highlight_second_pen.EndCap = LineCap.Triangle;
-            this.highlight_millisecond_pen = new Pen(this.MillisecondLineHighlightColor == Color.Empty ? this.LineHighlightColor : this.MillisecondLineHighlightColor, this.LineWidth);
+            this.highlight_millisecond_pen = new Pen(this.MillisecondLineHighlightColor == Color.Empty ? this.LineHighlightColor : this.MillisecondLineHighlightColor, scale_lineWidth);
             this.highlight_millisecond_pen.StartCap = LineCap.Triangle;
             this.highlight_millisecond_pen.EndCap = LineCap.Triangle;
-            this.shadow_pen = new Pen(this.lineShadowColor, this.LineWidth);
+            this.shadow_pen = new Pen(this.lineShadowColor, scale_lineWidth);
             this.shadow_pen.StartCap = LineCap.Triangle;
             this.shadow_pen.EndCap = LineCap.Triangle;
             this.split_sb = new SolidBrush(this.lineHighlightColor);
@@ -587,52 +589,55 @@ namespace WinformControlLibraryExtension
                 return;
 
             Graphics g = e.Graphics;
+
+            int scale_lineWidth = (int)((this.LineWidth * DotsPerInchHelper.DPIScale.XScale) - (this.LineWidth * DotsPerInchHelper.DPIScale.XScale % 2));
+
             g.SmoothingMode = SmoothingMode.AntiAlias;
 
             if (this.TimeTypeFormat == NumberTimeFormats.Hour)
             {
-                this.draw_num(g, this.highlight_hour_pen, this.hour1_rect, this.shadow_pen, int.Parse(this.Value.ToString("HH").Substring(0, 1)));
-                this.draw_num(g, this.highlight_hour_pen, this.hour2_rect, this.shadow_pen, int.Parse(this.Value.ToString("HH").Substring(1, 1)));
+                this.draw_num(g, this.highlight_hour_pen, this.hour1_rect, this.shadow_pen, int.Parse(this.Value.ToString("HH").Substring(0, 1)),scale_lineWidth);
+                this.draw_num(g, this.highlight_hour_pen, this.hour2_rect, this.shadow_pen, int.Parse(this.Value.ToString("HH").Substring(1, 1)), scale_lineWidth);
             }
             else if (this.TimeTypeFormat == NumberTimeFormats.HourMinute)
             {
-                this.draw_num(g, this.highlight_hour_pen, this.hour1_rect, this.shadow_pen, int.Parse(this.Value.ToString("HH").Substring(0, 1)));
-                this.draw_num(g, this.highlight_hour_pen, this.hour2_rect, this.shadow_pen, int.Parse(this.Value.ToString("HH").Substring(1, 1)));
+                this.draw_num(g, this.highlight_hour_pen, this.hour1_rect, this.shadow_pen, int.Parse(this.Value.ToString("HH").Substring(0, 1)), scale_lineWidth);
+                this.draw_num(g, this.highlight_hour_pen, this.hour2_rect, this.shadow_pen, int.Parse(this.Value.ToString("HH").Substring(1, 1)), scale_lineWidth);
 
-                this.draw_split(g, split_sb, this.split1_rect);
-                this.draw_num(g, this.highlight_minute_pen, this.minute1_rect, this.shadow_pen, int.Parse(this.Value.ToString("mm").Substring(0, 1)));
-                this.draw_num(g, this.highlight_minute_pen, this.minute2_rect, this.shadow_pen, int.Parse(this.Value.ToString("mm").Substring(1, 1)));
+                this.draw_split(g, split_sb, this.split1_rect, scale_lineWidth);
+                this.draw_num(g, this.highlight_minute_pen, this.minute1_rect, this.shadow_pen, int.Parse(this.Value.ToString("mm").Substring(0, 1)), scale_lineWidth);
+                this.draw_num(g, this.highlight_minute_pen, this.minute2_rect, this.shadow_pen, int.Parse(this.Value.ToString("mm").Substring(1, 1)), scale_lineWidth);
             }
             else if (this.TimeTypeFormat == NumberTimeFormats.HourMinuteSecond)
             {
-                this.draw_num(g, this.highlight_hour_pen, this.hour1_rect, this.shadow_pen, int.Parse(this.Value.ToString("HH").Substring(0, 1)));
-                this.draw_num(g, this.highlight_hour_pen, this.hour2_rect, this.shadow_pen, int.Parse(this.Value.ToString("HH").Substring(1, 1)));
+                this.draw_num(g, this.highlight_hour_pen, this.hour1_rect, this.shadow_pen, int.Parse(this.Value.ToString("HH").Substring(0, 1)), scale_lineWidth);
+                this.draw_num(g, this.highlight_hour_pen, this.hour2_rect, this.shadow_pen, int.Parse(this.Value.ToString("HH").Substring(1, 1)), scale_lineWidth);
 
-                this.draw_split(g, split_sb, this.split1_rect);
-                this.draw_num(g, this.highlight_minute_pen, this.minute1_rect, this.shadow_pen, int.Parse(this.Value.ToString("mm").Substring(0, 1)));
-                this.draw_num(g, this.highlight_minute_pen, this.minute2_rect, this.shadow_pen, int.Parse(this.Value.ToString("mm").Substring(1, 1)));
+                this.draw_split(g, split_sb, this.split1_rect, scale_lineWidth);
+                this.draw_num(g, this.highlight_minute_pen, this.minute1_rect, this.shadow_pen, int.Parse(this.Value.ToString("mm").Substring(0, 1)), scale_lineWidth);
+                this.draw_num(g, this.highlight_minute_pen, this.minute2_rect, this.shadow_pen, int.Parse(this.Value.ToString("mm").Substring(1, 1)), scale_lineWidth);
 
-                this.draw_split(g, split_sb, this.split2_rect);
-                this.draw_num(g, this.highlight_second_pen, this.second1_rect, this.shadow_pen, int.Parse(this.Value.ToString("ss").Substring(0, 1)));
-                this.draw_num(g, this.highlight_second_pen, this.second2_rect, this.shadow_pen, int.Parse(this.Value.ToString("ss").Substring(1, 1)));
+                this.draw_split(g, split_sb, this.split2_rect, scale_lineWidth);
+                this.draw_num(g, this.highlight_second_pen, this.second1_rect, this.shadow_pen, int.Parse(this.Value.ToString("ss").Substring(0, 1)), scale_lineWidth);
+                this.draw_num(g, this.highlight_second_pen, this.second2_rect, this.shadow_pen, int.Parse(this.Value.ToString("ss").Substring(1, 1)), scale_lineWidth);
             }
             else if (this.TimeTypeFormat == NumberTimeFormats.HourMinuteSecondMillisecond)
             {
-                this.draw_num(g, this.highlight_hour_pen, this.hour1_rect, this.shadow_pen, int.Parse(this.Value.ToString("HH").Substring(0, 1)));
-                this.draw_num(g, this.highlight_hour_pen, this.hour2_rect, this.shadow_pen, int.Parse(this.Value.ToString("HH").Substring(1, 1)));
+                this.draw_num(g, this.highlight_hour_pen, this.hour1_rect, this.shadow_pen, int.Parse(this.Value.ToString("HH").Substring(0, 1)), scale_lineWidth);
+                this.draw_num(g, this.highlight_hour_pen, this.hour2_rect, this.shadow_pen, int.Parse(this.Value.ToString("HH").Substring(1, 1)), scale_lineWidth);
 
-                this.draw_split(g, split_sb, this.split1_rect);
-                this.draw_num(g, this.highlight_minute_pen, this.minute1_rect, this.shadow_pen, int.Parse(this.Value.ToString("mm").Substring(0, 1)));
-                this.draw_num(g, this.highlight_minute_pen, this.minute2_rect, this.shadow_pen, int.Parse(this.Value.ToString("mm").Substring(1, 1)));
+                this.draw_split(g, split_sb, this.split1_rect, scale_lineWidth);
+                this.draw_num(g, this.highlight_minute_pen, this.minute1_rect, this.shadow_pen, int.Parse(this.Value.ToString("mm").Substring(0, 1)), scale_lineWidth);
+                this.draw_num(g, this.highlight_minute_pen, this.minute2_rect, this.shadow_pen, int.Parse(this.Value.ToString("mm").Substring(1, 1)), scale_lineWidth);
 
-                this.draw_split(g, split_sb, this.split2_rect);
-                this.draw_num(g, this.highlight_second_pen, this.second1_rect, this.shadow_pen, int.Parse(this.Value.ToString("ss").Substring(0, 1)));
-                this.draw_num(g, this.highlight_second_pen, this.second2_rect, this.shadow_pen, int.Parse(this.Value.ToString("ss").Substring(1, 1)));
+                this.draw_split(g, split_sb, this.split2_rect, scale_lineWidth);
+                this.draw_num(g, this.highlight_second_pen, this.second1_rect, this.shadow_pen, int.Parse(this.Value.ToString("ss").Substring(0, 1)), scale_lineWidth);
+                this.draw_num(g, this.highlight_second_pen, this.second2_rect, this.shadow_pen, int.Parse(this.Value.ToString("ss").Substring(1, 1)), scale_lineWidth);
 
-                this.draw_split(g, split_sb, this.split3_rect);
-                this.draw_num(g, this.highlight_millisecond_pen, this.millisecond1_rect, this.shadow_pen, int.Parse(this.Value.ToString("fff").Substring(0, 1)));
-                this.draw_num(g, this.highlight_millisecond_pen, this.millisecond2_rect, this.shadow_pen, int.Parse(this.Value.ToString("fff").Substring(1, 1)));
-                this.draw_num(g, this.highlight_millisecond_pen, this.millisecond3_rect, this.shadow_pen, int.Parse(this.Value.ToString("fff").Substring(2, 1)));
+                this.draw_split(g, split_sb, this.split3_rect, scale_lineWidth);
+                this.draw_num(g, this.highlight_millisecond_pen, this.millisecond1_rect, this.shadow_pen, int.Parse(this.Value.ToString("fff").Substring(0, 1)), scale_lineWidth);
+                this.draw_num(g, this.highlight_millisecond_pen, this.millisecond2_rect, this.shadow_pen, int.Parse(this.Value.ToString("fff").Substring(1, 1)), scale_lineWidth);
+                this.draw_num(g, this.highlight_millisecond_pen, this.millisecond3_rect, this.shadow_pen, int.Parse(this.Value.ToString("fff").Substring(2, 1)), scale_lineWidth);
             }
 
         }
@@ -688,53 +693,54 @@ namespace WinformControlLibraryExtension
         /// </summary>
         private void InitializeNumberTimeRectangle()
         {
-            this.cap_c = (float)this.LineWidth / 2f;
-            this.line_w = (float)this.LineWidth * 4;
+            int scale_lineWidth = (int)((this.LineWidth * DotsPerInchHelper.DPIScale.XScale) - (this.LineWidth * DotsPerInchHelper.DPIScale.XScale % 2));
+
+            this.cap_c = (float)scale_lineWidth / 2f;
+            this.line_w = (float)scale_lineWidth * 4;
             this.line_h = this.line_w;
 
-            float rectf_w = this.line_w + this.LineWidth + 2;
-            float rectf_h = this.line_h * 2 + this.LineWidth + 4;
+            float rectf_w = this.line_w + scale_lineWidth + 2;
+            float rectf_h = this.line_h * 2 + scale_lineWidth + 4;
 
-            float split_w = this.LineWidth * 3;
+            float split_w = scale_lineWidth * 3;
 
             float start_x = 0f;
             if (this.TimeTypeFormat == NumberTimeFormats.Hour)
             {
-                start_x = (this.ClientRectangle.Width - (rectf_w * 2 + this.LineWidth)) / 2f;
+                start_x = (this.ClientRectangle.Width - (rectf_w * 2 + scale_lineWidth)) / 2f;
             }
             else if (this.TimeTypeFormat == NumberTimeFormats.HourMinute)
             {
-                start_x = (this.ClientRectangle.Width - (rectf_w * 4 + this.LineWidth * 2 + split_w)) / 2f;
+                start_x = (this.ClientRectangle.Width - (rectf_w * 4 + scale_lineWidth * 2 + split_w)) / 2f;
             }
             else if (this.TimeTypeFormat == NumberTimeFormats.HourMinuteSecond)
             {
-                start_x = (this.ClientRectangle.Width - (rectf_w * 6 + this.LineWidth * 3 + split_w * 2)) / 2f;
+                start_x = (this.ClientRectangle.Width - (rectf_w * 6 + scale_lineWidth * 3 + split_w * 2)) / 2f;
             }
             else if (this.TimeTypeFormat == NumberTimeFormats.HourMinuteSecondMillisecond)
             {
-                start_x = (this.ClientRectangle.Width - (rectf_w * 9 + this.LineWidth * 5 + split_w * 3)) / 2f;
+                start_x = (this.ClientRectangle.Width - (rectf_w * 9 + scale_lineWidth * 5 + split_w * 3)) / 2f;
             }
             float start_y = (this.ClientRectangle.Height - rectf_h) / 2f;
 
 
             this.hour1_rect = new RectangleF(start_x, start_y, rectf_w, rectf_h);
-            this.hour2_rect = new RectangleF(this.hour1_rect.Right + this.LineWidth, start_y, rectf_w, rectf_h);
+            this.hour2_rect = new RectangleF(this.hour1_rect.Right + scale_lineWidth, start_y, rectf_w, rectf_h);
 
             this.split1_rect = new RectangleF(this.hour2_rect.Right, start_y, split_w, rectf_h);
             this.minute1_rect = new RectangleF(this.split1_rect.Right, start_y, rectf_w, rectf_h);
-            this.minute2_rect = new RectangleF(this.minute1_rect.Right + this.LineWidth, start_y, rectf_w, rectf_h);
+            this.minute2_rect = new RectangleF(this.minute1_rect.Right + scale_lineWidth, start_y, rectf_w, rectf_h);
 
             this.split2_rect = new RectangleF(this.minute2_rect.Right, start_y, split_w, rectf_h);
             this.second1_rect = new RectangleF(this.split2_rect.Right, start_y, rectf_w, rectf_h);
-            this.second2_rect = new RectangleF(this.second1_rect.Right + this.LineWidth, start_y, rectf_w, rectf_h);
+            this.second2_rect = new RectangleF(this.second1_rect.Right + scale_lineWidth, start_y, rectf_w, rectf_h);
 
             this.split3_rect = new RectangleF(this.second2_rect.Right, start_y, split_w, rectf_h);
             this.millisecond1_rect = new RectangleF(this.split3_rect.Right, start_y, rectf_w, rectf_h);
-            this.millisecond2_rect = new RectangleF(this.millisecond1_rect.Right + this.LineWidth, start_y, rectf_w, rectf_h);
-            this.millisecond3_rect = new RectangleF(this.millisecond2_rect.Right + this.LineWidth, start_y, rectf_w, rectf_h);
+            this.millisecond2_rect = new RectangleF(this.millisecond1_rect.Right + scale_lineWidth, start_y, rectf_w, rectf_h);
+            this.millisecond3_rect = new RectangleF(this.millisecond2_rect.Right + scale_lineWidth, start_y, rectf_w, rectf_h);
 
         }
-
 
         #region 绘制数字笔画
         //
@@ -744,60 +750,60 @@ namespace WinformControlLibraryExtension
         //    | |      21  22
         //    ---        3
         //
-        private void draw_vertical_11(Graphics g, Pen pen, RectangleF bounds_rect)
+        private void draw_vertical_11(Graphics g, Pen pen, RectangleF bounds_rect, int scale_lineWidth)
         {
             float x1 = bounds_rect.X + this.cap_c;
-            float y1 = bounds_rect.Y + this.LineWidth + 1;
+            float y1 = bounds_rect.Y + scale_lineWidth + 1;
             float x2 = bounds_rect.X + this.cap_c;
             float y2 = bounds_rect.Y + this.line_h + 1;
             g.DrawLine(pen, x1, y1, x2, y2);
         }
-        private void draw_vertical_21(Graphics g, Pen pen, RectangleF bounds_rect)
+        private void draw_vertical_21(Graphics g, Pen pen, RectangleF bounds_rect, int scale_lineWidth)
         {
             float x1 = bounds_rect.X + this.cap_c;
-            float y1 = bounds_rect.Y + this.LineWidth + this.line_h + 3;
+            float y1 = bounds_rect.Y + scale_lineWidth + this.line_h + 3;
             float x2 = bounds_rect.X + this.cap_c;
             float y2 = bounds_rect.Y + this.line_h + this.line_h + 3;
             g.DrawLine(pen, x1, y1, x2, y2);
         }
 
-        private void draw_horizontal_1(Graphics g, Pen pen, RectangleF bounds_rect)
+        private void draw_horizontal_1(Graphics g, Pen pen, RectangleF bounds_rect, int scale_lineWidth)
         {
-            float x1 = 1 + bounds_rect.X + this.LineWidth;
+            float x1 = 1 + bounds_rect.X + scale_lineWidth;
             float y1 = bounds_rect.Y + this.cap_c;
             float x2 = 1 + bounds_rect.X + this.line_w;
             float y2 = bounds_rect.Y + this.cap_c;
             g.DrawLine(pen, x1, y1, x2, y2);
         }
-        private void draw_horizontal_2(Graphics g, Pen pen, RectangleF bounds_rect)
+        private void draw_horizontal_2(Graphics g, Pen pen, RectangleF bounds_rect, int scale_lineWidth)
         {
-            float x1 = 1 + bounds_rect.X + this.LineWidth;
+            float x1 = 1 + bounds_rect.X + scale_lineWidth;
             float y1 = 2 + bounds_rect.Y + this.cap_c + this.line_h;
             float x2 = 1 + bounds_rect.X + this.line_w;
             float y2 = 2 + bounds_rect.Y + this.cap_c + this.line_h;
             g.DrawLine(pen, x1, y1, x2, y2);
         }
-        private void draw_horizontal_3(Graphics g, Pen pen, RectangleF bounds_rect)
+        private void draw_horizontal_3(Graphics g, Pen pen, RectangleF bounds_rect, int scale_lineWidth)
         {
-            float x1 = 1 + bounds_rect.X + this.LineWidth;
+            float x1 = 1 + bounds_rect.X + scale_lineWidth;
             float y1 = 4 + bounds_rect.Y + this.cap_c + this.line_h + this.line_h;
             float x2 = 1 + bounds_rect.X + this.line_w;
             float y2 = 4 + bounds_rect.Y + this.cap_c + this.line_h + this.line_h;
             g.DrawLine(pen, x1, y1, x2, y2);
         }
 
-        private void draw_vertical_12(Graphics g, Pen pen, RectangleF bounds_rect)
+        private void draw_vertical_12(Graphics g, Pen pen, RectangleF bounds_rect, int scale_lineWidth)
         {
             float x1 = bounds_rect.X + this.cap_c + 2 + this.line_w;
-            float y1 = bounds_rect.Y + this.LineWidth + 1;
+            float y1 = bounds_rect.Y + scale_lineWidth + 1;
             float x2 = bounds_rect.X + this.cap_c + 2 + this.line_w;
             float y2 = bounds_rect.Y + this.line_h + 1;
             g.DrawLine(pen, x1, y1, x2, y2);
         }
-        private void draw_vertical_22(Graphics g, Pen pen, RectangleF bounds_rect)
+        private void draw_vertical_22(Graphics g, Pen pen, RectangleF bounds_rect, int scale_lineWidth)
         {
             float x1 = bounds_rect.X + this.cap_c + 2 + this.line_w;
-            float y1 = bounds_rect.Y + this.LineWidth + this.line_h + +3;
+            float y1 = bounds_rect.Y + scale_lineWidth + this.line_h + +3;
             float x2 = bounds_rect.X + this.cap_c + 2 + this.line_w;
             float y2 = bounds_rect.Y + this.line_h + this.line_h + 3;
             g.DrawLine(pen, x1, y1, x2, y2);
@@ -805,151 +811,151 @@ namespace WinformControlLibraryExtension
         #endregion
 
         #region 绘制数字
-        private void draw_0(Graphics g, Pen highlight_pen, RectangleF bounds_rect, Pen shadow_pen)
+        private void draw_0(Graphics g, Pen highlight_pen, RectangleF bounds_rect, Pen shadow_pen, int scale_lineWidth)
         {
-            this.draw_vertical_11(g, highlight_pen, bounds_rect);
-            this.draw_vertical_21(g, highlight_pen, bounds_rect);
+            this.draw_vertical_11(g, highlight_pen, bounds_rect, scale_lineWidth);
+            this.draw_vertical_21(g, highlight_pen, bounds_rect, scale_lineWidth);
 
-            this.draw_horizontal_1(g, highlight_pen, bounds_rect);
+            this.draw_horizontal_1(g, highlight_pen, bounds_rect, scale_lineWidth);
             if (this.ShadowShow)
-                this.draw_horizontal_2(g, shadow_pen, bounds_rect);
-            this.draw_horizontal_3(g, highlight_pen, bounds_rect);
+                this.draw_horizontal_2(g, shadow_pen, bounds_rect, scale_lineWidth);
+            this.draw_horizontal_3(g, highlight_pen, bounds_rect, scale_lineWidth);
 
-            this.draw_vertical_12(g, highlight_pen, bounds_rect);
-            this.draw_vertical_22(g, highlight_pen, bounds_rect);
+            this.draw_vertical_12(g, highlight_pen, bounds_rect, scale_lineWidth);
+            this.draw_vertical_22(g, highlight_pen, bounds_rect, scale_lineWidth);
         }
-        private void draw_1(Graphics g, Pen highlight_pen, RectangleF bounds_rect, Pen shadow_pen)
+        private void draw_1(Graphics g, Pen highlight_pen, RectangleF bounds_rect, Pen shadow_pen, int scale_lineWidth)
         {
             if (this.ShadowShow)
-                this.draw_vertical_11(g, shadow_pen, bounds_rect);
+                this.draw_vertical_11(g, shadow_pen, bounds_rect, scale_lineWidth);
             if (this.ShadowShow)
-                this.draw_vertical_21(g, shadow_pen, bounds_rect);
+                this.draw_vertical_21(g, shadow_pen, bounds_rect, scale_lineWidth);
 
             if (this.ShadowShow)
-                this.draw_horizontal_1(g, shadow_pen, bounds_rect);
+                this.draw_horizontal_1(g, shadow_pen, bounds_rect, scale_lineWidth);
             if (this.ShadowShow)
-                this.draw_horizontal_2(g, shadow_pen, bounds_rect);
+                this.draw_horizontal_2(g, shadow_pen, bounds_rect, scale_lineWidth);
             if (this.ShadowShow)
-                this.draw_horizontal_3(g, shadow_pen, bounds_rect);
+                this.draw_horizontal_3(g, shadow_pen, bounds_rect, scale_lineWidth);
 
-            this.draw_vertical_12(g, highlight_pen, bounds_rect);
-            this.draw_vertical_22(g, highlight_pen, bounds_rect);
+            this.draw_vertical_12(g, highlight_pen, bounds_rect, scale_lineWidth);
+            this.draw_vertical_22(g, highlight_pen, bounds_rect, scale_lineWidth);
         }
-        private void draw_2(Graphics g, Pen highlight_pen, RectangleF bounds_rect, Pen shadow_pen)
+        private void draw_2(Graphics g, Pen highlight_pen, RectangleF bounds_rect, Pen shadow_pen, int scale_lineWidth)
         {
             if (this.ShadowShow)
-                this.draw_vertical_11(g, shadow_pen, bounds_rect);
-            this.draw_vertical_21(g, highlight_pen, bounds_rect);
+                this.draw_vertical_11(g, shadow_pen, bounds_rect, scale_lineWidth);
+            this.draw_vertical_21(g, highlight_pen, bounds_rect, scale_lineWidth);
 
-            this.draw_horizontal_1(g, highlight_pen, bounds_rect);
-            this.draw_horizontal_2(g, highlight_pen, bounds_rect);
-            this.draw_horizontal_3(g, highlight_pen, bounds_rect);
+            this.draw_horizontal_1(g, highlight_pen, bounds_rect, scale_lineWidth);
+            this.draw_horizontal_2(g, highlight_pen, bounds_rect, scale_lineWidth);
+            this.draw_horizontal_3(g, highlight_pen, bounds_rect, scale_lineWidth);
 
-            this.draw_vertical_12(g, highlight_pen, bounds_rect);
+            this.draw_vertical_12(g, highlight_pen, bounds_rect, scale_lineWidth);
             if (this.ShadowShow)
-                this.draw_vertical_22(g, shadow_pen, bounds_rect);
+                this.draw_vertical_22(g, shadow_pen, bounds_rect, scale_lineWidth);
         }
-        private void draw_3(Graphics g, Pen highlight_pen, RectangleF bounds_rect, Pen shadow_pen)
+        private void draw_3(Graphics g, Pen highlight_pen, RectangleF bounds_rect, Pen shadow_pen, int scale_lineWidth)
         {
             if (this.ShadowShow)
-                this.draw_vertical_11(g, shadow_pen, bounds_rect);
+                this.draw_vertical_11(g, shadow_pen, bounds_rect, scale_lineWidth);
             if (this.ShadowShow)
-                this.draw_vertical_21(g, shadow_pen, bounds_rect);
+                this.draw_vertical_21(g, shadow_pen, bounds_rect, scale_lineWidth);
 
-            this.draw_horizontal_1(g, highlight_pen, bounds_rect);
-            this.draw_horizontal_2(g, highlight_pen, bounds_rect);
-            this.draw_horizontal_3(g, highlight_pen, bounds_rect);
+            this.draw_horizontal_1(g, highlight_pen, bounds_rect, scale_lineWidth);
+            this.draw_horizontal_2(g, highlight_pen, bounds_rect, scale_lineWidth);
+            this.draw_horizontal_3(g, highlight_pen, bounds_rect, scale_lineWidth);
 
-            this.draw_vertical_12(g, highlight_pen, bounds_rect);
-            this.draw_vertical_22(g, highlight_pen, bounds_rect);
+            this.draw_vertical_12(g, highlight_pen, bounds_rect, scale_lineWidth);
+            this.draw_vertical_22(g, highlight_pen, bounds_rect, scale_lineWidth);
         }
-        private void draw_4(Graphics g, Pen highlight_pen, RectangleF bounds_rect, Pen shadow_pen)
+        private void draw_4(Graphics g, Pen highlight_pen, RectangleF bounds_rect, Pen shadow_pen, int scale_lineWidth)
         {
-            this.draw_vertical_11(g, highlight_pen, bounds_rect);
+            this.draw_vertical_11(g, highlight_pen, bounds_rect, scale_lineWidth);
             if (this.ShadowShow)
-                this.draw_vertical_21(g, shadow_pen, bounds_rect);
+                this.draw_vertical_21(g, shadow_pen, bounds_rect, scale_lineWidth);
 
             if (this.ShadowShow)
-                this.draw_horizontal_1(g, shadow_pen, bounds_rect);
-            this.draw_horizontal_2(g, highlight_pen, bounds_rect);
+                this.draw_horizontal_1(g, shadow_pen, bounds_rect, scale_lineWidth);
+            this.draw_horizontal_2(g, highlight_pen, bounds_rect, scale_lineWidth);
             if (this.ShadowShow)
-                this.draw_horizontal_3(g, shadow_pen, bounds_rect);
+                this.draw_horizontal_3(g, shadow_pen, bounds_rect, scale_lineWidth);
 
-            this.draw_vertical_12(g, highlight_pen, bounds_rect);
-            this.draw_vertical_22(g, highlight_pen, bounds_rect);
+            this.draw_vertical_12(g, highlight_pen, bounds_rect, scale_lineWidth);
+            this.draw_vertical_22(g, highlight_pen, bounds_rect, scale_lineWidth);
         }
-        private void draw_5(Graphics g, Pen highlight_pen, RectangleF bounds_rect, Pen shadow_pen)
+        private void draw_5(Graphics g, Pen highlight_pen, RectangleF bounds_rect, Pen shadow_pen, int scale_lineWidth)
         {
-            this.draw_vertical_11(g, highlight_pen, bounds_rect);
+            this.draw_vertical_11(g, highlight_pen, bounds_rect, scale_lineWidth);
             if (this.ShadowShow)
-                this.draw_vertical_21(g, shadow_pen, bounds_rect);
+                this.draw_vertical_21(g, shadow_pen, bounds_rect, scale_lineWidth);
 
-            this.draw_horizontal_1(g, highlight_pen, bounds_rect);
-            this.draw_horizontal_2(g, highlight_pen, bounds_rect);
-            this.draw_horizontal_3(g, highlight_pen, bounds_rect);
+            this.draw_horizontal_1(g, highlight_pen, bounds_rect, scale_lineWidth);
+            this.draw_horizontal_2(g, highlight_pen, bounds_rect, scale_lineWidth);
+            this.draw_horizontal_3(g, highlight_pen, bounds_rect, scale_lineWidth);
 
             if (this.ShadowShow)
-                this.draw_vertical_12(g, shadow_pen, bounds_rect);
-            this.draw_vertical_22(g, highlight_pen, bounds_rect);
+                this.draw_vertical_12(g, shadow_pen, bounds_rect, scale_lineWidth);
+            this.draw_vertical_22(g, highlight_pen, bounds_rect, scale_lineWidth);
         }
-        private void draw_6(Graphics g, Pen highlight_pen, RectangleF bounds_rect, Pen shadow_pen)
+        private void draw_6(Graphics g, Pen highlight_pen, RectangleF bounds_rect, Pen shadow_pen, int scale_lineWidth)
         {
-            this.draw_vertical_11(g, highlight_pen, bounds_rect);
-            this.draw_vertical_21(g, highlight_pen, bounds_rect);
+            this.draw_vertical_11(g, highlight_pen, bounds_rect, scale_lineWidth);
+            this.draw_vertical_21(g, highlight_pen, bounds_rect, scale_lineWidth);
 
-            this.draw_horizontal_1(g, highlight_pen, bounds_rect);
-            this.draw_horizontal_2(g, highlight_pen, bounds_rect);
-            this.draw_horizontal_3(g, highlight_pen, bounds_rect);
+            this.draw_horizontal_1(g, highlight_pen, bounds_rect, scale_lineWidth);
+            this.draw_horizontal_2(g, highlight_pen, bounds_rect, scale_lineWidth);
+            this.draw_horizontal_3(g, highlight_pen, bounds_rect, scale_lineWidth);
 
             if (this.ShadowShow)
-                this.draw_vertical_12(g, shadow_pen, bounds_rect);
-            this.draw_vertical_22(g, highlight_pen, bounds_rect);
+                this.draw_vertical_12(g, shadow_pen, bounds_rect, scale_lineWidth);
+            this.draw_vertical_22(g, highlight_pen, bounds_rect, scale_lineWidth);
         }
-        private void draw_7(Graphics g, Pen highlight_pen, RectangleF bounds_rect, Pen shadow_pen)
+        private void draw_7(Graphics g, Pen highlight_pen, RectangleF bounds_rect, Pen shadow_pen, int scale_lineWidth)
         {
             if (this.ShadowShow)
-                this.draw_vertical_11(g, shadow_pen, bounds_rect);
+                this.draw_vertical_11(g, shadow_pen, bounds_rect, scale_lineWidth);
             if (this.ShadowShow)
-                this.draw_vertical_21(g, shadow_pen, bounds_rect);
+                this.draw_vertical_21(g, shadow_pen, bounds_rect, scale_lineWidth);
 
-            this.draw_horizontal_1(g, highlight_pen, bounds_rect);
+            this.draw_horizontal_1(g, highlight_pen, bounds_rect, scale_lineWidth);
             if (this.ShadowShow)
-                this.draw_horizontal_2(g, shadow_pen, bounds_rect);
+                this.draw_horizontal_2(g, shadow_pen, bounds_rect, scale_lineWidth);
             if (this.ShadowShow)
-                this.draw_horizontal_3(g, shadow_pen, bounds_rect);
+                this.draw_horizontal_3(g, shadow_pen, bounds_rect, scale_lineWidth);
 
-            this.draw_vertical_12(g, highlight_pen, bounds_rect);
-            this.draw_vertical_22(g, highlight_pen, bounds_rect);
+            this.draw_vertical_12(g, highlight_pen, bounds_rect, scale_lineWidth);
+            this.draw_vertical_22(g, highlight_pen, bounds_rect, scale_lineWidth);
         }
-        private void draw_8(Graphics g, Pen highlight_pen, RectangleF bounds_rect, Pen shadow_pen)
+        private void draw_8(Graphics g, Pen highlight_pen, RectangleF bounds_rect, Pen shadow_pen, int scale_lineWidth)
         {
-            this.draw_vertical_11(g, highlight_pen, bounds_rect);
-            this.draw_vertical_21(g, highlight_pen, bounds_rect);
+            this.draw_vertical_11(g, highlight_pen, bounds_rect, scale_lineWidth);
+            this.draw_vertical_21(g, highlight_pen, bounds_rect, scale_lineWidth);
 
-            this.draw_horizontal_1(g, highlight_pen, bounds_rect);
-            this.draw_horizontal_2(g, highlight_pen, bounds_rect);
-            this.draw_horizontal_3(g, highlight_pen, bounds_rect);
+            this.draw_horizontal_1(g, highlight_pen, bounds_rect, scale_lineWidth);
+            this.draw_horizontal_2(g, highlight_pen, bounds_rect, scale_lineWidth);
+            this.draw_horizontal_3(g, highlight_pen, bounds_rect, scale_lineWidth);
 
-            this.draw_vertical_12(g, highlight_pen, bounds_rect);
-            this.draw_vertical_22(g, highlight_pen, bounds_rect);
+            this.draw_vertical_12(g, highlight_pen, bounds_rect, scale_lineWidth);
+            this.draw_vertical_22(g, highlight_pen, bounds_rect, scale_lineWidth);
         }
-        private void draw_9(Graphics g, Pen highlight_pen, RectangleF bounds_rect, Pen shadow_pen)
+        private void draw_9(Graphics g, Pen highlight_pen, RectangleF bounds_rect, Pen shadow_pen, int scale_lineWidth)
         {
-            this.draw_vertical_11(g, highlight_pen, bounds_rect);
+            this.draw_vertical_11(g, highlight_pen, bounds_rect, scale_lineWidth);
             if (this.ShadowShow)
-                this.draw_vertical_21(g, shadow_pen, bounds_rect);
+                this.draw_vertical_21(g, shadow_pen, bounds_rect, scale_lineWidth);
 
-            this.draw_horizontal_1(g, highlight_pen, bounds_rect);
-            this.draw_horizontal_2(g, highlight_pen, bounds_rect);
-            this.draw_horizontal_3(g, highlight_pen, bounds_rect);
+            this.draw_horizontal_1(g, highlight_pen, bounds_rect, scale_lineWidth);
+            this.draw_horizontal_2(g, highlight_pen, bounds_rect, scale_lineWidth);
+            this.draw_horizontal_3(g, highlight_pen, bounds_rect, scale_lineWidth);
 
-            this.draw_vertical_12(g, highlight_pen, bounds_rect);
-            this.draw_vertical_22(g, highlight_pen, bounds_rect);
+            this.draw_vertical_12(g, highlight_pen, bounds_rect, scale_lineWidth);
+            this.draw_vertical_22(g, highlight_pen, bounds_rect, scale_lineWidth);
         }
-        private void draw_split(Graphics g, SolidBrush highlight_sb, RectangleF bounds_rect)
+        private void draw_split(Graphics g, SolidBrush highlight_sb, RectangleF bounds_rect, int scale_lineWidth)
         {
-            RectangleF top_rect = new RectangleF(bounds_rect.X + (bounds_rect.Width - this.LineWidth) / 2, bounds_rect.Y + (bounds_rect.Height / 2 - this.LineWidth) / 2, this.LineWidth, this.LineWidth);
-            RectangleF bottom_rect = new RectangleF(bounds_rect.X + (bounds_rect.Width - this.LineWidth) / 2, bounds_rect.Y + bounds_rect.Height / 2 + (bounds_rect.Height / 2 - this.LineWidth) / 2, this.LineWidth, this.LineWidth);
+            RectangleF top_rect = new RectangleF(bounds_rect.X + (bounds_rect.Width - scale_lineWidth) / 2, bounds_rect.Y + (bounds_rect.Height / 2 - scale_lineWidth) / 2, scale_lineWidth, scale_lineWidth);
+            RectangleF bottom_rect = new RectangleF(bounds_rect.X + (bounds_rect.Width - scale_lineWidth) / 2, bounds_rect.Y + bounds_rect.Height / 2 + (bounds_rect.Height / 2 - scale_lineWidth) / 2, scale_lineWidth, scale_lineWidth);
             g.FillEllipse(highlight_sb, top_rect);
             g.FillEllipse(highlight_sb, bottom_rect);
         }
@@ -962,58 +968,59 @@ namespace WinformControlLibraryExtension
         /// <param name="bounds_rect">数字的rect</param>
         /// <param name="shadow_pen">数字阴影颜色</param>
         /// <param name="num">数字</param>
-        private void draw_num(Graphics g, Pen highlight_pen, RectangleF bounds_rect, Pen shadow_pen, int num)
+        /// <param name="scale_lineWidth">线条宽度</param>
+        private void draw_num(Graphics g, Pen highlight_pen, RectangleF bounds_rect, Pen shadow_pen, int num,int scale_lineWidth)
         {
             switch (num)
             {
                 case 0:
                     {
-                        this.draw_0(g, highlight_pen, bounds_rect, shadow_pen);
+                        this.draw_0(g, highlight_pen, bounds_rect, shadow_pen, scale_lineWidth);
                         break;
                     }
                 case 1:
                     {
-                        this.draw_1(g, highlight_pen, bounds_rect, shadow_pen);
+                        this.draw_1(g, highlight_pen, bounds_rect, shadow_pen, scale_lineWidth);
                         break;
                     }
                 case 2:
                     {
-                        this.draw_2(g, highlight_pen, bounds_rect, shadow_pen);
+                        this.draw_2(g, highlight_pen, bounds_rect, shadow_pen, scale_lineWidth);
                         break;
                     }
                 case 3:
                     {
-                        this.draw_3(g, highlight_pen, bounds_rect, shadow_pen);
+                        this.draw_3(g, highlight_pen, bounds_rect, shadow_pen, scale_lineWidth);
                         break;
                     }
                 case 4:
                     {
-                        this.draw_4(g, highlight_pen, bounds_rect, shadow_pen);
+                        this.draw_4(g, highlight_pen, bounds_rect, shadow_pen, scale_lineWidth);
                         break;
                     }
                 case 5:
                     {
-                        this.draw_5(g, highlight_pen, bounds_rect, shadow_pen);
+                        this.draw_5(g, highlight_pen, bounds_rect, shadow_pen, scale_lineWidth);
                         break;
                     }
                 case 6:
                     {
-                        this.draw_6(g, highlight_pen, bounds_rect, shadow_pen);
+                        this.draw_6(g, highlight_pen, bounds_rect, shadow_pen, scale_lineWidth);
                         break;
                     }
                 case 7:
                     {
-                        this.draw_7(g, highlight_pen, bounds_rect, shadow_pen);
+                        this.draw_7(g, highlight_pen, bounds_rect, shadow_pen, scale_lineWidth);
                         break;
                     }
                 case 8:
                     {
-                        this.draw_8(g, highlight_pen, bounds_rect, shadow_pen);
+                        this.draw_8(g, highlight_pen, bounds_rect, shadow_pen, scale_lineWidth);
                         break;
                     }
                 case 9:
                     {
-                        this.draw_9(g, highlight_pen, bounds_rect, shadow_pen);
+                        this.draw_9(g, highlight_pen, bounds_rect, shadow_pen, scale_lineWidth);
                         break;
                     }
             }

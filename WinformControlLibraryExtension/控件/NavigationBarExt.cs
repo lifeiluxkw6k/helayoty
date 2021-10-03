@@ -1200,7 +1200,13 @@ namespace WinformControlLibraryExtension
         /// </summary>
         private void InitializeItemsRectangle()
         {
-            Graphics g = this.CreateGraphics();
+            IntPtr hDC = IntPtr.Zero;
+            Graphics g = null;
+            ControlCommom.GetWindowClientGraphics(this.Handle, out g, out hDC);
+
+            float scale_itemInterval = this.ItemInterval * DotsPerInchHelper.DPIScale.XScale;
+            float scale_itemMinWidth = this.ItemMinWidth * DotsPerInchHelper.DPIScale.XScale;
+            float scale_itemMaxHeight = this.ItemMaxWidth * DotsPerInchHelper.DPIScale.XScale;
             RectangleF rect = this.ClientRectangle;
 
             float sawtoothLine = 1;//开启抗锯齿功能xy都会增大1px
@@ -1213,9 +1219,9 @@ namespace WinformControlLibraryExtension
             {
                 for (int i = 0; i < this.Items.Count; i++)
                 {
-                    this.Items[i].TextSize = this.GetItemTextSize(g, this.Items[i].Text);
+                    this.Items[i].TextSize = this.GetItemTextSize(g, this.Items[i].Text, scale_itemMinWidth, scale_itemMaxHeight);
                     this.Items[i].BackRectF = new RectangleF(item_x, item_y, this.Items[i].TextSize.Width, item_height);
-                    item_x += this.Items[i].BackRectF.Width - sawtoothLine + this.ItemInterval;
+                    item_x += this.Items[i].BackRectF.Width - sawtoothLine + scale_itemInterval;
                 }
             }
             #endregion
@@ -1224,9 +1230,9 @@ namespace WinformControlLibraryExtension
             {
                 for (int i = 0; i < this.Items.Count; i++)
                 {
-                    this.Items[i].TextSize = this.GetItemTextSize(g, this.Items[i].Text);
+                    this.Items[i].TextSize = this.GetItemTextSize(g, this.Items[i].Text, scale_itemMinWidth, scale_itemMaxHeight);
                     this.Items[i].BackRectF = new RectangleF(item_x, item_y, this.Items[i].TextSize.Width + item_height, item_height);
-                    item_x += this.Items[i].BackRectF.Width - sawtoothLine + this.ItemInterval;
+                    item_x += this.Items[i].BackRectF.Width - sawtoothLine + scale_itemInterval;
 
                     GraphicsPath back_gp = new GraphicsPath();
                     back_gp.AddArc(new RectangleF(this.Items[i].BackRectF.Right - this.Items[i].BackRectF.Height * 2, this.Items[i].BackRectF.Y, this.Items[i].BackRectF.Height * 2, this.Items[i].BackRectF.Height * 2), 270, 90);
@@ -1249,9 +1255,9 @@ namespace WinformControlLibraryExtension
             {
                 for (int i = 0; i < this.Items.Count; i++)
                 {
-                    this.Items[i].TextSize = this.GetItemTextSize(g, this.Items[i].Text);
+                    this.Items[i].TextSize = this.GetItemTextSize(g, this.Items[i].Text, scale_itemMinWidth, scale_itemMaxHeight);
                     this.Items[i].BackRectF = new RectangleF(item_x, item_y, this.Items[i].TextSize.Width + item_height, item_height);
-                    item_x += this.Items[i].BackRectF.Width - item_height / 2f - sawtoothLine + this.ItemInterval;
+                    item_x += this.Items[i].BackRectF.Width - item_height / 2f - sawtoothLine + scale_itemInterval;
 
                     GraphicsPath back_gp = new GraphicsPath();
                     if (this.ItemStyle == ItemStyles.Arrows)
@@ -1300,9 +1306,9 @@ namespace WinformControlLibraryExtension
             {
                 for (int i = 0; i < this.Items.Count; i++)
                 {
-                    this.Items[i].TextSize = this.GetItemTextSize(g, this.Items[i].Text);
+                    this.Items[i].TextSize = this.GetItemTextSize(g, this.Items[i].Text, scale_itemMinWidth, scale_itemMaxHeight);
                     this.Items[i].BackRectF = new RectangleF(item_x, item_y, this.Items[i].TextSize.Width + item_height * 2, item_height);
-                    item_x += this.Items[i].BackRectF.Width - item_height / 4f - sawtoothLine + this.ItemInterval;
+                    item_x += this.Items[i].BackRectF.Width - item_height / 4f - sawtoothLine + scale_itemInterval;
 
                     GraphicsPath back_gp = new GraphicsPath();
                     back_gp.AddArc(new RectangleF(this.Items[i].BackRectF.Right - this.Items[i].BackRectF.Height * 2, this.Items[i].BackRectF.Y, this.Items[i].BackRectF.Height * 2, this.Items[i].BackRectF.Height * 2), 270, 90);
@@ -1325,10 +1331,10 @@ namespace WinformControlLibraryExtension
             {
                 for (int i = 0; i < this.Items.Count; i++)
                 {
-                    this.Items[i].TextSize = this.GetItemTextSize(g, this.Items[i].Text);
+                    this.Items[i].TextSize = this.GetItemTextSize(g, this.Items[i].Text, scale_itemMinWidth, scale_itemMaxHeight);
                     this.Items[i].BackRectF = new RectangleF(item_x, item_y, this.Items[i].TextSize.Width, item_height);
-                    this.Items[i].SymbolRectF = new RectangleF(this.Items[i].BackRectF.Right + this.ItemInterval, item_y + this.Items[i].TextSize.Height / 6f, item_height / 2f, item_height - this.Items[i].TextSize.Height / 6f * 2);
-                    item_x += this.Items[i].BackRectF.Width + this.ItemInterval + this.Items[i].SymbolRectF.Width + this.ItemInterval;
+                    this.Items[i].SymbolRectF = new RectangleF(this.Items[i].BackRectF.Right + scale_itemInterval, item_y + this.Items[i].TextSize.Height / 6f, item_height / 2f, item_height - this.Items[i].TextSize.Height / 6f * 2);
+                    item_x += this.Items[i].BackRectF.Width + scale_itemInterval + this.Items[i].SymbolRectF.Width + scale_itemInterval;
                 }
             }
             #endregion
@@ -1337,15 +1343,16 @@ namespace WinformControlLibraryExtension
             {
                 for (int i = 0; i < this.Items.Count; i++)
                 {
-                    this.Items[i].TextSize = this.GetItemTextSize(g, this.Items[i].Text);
+                    this.Items[i].TextSize = this.GetItemTextSize(g, this.Items[i].Text, scale_itemMinWidth, scale_itemMaxHeight);
                     this.Items[i].BackRectF = new RectangleF(item_x, item_y, this.Items[i].TextSize.Width, item_height);
-                    this.Items[i].SymbolRectF = new RectangleF(this.Items[i].BackRectF.Right + this.ItemInterval, item_y, item_height / 4f * 2f, item_height);
-                    item_x += this.Items[i].BackRectF.Width + this.ItemInterval + this.Items[i].SymbolRectF.Width + this.ItemInterval;
+                    this.Items[i].SymbolRectF = new RectangleF(this.Items[i].BackRectF.Right + scale_itemInterval, item_y, item_height / 4f * 2f, item_height);
+                    item_x += this.Items[i].BackRectF.Width + scale_itemInterval + this.Items[i].SymbolRectF.Width + scale_itemInterval;
                 }
             }
             #endregion
 
             g.Dispose();
+            WindowNavigate.ReleaseDC(this.Handle,hDC);
         }
 
         /// <summary>
@@ -1353,18 +1360,20 @@ namespace WinformControlLibraryExtension
         /// </summary>
         /// <param name="g"></param>
         /// <param name="text">选项文本</param>
+        /// <param name="scale_itemMinWidth"></param>
+        /// <param name="scale_itemMaxHeight"></param>
         /// <returns></returns>
-        private SizeF GetItemTextSize(Graphics g, string text)
+        private SizeF GetItemTextSize(Graphics g, string text,float scale_itemMinWidth, float scale_itemMaxHeight)
         {
             SizeF text_size = g.MeasureString(text, this.ItemTextFont);
             text_size = new SizeF(text_size.Width + 1, text_size.Height);
-            if (this.ItemMinWidth > 0)
+            if (scale_itemMinWidth > 0)
             {
-                text_size.Width = Math.Max(text_size.Width, this.ItemMinWidth);
+                text_size.Width = Math.Max(text_size.Width, scale_itemMinWidth);
             }
-            if (this.ItemMaxWidth > 0)
+            if (scale_itemMaxHeight > 0)
             {
-                text_size.Width = Math.Min(text_size.Width, this.ItemMaxWidth);
+                text_size.Width = Math.Min(text_size.Width, scale_itemMaxHeight);
             }
             return text_size;
         }

@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commom\ControlCommom.cs" />
+    <Compile Include="Commom\DotsPerInchHelper.cs" />
     <Compile Include="Design\EmptyConverter.cs" />
     <Compile Include="Design\MenuExtEditor.cs" />
     <Compile Include="Design\RadioButtonExtDesigner.cs" />
@@ -84,6 +85,12 @@
     </Compile>
     <Compile Include="控件\Form\FormExt.Designer.cs">
       <DependentUpon>FormExt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="控件\HRulerExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="控件\LabelExt.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="控件\ListBoxExt.cs">
       <SubType>Component</SubType>
@@ -202,6 +209,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="控件\ValidCodeExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="控件\VRulerExt.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="控件\WaveProgressExt.cs">

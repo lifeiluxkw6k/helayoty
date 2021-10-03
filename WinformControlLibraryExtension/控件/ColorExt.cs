@@ -406,6 +406,9 @@ namespace WinformControlLibraryExtension
 
         private Rectangle image_rect = Rectangle.Empty;
         private Rectangle color_rect = Rectangle.Empty;
+
+        private float scale = 0f;
+
         #endregion
 
         public ColorExt()
@@ -424,8 +427,6 @@ namespace WinformControlLibraryExtension
             this.ColorPicker = new ColorPickerExt();
 
             this.tsdd = new ToolStripDropDown() { Padding = Padding.Empty };
-            this.tsch = new ToolStripControlHost(this.ColorPicker) { Margin = Padding.Empty, Padding = Padding.Empty };
-            tsdd.Items.Add(this.tsch);
 
             this.tsdd.Closed += new ToolStripDropDownClosedEventHandler(this.tsdd_Closed);
             this.ColorPicker.BottomBarConfirmClick += new ColorPickerExt.BottomBarIiemClickEventHandler(this.ColorPicker_ConfirmClick);
@@ -659,6 +660,7 @@ namespace WinformControlLibraryExtension
             {
                 if (!this.displayStatus)
                 {
+                    this.CreateToolStripControlHost();
                     tsdd.Show(this.PointToScreen(new Point(0, this.Height + 2)));
                     this.ColorPicker.InitializeColor();
                 }
@@ -674,7 +676,8 @@ namespace WinformControlLibraryExtension
 
         protected override void SetBoundsCore(int x, int y, int width, int height, BoundsSpecified specified)
         {
-            base.SetBoundsCore(x, y, width, this.DefaultSize.Height, specified);
+            int scale_height = (int)(this.DefaultSize.Height * DotsPerInchHelper.DPIScale.XScale);
+            base.SetBoundsCore(x, y, width, scale_height, specified);
             this.Invalidate();
         }
 
@@ -774,24 +777,45 @@ namespace WinformControlLibraryExtension
         #endregion
 
         /// <summary>
+        /// 更新ToolStripControlHost
+        /// </summary>
+        private void CreateToolStripControlHost()
+        {
+            if (this.scale != DotsPerInchHelper.DPIScale.XScale)
+            {
+                tsdd.Items.Clear();
+                this.tsch = new ToolStripControlHost(this.ColorPicker) { Margin = Padding.Empty, Padding = Padding.Empty };
+                tsdd.Items.Add(this.tsch);
+            }
+        }
+
+        /// <summary>
         /// 更新颜色输入框Location、Size
         /// </summary>
         private void UpdateLocationSize()
         {
-            this.colorTextBox.Height = this.DefaultSize.Height - 6;
-            this.colorTextBox.Width = this.Width - this.image_width - this.image_padding * 2 - this.border * 2 - 2;
-            this.colorTextBox.Location = this.ColorImageAlign == ColorImageAligns.Left ? new Point(this.image_width + this.image_padding * 2 + this.border * 2, 3) : new Point(this.border + 2, 3);
+            int scale_colorTextBox_height = (int)(this.DefaultSize.Height * DotsPerInchHelper.DPIScale.XScale);
+            int scale_colorTextBox_zoom = (int)(6 * DotsPerInchHelper.DPIScale.XScale);
+            int scale_colorTextBox_top = (int)(3 * DotsPerInchHelper.DPIScale.XScale);
+            int scale_colorTextBox_left = (int)(2 * DotsPerInchHelper.DPIScale.XScale);
+
+            int scale_image_width = (int)(this.image_width * DotsPerInchHelper.DPIScale.XScale);
+            int scale_image_height = (int)(this.image_height * DotsPerInchHelper.DPIScale.XScale);
+
+            this.colorTextBox.Height = scale_colorTextBox_height - scale_colorTextBox_zoom;
+            this.colorTextBox.Width = this.Width - scale_image_width - this.image_padding * 2 - this.border * 2 - (int)(4* DotsPerInchHelper.DPIScale.XScale);
+            this.colorTextBox.Location = this.ColorImageAlign == ColorImageAligns.Left ? new Point(scale_image_width + this.image_padding * 2 + this.border * 2, scale_colorTextBox_top) : new Point(this.border + scale_colorTextBox_left, scale_colorTextBox_top);
 
             if (this.ColorImageAlign == ColorImageAligns.Right)
             {
-                this.image_rect = new Rectangle(this.ClientRectangle.Right - this.image_width - this.image_padding * 2, this.ClientRectangle.Y + (this.ClientRectangle.Height - this.image_height) / 2, this.image_width, this.image_height);
-                this.color_rect = new Rectangle(this.ClientRectangle.X + this.border, this.ClientRectangle.Y, this.ClientRectangle.Width - this.image_width - this.image_padding * 2 - this.border * 2, this.ClientRectangle.Height);
+                this.image_rect = new Rectangle(this.ClientRectangle.Right - scale_image_width - this.image_padding * 2, this.ClientRectangle.Y + (this.ClientRectangle.Height - scale_image_height) / 2, scale_image_width, scale_image_height);
+                this.color_rect = new Rectangle(this.ClientRectangle.X + this.border, this.ClientRectangle.Y, this.ClientRectangle.Width - scale_image_width - this.image_padding * 2 - this.border * 2, this.ClientRectangle.Height);
 
             }
             else
             {
-                this.image_rect = new Rectangle(this.ClientRectangle.X + this.image_padding + this.border, this.ClientRectangle.Y + (this.ClientRectangle.Height - this.image_height) / 2, this.image_width, this.image_height);
-                this.color_rect = new Rectangle(this.ClientRectangle.X + this.image_width + this.image_padding * 2, this.ClientRectangle.Y, this.ClientRectangle.Width - this.image_width - this.image_padding * 2 - this.border * 2, this.ClientRectangle.Height);
+                this.image_rect = new Rectangle(this.ClientRectangle.X + this.image_padding + this.border, this.ClientRectangle.Y + (this.ClientRectangle.Height - scale_image_height) / 2, scale_image_width, scale_image_height);
+                this.color_rect = new Rectangle(this.ClientRectangle.X + scale_image_width + this.image_padding * 2, this.ClientRectangle.Y, this.ClientRectangle.Width - scale_image_width - this.image_padding * 2 - this.border * 2, this.ClientRectangle.Height);
             }
         }
 
@@ -1922,7 +1946,7 @@ namespace WinformControlLibraryExtension
             g.DrawRectangle(this.SolidBrushManageObject.border_slide_pen, this.ColorObject.CurrentValue_A_SlideRect);
             //文本     
             this.SolidBrushManageObject.common_sb.Color = this.CurrentTextForeColor;
-            Rectangle a_rect = new Rectangle(this.ColorObject.CurrentValue_A_Rect.Right, this.ColorObject.CurrentValue_A_Rect.Y, 20, this.ColorObject.CurrentValue_A_Rect.Height);
+            Rectangle a_rect = new Rectangle(this.ColorObject.CurrentValue_A_Rect.Right + this.ColorObject.CurrentValue_A_SlideRect.Width, this.ColorObject.CurrentValue_A_Rect.Y, 20, this.ColorObject.CurrentValue_A_Rect.Height);
             g.DrawString("A", this.SolidBrushManageObject.text_font, this.SolidBrushManageObject.common_sb, a_rect, text_right_sf);
             #endregion
 
@@ -1940,7 +1964,7 @@ namespace WinformControlLibraryExtension
             g.DrawRectangle(this.SolidBrushManageObject.border_slide_pen, this.ColorObject.CurrentValue_R_SlideRect);
             //文本     
             this.SolidBrushManageObject.common_sb.Color = this.CurrentTextForeColor;
-            Rectangle r_rect = new Rectangle(this.ColorObject.CurrentValue_R_Rect.Right, this.ColorObject.CurrentValue_R_Rect.Y, 20, this.ColorObject.CurrentValue_R_Rect.Height);
+            Rectangle r_rect = new Rectangle(this.ColorObject.CurrentValue_R_Rect.Right + this.ColorObject.CurrentValue_R_SlideRect.Width, this.ColorObject.CurrentValue_R_Rect.Y, 20, this.ColorObject.CurrentValue_R_Rect.Height);
             g.DrawString("R", this.SolidBrushManageObject.text_font, this.SolidBrushManageObject.common_sb, r_rect, text_right_sf);
             #endregion
 
@@ -1958,7 +1982,7 @@ namespace WinformControlLibraryExtension
             g.DrawRectangle(this.SolidBrushManageObject.border_slide_pen, this.ColorObject.CurrentValue_G_SlideRect);
             //文本     
             this.SolidBrushManageObject.common_sb.Color = this.CurrentTextForeColor;
-            Rectangle g_rect = new Rectangle(this.ColorObject.CurrentValue_G_Rect.Right, this.ColorObject.CurrentValue_G_Rect.Y, 20, this.ColorObject.CurrentValue_G_Rect.Height);
+            Rectangle g_rect = new Rectangle(this.ColorObject.CurrentValue_G_Rect.Right + this.ColorObject.CurrentValue_G_SlideRect.Width, this.ColorObject.CurrentValue_G_Rect.Y, 20, this.ColorObject.CurrentValue_G_Rect.Height);
             g.DrawString("G", this.SolidBrushManageObject.text_font, this.SolidBrushManageObject.common_sb, g_rect, text_right_sf);
             #endregion
 
@@ -1976,7 +2000,7 @@ namespace WinformControlLibraryExtension
             g.DrawRectangle(this.SolidBrushManageObject.border_slide_pen, this.ColorObject.CurrentValue_B_SlideRect);
             //文本     
             this.SolidBrushManageObject.common_sb.Color = this.CurrentTextForeColor;
-            Rectangle b_rect = new Rectangle(this.ColorObject.CurrentValue_B_Rect.Right, this.ColorObject.CurrentValue_B_Rect.Y, 20, this.ColorObject.CurrentValue_B_Rect.Height);
+            Rectangle b_rect = new Rectangle(this.ColorObject.CurrentValue_B_Rect.Right + this.ColorObject.CurrentValue_B_SlideRect.Width, this.ColorObject.CurrentValue_B_Rect.Y, 20, this.ColorObject.CurrentValue_B_Rect.Height);
             g.DrawString("B", this.SolidBrushManageObject.text_font, this.SolidBrushManageObject.common_sb, b_rect, text_right_sf);
             #endregion
 
@@ -2711,11 +2735,15 @@ namespace WinformControlLibraryExtension
             base.OnResize(e);
 
             this.InitializeControlRectangle();
+            this.Invalidate();
         }
 
         protected override void SetBoundsCore(int x, int y, int width, int height, BoundsSpecified specified)
         {
-            base.SetBoundsCore(x, y, DefaultSize.Width, this.DefaultSize.Height, specified);
+            int scale_width = (int)(this.DefaultSize.Width * DotsPerInchHelper.DPIScale.XScale);
+            int scale_height = (int)(this.DefaultSize.Height * DotsPerInchHelper.DPIScale.YScale);
+
+            base.SetBoundsCore(x, y, scale_width, scale_height, specified);
             this.Invalidate();
         }
 
@@ -2894,46 +2922,47 @@ namespace WinformControlLibraryExtension
         {
             #region
 
-            int color_width = 203;//颜色面板宽度
-            int color_height = 212;//颜色面板高度
+            int color_width = (int)(203 * DotsPerInchHelper.DPIScale.XScale);//颜色面板宽度
+            int color_height = (int)(212 * DotsPerInchHelper.DPIScale.XScale);//颜色面板高度
 
-            int top_btn_width = 70;//头部按钮宽度
-            int top_btn_height = 20;//头部按钮高度
+            int top_btn_width = (int)(70 * DotsPerInchHelper.DPIScale.XScale);//头部按钮宽度
+            int top_btn_height = (int)(20 * DotsPerInchHelper.DPIScale.XScale);//头部按钮高度
 
-            int theme_title_height = 30;// 主题颜色标题高度
-            int theme_item_width = 14;//主题颜色选项宽度
-            int theme_item_height = 14;//主题颜色选项高度
+            int theme_title_height = (int)(30 * DotsPerInchHelper.DPIScale.XScale);// 主题颜色标题高度
+            int theme_item_width = (int)(14 * DotsPerInchHelper.DPIScale.XScale);//主题颜色选项宽度
+            int theme_item_height = (int)(14 * DotsPerInchHelper.DPIScale.XScale);//主题颜色选项高度
 
-            int standard_title_height = 30;//标准颜色标题高度
-            int standard_item_width = 14;//标准颜色选项宽度
-            int standard_item_height = 14;//标准颜色选项高度
+            int standard_title_height = (int)(30 * DotsPerInchHelper.DPIScale.XScale);//标准颜色标题高度
+            int standard_item_width = (int)(14 * DotsPerInchHelper.DPIScale.XScale);//标准颜色选项宽度
+            int standard_item_height = (int)(14 * DotsPerInchHelper.DPIScale.XScale);//标准颜色选项高度
 
-            int html_item_side = 8;//html颜色选项六边形边长
+            int html_item_side = (int)(8 * DotsPerInchHelper.DPIScale.XScale);//html颜色选项六边形边长
 
-            int custom_title_height = 30;//自定义颜色标题高度
-            int custom_item_width = 14;//自定义颜色选项宽度
-            int custom_item_height = 14;//自定义颜色选项高度
+            int custom_title_height = (int)(30 * DotsPerInchHelper.DPIScale.XScale);//自定义颜色标题高度
+            int custom_item_width = (int)(14 * DotsPerInchHelper.DPIScale.XScale);//自定义颜色选项宽度
+            int custom_item_height = (int)(14 * DotsPerInchHelper.DPIScale.XScale);//自定义颜色选项高度
 
-            int gradual_width = 200;//渐变框宽度
-            int gradual_height = 135;//渐变框高度
+            int gradual_width = (int)(200 * DotsPerInchHelper.DPIScale.XScale);//渐变框宽度
+            int gradual_height = (int)(135 * DotsPerInchHelper.DPIScale.XScale);//渐变框高度
 
-            int gradualbar_width = 30;//渐变栏宽度
-            int gradualbar_height = 220;//渐变栏高度
-            int gradualbar_slide_height = 6;//渐变栏滑块高度
+            int gradualbar_width = (int)(30 * DotsPerInchHelper.DPIScale.XScale);//渐变栏宽度
+            int gradualbar_height = (int)(220 * DotsPerInchHelper.DPIScale.XScale);//渐变栏高度
+            int gradualbar_slide_height = (int)(6 * DotsPerInchHelper.DPIScale.XScale);//渐变栏滑块高度
 
-            int argb_width = 180;//ARGB宽度
-            int argb_height = 12;// ARGB高度
-            int argb_slide_width = 6;//ARGB滑块宽度
+            int argb_width = (int)(180 * DotsPerInchHelper.DPIScale.XScale);//ARGB宽度
+            int argb_height = (int)(12 * DotsPerInchHelper.DPIScale.XScale);// ARGB高度
+            int argb_slide_width = (int)(6 * DotsPerInchHelper.DPIScale.XScale);//ARGB滑块宽度
 
-            int current_text_height = 20;//当前颜色文本高度
+            int current_text_height = (int)(20 * DotsPerInchHelper.DPIScale.XScale);//当前颜色文本高度
 
-            int bottom_btn_width = 50;//底部按钮宽度
-            int bottom_btn_height = 30;//底部按钮高度
+            int bottom_btn_width = (int)(50 * DotsPerInchHelper.DPIScale.XScale);//底部按钮宽度
+            int bottom_btn_height = (int)(30 * DotsPerInchHelper.DPIScale.XScale);//底部按钮高度
             #endregion
 
             this.ColorObject.ColorRect = new Rectangle(this.ClientRectangle.X + this.Padding.Left, this.ClientRectangle.Y + this.Padding.Top, color_width, color_height);
 
-            this.ColorObject.DefaultColorBtn.Rect = new Rectangle(this.ColorObject.ColorRect.Left + 10, this.ClientRectangle.Y + this.Padding.Top, top_btn_width, top_btn_height);
+            int scale_colorRect_left_padding = (int)(10 * DotsPerInchHelper.DPIScale.XScale);
+            this.ColorObject.DefaultColorBtn.Rect = new Rectangle(this.ColorObject.ColorRect.Left + scale_colorRect_left_padding, this.ClientRectangle.Y + this.Padding.Top, top_btn_width, top_btn_height);
             this.ColorObject.HtmlColorBtn.Rect = new Rectangle(this.ColorObject.DefaultColorBtn.Rect.Right, this.ClientRectangle.Y + this.Padding.Top, top_btn_width, top_btn_height);
 
             int theme_color_rect_width = theme_item_width * this.ColorObject.ThemeColorsItem.GetLength(0) + (theme_item_width / 2 * (this.ColorObject.ThemeColorsItem.GetLength(0) - 1));
@@ -2989,7 +3018,7 @@ namespace WinformControlLibraryExtension
 
             double html_w = html_item_side * Math.Cos(2 * Math.PI / 360 * 30);
             double html_h = html_item_side * Math.Sin(2 * Math.PI / 360 * 30);
-            double html_top = 10;
+            double html_top = (int)(10 * DotsPerInchHelper.DPIScale.XScale);
             double html_left = (this.ColorObject.ColorRect.Width - (this.ColorObject.HtmlColorsItem[this.ColorObject.HtmlColorsItem.Count / 2].ColorsRects.Count * html_w * 2)) / 2;
             for (int i = 0; i < this.ColorObject.HtmlColorsItem.Count; i++)
             {
@@ -3005,31 +3034,32 @@ namespace WinformControlLibraryExtension
                 }
             }
 
-            this.ColorObject.GradualRect = new Rectangle(this.ColorObject.ThemeRect.Right + 10, this.ClientRectangle.Y + this.Padding.Top + 5, gradual_width, gradual_height);
-            this.ColorObject.GradualBarRect = new Rectangle(this.ColorObject.GradualRect.Right + 10, this.ClientRectangle.Y + this.Padding.Top + 5, gradualbar_width, gradualbar_height);
+            int scale_padding = (int)(5 * DotsPerInchHelper.DPIScale.XScale);
+            this.ColorObject.GradualRect = new Rectangle(this.ColorObject.ThemeRect.Right + scale_padding * 2, this.ClientRectangle.Y + this.Padding.Top + scale_padding, gradual_width, gradual_height);
+            this.ColorObject.GradualBarRect = new Rectangle(this.ColorObject.GradualRect.Right + scale_padding * 2, this.ClientRectangle.Y + this.Padding.Top + scale_padding, gradualbar_width, gradualbar_height);
             this.ColorObject.GradualBarSlideRect = new Rectangle(this.ColorObject.GradualBarRect.X, this.ColorObject.GradualBarRect.Y + gradualbar_slide_height / 2, this.ColorObject.GradualBarRect.Width, gradualbar_slide_height);
 
-            this.ColorObject.CurrentValue_A_Rect = new Rectangle(this.ColorObject.GradualRect.X, this.ColorObject.GradualRect.Bottom + 10, argb_width, argb_height);
+            this.ColorObject.CurrentValue_A_Rect = new Rectangle(this.ColorObject.GradualRect.X, this.ColorObject.GradualRect.Bottom + scale_padding * 2, argb_width, argb_height);
             this.ColorObject.CurrentValue_A_SlideRect = new Rectangle(this.ColorObject.CurrentValue_A_Rect.Right - argb_slide_width / 2, this.ColorObject.CurrentValue_A_Rect.Y, argb_slide_width, this.ColorObject.CurrentValue_A_Rect.Height);
 
-            this.ColorObject.CurrentValue_R_Rect = new Rectangle(this.ColorObject.GradualRect.X, this.ColorObject.CurrentValue_A_Rect.Bottom + 10, argb_width, argb_height);
+            this.ColorObject.CurrentValue_R_Rect = new Rectangle(this.ColorObject.GradualRect.X, this.ColorObject.CurrentValue_A_Rect.Bottom + scale_padding * 2, argb_width, argb_height);
             this.ColorObject.CurrentValue_R_SlideRect = new Rectangle(this.ColorObject.CurrentValue_R_Rect.Right - argb_slide_width / 2, this.ColorObject.CurrentValue_R_Rect.Y, argb_slide_width, this.ColorObject.CurrentValue_R_Rect.Height);
 
-            this.ColorObject.CurrentValue_G_Rect = new Rectangle(this.ColorObject.GradualRect.X, this.ColorObject.CurrentValue_R_Rect.Bottom + 10, argb_width, argb_height);
+            this.ColorObject.CurrentValue_G_Rect = new Rectangle(this.ColorObject.GradualRect.X, this.ColorObject.CurrentValue_R_Rect.Bottom + scale_padding * 2, argb_width, argb_height);
             this.ColorObject.CurrentValue_G_SlideRect = new Rectangle(this.ColorObject.CurrentValue_G_Rect.Right - argb_slide_width / 2, this.ColorObject.CurrentValue_G_Rect.Y, argb_slide_width, this.ColorObject.CurrentValue_G_Rect.Height);
 
-            this.ColorObject.CurrentValue_B_Rect = new Rectangle(this.ColorObject.GradualRect.X, this.ColorObject.CurrentValue_G_Rect.Bottom + 10, argb_width, argb_height);
+            this.ColorObject.CurrentValue_B_Rect = new Rectangle(this.ColorObject.GradualRect.X, this.ColorObject.CurrentValue_G_Rect.Bottom + scale_padding * 2, argb_width, argb_height);
             this.ColorObject.CurrentValue_B_SlideRect = new Rectangle(this.ColorObject.CurrentValue_B_Rect.Right - argb_slide_width / 2, this.ColorObject.CurrentValue_B_Rect.Y, argb_slide_width, this.ColorObject.CurrentValue_B_Rect.Height);
 
-            this.ColorObject.CurrentColorRect = new Rectangle(this.ColorObject.GradualRect.X, this.ColorObject.CurrentValue_B_SlideRect.Bottom + 10, current_text_height * 2, current_text_height);
-            this.ColorObject.CurrentColorTextRect = new Rectangle(this.ColorObject.CurrentColorRect.Right, this.ColorObject.CurrentValue_B_SlideRect.Bottom + 10, tandard_color_rect_width, current_text_height);
+            this.ColorObject.CurrentColorRect = new Rectangle(this.ColorObject.GradualRect.X, this.ColorObject.CurrentValue_B_SlideRect.Bottom + scale_padding * 2, current_text_height * 2, current_text_height);
+            this.ColorObject.CurrentColorTextRect = new Rectangle(this.ColorObject.CurrentColorRect.Right, this.ColorObject.CurrentValue_B_SlideRect.Bottom + scale_padding * 2, tandard_color_rect_width, current_text_height);
 
-            this.ColorObject.OriginalColorRect = new Rectangle(this.ColorObject.GradualRect.X, this.ColorObject.CurrentColorRect.Bottom + 5, current_text_height * 2, current_text_height);
-            this.ColorObject.OriginalColorTextRect = new Rectangle(this.ColorObject.CurrentColorRect.Right, this.ColorObject.CurrentColorRect.Bottom + 5, tandard_color_rect_width, current_text_height);
+            this.ColorObject.OriginalColorRect = new Rectangle(this.ColorObject.GradualRect.X, this.ColorObject.CurrentColorRect.Bottom + scale_padding, current_text_height * 2, current_text_height);
+            this.ColorObject.OriginalColorTextRect = new Rectangle(this.ColorObject.CurrentColorRect.Right, this.ColorObject.CurrentColorRect.Bottom + scale_padding, tandard_color_rect_width, current_text_height);
 
-            this.ColorObject.ConfirmBtn.Rect = new Rectangle(this.ClientRectangle.Right - bottom_btn_width - 5, this.ClientRectangle.Bottom - bottom_btn_height - 5, bottom_btn_width, bottom_btn_height);
-            this.ColorObject.ClearBtn.Rect = new Rectangle(this.ColorObject.ConfirmBtn.Rect.X - 5 - bottom_btn_width, this.ClientRectangle.Bottom - bottom_btn_height - 5, bottom_btn_width, bottom_btn_height);
-            this.ColorObject.CustomBtn.Rect = new Rectangle(this.ColorObject.ClearBtn.Rect.X - 5 - 20 - bottom_btn_width, this.ClientRectangle.Bottom - bottom_btn_height - 5, bottom_btn_width + 20, bottom_btn_height);
+            this.ColorObject.ConfirmBtn.Rect = new Rectangle(this.ClientRectangle.Right - bottom_btn_width - scale_padding, this.ClientRectangle.Bottom - bottom_btn_height - scale_padding, bottom_btn_width, bottom_btn_height);
+            this.ColorObject.ClearBtn.Rect = new Rectangle(this.ColorObject.ConfirmBtn.Rect.X - scale_padding - bottom_btn_width, this.ClientRectangle.Bottom - bottom_btn_height - scale_padding, bottom_btn_width, bottom_btn_height);
+            this.ColorObject.CustomBtn.Rect = new Rectangle(this.ColorObject.ClearBtn.Rect.X - scale_padding - scale_padding * 4 - bottom_btn_width, this.ClientRectangle.Bottom - bottom_btn_height - scale_padding, bottom_btn_width + scale_padding * 4, bottom_btn_height);
 
         }
 
@@ -3198,7 +3228,7 @@ namespace WinformControlLibraryExtension
         {
             this.colorTextBox.Width = colorTextWidth;
             this.colorTextBox.Height = this.ColorObject.CurrentColorTextRect.Height;
-            this.colorTextBox.Location = new Point(this.ColorObject.CurrentColorTextRect.X + 60, this.ColorObject.CurrentColorTextRect.Y + 3);
+            this.colorTextBox.Location = new Point(this.ColorObject.CurrentColorTextRect.X + (int)(60* DotsPerInchHelper.DPIScale.XScale), this.ColorObject.CurrentColorTextRect.Y + 3);
         }
 
         /// <summary>

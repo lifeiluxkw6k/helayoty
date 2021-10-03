@@ -201,11 +201,11 @@ namespace WinformControlLibraryExtension
             }
         }
 
-        private int interval = 80;
+        private int interval = 60;
         /// <summary>
         /// 步骤流程选项间距
         /// </summary>
-        [DefaultValue(80)]
+        [DefaultValue(60)]
         [Description("步骤流程选项间距")]
         public int Interval
         {
@@ -271,6 +271,24 @@ namespace WinformControlLibraryExtension
                 if (this.textFont == value)
                     return;
                 this.textFont = value;
+                this.Invalidate();
+            }
+        }
+
+        private int textInterval = 10;
+        /// <summary>
+        /// 步骤流程选项文本间距
+        /// </summary>
+        [DefaultValue(10)]
+        [Description("步骤流程选项文本间距")]
+        public int TextInterval
+        {
+            get { return this.textInterval; }
+            set
+            {
+                if (this.textInterval == value || value < 0)
+                    return;
+                this.textInterval = value;
                 this.Invalidate();
             }
         }
@@ -643,6 +661,23 @@ namespace WinformControlLibraryExtension
             get
             {
                 return new Padding(20, 10, 20, 10);
+            }
+        }
+
+        public new Padding Padding
+        {
+            get
+            {
+                return base.Padding;
+            }
+            set
+            {
+                if (base.Padding == value)
+                    return;
+
+                base.Padding = value;
+                this.InitializeStepProcessRectangle();
+                this.Invalidate();
             }
         }
 
@@ -1253,7 +1288,9 @@ namespace WinformControlLibraryExtension
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
+
             this.InitializeStepProcessRectangle();
+            this.Invalidate();
         }
 
         /// <summary> 
@@ -1323,20 +1360,24 @@ namespace WinformControlLibraryExtension
         /// <param name="item"></param>
         private void InitializeStepProcessItemRectangle(ProcedureItem item)
         {
-            RectangleF rectf = new Rectangle(this.Padding.Left, this.Padding.Top, this.ClientRectangle.Width - this.Padding.Left - this.Padding.Right, this.ClientRectangle.Height - this.Padding.Top - this.Padding.Bottom);
+            Padding scale_padding = new Padding((int)(this.Padding.Left * DotsPerInchHelper.DPIScale.XScale), (int)(this.Padding.Top * DotsPerInchHelper.DPIScale.YScale), (int)(this.Padding.Right * DotsPerInchHelper.DPIScale.XScale), (int)(this.Padding.Bottom * DotsPerInchHelper.DPIScale.YScale));
+            float scale_radius = this.Radius * DotsPerInchHelper.DPIScale.XScale;
+            float scale_interval = this.Interval * DotsPerInchHelper.DPIScale.XScale;
+
+            RectangleF scale_rectf = new Rectangle(this.ClientRectangle.Left + scale_padding.Left, this.ClientRectangle.Top + scale_padding.Top, this.ClientRectangle.Width - scale_padding.Left - scale_padding.Right, this.ClientRectangle.Height - scale_padding.Top - scale_padding.Bottom);
 
             int index = this.Items.IndexOf(item);
             if (this.Orientation == Orientations.HorizontalTop || this.Orientation == Orientations.HorizontalBottom)
             {
-                float x = (float)this.Padding.Left - (float)this.Radius / 2f + index * this.Interval;
-                float y = (this.Orientation == Orientations.HorizontalTop) ? this.Padding.Top + (float)this.Radius / 2 : rectf.Bottom - this.Padding.Bottom - this.Radius * 2;
-                item.RectF = new RectangleF(x, y, this.Radius * 2, this.Radius * 2);
+                float x = (float)scale_padding.Left + index * (scale_radius * 2f + scale_interval);
+                float y = (this.Orientation == Orientations.HorizontalTop) ? scale_padding.Top : scale_rectf.Bottom - scale_padding.Bottom - scale_radius * 2 - this.Line;
+                item.RectF = new RectangleF(x, y, scale_radius * 2, scale_radius * 2);
             }
             else
             {
-                float x = (this.Orientation == Orientations.VerticalLeft) ? this.Padding.Top + this.Radius / 2 : rectf.Right - this.Padding.Right - this.Radius;
-                float y = this.Padding.Top - (float)this.Radius / 2 + index * this.Interval;
-                item.RectF = new RectangleF(x, y, this.Radius * 2, this.Radius * 2);
+                float x = (this.Orientation == Orientations.VerticalLeft) ? scale_padding.Left : scale_rectf.Right - scale_padding.Right - scale_radius * 2 - this.Line;
+                float y = scale_padding.Top + index * (scale_radius * 2f + scale_interval);
+                item.RectF = new RectangleF(x, y, scale_radius * 2, scale_radius * 2);
             }
         }
 
@@ -1356,7 +1397,7 @@ namespace WinformControlLibraryExtension
         }
 
         /// <summary>
-        /// 绘制步骤流程选项文本
+        /// 绘制步骤流程选项间隔线
         /// </summary>
         /// <param name="index"></param>
         /// <param name="g"></param>
@@ -1396,22 +1437,21 @@ namespace WinformControlLibraryExtension
         /// <param name="text_sb"></param>
         private void DrawText(ProcedureItem item, Graphics g, SolidBrush text_sb)
         {
-
-            int text_space = 10;//文本离圆形距离
+            int scale_text_space = (int)(this.TextInterval * DotsPerInchHelper.DPIScale.XScale);//文本离圆形距离
             Size text_size = g.MeasureString(item.Text, item.TextFont, new SizeF(), text_sf).ToSize();
-            RectangleF text_rectf = new RectangleF(item.RectF.X + (item.RectF.Width - text_size.Width) / 2f, item.RectF.Bottom + text_space, text_size.Width, text_size.Height);
+            RectangleF text_rectf = new RectangleF(item.RectF.X + (item.RectF.Width - text_size.Width) / 2f, item.RectF.Bottom + scale_text_space, text_size.Width, text_size.Height);
             if (this.Orientation == Orientations.HorizontalBottom)
             {
-                text_rectf.Y = item.RectF.Y - text_space - text_size.Height;
+                text_rectf.Y = item.RectF.Y - scale_text_space - text_size.Height;
             }
             else if (this.Orientation == Orientations.VerticalLeft)
             {
-                text_rectf.X = item.RectF.Right + text_space;
+                text_rectf.X = item.RectF.Right + scale_text_space;
                 text_rectf.Y = item.RectF.Y + (item.RectF.Height - text_size.Height) / 2f;
             }
             else if (this.Orientation == Orientations.VerticalRight)
             {
-                text_rectf.X = item.RectF.X - text_space - text_size.Width;
+                text_rectf.X = item.RectF.X - scale_text_space - text_size.Width;
                 text_rectf.Y = item.RectF.Y + (item.RectF.Height - text_size.Height) / 2f;
             }
 

@@ -81,43 +81,73 @@ namespace WinformControlLibraryExtension
         /// <returns></returns>
         public static GraphicsPath TransformCircular(RectangleF rectf, float leftTopRadius = 0f, float rightTopRadius = 0f, float rightBottomRadius = 0f, float leftBottomRadius = 0f)
         {
-            GraphicsPath gp = new GraphicsPath();
+            leftTopRadius = Math.Abs(leftTopRadius);
+            rightTopRadius = Math.Abs(rightTopRadius);
+            rightBottomRadius = Math.Abs(rightBottomRadius);
+            leftBottomRadius = Math.Abs(leftBottomRadius);
+
+            PointF leftTop_x = new PointF(rectf.Left, rectf.Top);
+            PointF leftTop_y = new PointF(rectf.Left, rectf.Top);
             if (leftTopRadius > 0)
             {
-                RectangleF lefttop_rect = new RectangleF(rectf.X, rectf.Y, leftTopRadius * 2, leftTopRadius * 2);
-                gp.AddArc(lefttop_rect, 180, 90);
+                leftTop_x = new PointF(rectf.Left + leftTopRadius, rectf.Top);
+                leftTop_y = new PointF(rectf.Left, rectf.Top + leftTopRadius);
             }
-            else
-            {
-                gp.AddLine(new PointF(rectf.X, rectf.Y), new PointF(rightTopRadius > 0 ? rectf.Right - rightTopRadius * 2 : rectf.Right, rectf.Y));
-            }
+
+            PointF rightTop_x = new PointF(rectf.Right, rectf.Top);
+            PointF rightTop_y = new PointF(rectf.Right, rectf.Top);
             if (rightTopRadius > 0)
             {
-                RectangleF righttop_rect = new RectangleF(rectf.Right - rightTopRadius * 2, rectf.Y, rightTopRadius * 2, rightTopRadius * 2);
-                gp.AddArc(righttop_rect, 270, 90);
+                rightTop_x = new PointF(rectf.Right - rightTopRadius, rectf.Top);
+                rightTop_y = new PointF(rectf.Right, rectf.Top + rightTopRadius);
             }
-            else
-            {
-                gp.AddLine(new PointF(rectf.Right, rectf.Y), new PointF(rectf.Right, rightBottomRadius > 0 ? rectf.Bottom - rightTopRadius * 2 : rectf.Bottom));
-            }
+
+            PointF rightBottom_x = new PointF(rectf.Right, rectf.Bottom);
+            PointF rightBottom_y = new PointF(rectf.Right, rectf.Bottom);
             if (rightBottomRadius > 0)
             {
-                RectangleF rightbottom_rect = new RectangleF(rectf.Right - rightTopRadius * 2, rectf.Bottom - rightTopRadius * 2, rightBottomRadius * 2, rightBottomRadius * 2);
-                gp.AddArc(rightbottom_rect, 0, 90);
+                rightBottom_x = new PointF(rectf.Right - rightBottomRadius, rectf.Bottom);
+                rightBottom_y = new PointF(rectf.Right, rectf.Bottom - rightBottomRadius);
             }
-            else
-            {
-                gp.AddLine(new PointF(rectf.Right, rectf.Bottom), new PointF(leftBottomRadius > 0 ? leftBottomRadius * 2 : rectf.X, rectf.Bottom));
-            }
+
+            PointF leftBottom_x = new PointF(rectf.Left, rectf.Bottom);
+            PointF leftBottom_y = new PointF(rectf.Left, rectf.Bottom);
             if (leftBottomRadius > 0)
             {
-                RectangleF rightbottom_rect = new RectangleF(rectf.X, rectf.Bottom - leftBottomRadius * 2, leftBottomRadius * 2, leftBottomRadius * 2);
+                leftBottom_x = new PointF(rectf.Left + leftBottomRadius, rectf.Bottom);
+                leftBottom_y = new PointF(rectf.Left, rectf.Bottom - leftBottomRadius);
+            }
+
+            GraphicsPath gp = new GraphicsPath();
+
+            if (leftTopRadius > 0)
+            {
+                RectangleF lefttop_rect = new RectangleF(rectf.Left, rectf.Top, leftTopRadius * 2, leftTopRadius * 2);
+                gp.AddArc(lefttop_rect, 180, 90);
+            }
+            gp.AddLine(leftTop_x, rightTop_x);
+
+            if (rightTopRadius > 0)
+            {
+                RectangleF righttop_rect = new RectangleF(rectf.Right - rightTopRadius * 2, rectf.Top, rightTopRadius * 2, rightTopRadius * 2);
+                gp.AddArc(righttop_rect, 270, 90);
+            }
+            gp.AddLine(rightTop_y, rightBottom_y);
+
+            if (rightBottomRadius > 0)
+            {
+                RectangleF rightbottom_rect = new RectangleF(rectf.Right - rightBottomRadius * 2, rectf.Bottom - rightBottomRadius * 2, rightBottomRadius * 2, rightBottomRadius * 2);
+                gp.AddArc(rightbottom_rect, 0, 90);
+            }
+            gp.AddLine(rightBottom_x, leftBottom_x);
+
+            if (leftBottomRadius > 0)
+            {
+                RectangleF rightbottom_rect = new RectangleF(rectf.Left, rectf.Bottom - leftBottomRadius * 2, leftBottomRadius * 2, leftBottomRadius * 2);
                 gp.AddArc(rightbottom_rect, 90, 90);
             }
-            else
-            {
-                gp.AddLine(new PointF(rectf.X, rectf.Bottom), new PointF(rectf.X, leftTopRadius > 0 ? rectf.X + leftTopRadius * 2 : rectf.X));
-            }
+            gp.AddLine(leftBottom_y, leftTop_y);
+
             gp.CloseAllFigures();
             return gp;
         }
@@ -127,14 +157,41 @@ namespace WinformControlLibraryExtension
         /// </summary>
         /// <param name="rectf">要转换的rectf</param>
         /// <param name="pen">画笔大小大小</param>
+        /// <param name="pen">画笔对齐方式</param>
         /// <returns></returns>
-        public static RectangleF TransformRectangleF(RectangleF rectf, float pen)
+        public static RectangleF TransformRectangleF(RectangleF rectf, float pen, PenAlignment alignment = PenAlignment.Center)
         {
+            if (pen <= 0)
+            {
+                return rectf;
+            }
+
             RectangleF result = new RectangleF();
-            result.Width = rectf.Width - (pen < 1 ? 0 : pen);
-            result.Height = rectf.Height - (pen < 1 ? 0 : pen);
-            result.X = rectf.X + (pen / 2f);
-            result.Y = rectf.Y + (pen / 2f);
+            if (alignment == PenAlignment.Center || alignment == PenAlignment.Left || alignment == PenAlignment.Right || alignment == PenAlignment.Outset)
+            {
+                result.Width = rectf.Width - pen;
+                result.Height = rectf.Height - pen;
+                result.X = rectf.X + ((int)pen) / 2;
+                result.Y = rectf.Y + ((int)pen) / 2;
+            }
+            else if (alignment == PenAlignment.Inset)
+            {
+
+                if (pen > 0 && pen < 2)
+                {
+                    result.Width = rectf.Width - 1;
+                    result.Height = rectf.Height - 1;
+                }
+                else
+                {
+                    result.Width = rectf.Width;
+                    result.Height = rectf.Height;
+                }
+
+                result.X = rectf.X;
+                result.Y = rectf.Y;
+            }
+
             return result;
         }
 
@@ -186,6 +243,72 @@ namespace WinformControlLibraryExtension
                 }
             }
             return result;
+        }
+
+        ///// <summary>
+        ///// 获取DPI缩放比例
+        ///// </summary>
+        ///// <param name="autoHighAdaptive">是否返回高分辨率</param>
+        ///// <param name="g">控件所属Graphics</param>
+        ///// <returns></returns>
+        //public static DotsPerInch GetDPIScale(bool autoHighAdaptive, Graphics g)
+        //{
+        //    if (!autoHighAdaptive)
+        //    {
+        //        return new DotsPerInch() { XScale = 1f, YScale = 1f };
+        //    }
+
+        //    float default_dpi = 96;
+        //    DotsPerInch dpi = new DotsPerInch();
+        //    dpi.XScale = g.DpiX / default_dpi;
+        //    dpi.YScale = g.DpiY / default_dpi;
+        //    return dpi;
+        //}
+
+        ///// <summary>
+        ///// 获取DPI缩放比例
+        ///// </summary>
+        ///// <param name="autoHighAdaptive">是否返回高分辨率</param>
+        ///// <param name="handle">控件句柄</param>
+        ///// <returns></returns>
+        //public static DotsPerInch GetDPIScale(bool autoHighAdaptive, IntPtr handle)
+        //{
+        //    if (!autoHighAdaptive)
+        //    {
+        //        return new DotsPerInch() { XScale = 1f, YScale = 1f };
+        //    }
+
+        //    Graphics g = GetGraphics(handle);
+        //    float default_dpi = 96;
+        //    DotsPerInch dpi = new DotsPerInch();
+        //    dpi.XScale = g.DpiX / default_dpi;
+        //    dpi.YScale = g.DpiY / default_dpi;
+        //    g.Dispose();
+        //    return dpi;
+        //}
+
+        /// <summary>
+        /// 获取指定窗口（包括非工作区）的Graphics
+        /// </summary>
+        /// <param name="handle">指定窗口的handle</param>
+        /// <param name="g">返回g</param>
+        /// <param name="hDC">返回hDC</param>
+        public static void GetWindowGraphics(IntPtr handle, out Graphics g, out IntPtr hDC)
+        {
+            hDC = WindowNavigate.GetWindowDC(handle);
+            g = Graphics.FromHdc(hDC);
+        }
+
+        /// <summary>
+        /// 获取指定窗口（只包括工作区）的Graphics
+        /// </summary>
+        /// <param name="handle">指定窗口的handle</param>
+        /// <param name="g">返回g</param>
+        /// <param name="hDC">返回hDC</param>
+        public static void GetWindowClientGraphics(IntPtr handle,out Graphics g,out IntPtr hDC)
+        {
+             hDC = WindowNavigate.GetDC(handle);
+             g = Graphics.FromHdc(hDC);
         }
 
         /// <summary>
@@ -282,4 +405,5 @@ namespace WinformControlLibraryExtension
             return (T)Marshal.PtrToStructure(info, typeof(T));
         }
     }
+
 }

@@ -168,17 +168,17 @@ namespace WinformControlLibraryExtension
             get { return this.menuPanel; }
         }
 
-        private int menuWidth = 200;
+        private int menuWidth=200;
         /// <summary>
-        /// 控件隐藏状态控件宽度
+        /// 控件宽度
         /// </summary>
-        [Description("控件隐藏状态控件宽度")]
+        [Description("控件宽度")]
         [DefaultValue(200)]
         public int MenuWidth
         {
             get
             {
-                return this.menuWidth;
+                    return this.menuWidth;
             }
             set
             {
@@ -190,13 +190,14 @@ namespace WinformControlLibraryExtension
                 {
                     this.Width = this.menuWidth;
                 }
+
             }
         }
 
         /// <summary>
-        /// 控件隐藏隐藏后的宽度
+        /// 控件宽度
         /// </summary>
-        [Description("控件隐藏状态控件宽度")]
+        [Description("控件宽度")]
         [DefaultValue(300)]
         public int MenuHeight
         {
@@ -475,6 +476,7 @@ namespace WinformControlLibraryExtension
             this.menuPanel.Dock = DockStyle.Fill;
             this.menuPanel.Tool.MinBtn.Click += this.HideBtn_Click;
             this.menuPanel.Tool.FixedBtn.Click += this.FixedBtn_Click;
+            this.menuWidth = (int)(this.menuWidth * DotsPerInchHelper.DPIScale.XScale);
             this.Controls.Add(this.menuPanel);
 
             this.drawEnabled = this.menuPanel.Drag.Enabled;

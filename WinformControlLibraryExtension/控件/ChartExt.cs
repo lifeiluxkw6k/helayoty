@@ -723,6 +723,9 @@ namespace WinformControlLibraryExtension
             base.OnPaint(e);
 
             Graphics g = e.Graphics;
+       
+            int scale_gridsWidthIntervalPixel = (int)(this.GridsWidthIntervalPixel * DotsPerInchHelper.DPIScale.XScale);
+
             g.SmoothingMode = SmoothingMode.AntiAlias;
             RectangleF rectf = new RectangleF(0, 0, this.ClientRectangle.Width - 1, this.ClientRectangle.Height - 1);
 
@@ -731,18 +734,18 @@ namespace WinformControlLibraryExtension
             Pen grids_pen = new Pen(this.GridsColor);
             g.DrawRectangle(grids_pen, rectf.X, rectf.Y, rectf.Width, rectf.Height);//外边框
 
-            int r_count = (int)Math.Ceiling(rectf.Height / (float)this.GridsHeightIntervalPixel);//行线
+            int r_count = (int)Math.Ceiling(rectf.Height / (float)scale_gridsWidthIntervalPixel);//行线
             for (int i = r_count - 1; i > -1; i--)
             {
-                float y = rectf.Height - this.GridsHeightIntervalPixel * i;
+                float y = rectf.Height - scale_gridsWidthIntervalPixel * i;
                 g.DrawLine(grids_pen, 0, y, rectf.Width, y);
             }
 
-            int c_count = (int)Math.Ceiling(rectf.Width / (float)this.GridsWidthIntervalPixel);//列线
+            int c_count = (int)Math.Ceiling(rectf.Width / (float)scale_gridsWidthIntervalPixel);//列线
             c_count++;
             for (int i = 0; i < c_count; i++)
             {
-                float x = this.GridsWidthIntervalPixel * i;
+                float x = scale_gridsWidthIntervalPixel * i;
                 g.DrawLine(grids_pen, x, 0, x, rectf.Height);
             }
             grids_pen.Dispose();
@@ -765,7 +768,7 @@ namespace WinformControlLibraryExtension
                 if ((float)this.pathpoints[i] > max)
                     max = (float)this.pathpoints[i];
                 sum += (float)this.pathpoints[i];
-                points[i] = new Point((int)(rectf.Width - i * this.GridsWidthIntervalPixel), (int)(rectf.Height - rectf.Height * (float)this.pathpoints[i]));
+                points[i] = new Point((int)(rectf.Width - i * scale_gridsWidthIntervalPixel), (int)(rectf.Height - rectf.Height * (float)this.pathpoints[i]));
             }
             #endregion
 
@@ -941,11 +944,13 @@ namespace WinformControlLibraryExtension
         /// <param name="value"></param>
         public void AddPathPoint(float value)
         {
+            int scale_gridsWidthIntervalPixel = (int)(this.GridsWidthIntervalPixel * DotsPerInchHelper.DPIScale.XScale);
+
             ArrayList new_pathpoints = new ArrayList();
             new_pathpoints.Add(value);
             for (int i = 0; i < this.pathpoints.Count; i++)
             {
-                if (this.ClientRectangle.Width - i * this.GridsWidthIntervalPixel >= 0)
+                if (this.ClientRectangle.Width - i * scale_gridsWidthIntervalPixel >= 0)
                 {
                     new_pathpoints.Add(this.pathpoints[i]);
                 }

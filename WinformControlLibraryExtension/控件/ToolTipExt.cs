@@ -281,6 +281,52 @@ namespace WinformControlLibraryExtension
 
         #endregion
 
+        #region 废弃属性
+
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public new bool IsBalloon
+        {
+            get
+            {
+                return base.IsBalloon;
+            }
+            set
+            {
+                base.IsBalloon = value;
+            }
+        }
+
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public new ToolTipIcon ToolTipIcon
+        {
+            get
+            {
+                return base.ToolTipIcon;
+            }
+            set
+            {
+                base.ToolTipIcon = value;
+            }
+        }
+
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public new bool OwnerDraw
+        {
+            get
+            {
+                return base.OwnerDraw;
+            }
+            set
+            {
+                base.OwnerDraw = value;
+            }
+        }
+
+        #endregion
+
         public ToolTipExt()
         {
             this.OwnerDraw = true;
@@ -382,6 +428,8 @@ namespace WinformControlLibraryExtension
 
         private void ToolTipExt_Draw(object sender, DrawToolTipEventArgs e)
         {
+            int scale_padding = (int)(this.Padding * DotsPerInchHelper.DPIScale.XScale);
+
             #region 背景
 
             SolidBrush back_sb = new SolidBrush(this.BackColor);
@@ -404,23 +452,23 @@ namespace WinformControlLibraryExtension
                 Rectangle title_rect = new Rectangle();
                 if (this.TitleStation == TitleAnchor.Top)
                 {
-                    titleback_rect = new Rectangle(e.Bounds.X, e.Bounds.Y, e.Bounds.Width, this.TitleHeight);
-                    title_rect = new Rectangle(titleback_rect.X + this.Padding, titleback_rect.Y + (titleback_rect.Height - title_size.Height) / 2, titleback_rect.Width - this.Padding * 2, titleback_rect.Height - this.Padding * 2);
+                    titleback_rect = new Rectangle(e.Bounds.X, e.Bounds.Y, e.Bounds.Width, (int)(this.TitleHeight * DotsPerInchHelper.DPIScale.YScale));
+                    title_rect = new Rectangle(titleback_rect.X + scale_padding, titleback_rect.Y + (titleback_rect.Height - title_size.Height) / 2, titleback_rect.Width - scale_padding * 2, titleback_rect.Height - scale_padding * 2);
                 }
                 else if (this.TitleStation == TitleAnchor.Bottom)
                 {
-                    titleback_rect = new Rectangle(e.Bounds.X, e.Bounds.Bottom - this.TitleHeight, e.Bounds.Width, this.TitleHeight);
-                    title_rect = new Rectangle(titleback_rect.X + this.Padding, e.Bounds.Bottom - titleback_rect.Height + (titleback_rect.Height - title_size.Height) / 2, titleback_rect.Width - this.Padding * 2, titleback_rect.Height - this.Padding * 2);
+                    titleback_rect = new Rectangle(e.Bounds.X, e.Bounds.Bottom - (int)(this.TitleHeight * DotsPerInchHelper.DPIScale.YScale), e.Bounds.Width, (int)(this.TitleHeight * DotsPerInchHelper.DPIScale.YScale));
+                    title_rect = new Rectangle(titleback_rect.X + scale_padding, e.Bounds.Bottom - titleback_rect.Height + (titleback_rect.Height - title_size.Height) / 2, titleback_rect.Width - scale_padding * 2, titleback_rect.Height - scale_padding * 2);
                 }
                 else if (this.TitleStation == TitleAnchor.Left)
                 {
-                    titleback_rect = new Rectangle(e.Bounds.X, e.Bounds.Y, this.TitleHeight, e.Bounds.Height);
-                    title_rect = new Rectangle(titleback_rect.X + (titleback_rect.Width - title_size.Width) / 2, titleback_rect.Y + this.Padding, titleback_rect.Width - this.Padding * 2, titleback_rect.Height - this.Padding * 2);
+                    titleback_rect = new Rectangle(e.Bounds.X, e.Bounds.Y, (int)(this.TitleHeight * DotsPerInchHelper.DPIScale.YScale), e.Bounds.Height);
+                    title_rect = new Rectangle(titleback_rect.X + (titleback_rect.Width - title_size.Width) / 2, titleback_rect.Y + scale_padding, titleback_rect.Width - scale_padding * 2, titleback_rect.Height - scale_padding * 2);
                 }
                 else if (this.TitleStation == TitleAnchor.Right)
                 {
-                    titleback_rect = new Rectangle(e.Bounds.Right - this.TitleHeight, e.Bounds.Y, this.TitleHeight, e.Bounds.Height);
-                    title_rect = new Rectangle(titleback_rect.Right - titleback_rect.Width + (titleback_rect.Width - title_size.Width) / 2, titleback_rect.Y + this.Padding, titleback_rect.Width - this.Padding * 2, titleback_rect.Height - this.Padding * 2);
+                    titleback_rect = new Rectangle(e.Bounds.Right - (int)(this.TitleHeight * DotsPerInchHelper.DPIScale.YScale), e.Bounds.Y, (int)(this.TitleHeight * DotsPerInchHelper.DPIScale.YScale), e.Bounds.Height);
+                    title_rect = new Rectangle(titleback_rect.Right - titleback_rect.Width + (titleback_rect.Width - title_size.Width) / 2, titleback_rect.Y + scale_padding, titleback_rect.Width - scale_padding * 2, titleback_rect.Height - scale_padding * 2);
                 }
 
                 if (this.TitleBackColor != Color.Empty)
@@ -444,19 +492,19 @@ namespace WinformControlLibraryExtension
             Rectangle text_rect = new Rectangle();
             if (this.TitleStation == TitleAnchor.Top)
             {
-                text_rect = new Rectangle(e.Bounds.X + this.Padding, titleback_rect.Bottom + this.Padding, e.Bounds.Width, e.Bounds.Height - titleback_rect.Height);
+                text_rect = new Rectangle(e.Bounds.X + scale_padding, titleback_rect.Bottom + scale_padding, e.Bounds.Width, e.Bounds.Height - titleback_rect.Height);
             }
             else if (this.TitleStation == TitleAnchor.Bottom)
             {
-                text_rect = new Rectangle(e.Bounds.X + this.Padding, e.Bounds.Y + this.Padding, e.Bounds.Width, e.Bounds.Height - titleback_rect.Height);
+                text_rect = new Rectangle(e.Bounds.X + scale_padding, e.Bounds.Y + scale_padding, e.Bounds.Width, e.Bounds.Height - titleback_rect.Height);
             }
             else if (this.TitleStation == TitleAnchor.Left)
             {
-                text_rect = new Rectangle(e.Bounds.X + titleback_rect.Width + this.Padding, e.Bounds.Y + this.Padding, e.Bounds.Width, e.Bounds.Height - titleback_rect.Height);
+                text_rect = new Rectangle(e.Bounds.X + titleback_rect.Width + scale_padding, e.Bounds.Y + scale_padding, e.Bounds.Width, e.Bounds.Height - titleback_rect.Height);
             }
             else if (this.TitleStation == TitleAnchor.Right)
             {
-                text_rect = new Rectangle(e.Bounds.X + this.Padding, e.Bounds.Y + this.Padding, e.Bounds.Width, e.Bounds.Height - titleback_rect.Height);
+                text_rect = new Rectangle(e.Bounds.X + scale_padding, e.Bounds.Y + scale_padding, e.Bounds.Width, e.Bounds.Height - titleback_rect.Height);
             }
 
             SolidBrush text_sb = new SolidBrush(this.ForeColor);
@@ -475,33 +523,36 @@ namespace WinformControlLibraryExtension
         /// <returns></returns>
         private Size GetToolTipSize(Control control, string text = null)
         {
-            IntPtr hDC = WindowNavigate.GetWindowDC(control.Handle);
-            Graphics g = Graphics.FromHdc(hDC);
+            IntPtr hDC = IntPtr.Zero;
+            Graphics g = null;
+            ControlCommom.GetWindowClientGraphics(control.Handle, out g, out hDC);
+
+            int scale_padding = (int)(this.Padding * DotsPerInchHelper.DPIScale.XScale);
 
             string text_str = text == null ? this.GetToolTip(control) : text;
             Size text_size = g.MeasureString(text_str, this.Font, new Size()).ToSize();
-            text_size.Width += this.Padding * 2;
-            text_size.Height += this.Padding * 2;
+            text_size.Width += scale_padding * 2;
+            text_size.Height += scale_padding * 2;
 
             if (this.MinSize.Width > 0 && this.MinSize.Width > text_size.Width)
-                text_size.Width = this.MinSize.Width;
+                text_size.Width = (int)(this.MinSize.Width * DotsPerInchHelper.DPIScale.XScale);
             if (this.MinSize.Height > 0 && this.MinSize.Height > text_size.Height)
-                text_size.Height = this.MinSize.Height;
+                text_size.Height = (int)(this.MinSize.Height * DotsPerInchHelper.DPIScale.YScale);
 
             if (this.MaxSize.Width > 0 && text_size.Width > this.MaxSize.Width)
-                text_size.Width = this.MaxSize.Width;
+                text_size.Width = (int)(this.MaxSize.Width * DotsPerInchHelper.DPIScale.XScale);
             if (this.MaxSize.Height > 0 && text_size.Height > this.MaxSize.Height)
-                text_size.Height = this.MaxSize.Height;
+                text_size.Height = (int)(this.MaxSize.Height * DotsPerInchHelper.DPIScale.YScale);
 
             if (this.TitleShow)
             {
                 if (this.TitleStation == TitleAnchor.Top || this.TitleStation == TitleAnchor.Bottom)
                 {
-                    text_size.Height += this.TitleHeight;
+                    text_size.Height += (int)(this.TitleHeight * DotsPerInchHelper.DPIScale.YScale);
                 }
                 else
                 {
-                    text_size.Width += this.TitleHeight;
+                    text_size.Width += (int)(this.TitleHeight * DotsPerInchHelper.DPIScale.XScale);
                 }
             }
 

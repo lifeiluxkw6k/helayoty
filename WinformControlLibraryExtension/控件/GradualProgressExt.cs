@@ -460,6 +460,8 @@ namespace WinformControlLibraryExtension
                 return;
 
             Graphics g = e.Graphics;
+            int scale_gridsDistance =(int)( this.GridsDistance * DotsPerInchHelper.DPIScale.XScale);
+
             g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
             SizeF text_sizef = g.MeasureString("100%", this.Font);
 
@@ -509,10 +511,10 @@ namespace WinformControlLibraryExtension
                     g.FillRectangle(grids_sb, 0.0f, 0.0f, realityValue, rectf.Height);
                 }
                 g.DrawLine(grids_pen, 0, rectf.Height / 2, rectf.Width, rectf.Height / 2);
-                int count = (int)Math.Ceiling(rectf.Width / (float)this.GridsDistance);
+                int count = (int)Math.Ceiling(rectf.Width / (float)scale_gridsDistance);
                 for (int i = 0; i < count; i++)
                 {
-                    float x = this.GridsDistance * i;
+                    float x = scale_gridsDistance * i;
                     g.DrawLine(grids_pen, x, 0, x, rectf.Height);
                 }
             }
@@ -524,10 +526,10 @@ namespace WinformControlLibraryExtension
                     g.FillRectangle(grids_sb, 0.0f, rectf.Bottom - realityValue, rectf.Width, realityValue);//进度值背景
                 }
                 g.DrawLine(grids_pen, rectf.Width / 2, rectf.Y, rectf.Width / 2, rectf.Bottom);//中线
-                int count = (int)Math.Ceiling(rectf.Height / (float)this.GridsDistance);
+                int count = (int)Math.Ceiling(rectf.Height / (float)scale_gridsDistance);
                 for (int i = count - 1; i > -1; i--)
                 {
-                    int y = (int)(rectf.Bottom - this.GridsDistance * i);
+                    int y = (int)(rectf.Bottom - scale_gridsDistance * i);
                     g.DrawLine(grids_pen, 0, y, rectf.Width, y);
                 }
             }

@@ -123,183 +123,230 @@ namespace WinformControlLibraryExtension
                 styles = Styles;
             }
 
-            Size minsize = new Size(200, 100);
-            Size maxsize = new Size(900, 600);
-            Size ico_size = new Size(32, 32);
-            int btn_rect_height = 30;
-            int btn_interval = 10;
-            int btn_w = 75;
-            int btn_h = 24;
-            int text_padding = 10;
-            int text_maxwidth = (maxsize.Width - text_padding * 2 - (icon != MessageBoxExtIcon.None ? ico_size.Width : 0));
+            FormExt sfe = new FormExt();
+            LabelExt label = new LabelExt();
 
+            int text_captionBoxHeight = (int)(sfe.CaptionBox.Height * DotsPerInchHelper.DPIScale.XScale);
+            Size scale_ico_size = new Size((int)(32 * DotsPerInchHelper.DPIScale.XScale), (int)(32 * DotsPerInchHelper.DPIScale.YScale));
+            int scale_margin = (int)(6 * DotsPerInchHelper.DPIScale.XScale);//文本、图标边距
+            int scale_btn_width = (int)(75 * DotsPerInchHelper.DPIScale.XScale);
+            int scale_btn_height = (int)(24 * DotsPerInchHelper.DPIScale.YScale);
+            int scale_btn_interval = (int)(10 * DotsPerInchHelper.DPIScale.XScale);
+
+            Size scale_win_maxsize = new Size((int)(900 * DotsPerInchHelper.DPIScale.XScale), (int)(600 * DotsPerInchHelper.DPIScale.YScale));
+            Size scale_win_minsize = new Size((int)(200 * DotsPerInchHelper.DPIScale.XScale), (int)(100 * DotsPerInchHelper.DPIScale.YScale));
             if (buttons == MessageBoxExtButtons.YesNoCancel || buttons == MessageBoxExtButtons.AbortRetryIgnore)
             {
-                minsize = new Size(text_padding * 2 + btn_w * 3 + btn_interval * 2, minsize.Height);
+                scale_win_minsize = new Size((int)(285 * DotsPerInchHelper.DPIScale.XScale), (int)(100 * DotsPerInchHelper.DPIScale.YScale));
             }
 
+            Rectangle ico_rect = Rectangle.Empty;
+            Rectangle text_rect = Rectangle.Empty;
+            Rectangle btn_rect = Rectangle.Empty;
 
-            FormExt fe = new FormExt();
-            fe.BorderColor = styles.BorderColor;
-            fe.ShowInTaskbar = false;
-            fe.ShowIcon = false;
-            fe.ResizeType = FormExt.ResizeTypes.NoResize;
-            fe.StartPosition = FormStartPosition.CenterParent;
-            fe.TextOrientation = FormExt.TextOrientations.Left;
-            fe.MinimumSize = minsize;
-            fe.Size = minsize;
-            fe.Text = caption;
-            fe.BackColor = styles.BackColor;
-            fe.CaptionBox.CloseBtn.Enabled = false;
-            fe.CaptionBox.MaxBtn.Enabled = false;
-            fe.CaptionBox.MinBtn.Enabled = false;
-            fe.CaptionBox.BackColor = styles.CaptionBackColor;
-            fe.ForeColor = styles.CaptionTextColor;
+            Bitmap bmp = new Bitmap(1000, 1000);
+            Graphics g = Graphics.FromImage(bmp);
+            Size text_size = Size.Ceiling(g.MeasureString(text, sfe.Font, int.MaxValue));
+            g.Dispose();
+            bmp.Dispose();
 
-
-            SizeF text_sizef = GetTextSize(fe, text, text_maxwidth);
-            if (text_sizef.Height < ico_size.Height)
-            {
-                text_sizef = new SizeF(text_sizef.Width, ico_size.Height);
-            }
+            Size win_size = Size.Empty;
             if (icon != MessageBoxExtIcon.None)
             {
-                text_sizef = new SizeF(text_sizef.Width + ico_size.Width + 40, ico_size.Height);
+                ico_rect = new Rectangle(scale_margin, text_captionBoxHeight + scale_margin, scale_ico_size.Width, scale_ico_size.Height);
+                text_rect = new Rectangle(scale_margin + scale_ico_size.Width + scale_margin, text_captionBoxHeight + scale_margin, text_size.Width, text_size.Height);
+
+                if (text_rect.Width > scale_win_maxsize.Width - scale_margin - scale_ico_size.Width - scale_margin - scale_margin)
+                {
+                    text_rect.Width = scale_win_maxsize.Width - scale_margin - scale_ico_size.Width - scale_margin - scale_margin;
+                }
+                if (text_rect.Width < scale_win_minsize.Width - scale_margin - scale_ico_size.Width - scale_margin - scale_margin)
+                {
+                    text_rect.Width = scale_win_minsize.Width - scale_margin - scale_ico_size.Width - scale_margin - scale_margin;
+                }
+
+                if (text_rect.Height > scale_win_maxsize.Height - scale_margin - scale_btn_height - scale_margin - scale_margin - text_captionBoxHeight)
+                {
+                    text_rect.Height = scale_win_maxsize.Height - scale_margin - scale_btn_height - scale_margin - scale_margin - text_captionBoxHeight;
+                }
+                if (text_rect.Height < scale_win_minsize.Height - scale_margin - scale_btn_height - scale_margin - scale_margin - text_captionBoxHeight)
+                {
+                    text_rect.Height = scale_win_minsize.Height - scale_margin - scale_btn_height - scale_margin - scale_margin - text_captionBoxHeight;
+                }
+
+                btn_rect = new Rectangle(scale_margin, text_rect.Bottom + scale_margin, scale_ico_size.Width + scale_margin + text_rect.Width, scale_btn_height);
+                win_size = new Size(text_rect.Right + scale_margin, btn_rect.Bottom + scale_margin);
             }
-            Label label = new Label();
-            label.AutoSize = false;
+            else
+            {
+                text_rect = new Rectangle(scale_margin, text_captionBoxHeight + scale_margin, text_size.Width, text_size.Height);
+
+                if (text_rect.Width > scale_win_maxsize.Width - scale_margin - scale_margin)
+                {
+                    text_rect.Width = scale_win_maxsize.Width - scale_margin - scale_margin;
+                }
+                if (text_rect.Width < scale_win_minsize.Width - scale_margin - scale_margin)
+                {
+                    text_rect.Width = scale_win_minsize.Width - scale_margin - scale_margin;
+                }
+
+                if (text_rect.Height > scale_win_maxsize.Height - scale_margin - scale_btn_height - scale_margin - scale_margin - text_captionBoxHeight)
+                {
+                    text_rect.Height = scale_win_maxsize.Height - scale_margin - scale_btn_height - scale_margin - scale_margin - text_captionBoxHeight;
+                }
+                if (text_rect.Height < scale_win_minsize.Height - scale_margin - scale_btn_height - scale_margin - scale_margin - text_captionBoxHeight)
+                {
+                    text_rect.Height = scale_win_minsize.Height - scale_margin - scale_btn_height - scale_margin - scale_margin - text_captionBoxHeight;
+                }
+
+                btn_rect = new Rectangle(scale_margin, text_rect.Bottom + scale_margin, scale_margin + text_rect.Width + scale_margin, scale_btn_height);
+                win_size = new Size(text_rect.Right + scale_margin, btn_rect.Bottom + scale_margin);
+            }
+
+            sfe.BorderColor = styles.BorderColor;
+            sfe.ShowInTaskbar = false;
+            sfe.ShowIcon = false;
+            sfe.ResizeType = FormExt.ResizeTypes.NoResize;
+            sfe.StartPosition = FormStartPosition.CenterParent;
+            sfe.TextOrientation = FormExt.TextOrientations.Left;
+            sfe.Size = win_size;
+            sfe.Text = caption;
+            sfe.BackColor = styles.BackColor;
+            sfe.CaptionBox.CloseBtn.Enabled = styles.CloseEnable;
+            sfe.CaptionBox.MaxBtn.Enabled = false;
+            sfe.CaptionBox.MinBtn.Enabled = false;
+            sfe.CaptionBox.BackColor = styles.CaptionBackColor;
+            sfe.ForeColor = styles.CaptionTextColor;
+            sfe.SizeGripStyle = SizeGripStyle.Hide;
+
             label.Text = text;
             label.ForeColor = styles.TextColor;
-            label.ImageAlign = ContentAlignment.MiddleLeft;
-            label.TextAlign = ContentAlignment.MiddleCenter;
+
             if (icon != MessageBoxExtIcon.None)
             {
-                label.Image = GetIco(icon, customImage);
+                PictureBox ico_pb = new PictureBox() { Size = scale_ico_size, BackgroundImageLayout = ImageLayout.Zoom,  BackgroundImage = GetIco(icon, customImage)};
+                sfe.Controls.Add(ico_pb);
+                ico_pb.SetBounds(ico_rect.X, ico_rect.Y, ico_rect.Width, ico_rect.Height);
             }
-            label.SetBounds(fe.ClientRectangle.X + text_padding, fe.ClientRectangle.Y + text_padding + fe.CaptionBox.Height, (int)text_sizef.Width, (int)text_sizef.Height);
-            fe.Controls.Add(label);
-
+            sfe.Controls.Add(label);
+            label.SetBounds(text_rect.X, text_rect.Y, text_rect.Width, text_rect.Height);
 
 
             List<MessageBoxExtButton> btnList = new List<MessageBoxExtButton>();
             if (buttons == MessageBoxExtButtons.OK)
             {
-                MessageBoxExtButton ok_btn = CreateButton(fe, styles.Button1Text == String.Empty ? "确定" : styles.Button1Text, OK_Click, btn_w, btn_h, 0, styles);
-                ok_btn.Location = new Point(
-                    (int)((fe.ClientSize.Width - ok_btn.Width) / 2),
-                    (int)(fe.ClientRectangle.Bottom - btn_h - (btn_rect_height - btn_h) / 2));
+                MessageBoxExtButton ok_btn = CreateButton(sfe, styles.Button1Text == String.Empty ? "确定" : styles.Button1Text, OK_Click, scale_btn_width, scale_btn_height, 0, styles);
+                ok_btn.Location = new Point((int)((btn_rect.Width - ok_btn.Width) / 2),btn_rect.Y);
 
-                fe.Controls.Add(ok_btn);
+                sfe.Controls.Add(ok_btn);
                 btnList.Add(ok_btn);
             }
             else if (buttons == MessageBoxExtButtons.OKCancel)
             {
-                MessageBoxExtButton ok_btn = CreateButton(fe, styles.Button1Text == String.Empty ? "确定" : styles.Button1Text, OK_Click, btn_w, btn_h, 0, styles);
+                MessageBoxExtButton ok_btn = CreateButton(sfe, styles.Button1Text == String.Empty ? "确定" : styles.Button1Text, OK_Click, scale_btn_width, scale_btn_height, 0, styles);
                 ok_btn.Location = new Point(
-                    (int)((fe.ClientSize.Width - btn_w * 2 - btn_interval) / 2),
-                    (int)(fe.ClientRectangle.Bottom - btn_h - (btn_rect_height - btn_h) / 2));
+                    btn_rect.X+(int)((btn_rect.Width - scale_btn_width * 2 - scale_btn_interval) / 2),
+                    btn_rect.Y);
 
-                fe.Controls.Add(ok_btn);
+                sfe.Controls.Add(ok_btn);
                 btnList.Add(ok_btn);
 
-                MessageBoxExtButton cancel_btn = CreateButton(fe, styles.Button2Text == String.Empty ? "取消" : styles.Button2Text, Cancel_Click, btn_w, btn_h, 1, styles);
+                MessageBoxExtButton cancel_btn = CreateButton(sfe, styles.Button2Text == String.Empty ? "取消" : styles.Button2Text, Cancel_Click, scale_btn_width, scale_btn_height, 1, styles);
                 cancel_btn.Location = new Point(
-                    (int)((fe.ClientSize.Width - btn_w * 2 - btn_interval) / 2) + cancel_btn.Width + btn_interval,
-                    (int)(fe.ClientRectangle.Bottom - btn_h - (btn_rect_height - btn_h) / 2));
+                    btn_rect.X + (int)((btn_rect.Width - scale_btn_width * 2 - scale_btn_interval) / 2) + cancel_btn.Width + scale_btn_interval,
+                    btn_rect.Y);
 
-                fe.Controls.Add(cancel_btn);
+                sfe.Controls.Add(cancel_btn);
                 btnList.Add(cancel_btn);
             }
             else if (buttons == MessageBoxExtButtons.YesNo)
             {
-                MessageBoxExtButton ok_btn = CreateButton(fe, styles.Button1Text == String.Empty ? "是" : styles.Button1Text, OK_Click, btn_w, btn_h, 0, styles);
+                MessageBoxExtButton ok_btn = CreateButton(sfe, styles.Button1Text == String.Empty ? "是" : styles.Button1Text, OK_Click, scale_btn_width, scale_btn_height, 0, styles);
                 ok_btn.Location = new Point(
-                    (int)((fe.ClientSize.Width - btn_w * 2 - btn_interval) / 2),
-                    (int)(fe.ClientRectangle.Bottom - btn_h - (btn_rect_height - btn_h) / 2));
+                    btn_rect.X + (int)((btn_rect.Width - scale_btn_width * 2 - scale_btn_interval) / 2),
+                    btn_rect.Y);
 
-                fe.Controls.Add(ok_btn);
+                sfe.Controls.Add(ok_btn);
                 btnList.Add(ok_btn);
 
-                MessageBoxExtButton cancel_btn = CreateButton(fe, styles.Button2Text == String.Empty ? "否" : styles.Button2Text, No_Click, btn_w, btn_h, 1, styles);
+                MessageBoxExtButton cancel_btn = CreateButton(sfe, styles.Button2Text == String.Empty ? "否" : styles.Button2Text, No_Click, scale_btn_width, scale_btn_height, 1, styles);
                 cancel_btn.Location = new Point(
-                    (int)((fe.ClientSize.Width - btn_w * 2 - btn_interval) / 2) + cancel_btn.Width + btn_interval,
-                    (int)(fe.ClientRectangle.Bottom - btn_h - (btn_rect_height - btn_h) / 2));
+                    btn_rect.X + (int)((btn_rect.Width - scale_btn_width * 2 - scale_btn_interval) / 2) + cancel_btn.Width + scale_btn_interval,
+                    btn_rect.Y);
 
-                fe.Controls.Add(cancel_btn);
+                sfe.Controls.Add(cancel_btn);
                 btnList.Add(cancel_btn);
             }
             else if (buttons == MessageBoxExtButtons.YesNoCancel)
             {
-                MessageBoxExtButton ok_btn = CreateButton(fe, styles.Button1Text == String.Empty ? "是" : styles.Button1Text, OK_Click, btn_w, btn_h, 0, styles);
+                MessageBoxExtButton ok_btn = CreateButton(sfe, styles.Button1Text == String.Empty ? "是" : styles.Button1Text, OK_Click, scale_btn_width, scale_btn_height, 0, styles);
                 ok_btn.Location = new Point(
-                    (int)((fe.ClientSize.Width - btn_w * 3 - btn_interval * 2) / 2),
-                    (int)(fe.ClientRectangle.Bottom - btn_h - (btn_rect_height - btn_h) / 2));
+                    btn_rect.X + (int)((btn_rect.Width - scale_btn_width * 3 - scale_btn_interval * 2) / 2),
+                     btn_rect.Y);
 
-                fe.Controls.Add(ok_btn);
+                sfe.Controls.Add(ok_btn);
                 btnList.Add(ok_btn);
 
-                MessageBoxExtButton no_btn = CreateButton(fe, styles.Button2Text == String.Empty ? "否" : styles.Button2Text, No_Click, btn_w, btn_h, 1, styles);
+                MessageBoxExtButton no_btn = CreateButton(sfe, styles.Button2Text == String.Empty ? "否" : styles.Button2Text, No_Click, scale_btn_width, scale_btn_height, 1, styles);
                 no_btn.Location = new Point(
-                    (int)((fe.ClientSize.Width - btn_w * 3 - btn_interval * 2) / 2) + no_btn.Width + btn_interval,
-                    (int)(fe.ClientRectangle.Bottom - btn_h - (btn_rect_height - btn_h) / 2));
+                    btn_rect.X + (int)((btn_rect.Width - scale_btn_width * 3 - scale_btn_interval * 2) / 2) + no_btn.Width + scale_btn_interval,
+                    btn_rect.Y);
 
-                fe.Controls.Add(no_btn);
+                sfe.Controls.Add(no_btn);
                 btnList.Add(no_btn);
 
-                MessageBoxExtButton cancel_btn = CreateButton(fe, styles.Button3Text == String.Empty ? "取消" : styles.Button3Text, Cancel_Click, btn_w, btn_h, 2, styles);
+                MessageBoxExtButton cancel_btn = CreateButton(sfe, styles.Button3Text == String.Empty ? "取消" : styles.Button3Text, Cancel_Click, scale_btn_width, scale_btn_height, 2, styles);
                 cancel_btn.Location = new Point(
-                    (int)((fe.ClientSize.Width - btn_w * 3 - btn_interval * 2) / 2) + cancel_btn.Width * 2 + btn_interval * 2,
-                    (int)(fe.ClientRectangle.Bottom - btn_h - (btn_rect_height - btn_h) / 2));
+                    btn_rect.X + (int)((btn_rect.Width - scale_btn_width * 3 - scale_btn_interval * 2) / 2) + cancel_btn.Width * 2 + scale_btn_interval * 2,
+                    btn_rect.Y);
 
-                fe.Controls.Add(cancel_btn);
+                sfe.Controls.Add(cancel_btn);
                 btnList.Add(cancel_btn);
             }
             else if (buttons == MessageBoxExtButtons.RetryCancel)
             {
-                MessageBoxExtButton retry_btn = CreateButton(fe, styles.Button1Text == String.Empty ? "重试" : styles.Button1Text, Retry_Click, btn_w, btn_h, 0, styles);
+                MessageBoxExtButton retry_btn = CreateButton(sfe, styles.Button1Text == String.Empty ? "重试" : styles.Button1Text, Retry_Click, scale_btn_width, scale_btn_height, 0, styles);
                 retry_btn.Location = new Point(
-                    (int)((fe.ClientSize.Width - btn_w * 2 - btn_interval) / 2),
-                    (int)(fe.ClientRectangle.Bottom - btn_h - (btn_rect_height - btn_h) / 2));
+                    btn_rect.X + (int)((btn_rect.Width - scale_btn_width * 2 - scale_btn_interval) / 2),
+                    btn_rect.Y);
 
-                fe.Controls.Add(retry_btn);
+                sfe.Controls.Add(retry_btn);
                 btnList.Add(retry_btn);
 
-                MessageBoxExtButton cancel_btn = CreateButton(fe, styles.Button2Text == String.Empty ? "取消" : styles.Button2Text, Cancel_Click, btn_w, btn_h, 1, styles);
+                MessageBoxExtButton cancel_btn = CreateButton(sfe, styles.Button2Text == String.Empty ? "取消" : styles.Button2Text, Cancel_Click, scale_btn_width, scale_btn_height, 1, styles);
                 cancel_btn.Location = new Point(
-                    (int)((fe.ClientSize.Width - btn_w * 2 - btn_interval) / 2) + cancel_btn.Width + btn_interval,
-                    (int)(fe.ClientRectangle.Bottom - btn_h - (btn_rect_height - btn_h) / 2));
+                    btn_rect.X + (int)((btn_rect.Width - scale_btn_width * 2 - scale_btn_interval) / 2) + cancel_btn.Width + scale_btn_interval,
+                    btn_rect.Y);
 
-                fe.Controls.Add(cancel_btn);
+                sfe.Controls.Add(cancel_btn);
                 btnList.Add(cancel_btn);
             }
             else if (buttons == MessageBoxExtButtons.AbortRetryIgnore)
             {
-                MessageBoxExtButton abort_btn = CreateButton(fe, styles.Button1Text == String.Empty ? "中止" : styles.Button1Text, Abort_Click, btn_w, btn_h, 0, styles);
+                MessageBoxExtButton abort_btn = CreateButton(sfe, styles.Button1Text == String.Empty ? "中止" : styles.Button1Text, Abort_Click, scale_btn_width, scale_btn_height, 0, styles);
                 abort_btn.Location = new Point(
-                    (int)((fe.ClientSize.Width - btn_w * 3 - btn_interval * 2) / 2),
-                    (int)(fe.ClientRectangle.Bottom - btn_h - (btn_rect_height - btn_h) / 2));
+                    btn_rect.X + (int)((btn_rect.Width - scale_btn_width * 3 - scale_btn_interval * 2) / 2),
+                    btn_rect.Y);
 
-                fe.Controls.Add(abort_btn);
+                sfe.Controls.Add(abort_btn);
                 btnList.Add(abort_btn);
 
-                MessageBoxExtButton retry_btn = CreateButton(fe, styles.Button2Text == String.Empty ? "重试" : styles.Button2Text, Retry_Click, btn_w, btn_h, 1, styles);
+                MessageBoxExtButton retry_btn = CreateButton(sfe, styles.Button2Text == String.Empty ? "重试" : styles.Button2Text, Retry_Click, scale_btn_width, scale_btn_height, 1, styles);
                 retry_btn.Location = new Point(
-                    (int)((fe.ClientSize.Width - btn_w * 3 - btn_interval * 2) / 2) + retry_btn.Width + btn_interval,
-                    (int)(fe.ClientRectangle.Bottom - btn_h - (btn_rect_height - btn_h) / 2));
+                    btn_rect.X + (int)((btn_rect.Width - scale_btn_width * 3 - scale_btn_interval * 2) / 2) + retry_btn.Width + scale_btn_interval,
+                    btn_rect.Y);
 
-                fe.Controls.Add(retry_btn);
+                sfe.Controls.Add(retry_btn);
                 btnList.Add(retry_btn);
 
-                MessageBoxExtButton ignore_btn = CreateButton(fe, styles.Button3Text == String.Empty ? "忽略" : styles.Button3Text, Ignore_Click, btn_w, btn_h, 2, styles);
+                MessageBoxExtButton ignore_btn = CreateButton(sfe, styles.Button3Text == String.Empty ? "忽略" : styles.Button3Text, Ignore_Click, scale_btn_width, scale_btn_height, 2, styles);
                 ignore_btn.Location = new Point(
-                    (int)((fe.ClientSize.Width - btn_w * 3 - btn_interval * 2) / 2) + ignore_btn.Width * 2 + btn_interval * 2,
-                    (int)(fe.ClientRectangle.Bottom - btn_h - (btn_rect_height - btn_h) / 2));
+                    btn_rect.X + (int)((btn_rect.Width - scale_btn_width * 3 - scale_btn_interval * 2) / 2) + ignore_btn.Width * 2 + scale_btn_interval * 2,
+                    btn_rect.Y);
 
-                fe.Controls.Add(ignore_btn);
+                sfe.Controls.Add(ignore_btn);
                 btnList.Add(ignore_btn);
             }
-
-            fe.Size = new Size(fe.Size.Width, fe.CaptionBox.Height + (int)text_sizef.Height + btn_rect_height + text_padding * 2);
 
             if (defaultButton == MessageBoxExtDefaultButton.Button1)
             {
@@ -328,8 +375,13 @@ namespace WinformControlLibraryExtension
                 }
             }
 
-            fe.ShowDialog(owner);
-            return (DialogResult)fe.Tag;
+            sfe.ShowDialog(owner);
+
+            if (sfe.Tag == null)
+            {
+                return DialogResult.None;
+            }
+            return (DialogResult)sfe.Tag;
         }
 
         #endregion
@@ -434,26 +486,6 @@ namespace WinformControlLibraryExtension
             btn.ForeColor = style.ButtonTextColor;
             btn.Click += handler;
             return btn;
-        }
-
-        /// <summary>
-        /// 获取文本Size
-        /// </summary>
-        /// <param name="fe"></param>
-        /// <param name="text"></param>
-        /// <param name="maxwidth"></param>
-        /// <returns></returns>
-        private static Size GetTextSize(FormExt fe, string text, int maxwidth)
-        {
-            IntPtr hDC = WindowNavigate.GetWindowDC(fe.Handle);
-            Graphics g = Graphics.FromHdc(hDC);
-
-            SizeF text_sizef = g.MeasureString(text, fe.Font, maxwidth);
-
-            g.Dispose();
-            WindowNavigate.ReleaseDC(fe.Handle, hDC);
-
-            return Size.Ceiling(text_sizef);
         }
 
         /// <summary>
@@ -673,6 +705,27 @@ namespace WinformControlLibraryExtension
     [Description("提示框样式")]
     public class MessageBoxExtStyles
     {
+
+        private bool closeEnable =false;
+        /// <summary>
+        /// 弹窗是否显示关闭按钮
+        /// </summary>
+        [Description("弹窗是否显示关闭按钮")]
+        public bool CloseEnable
+        {
+            get
+            {
+                return this.closeEnable;
+            }
+            set
+            {
+                if (this.closeEnable == value)
+                    return;
+
+                this.closeEnable = value;
+            }
+        }
+
         private Color borderColor = Color.FromArgb(137, 158, 136);
         /// <summary>
         /// 边框颜色

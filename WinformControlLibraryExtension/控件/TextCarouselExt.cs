@@ -960,8 +960,9 @@ namespace WinformControlLibraryExtension
         /// </summary>
         private void InitializeTextRectangles()
         {
-            IntPtr hDC = GetWindowDC(this.Handle);
-            Graphics g = Graphics.FromHdc(hDC);
+            IntPtr hDC = IntPtr.Zero;
+            Graphics g = null;
+            ControlCommom.GetWindowClientGraphics(this.Handle, out g, out hDC);
 
             for (int i = 0; i < this.enableList.Count; i++)
             {
@@ -981,8 +982,9 @@ namespace WinformControlLibraryExtension
             if (textItem == null)
                 return;
 
-            IntPtr hDC = GetWindowDC(this.Handle);
-            Graphics g = Graphics.FromHdc(hDC);
+            IntPtr hDC = IntPtr.Zero;
+            Graphics g = null;
+            ControlCommom.GetWindowClientGraphics(this.Handle, out g, out hDC);
 
             this.InitializeTextRectangle(textItem, g);
 

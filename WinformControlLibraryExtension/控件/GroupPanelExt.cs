@@ -474,30 +474,38 @@ namespace WinformControlLibraryExtension
 
         #region 重写
 
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+
+            e.Graphics.Clip = new Region(this.ClientRectangle);
+        }
+
         protected override void WndProc(ref Message m)
         {
             switch (m.Msg)
             {
                 case WM_NCCALCSIZE:
                     {
-                        if (m.WParam != IntPtr.Zero)
-                        {
-                            NCCALCSIZE_PARAMS ncsize = (NCCALCSIZE_PARAMS)Marshal.PtrToStructure(m.LParam, typeof(NCCALCSIZE_PARAMS));
-                            ncsize.ncOldClientRectangle.Top = ncsize.ncNewRectangle.Top += this.titleHeight;
-                            ncsize.ncOldClientRectangle.Left = ncsize.ncNewRectangle.Left += this.border;
-                            ncsize.ncOldClientRectangle.Right = ncsize.ncNewRectangle.Right -= this.border;
-                            ncsize.ncOldClientRectangle.Bottom = ncsize.ncNewRectangle.Bottom -= this.border;
-                            Marshal.StructureToPtr(ncsize, m.LParam, false);
-                        }
-                        else
-                        {
-                            RECT ncsize = (RECT)Marshal.PtrToStructure(m.LParam, typeof(RECT));
-                            ncsize.Top += this.titleHeight;
-                            ncsize.Left += this.border;
-                            ncsize.Right -= this.border;
-                            ncsize.Bottom -= this.border;
-                            Marshal.StructureToPtr(ncsize, m.LParam, false);
-                        }
+                        //if (m.WParam != IntPtr.Zero)
+                        //{
+                        //    NCCALCSIZE_PARAMS ncsize = (NCCALCSIZE_PARAMS)Marshal.PtrToStructure(m.LParam, typeof(NCCALCSIZE_PARAMS));
+                        //    ncsize.ncOldClientRectangle.Top = ncsize.ncNewRectangle.Top += this.titleHeight;
+                        //    ncsize.ncOldClientRectangle.Left = ncsize.ncNewRectangle.Left += this.border;
+                        //    ncsize.ncOldClientRectangle.Right = ncsize.ncNewRectangle.Right -= this.border;
+                        //    ncsize.ncOldClientRectangle.Bottom = ncsize.ncNewRectangle.Bottom -= this.border;
+                        //    Marshal.StructureToPtr(ncsize, m.LParam, false);
+                        //}
+                        //else
+                        //{
+                        int scale_titleHeight = (int)(this.titleHeight * DotsPerInchHelper.DPIScale.XScale);
+                        RECT ncsize = (RECT)Marshal.PtrToStructure(m.LParam, typeof(RECT));
+                        ncsize.Top += scale_titleHeight;
+                        ncsize.Left += this.border;
+                        ncsize.Right -= this.border;
+                        ncsize.Bottom -= this.border;
+                        Marshal.StructureToPtr(ncsize, m.LParam, false);
+                        //}
 
                         this.Send_WM_NCPAINT_Message();
                         return;
@@ -532,7 +540,7 @@ namespace WinformControlLibraryExtension
         protected virtual void OnNCPaint(PaintEventArgs e)
         {
             Graphics g = e.Graphics;
-
+            int scale_titleHeight = (int)(this.titleHeight * DotsPerInchHelper.DPIScale.XScale);
             #region 边框
             if (this.border > 0)
             {
@@ -545,8 +553,9 @@ namespace WinformControlLibraryExtension
             #endregion
 
             #region 标题
+
             SolidBrush title_back_sb = new SolidBrush(this.TitleBackColor);
-            RectangleF title_rect = new RectangleF(g.VisibleClipBounds.X, g.VisibleClipBounds.Y, g.VisibleClipBounds.Width, this.titleHeight);
+            RectangleF title_rect = new RectangleF(g.VisibleClipBounds.X, g.VisibleClipBounds.Y, g.VisibleClipBounds.Width, scale_titleHeight);
             g.FillRectangle(title_back_sb, title_rect);
             title_back_sb.Dispose();
 
@@ -555,7 +564,7 @@ namespace WinformControlLibraryExtension
             {
                 int image_w = this.TitleImage.Width;
                 int image_h = this.TitleImage.Height;
-                g.DrawImage(this.TitleImage, new RectangleF(g.VisibleClipBounds.X + this.border, g.VisibleClipBounds.Y + (this.titleHeight - image_h) / 2, image_w, image_h));
+                g.DrawImage(this.TitleImage, new RectangleF(g.VisibleClipBounds.X + this.border, g.VisibleClipBounds.Y + (scale_titleHeight - image_h) / 2, image_w, image_h));
             }
             #endregion
 
@@ -563,22 +572,22 @@ namespace WinformControlLibraryExtension
             if (!String.IsNullOrWhiteSpace(Title))
             {
                 SolidBrush title_text_sb = new SolidBrush(this.TitleTextColor);
-                SizeF text_size = g.MeasureString(this.Title, this.TitleFont);
+                SizeF text_size = g.MeasureString(this.Title, this.TitleFont,int.MaxValue,StringFormat.GenericTypographic);
                 RectangleF text_rect = RectangleF.Empty;
                 if (this.TitleAlign == TitleAligns.Left)
                 {
                     int image_w = this.TitleImage == null ? 0 : this.TitleImage.Width;
-                    text_rect = new RectangleF(g.VisibleClipBounds.X + this.border + image_w + 5, g.VisibleClipBounds.Y + (this.titleHeight - text_size.Height) / 2f, text_size.Width, text_size.Height);
+                    text_rect = new RectangleF(g.VisibleClipBounds.X + this.border + image_w + 5, g.VisibleClipBounds.Y + (scale_titleHeight - text_size.Height) / 2f, text_size.Width, text_size.Height);
                 }
                 else if (this.TitleAlign == TitleAligns.Center)
                 {
-                    text_rect = new RectangleF(g.VisibleClipBounds.X + (g.VisibleClipBounds.Width - text_size.Width) / 2f, g.VisibleClipBounds.Y + (this.titleHeight - text_size.Height) / 2f, text_size.Width, text_size.Height);
+                    text_rect = new RectangleF(g.VisibleClipBounds.X + (g.VisibleClipBounds.Width - text_size.Width) / 2f, g.VisibleClipBounds.Y + (scale_titleHeight - text_size.Height) / 2f, text_size.Width, text_size.Height);
                 }
                 else
                 {
-                    text_rect = new RectangleF(g.VisibleClipBounds.Right - text_size.Width - this.border, g.VisibleClipBounds.Y + (this.titleHeight - text_size.Height) / 2f, text_size.Width, text_size.Height);
+                    text_rect = new RectangleF(g.VisibleClipBounds.Right - text_size.Width - this.border, g.VisibleClipBounds.Y + (scale_titleHeight - text_size.Height) / 2f, text_size.Width, text_size.Height);
                 }
-                g.DrawString(this.Title, this.TitleFont, title_text_sb, text_rect);
+                g.DrawString(this.Title, this.TitleFont, title_text_sb, text_rect.X,text_rect.Y, StringFormat.GenericTypographic);
                 title_text_sb.Dispose();
             }
             #endregion
@@ -596,8 +605,10 @@ namespace WinformControlLibraryExtension
         /// </summary>
         private void NCInvalidate()
         {
-            IntPtr hDC = WindowNavigate.GetWindowDC(this.Handle);
-            Graphics g = Graphics.FromHdc(hDC);
+            IntPtr hDC = IntPtr.Zero;
+            Graphics g = null;
+            ControlCommom.GetWindowGraphics(this.Handle, out g, out hDC);
+
             this.OnNCPaint(new PaintEventArgs(g, new Rectangle(0, 0, this.Width, this.Height)));
             g.Dispose();
             WindowNavigate.ReleaseDC(this.Handle, hDC);

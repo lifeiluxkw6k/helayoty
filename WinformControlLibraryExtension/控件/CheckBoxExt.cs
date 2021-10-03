@@ -146,6 +146,25 @@ namespace WinformControlLibraryExtension
             }
         }
 
+        private bool autoAntiAlias = true;
+        /// <summary>
+        /// 控件是否启用抗锯齿模式
+        /// </summary>
+        [DefaultValue(true)]
+        [Description("控件是否启用抗锯齿模式")]
+        public bool AutoAntiAlias
+        {
+            get { return this.autoAntiAlias; }
+            set
+            {
+                if (this.autoAntiAlias == value)
+                    return;
+
+                this.autoAntiAlias = value;
+                this.Invalidate();
+            }
+        }
+
         private OperateScopes operateScope = OperateScopes.Box;
         /// <summary>
         /// 更改状态操作范围
@@ -256,10 +275,7 @@ namespace WinformControlLibraryExtension
                     return;
 
                 this.threeState = value;
-                if (this.threeState)
-                {
-                    this.Invalidate();
-                }
+                this.Invalidate();
             }
         }
 
@@ -1524,17 +1540,22 @@ namespace WinformControlLibraryExtension
 
             #endregion
 
+            SmoothingMode sm = g.SmoothingMode;
+            if (this.AutoAntiAlias)
+            {
+                g.SmoothingMode = SmoothingMode.AntiAlias;
+            }
+
             #region back
             if (back_color != Color.Empty)
             {
                 SolidBrush back_sb = new SolidBrush(back_color);
                 if (this.Circular > 0)
                 {
-                    SmoothingMode sm = g.SmoothingMode;
-                    g.SmoothingMode = SmoothingMode.AntiAlias;
-                    GraphicsPath back_rect_gp = ControlCommom.TransformCircular(this.ClientRectangle, this.Circular);
+                    float scale_circular = this.Circular * DotsPerInchHelper.DPIScale.XScale;
+                    GraphicsPath back_rect_gp = ControlCommom.TransformCircular(this.ClientRectangle, scale_circular);
+
                     g.FillPath(back_sb, back_rect_gp);
-                    g.SmoothingMode = sm;
                     back_rect_gp.Dispose();
                 }
                 else
@@ -1549,7 +1570,7 @@ namespace WinformControlLibraryExtension
             if (text_color != Color.Empty)
             {
                 SolidBrush text_sb = new SolidBrush(text_color);
-                g.DrawString(this.Text, this.Font, text_sb, this.text_rect);
+                g.DrawString(this.Text, this.Font, text_sb, this.text_rect.X, this.text_rect.Y, StringFormat.GenericTypographic);
                 text_sb.Dispose();
             }
             #endregion
@@ -1565,7 +1586,8 @@ namespace WinformControlLibraryExtension
                 SolidBrush box_back_sb = new SolidBrush(box_back_color);
                 if (this.BoxCircular > 0)
                 {
-                    box_rect_gp = ControlCommom.TransformCircular(box_rect_tmp, this.BoxCircular);
+                    float scale_boxCircular = this.BoxCircular * DotsPerInchHelper.DPIScale.XScale;
+                    box_rect_gp = ControlCommom.TransformCircular(box_rect_tmp, scale_boxCircular);
                     g.FillPath(box_back_sb, box_rect_gp);
                 }
                 else
@@ -1584,10 +1606,9 @@ namespace WinformControlLibraryExtension
                     Pen box_border_pen = new Pen(box_border_color, this.BoxBorder);
                     if (this.BoxCircular > 0)
                     {
-                        SmoothingMode sm = g.SmoothingMode;
-                        g.SmoothingMode = SmoothingMode.AntiAlias;
+                        float scale_boxCircular = this.BoxCircular * DotsPerInchHelper.DPIScale.XScale;
+                        box_rect_gp = ControlCommom.TransformCircular(box_rect_tmp, scale_boxCircular);
                         g.DrawPath(box_border_pen, box_rect_gp);
-                        g.SmoothingMode = sm;
                     }
                     else
                     {
@@ -1608,10 +1629,10 @@ namespace WinformControlLibraryExtension
             {
                 if (box_char_color != Color.Empty)
                 {
-                    float min_grid = (this.BoxRadius * 2) / 8f;
+                    float min_grid = (this.BoxRadius * 2 * DotsPerInchHelper.DPIScale.XScale) / 8f;
                     if (this.ThreeState == false)
                     {
-                        Pen box_char_pen = new Pen(box_char_color, this.BoxRadius / 4f - 0.3f);
+                        Pen box_char_pen = new Pen(box_char_color, this.BoxRadius * DotsPerInchHelper.DPIScale.XScale / 4f - 0.3f);
                         if (this.Checked)
                         {
                             PointF[] box_char_line = new PointF[] {
@@ -1641,7 +1662,7 @@ namespace WinformControlLibraryExtension
                     {
                         if (this.CheckState == CheckStates.Checked)
                         {
-                            Pen box_char_pen = new Pen(box_char_color, this.BoxRadius / 4f - 0.3f);
+                            Pen box_char_pen = new Pen(box_char_color, this.BoxRadius * DotsPerInchHelper.DPIScale.XScale / 4f - 0.3f);
 
                             PointF[] box_char_line = new PointF[] {
                                        new PointF(this.box_rect.X+min_grid,this.box_rect.Y+ min_grid * 3),
@@ -1656,7 +1677,7 @@ namespace WinformControlLibraryExtension
                         {
                             if (this.Style == Styles.Button)
                             {
-                                Pen box_char_pen = new Pen(box_char_color, this.BoxRadius / 4f - 0.3f);
+                                Pen box_char_pen = new Pen(box_char_color, this.BoxRadius * DotsPerInchHelper.DPIScale.XScale / 4f - 0.3f);
 
                                 PointF line_left_s = new PointF(this.box_rect.X + min_grid * 2, this.box_rect.Y + min_grid * 2);
                                 PointF line_left_e = new PointF(this.box_rect.X + min_grid * 6, this.box_rect.Y + min_grid * 6);
@@ -1730,6 +1751,11 @@ namespace WinformControlLibraryExtension
             #endregion
 
             #endregion
+
+            if (this.AutoAntiAlias)
+            {
+                g.SmoothingMode = sm;
+            }
 
             #region 激活边框
             if (this.activatedState)
@@ -1947,9 +1973,11 @@ namespace WinformControlLibraryExtension
         /// </summary>
         private void InitializeRectangle()
         {
-            RectangleF rectf = this.AutoSize ? new RectangleF(this.ClientRectangle.X + this.Padding.Left, this.ClientRectangle.Y + this.Padding.Top, this.ClientRectangle.Width - this.Padding.Left - this.Padding.Right, this.ClientRectangle.Height - this.Padding.Top - this.Padding.Bottom) : this.ClientRectangle;
-            SizeF box_sizef = new SizeF(this.boxRadius * 2, this.boxRadius * 2);
-            SizeF text_sizef = this.GetTextSize();
+            Padding scale_padding = new Padding((int)(this.Padding.Left * DotsPerInchHelper.DPIScale.XScale), (int)(this.Padding.Top * DotsPerInchHelper.DPIScale.YScale), (int)(this.Padding.Right * DotsPerInchHelper.DPIScale.XScale), (int)(this.Padding.Bottom * DotsPerInchHelper.DPIScale.YScale));
+
+            RectangleF scale_rectf = this.AutoSize ? new RectangleF(this.ClientRectangle.X + scale_padding.Left, this.ClientRectangle.Y + scale_padding.Top, this.ClientRectangle.Width - scale_padding.Left - scale_padding.Right, this.ClientRectangle.Height - scale_padding.Top - scale_padding.Bottom) : this.ClientRectangle;
+            SizeF scale_box_sizef = new SizeF(this.BoxRadius * 2 * DotsPerInchHelper.DPIScale.XScale, this.BoxRadius * 2 * DotsPerInchHelper.DPIScale.YScale);
+            SizeF scale_text_sizef = this.GetTextSize();
 
             switch (this.TextAlign)
             {
@@ -1959,30 +1987,30 @@ namespace WinformControlLibraryExtension
                         if (this.textAlign == TextAligns.Top)
                         {
                             this.text_rect = new RectangleF(
-                               rectf.X + (rectf.Width - text_sizef.Width) / 2f,
-                               rectf.Y + (rectf.Height - text_sizef.Height - this.BoxSpace - box_sizef.Height) / 2f,
-                               text_sizef.Width,
-                               text_sizef.Height);
+                               scale_rectf.X + (scale_rectf.Width - scale_text_sizef.Width) / 2f,
+                               scale_rectf.Y + (scale_rectf.Height - scale_text_sizef.Height - this.BoxSpace * DotsPerInchHelper.DPIScale.YScale - scale_box_sizef.Height) / 2f,
+                               scale_text_sizef.Width,
+                               scale_text_sizef.Height);
 
                             this.box_rect = new RectangleF(
-                               rectf.X + (rectf.Width - box_sizef.Width) / 2f,
-                               this.text_rect.Bottom + this.BoxSpace,
-                               box_sizef.Width,
-                               box_sizef.Height);
+                               scale_rectf.X + (scale_rectf.Width - scale_box_sizef.Width) / 2f,
+                               this.text_rect.Bottom + this.BoxSpace * DotsPerInchHelper.DPIScale.YScale,
+                               scale_box_sizef.Width,
+                               scale_box_sizef.Height);
                         }
                         else if (this.textAlign == TextAligns.Bottom)
                         {
                             this.box_rect = new RectangleF(
-                               rectf.X + (rectf.Width - box_sizef.Width) / 2f,
-                               rectf.Y + (rectf.Height - box_sizef.Height - this.BoxSpace - text_sizef.Height) / 2f,
-                               box_sizef.Width,
-                               box_sizef.Height);
+                               scale_rectf.X + (scale_rectf.Width - scale_box_sizef.Width) / 2f,
+                               scale_rectf.Y + (scale_rectf.Height - scale_box_sizef.Height - this.BoxSpace * DotsPerInchHelper.DPIScale.YScale - scale_text_sizef.Height) / 2f,
+                               scale_box_sizef.Width,
+                               scale_box_sizef.Height);
 
                             this.text_rect = new RectangleF(
-                               rectf.X + (rectf.Width - text_sizef.Width) / 2f,
-                               this.box_rect.Bottom + this.BoxSpace,
-                               text_sizef.Width,
-                               text_sizef.Height);
+                               scale_rectf.X + (scale_rectf.Width - scale_text_sizef.Width) / 2f,
+                               this.box_rect.Bottom + this.BoxSpace * DotsPerInchHelper.DPIScale.YScale,
+                               scale_text_sizef.Width,
+                               scale_text_sizef.Height);
                         }
                         break;
                     }
@@ -1992,30 +2020,30 @@ namespace WinformControlLibraryExtension
                         if (this.textAlign == TextAligns.Right)
                         {
                             this.box_rect = new RectangleF(
-                               rectf.X,
-                               rectf.Y + (rectf.Height - box_sizef.Height) / 2f,
-                               box_sizef.Width,
-                               box_sizef.Height);
+                               scale_rectf.X,
+                               scale_rectf.Y + (scale_rectf.Height - scale_box_sizef.Height) / 2f,
+                               scale_box_sizef.Width,
+                               scale_box_sizef.Height);
 
                             this.text_rect = new RectangleF(
-                               this.box_rect.Right + this.BoxSpace,
-                               rectf.Y + (rectf.Height - text_sizef.Height) / 2f,
-                               text_sizef.Width,
-                               text_sizef.Height);
+                               this.box_rect.Right + this.BoxSpace * DotsPerInchHelper.DPIScale.XScale,
+                               scale_rectf.Y + (scale_rectf.Height - scale_text_sizef.Height) / 2f,
+                               scale_text_sizef.Width,
+                               scale_text_sizef.Height);
                         }
                         else if (this.textAlign == TextAligns.Left)
                         {
                             this.text_rect = new RectangleF(
-                               rectf.X,
-                               rectf.Y + (rectf.Height - text_sizef.Height) / 2f,
-                               text_sizef.Width,
-                               text_sizef.Height);
+                               scale_rectf.X,
+                               scale_rectf.Y + (scale_rectf.Height - scale_text_sizef.Height) / 2f,
+                               scale_text_sizef.Width,
+                               scale_text_sizef.Height);
 
                             this.box_rect = new RectangleF(
-                               this.text_rect.Right + this.BoxSpace,
-                               rectf.Y + (rectf.Height - box_sizef.Height) / 2f,
-                               box_sizef.Width,
-                               box_sizef.Height);
+                               this.text_rect.Right + this.BoxSpace * DotsPerInchHelper.DPIScale.XScale,
+                               scale_rectf.Y + (scale_rectf.Height - scale_box_sizef.Height) / 2f,
+                               scale_box_sizef.Width,
+                               scale_box_sizef.Height);
                         }
                         break;
                     }
@@ -2030,8 +2058,10 @@ namespace WinformControlLibraryExtension
             if (!this.AutoSize && ((this.Anchor & (AnchorStyles.Left | AnchorStyles.Right)) == (AnchorStyles.Left | AnchorStyles.Right) || (this.Anchor & (AnchorStyles.Top | AnchorStyles.Bottom)) == (AnchorStyles.Top | AnchorStyles.Bottom)))
                 return;
 
-            SizeF box_sizef = new SizeF(this.boxRadius * 2, this.boxRadius * 2);
-            SizeF text_sizef = this.GetTextSize();
+            Padding scale_padding = new Padding((int)(this.Padding.Left * DotsPerInchHelper.DPIScale.XScale), (int)(this.Padding.Top * DotsPerInchHelper.DPIScale.YScale), (int)(this.Padding.Right * DotsPerInchHelper.DPIScale.XScale), (int)(this.Padding.Bottom * DotsPerInchHelper.DPIScale.YScale));
+
+            SizeF scale_box_sizef = new SizeF(this.boxRadius * 2 * DotsPerInchHelper.DPIScale.XScale, this.boxRadius * 2 * DotsPerInchHelper.DPIScale.YScale);
+            SizeF scale_text_sizef = this.GetTextSize();
             SizeF size = SizeF.Empty;
             float text_border = 2;
 
@@ -2040,13 +2070,13 @@ namespace WinformControlLibraryExtension
                 case TextAligns.Top:
                 case TextAligns.Bottom:
                     {
-                        size = new SizeF(Math.Max(box_sizef.Width, text_sizef.Width) + this.Padding.Left + this.Padding.Right + text_border * 2, box_sizef.Height + this.BoxSpace + text_sizef.Height + this.Padding.Top + this.Padding.Bottom + text_border * 2);
+                        size = new SizeF(Math.Max(scale_box_sizef.Width, scale_text_sizef.Width) + scale_padding.Left + scale_padding.Right + text_border * 2, scale_box_sizef.Height + this.BoxSpace * DotsPerInchHelper.DPIScale.YScale + scale_text_sizef.Height + scale_padding.Top + scale_padding.Bottom + text_border * 2);
                         break;
                     }
                 case TextAligns.Left:
                 case TextAligns.Right:
                     {
-                        size = new SizeF(box_sizef.Width + this.BoxSpace + text_sizef.Width + this.Padding.Left + this.Padding.Right + text_border * 2, Math.Max(box_sizef.Height, text_sizef.Height) + this.Padding.Top + this.Padding.Bottom + text_border * 2);
+                        size = new SizeF(scale_box_sizef.Width + this.BoxSpace * DotsPerInchHelper.DPIScale.XScale + scale_text_sizef.Width + scale_padding.Left + scale_padding.Right + text_border * 2, Math.Max(scale_box_sizef.Height, scale_text_sizef.Height) + scale_padding.Top + scale_padding.Bottom + text_border * 2);
                         break;
                     }
             }
@@ -2060,11 +2090,11 @@ namespace WinformControlLibraryExtension
         /// <returns></returns>
         private SizeF GetTextSize()
         {
-            IntPtr hDC = WindowNavigate.GetWindowDC(this.Handle);
-            Graphics g = Graphics.FromHdc(hDC);
+            IntPtr hDC = IntPtr.Zero;
+            Graphics g = null;
+            ControlCommom.GetWindowClientGraphics(this.Handle, out g, out hDC);
 
-            SizeF text_sizef = g.MeasureString(this.Text, this.Font);
-
+            SizeF text_sizef = g.MeasureString(this.Text, this.Font, int.MaxValue, StringFormat.GenericTypographic);
             g.Dispose();
             WindowNavigate.ReleaseDC(this.Handle, hDC);
 

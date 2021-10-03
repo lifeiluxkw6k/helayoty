@@ -60,6 +60,7 @@ namespace WinformControlLibraryExtension
     /// 日期选择美化控件
     /// </summary>
     [ToolboxItem(true)]
+    [ToolboxBitmap(typeof(DateExt), "控件.DateExt.bmp")]
     [Description("日期选择美化控件")]
     [DefaultProperty("DatePicker")]
     [Designer(typeof(DateExtDesigner))]
@@ -436,6 +437,9 @@ namespace WinformControlLibraryExtension
 
         private Rectangle image_rect = Rectangle.Empty;
         private Rectangle date_rect = Rectangle.Empty;
+
+        private float scale = 0f;
+
         #endregion
 
         public DateExt()
@@ -454,8 +458,6 @@ namespace WinformControlLibraryExtension
             this.DatePicker = new DatePickerExt();
 
             this.tsdd = new ToolStripDropDown() { Padding = Padding.Empty };
-            this.tsch = new ToolStripControlHost(this.DatePicker) { Margin = Padding.Empty, Padding = Padding.Empty };
-            tsdd.Items.Add(this.tsch);
 
             this.tsdd.Closed += new ToolStripDropDownClosedEventHandler(this.tsdd_Closed);
             this.DatePicker.BottomBarConfirmClick += new DatePickerExt.BottomBarIiemClickEventHandler(this.datePicker_BottomBarConfirmClick);
@@ -478,6 +480,7 @@ namespace WinformControlLibraryExtension
             this.Controls.Add(this.dateTextBox);
 
             this.UpdateLocationSize();
+            this.Invalidate();
         }
 
         #region 重写
@@ -713,6 +716,7 @@ namespace WinformControlLibraryExtension
                 if (!this.displayStatus)
                 {
                     this.DatePicker.InitializeDatePickerDateValue(this.GetLocalDate());
+                    this.CreateToolStripControlHost();
                     tsdd.Show(this.PointToScreen(new Point(0, this.Height + 2)));
                     this.DatePicker.SetActive();
                 }
@@ -724,11 +728,13 @@ namespace WinformControlLibraryExtension
             base.OnResize(e);
 
             this.UpdateLocationSize();
+            this.Invalidate();
         }
 
         protected override void SetBoundsCore(int x, int y, int width, int height, BoundsSpecified specified)
         {
-            base.SetBoundsCore(x, y, width, this.DefaultSize.Height, specified);
+            int scale_height = (int)(this.DefaultSize.Height * DotsPerInchHelper.DPIScale.XScale);
+            base.SetBoundsCore(x, y, width, scale_height, specified);
             this.Invalidate();
         }
 
@@ -1331,24 +1337,43 @@ namespace WinformControlLibraryExtension
         #endregion
 
         /// <summary>
+        /// 更新ToolStripControlHost
+        /// </summary>
+        private void CreateToolStripControlHost()
+        {
+            if (this.scale != DotsPerInchHelper.DPIScale.XScale)
+            {
+                tsdd.Items.Clear();
+                this.tsch = new ToolStripControlHost(this.DatePicker) { Margin = Padding.Empty, Padding = Padding.Empty };
+                tsdd.Items.Add(this.tsch);
+            }
+        }
+
+        /// <summary>
         /// 更新日期输入框Location、Size
         /// </summary>
         private void UpdateLocationSize()
         {
-            this.dateTextBox.Height = this.DefaultSize.Height - 6;
-            this.dateTextBox.Width = this.Width - this.image_width - this.image_padding * 2 - this.border * 2;
-            this.dateTextBox.Location = this.DataImageAlign == DataImageAligns.Left ? new Point(this.image_width + this.image_padding * 2 + this.border, 4) : new Point(this.border, 4);
+            int scale_height = (int)(this.DefaultSize.Height * DotsPerInchHelper.DPIScale.XScale);
+            int scale_dateTextBox_zoom = (int)(6 * DotsPerInchHelper.DPIScale.XScale);
+            int scale_top_padding = (int)(4 * DotsPerInchHelper.DPIScale.XScale);
+            int scale_image_width = (int)(this.image_width * DotsPerInchHelper.DPIScale.XScale);
+            int scale_image_height = (int)(this.image_height * DotsPerInchHelper.DPIScale.XScale);
+
+            this.dateTextBox.Height = scale_height - scale_dateTextBox_zoom;
+            this.dateTextBox.Width = this.Width - scale_image_width - this.image_padding * 2 - this.border * 2;
+            this.dateTextBox.Location = this.DataImageAlign == DataImageAligns.Left ? new Point(scale_image_width + this.image_padding * 2 + this.border, scale_top_padding) : new Point(this.border, scale_top_padding);
 
             if (this.DataImageAlign == DataImageAligns.Right)
             {
-                this.image_rect = new Rectangle(this.ClientRectangle.Right - this.image_width - this.image_padding * 2, this.ClientRectangle.Y + (this.ClientRectangle.Height - this.image_height) / 2, this.image_width, this.image_height);
-                this.date_rect = new Rectangle(this.ClientRectangle.X + this.border, this.ClientRectangle.Y, this.ClientRectangle.Width - this.image_width - this.image_padding * 2 - this.border * 2, this.ClientRectangle.Height);
+                this.image_rect = new Rectangle(this.ClientRectangle.Right - scale_image_width - this.image_padding * 2, this.ClientRectangle.Y + (this.ClientRectangle.Height - scale_image_height) / 2, scale_image_width, scale_image_height);
+                this.date_rect = new Rectangle(this.ClientRectangle.X + this.border, this.ClientRectangle.Y, this.ClientRectangle.Width - scale_image_width - this.image_padding * 2 - this.border * 2, this.ClientRectangle.Height);
 
             }
             else
             {
-                this.image_rect = new Rectangle(this.ClientRectangle.X + this.image_padding + this.border, this.ClientRectangle.Y + (this.ClientRectangle.Height - this.image_height) / 2, this.image_width, this.image_height);
-                this.date_rect = new Rectangle(this.ClientRectangle.X + this.image_width + this.image_padding * 2 + this.border * 2, this.ClientRectangle.Y, this.ClientRectangle.Width - this.image_width - this.image_padding * 2 - this.border * 2, this.ClientRectangle.Height);
+                this.image_rect = new Rectangle(this.ClientRectangle.X + this.image_padding + this.border, this.ClientRectangle.Y + (this.ClientRectangle.Height - scale_image_height) / 2, scale_image_width, scale_image_height);
+                this.date_rect = new Rectangle(this.ClientRectangle.X + scale_image_width + this.image_padding * 2 + this.border * 2, this.ClientRectangle.Y, this.ClientRectangle.Width - scale_image_width - this.image_padding * 2 - this.border * 2, this.ClientRectangle.Height);
             }
         }
 
@@ -4950,8 +4975,13 @@ namespace WinformControlLibraryExtension
 
         protected override void SetBoundsCore(int x, int y, int width, int height, BoundsSpecified specified)
         {
-            width = this.date_rect_width;
-            height = this.topbar_rect_height + this.date_rect_height + this.bottombar_rect_height;
+            int scale_date_rect_width = (int)(this.date_rect_width * DotsPerInchHelper.DPIScale.XScale);
+            int scale_date_rect_height = (int)(this.date_rect_height * DotsPerInchHelper.DPIScale.YScale);
+            int scale_topbar_rect_height = (int)(this.topbar_rect_height * DotsPerInchHelper.DPIScale.YScale);
+            int scale_bottombar_rect_height = (int)(this.bottombar_rect_height * DotsPerInchHelper.DPIScale.YScale);
+
+            width = scale_date_rect_width;
+            height = scale_topbar_rect_height + scale_date_rect_height + scale_bottombar_rect_height;
             base.SetBoundsCore(x, y, width, height, specified);
             this.InitializeRectangle();
         }
@@ -5629,29 +5659,48 @@ namespace WinformControlLibraryExtension
         /// </summary>
         private void InitializeRectangle()
         {
-            this.DateObject.TopBar.Rect = new Rectangle(this.ClientRectangle.X, this.ClientRectangle.Y, this.date_rect_width, this.topbar_rect_height);
-            this.DateObject.YearMain.Rect = new Rectangle(this.ClientRectangle.X, this.ClientRectangle.Y + this.topbar_rect_height, this.date_rect_width, this.date_rect_height);
+            IntPtr hDC = IntPtr.Zero;
+            Graphics g = null;
+            ControlCommom.GetWindowClientGraphics(this.Handle, out g, out hDC);
+
+            int scale_topbar_rect_height = (int)(this.topbar_rect_height * DotsPerInchHelper.DPIScale.YScale);
+
+            int scale_year_rectf_item_width = (int)(this.year_rectf_item_width * DotsPerInchHelper.DPIScale.XScale);
+            int scale_year_rectf_item_height = (int)(this.year_rectf_item_height * DotsPerInchHelper.DPIScale.YScale);
+            int scale_month_rectf_item_width = (int)(this.month_rectf_item_width * DotsPerInchHelper.DPIScale.XScale);
+            int scale_month_rectf_item_height = (int)(this.month_rectf_item_height * DotsPerInchHelper.DPIScale.YScale);
+            int scale_date_rect_width = (int)(this.date_rect_width * DotsPerInchHelper.DPIScale.XScale);
+            int scale_date_rect_height = (int)(this.date_rect_height * DotsPerInchHelper.DPIScale.YScale);
+            int scale_day_rectf_item_width = (int)(this.day_rectf_item_width * DotsPerInchHelper.DPIScale.XScale);
+            int scale_day_rectf_item_height = (int)(this.day_rectf_item_height * DotsPerInchHelper.DPIScale.YScale);
+            int scale_time_topbar_rect_height = (int)(this.time_topbar_rect_height * DotsPerInchHelper.DPIScale.YScale);
+
+            int scale_bottombar_rect_height = (int)(this.bottombar_rect_height * DotsPerInchHelper.DPIScale.YScale);
+
+            this.DateObject.TopBar.Rect = new Rectangle(this.ClientRectangle.X, this.ClientRectangle.Y, scale_date_rect_width, scale_topbar_rect_height);
+            this.DateObject.YearMain.Rect = new Rectangle(this.ClientRectangle.X, this.ClientRectangle.Y + scale_topbar_rect_height, scale_date_rect_width, scale_date_rect_height);
             this.DateObject.MonthMain.Rect = this.DateObject.YearMain.Rect;
             this.DateObject.DayMain.Rect = this.DateObject.YearMain.Rect;
-            this.DateObject.TimeMain.TopBarRect = new Rectangle(this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Width, this.time_topbar_rect_height);
-            this.DateObject.TimeMain.Rect = new Rectangle(this.ClientRectangle.X, this.ClientRectangle.Y + this.time_topbar_rect_height, this.date_rect_width, this.ClientRectangle.Height - this.time_topbar_rect_height - this.bottombar_rect_height);
-            this.DateObject.BottomBar.Rect = new Rectangle(this.ClientRectangle.X, this.ClientRectangle.Bottom - this.bottombar_rect_height, this.ClientRectangle.Width, this.bottombar_rect_height);
+            this.DateObject.TimeMain.TopBarRect = new Rectangle(this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Width, scale_time_topbar_rect_height);
+            this.DateObject.TimeMain.Rect = new Rectangle(this.ClientRectangle.X, this.ClientRectangle.Y + scale_time_topbar_rect_height, scale_date_rect_width, this.ClientRectangle.Height - scale_time_topbar_rect_height - scale_bottombar_rect_height);
+            this.DateObject.BottomBar.Rect = new Rectangle(this.ClientRectangle.X, this.ClientRectangle.Bottom - scale_bottombar_rect_height, this.ClientRectangle.Width, scale_bottombar_rect_height);
 
             #region 顶部工具栏
-            int topbar_btn_rectf_width = 24;
+            int topbar_btn_rectf_width = (int)(24 * DotsPerInchHelper.DPIScale.XScale);
             float topbar_avg_w = topbar_btn_rectf_width / 3f;
             float topbar_avg_h = this.DateObject.TopBar.Rect.Height / 6f;
+            int scale_line_interval = (int)(3 * DotsPerInchHelper.DPIScale.XScale);
 
             #region 上一年
             this.DateObject.TopBar.prev_year_btn.Rect = new Rectangle(this.DateObject.TopBar.Rect.X, this.DateObject.TopBar.Rect.Y, topbar_btn_rectf_width, this.DateObject.TopBar.Rect.Height);
             this.DateObject.TopBar.prev_year_btn.LineLeftPointArr = new Point[3];
-            this.DateObject.TopBar.prev_year_btn.LineLeftPointArr[0] = new Point((int)(this.DateObject.TopBar.prev_year_btn.Rect.X + topbar_avg_w * 2 - 3), (int)(this.DateObject.TopBar.prev_year_btn.Rect.Y + topbar_avg_h * 2));
+            this.DateObject.TopBar.prev_year_btn.LineLeftPointArr[0] = new Point((int)(this.DateObject.TopBar.prev_year_btn.Rect.X + topbar_avg_w * 2 - scale_line_interval), (int)(this.DateObject.TopBar.prev_year_btn.Rect.Y + topbar_avg_h * 2));
             this.DateObject.TopBar.prev_year_btn.LineLeftPointArr[1] = new Point((int)(this.DateObject.TopBar.prev_year_btn.Rect.X + topbar_avg_w), (int)(this.DateObject.TopBar.prev_year_btn.Rect.Y + topbar_avg_h * 3));
-            this.DateObject.TopBar.prev_year_btn.LineLeftPointArr[2] = new Point((int)(this.DateObject.TopBar.prev_year_btn.Rect.X + topbar_avg_w * 2 - 3), (int)(this.DateObject.TopBar.prev_year_btn.Rect.Y + topbar_avg_h * 4));
+            this.DateObject.TopBar.prev_year_btn.LineLeftPointArr[2] = new Point((int)(this.DateObject.TopBar.prev_year_btn.Rect.X + topbar_avg_w * 2 - scale_line_interval), (int)(this.DateObject.TopBar.prev_year_btn.Rect.Y + topbar_avg_h * 4));
 
             this.DateObject.TopBar.prev_year_btn.LineRightPointArr = new Point[3];
             this.DateObject.TopBar.prev_year_btn.LineRightPointArr[0] = new Point((int)(this.DateObject.TopBar.prev_year_btn.Rect.X + topbar_avg_w * 2), (int)(this.DateObject.TopBar.prev_year_btn.Rect.Y + topbar_avg_h * 2));
-            this.DateObject.TopBar.prev_year_btn.LineRightPointArr[1] = new Point((int)(this.DateObject.TopBar.prev_year_btn.Rect.X + topbar_avg_w + 3), (int)(this.DateObject.TopBar.prev_year_btn.Rect.Y + topbar_avg_h * 3));
+            this.DateObject.TopBar.prev_year_btn.LineRightPointArr[1] = new Point((int)(this.DateObject.TopBar.prev_year_btn.Rect.X + topbar_avg_w + scale_line_interval), (int)(this.DateObject.TopBar.prev_year_btn.Rect.Y + topbar_avg_h * 3));
             this.DateObject.TopBar.prev_year_btn.LineRightPointArr[2] = new Point((int)(this.DateObject.TopBar.prev_year_btn.Rect.X + topbar_avg_w * 2), (int)(this.DateObject.TopBar.prev_year_btn.Rect.Y + topbar_avg_h * 4));
             #endregion
             #region 上一月
@@ -5662,10 +5711,14 @@ namespace WinformControlLibraryExtension
             this.DateObject.TopBar.prev_month_btn.LineLeftPointArr[1] = new Point((int)(this.DateObject.TopBar.prev_month_btn.Rect.X + topbar_avg_w), (int)(this.DateObject.TopBar.prev_month_btn.Rect.Y + topbar_avg_h * 3));
             this.DateObject.TopBar.prev_month_btn.LineLeftPointArr[2] = new Point((int)(this.DateObject.TopBar.prev_month_btn.Rect.X + topbar_avg_w * 2 - 3), (int)(this.DateObject.TopBar.prev_month_btn.Rect.Y + topbar_avg_h * 4));
             #endregion
-            this.DateObject.TopBar.yearscope_btn.Rect = new Rectangle(this.DateObject.TopBar.Rect.X + (this.DateObject.TopBar.Rect.Width - 120) / 2, this.DateObject.TopBar.Rect.Y, 120, this.DateObject.TopBar.Rect.Height);
-            this.DateObject.TopBar.monthyear_btn.Rect = new Rectangle(this.DateObject.TopBar.Rect.X + (this.DateObject.TopBar.Rect.Width - 60) / 2, this.DateObject.TopBar.Rect.Y, 60, this.DateObject.TopBar.Rect.Height);
-            this.DateObject.TopBar.month_btn.Rect = new Rectangle(this.DateObject.TopBar.Rect.X + (this.DateObject.TopBar.Rect.Width - (37 + 60)) / 2, this.DateObject.TopBar.Rect.Y, 37, this.DateObject.TopBar.Rect.Height);
-            this.DateObject.TopBar.year_btn.Rect = new Rectangle(this.DateObject.TopBar.Rect.X + (this.DateObject.TopBar.Rect.Width - (37 + 60)) / 2 + 37, this.DateObject.TopBar.Rect.Y, 60, this.DateObject.TopBar.Rect.Height);
+
+            int scale_yearscope_btn_width = (int)(120 * DotsPerInchHelper.DPIScale.XScale);
+            int scale_monthyear_btn_width = (int)(60 * DotsPerInchHelper.DPIScale.XScale);
+            int scale_month_btn_width = (int)(37 * DotsPerInchHelper.DPIScale.XScale);
+            this.DateObject.TopBar.yearscope_btn.Rect = new Rectangle(this.DateObject.TopBar.Rect.X + (this.DateObject.TopBar.Rect.Width - scale_yearscope_btn_width) / 2, this.DateObject.TopBar.Rect.Y, scale_yearscope_btn_width, this.DateObject.TopBar.Rect.Height);
+            this.DateObject.TopBar.monthyear_btn.Rect = new Rectangle(this.DateObject.TopBar.Rect.X + (this.DateObject.TopBar.Rect.Width - scale_monthyear_btn_width) / 2, this.DateObject.TopBar.Rect.Y, scale_monthyear_btn_width, this.DateObject.TopBar.Rect.Height);
+            this.DateObject.TopBar.month_btn.Rect = new Rectangle(this.DateObject.TopBar.Rect.X + (this.DateObject.TopBar.Rect.Width - (scale_month_btn_width + scale_monthyear_btn_width)) / 2, this.DateObject.TopBar.Rect.Y, scale_month_btn_width, this.DateObject.TopBar.Rect.Height);
+            this.DateObject.TopBar.year_btn.Rect = new Rectangle(this.DateObject.TopBar.Rect.X + (this.DateObject.TopBar.Rect.Width - (scale_month_btn_width + scale_monthyear_btn_width)) / 2 + scale_month_btn_width, this.DateObject.TopBar.Rect.Y, scale_monthyear_btn_width, this.DateObject.TopBar.Rect.Height);
             #region 下一月
             this.DateObject.TopBar.next_month_btn.Rect = new Rectangle(this.DateObject.TopBar.Rect.Right - topbar_btn_rectf_width - topbar_btn_rectf_width, this.DateObject.TopBar.Rect.Y, topbar_btn_rectf_width, this.DateObject.TopBar.Rect.Height);
 
@@ -5678,38 +5731,38 @@ namespace WinformControlLibraryExtension
             this.DateObject.TopBar.next_year_btn.Rect = new Rectangle(this.DateObject.TopBar.Rect.Right - topbar_btn_rectf_width, this.DateObject.TopBar.Rect.Y, topbar_btn_rectf_width, this.DateObject.TopBar.Rect.Height);
 
             this.DateObject.TopBar.next_year_btn.LineLeftPointArr = new Point[3];
-            this.DateObject.TopBar.next_year_btn.LineLeftPointArr[0] = new Point((int)(this.DateObject.TopBar.next_year_btn.Rect.Right - topbar_avg_w * 2 + 3), (int)(this.DateObject.TopBar.next_year_btn.Rect.Y + topbar_avg_h * 2));
+            this.DateObject.TopBar.next_year_btn.LineLeftPointArr[0] = new Point((int)(this.DateObject.TopBar.next_year_btn.Rect.Right - topbar_avg_w * 2 + scale_line_interval), (int)(this.DateObject.TopBar.next_year_btn.Rect.Y + topbar_avg_h * 2));
             this.DateObject.TopBar.next_year_btn.LineLeftPointArr[1] = new Point((int)(this.DateObject.TopBar.next_year_btn.Rect.Right - topbar_avg_w), (int)(this.DateObject.TopBar.next_year_btn.Rect.Y + topbar_avg_h * 3));
-            this.DateObject.TopBar.next_year_btn.LineLeftPointArr[2] = new Point((int)(this.DateObject.TopBar.next_year_btn.Rect.Right - topbar_avg_w * 2 + 3), (int)(this.DateObject.TopBar.next_year_btn.Rect.Y + topbar_avg_h * 4));
+            this.DateObject.TopBar.next_year_btn.LineLeftPointArr[2] = new Point((int)(this.DateObject.TopBar.next_year_btn.Rect.Right - topbar_avg_w * 2 + scale_line_interval), (int)(this.DateObject.TopBar.next_year_btn.Rect.Y + topbar_avg_h * 4));
 
             this.DateObject.TopBar.next_year_btn.LineRightPointArr = new Point[3];
             this.DateObject.TopBar.next_year_btn.LineRightPointArr[0] = new Point((int)(this.DateObject.TopBar.next_year_btn.Rect.Right - topbar_avg_w * 2), (int)(this.DateObject.TopBar.next_year_btn.Rect.Y + topbar_avg_h * 2));
-            this.DateObject.TopBar.next_year_btn.LineRightPointArr[1] = new Point((int)(this.DateObject.TopBar.next_year_btn.Rect.Right - topbar_avg_w - 3), (int)(this.DateObject.TopBar.next_year_btn.Rect.Y + topbar_avg_h * 3));
+            this.DateObject.TopBar.next_year_btn.LineRightPointArr[1] = new Point((int)(this.DateObject.TopBar.next_year_btn.Rect.Right - topbar_avg_w - scale_line_interval), (int)(this.DateObject.TopBar.next_year_btn.Rect.Y + topbar_avg_h * 3));
             this.DateObject.TopBar.next_year_btn.LineRightPointArr[2] = new Point((int)(this.DateObject.TopBar.next_year_btn.Rect.Right - topbar_avg_w * 2), (int)(this.DateObject.TopBar.next_year_btn.Rect.Y + topbar_avg_h * 4));
             #endregion
             #endregion
             #region 年面板
             int year_col = 3;
             int year_row = 4;
-            float year_space_width = (this.date_rect_width - this.year_rectf_item_width * year_col) / (float)(year_col + 1);
-            float year_space_height = (this.date_rect_height - this.year_rectf_item_height * year_row) / (float)(year_row + 1);
+            float year_space_width = (scale_date_rect_width - scale_year_rectf_item_width * year_col) / (float)(year_col + 1);
+            float year_space_height = (scale_date_rect_height - scale_year_rectf_item_height * year_row) / (float)(year_row + 1);
             for (int i = 0; i < this.DateObject.YearMain.itemArr.Length; i++)
             {
-                float x = this.DateObject.YearMain.Rect.X + year_space_width + (i % year_col) * (this.year_rectf_item_width + year_space_width);
-                float y = this.DateObject.YearMain.Rect.Y + year_space_height + (i / year_col) * (this.year_rectf_item_height + year_space_height);
-                this.DateObject.YearMain.itemArr[i].Rect = new Rectangle((int)x, (int)y, this.year_rectf_item_width, this.year_rectf_item_height);
+                float x = this.DateObject.YearMain.Rect.X + year_space_width + (i % year_col) * (scale_year_rectf_item_width + year_space_width);
+                float y = this.DateObject.YearMain.Rect.Y + year_space_height + (i / year_col) * (scale_year_rectf_item_height + year_space_height);
+                this.DateObject.YearMain.itemArr[i].Rect = new Rectangle((int)x, (int)y, scale_year_rectf_item_width, scale_year_rectf_item_height);
             }
             #endregion
             #region 月面板
             int month_col = 3;
             int month_row = 4;
-            float month_space_width = (this.date_rect_width - this.month_rectf_item_width * month_col) / (float)(month_col + 1);
-            float month_space_height = (this.date_rect_height - this.month_rectf_item_height * month_row) / (float)(month_row + 1);
+            float month_space_width = (scale_date_rect_width - scale_month_rectf_item_width * month_col) / (float)(month_col + 1);
+            float month_space_height = (scale_date_rect_height - scale_month_rectf_item_height * month_row) / (float)(month_row + 1);
             for (int i = 0; i < this.DateObject.MonthMain.itemArr.Length; i++)
             {
-                float x = this.DateObject.MonthMain.Rect.X + month_space_width + (i % month_col) * (this.month_rectf_item_width + month_space_width);
-                float y = this.DateObject.MonthMain.Rect.Y + month_space_height + (i / month_col) * (this.month_rectf_item_height + month_space_height);
-                this.DateObject.MonthMain.itemArr[i].Rect = new Rectangle((int)x, (int)y, this.month_rectf_item_width, this.month_rectf_item_height);
+                float x = this.DateObject.MonthMain.Rect.X + month_space_width + (i % month_col) * (scale_month_rectf_item_width + month_space_width);
+                float y = this.DateObject.MonthMain.Rect.Y + month_space_height + (i / month_col) * (scale_month_rectf_item_height + month_space_height);
+                this.DateObject.MonthMain.itemArr[i].Rect = new Rectangle((int)x, (int)y, scale_month_rectf_item_width, scale_month_rectf_item_height);
             }
             #endregion
             #region 日面板
@@ -5724,14 +5777,14 @@ namespace WinformControlLibraryExtension
 
             float day_space_width = 1;
             float day_space_height = 1;
-            float day_space_left = (this.date_rect_width - this.day_rectf_item_width * day_col - day_space_width * (day_col - 1)) / 2f;
-            float day_space_top = (this.date_rect_height - this.day_rectf_item_height * day_row - day_space_height * (day_row - 1)) / 2f;
+            float day_space_left = (scale_date_rect_width - scale_day_rectf_item_width * day_col - day_space_width * (day_col - 1)) / 2f;
+            float day_space_top = (scale_date_rect_height - scale_day_rectf_item_height * day_row - day_space_height * (day_row - 1)) / 2f;
 
             for (int i = 0; i < this.DateObject.DayMain.itemArr.Length; i++)
             {
-                float x = this.DateObject.DayMain.Rect.X + day_space_left + (i % day_col) * (this.day_rectf_item_width + day_space_width);
-                float y = this.DateObject.DayMain.Rect.Y + day_space_top + (i / day_col) * (this.day_rectf_item_height + day_space_height);
-                this.DateObject.DayMain.itemArr[i].Rect = new Rectangle((int)x, (int)y, this.day_rectf_item_width, this.day_rectf_item_height);
+                float x = this.DateObject.DayMain.Rect.X + day_space_left + (i % day_col) * (scale_day_rectf_item_width + day_space_width);
+                float y = this.DateObject.DayMain.Rect.Y + day_space_top + (i / day_col) * (scale_day_rectf_item_height + day_space_height);
+                this.DateObject.DayMain.itemArr[i].Rect = new Rectangle((int)x, (int)y, scale_day_rectf_item_width, scale_day_rectf_item_height);
 
                 if (i < day_col)//绘制标题
                 {
@@ -5767,22 +5820,26 @@ namespace WinformControlLibraryExtension
             this.InitializeTimeRectangle();
             #endregion
             #region 底部工具栏
-            int bottombar_btn_rectf_width = 35;
-            int bottombar_btn_rectf_height = 28;
-            int bottombar_space_width = 2;
-            int bottombar_space_right = 5;
-            int bottombar_time_width = 26;
+            int bottombar_btn_rectf_width = (int)(35 * DotsPerInchHelper.DPIScale.XScale);
+            int bottombar_btn_rectf_height = (int)(28 * DotsPerInchHelper.DPIScale.XScale);
+            int bottombar_space_width = (int)(2 * DotsPerInchHelper.DPIScale.XScale);
+            int bottombar_space_right = (int)(5 * DotsPerInchHelper.DPIScale.XScale);
+            int bottombar_time_width = (int)(26 * DotsPerInchHelper.DPIScale.XScale);
             int bottombar_btn_y = this.DateObject.BottomBar.Rect.Y + (this.DateObject.BottomBar.Rect.Height - bottombar_btn_rectf_height) / 2;
 
-            int bottombar_tip_border_width = 5;
+            int bottombar_tip_left_padding = (int)(5 * DotsPerInchHelper.DPIScale.XScale);
+            int bottombar_tip_topbottom_padding = (int)(10 * DotsPerInchHelper.DPIScale.XScale);
+            int bottombar_tip_border_width = (int)(5 * DotsPerInchHelper.DPIScale.XScale);
             this.DateObject.BottomBar.bottombar_minmaxborder_lab.LinePointArr = new Point[4];
-            this.DateObject.BottomBar.bottombar_minmaxborder_lab.LinePointArr[0] = new Point(this.DateObject.BottomBar.Rect.X + 5 + bottombar_tip_border_width, this.DateObject.BottomBar.Rect.Y + 10);
-            this.DateObject.BottomBar.bottombar_minmaxborder_lab.LinePointArr[1] = new Point(this.DateObject.BottomBar.Rect.X + 5, this.DateObject.BottomBar.Rect.Y + 10);
-            this.DateObject.BottomBar.bottombar_minmaxborder_lab.LinePointArr[2] = new Point(this.DateObject.BottomBar.Rect.X + 5, this.DateObject.BottomBar.Rect.Bottom - 10);
-            this.DateObject.BottomBar.bottombar_minmaxborder_lab.LinePointArr[3] = new Point(this.DateObject.BottomBar.Rect.X + 5 + bottombar_tip_border_width, this.DateObject.BottomBar.Rect.Bottom - 10);
+            this.DateObject.BottomBar.bottombar_minmaxborder_lab.LinePointArr[0] = new Point(this.DateObject.BottomBar.Rect.X + bottombar_tip_left_padding + bottombar_tip_border_width, this.DateObject.BottomBar.Rect.Y + bottombar_tip_topbottom_padding);
+            this.DateObject.BottomBar.bottombar_minmaxborder_lab.LinePointArr[1] = new Point(this.DateObject.BottomBar.Rect.X + bottombar_tip_left_padding, this.DateObject.BottomBar.Rect.Y + bottombar_tip_topbottom_padding);
+            this.DateObject.BottomBar.bottombar_minmaxborder_lab.LinePointArr[2] = new Point(this.DateObject.BottomBar.Rect.X + bottombar_tip_left_padding, this.DateObject.BottomBar.Rect.Bottom - bottombar_tip_topbottom_padding);
+            this.DateObject.BottomBar.bottombar_minmaxborder_lab.LinePointArr[3] = new Point(this.DateObject.BottomBar.Rect.X + bottombar_tip_left_padding + bottombar_tip_border_width, this.DateObject.BottomBar.Rect.Bottom - bottombar_tip_topbottom_padding);
 
-            this.DateObject.BottomBar.bottombar_mindate_lab.Rect = new Rectangle(this.DateObject.BottomBar.Rect.X + 5 + bottombar_tip_border_width, this.DateObject.BottomBar.Rect.Y + 2, 0, 0);
-            this.DateObject.BottomBar.bottombar_maxdate_lab.Rect = new Rectangle(this.DateObject.BottomBar.Rect.X + 5 + bottombar_tip_border_width, this.DateObject.BottomBar.Rect.Bottom - 18, 0, 0);
+            Size bottombar_mindate_lab_size = g.MeasureString(this.DateObject.BottomBar.bottombar_mindate_lab.Text, this.SolidBrushManageObject.bottom_rect_font, int.MaxValue, StringFormat.GenericTypographic).ToSize();
+            this.DateObject.BottomBar.bottombar_mindate_lab.Rect = new Rectangle(this.DateObject.BottomBar.Rect.X + bottombar_tip_left_padding + bottombar_tip_border_width * 2, this.DateObject.BottomBar.Rect.Top + bottombar_tip_topbottom_padding - bottombar_mindate_lab_size.Height / 2, bottombar_mindate_lab_size.Width, bottombar_mindate_lab_size.Height);
+            Size bottombar_maxdate_lab_size = g.MeasureString(this.DateObject.BottomBar.bottombar_maxdate_lab.Text, this.SolidBrushManageObject.bottom_rect_font, int.MaxValue, StringFormat.GenericTypographic).ToSize();
+            this.DateObject.BottomBar.bottombar_maxdate_lab.Rect = new Rectangle(this.DateObject.BottomBar.Rect.X + bottombar_tip_left_padding + bottombar_tip_border_width * 2, this.DateObject.BottomBar.Rect.Bottom - bottombar_tip_topbottom_padding - bottombar_maxdate_lab_size.Height / 2, bottombar_maxdate_lab_size.Width, bottombar_maxdate_lab_size.Height);
 
             this.DateObject.BottomBar.bottombar_confirm_btn.Rect = new Rectangle(this.DateObject.BottomBar.Rect.Right - bottombar_space_right - bottombar_btn_rectf_width, bottombar_btn_y, bottombar_btn_rectf_width, bottombar_btn_rectf_height);
             this.DateObject.BottomBar.bottombar_now_btn.Rect = new Rectangle(this.DateObject.BottomBar.bottombar_confirm_btn.Rect.X - bottombar_space_width - bottombar_btn_rectf_width, bottombar_btn_y, bottombar_btn_rectf_width, bottombar_btn_rectf_height);
@@ -5791,7 +5848,8 @@ namespace WinformControlLibraryExtension
 
             #endregion
 
-
+            g.Dispose();
+            WindowNavigate.ReleaseDC(this.Handle,hDC);
         }
 
         /// <summary>
@@ -5799,54 +5857,56 @@ namespace WinformControlLibraryExtension
         /// </summary>
         private void InitializeTimeRectangle()
         {
+            int scale_time_item_height = (int)(this.time_item_height * DotsPerInchHelper.DPIScale.YScale);
+            int scale_timeScrollThickness = (int)(this.timeScrollThickness * DotsPerInchHelper.DPIScale.YScale);
 
             #region 选项信息
             int item_w = 0;
             int item_y = this.DateObject.TimeMain.Rect.Y;
             if (this.DateDisplayType == DateDisplayTypes.YearMonthDayHour)
             {
-                item_w = this.DateObject.TimeMain.Rect.Width - this.timeScrollThickness;
+                item_w = this.DateObject.TimeMain.Rect.Width - scale_timeScrollThickness;
             }
             else if (this.DateDisplayType == DateDisplayTypes.YearMonthDayHourMinute)
             {
-                item_w = (int)(((float)this.DateObject.TimeMain.Rect.Width - this.timeScrollThickness * 2) / 2f);
+                item_w = (int)(((float)this.DateObject.TimeMain.Rect.Width - scale_timeScrollThickness * 2) / 2f);
             }
             else if (this.DateDisplayType == DateDisplayTypes.YearMonthDayHourMinuteSecond)
             {
-                item_w = (int)(((float)this.DateObject.TimeMain.Rect.Width - this.timeScrollThickness * 3) / 3f);
+                item_w = (int)(((float)this.DateObject.TimeMain.Rect.Width - scale_timeScrollThickness * 3) / 3f);
             }
             #endregion
 
             #region 时分秒区域
             this.DateObject.TimeMain.HourArea.Rect = new RectangleF(this.DateObject.TimeMain.Rect.X, this.DateObject.TimeMain.Rect.Y, item_w, this.DateObject.TimeMain.Rect.Height);
-            this.DateObject.TimeMain.MinuteArea.Rect = new RectangleF(this.DateObject.TimeMain.Rect.X + item_w + this.timeScrollThickness, this.DateObject.TimeMain.Rect.Y, item_w, this.DateObject.TimeMain.Rect.Height);
-            this.DateObject.TimeMain.SecondArea.Rect = new RectangleF(this.DateObject.TimeMain.Rect.X + item_w * 2f + this.timeScrollThickness * 2, this.DateObject.TimeMain.Rect.Y, item_w, this.DateObject.TimeMain.Rect.Height);
+            this.DateObject.TimeMain.MinuteArea.Rect = new RectangleF(this.DateObject.TimeMain.Rect.X + item_w + scale_timeScrollThickness, this.DateObject.TimeMain.Rect.Y, item_w, this.DateObject.TimeMain.Rect.Height);
+            this.DateObject.TimeMain.SecondArea.Rect = new RectangleF(this.DateObject.TimeMain.Rect.X + item_w * 2f + scale_timeScrollThickness * 2, this.DateObject.TimeMain.Rect.Y, item_w, this.DateObject.TimeMain.Rect.Height);
             #endregion
 
             #region 时分秒选项
             for (int i = 0; i < this.DateObject.TimeMain.HourArea.itemArr.Length; i++)
             {
-                this.DateObject.TimeMain.HourArea.itemArr[i].Rect = new Rectangle((int)this.DateObject.TimeMain.HourArea.Rect.X, item_y, item_w, this.time_item_height);
-                item_y += this.time_item_height;
+                this.DateObject.TimeMain.HourArea.itemArr[i].Rect = new Rectangle((int)this.DateObject.TimeMain.HourArea.Rect.X, item_y, item_w, scale_time_item_height);
+                item_y += scale_time_item_height;
             }
             item_y = this.DateObject.TimeMain.Rect.Y;
             for (int i = 0; i < this.DateObject.TimeMain.MinuteArea.itemArr.Length; i++)
             {
-                this.DateObject.TimeMain.MinuteArea.itemArr[i].Rect = new Rectangle((int)this.DateObject.TimeMain.MinuteArea.Rect.X, item_y, item_w, this.time_item_height);
-                item_y += this.time_item_height;
+                this.DateObject.TimeMain.MinuteArea.itemArr[i].Rect = new Rectangle((int)this.DateObject.TimeMain.MinuteArea.Rect.X, item_y, item_w, scale_time_item_height);
+                item_y += scale_time_item_height;
             }
             item_y = this.DateObject.TimeMain.Rect.Y;
             for (int i = 0; i < this.DateObject.TimeMain.SecondArea.itemArr.Length; i++)
             {
-                this.DateObject.TimeMain.SecondArea.itemArr[i].Rect = new Rectangle((int)this.DateObject.TimeMain.SecondArea.Rect.X, item_y, item_w, this.time_item_height);
-                item_y += this.time_item_height;
+                this.DateObject.TimeMain.SecondArea.itemArr[i].Rect = new Rectangle((int)this.DateObject.TimeMain.SecondArea.Rect.X, item_y, item_w, scale_time_item_height);
+                item_y += scale_time_item_height;
             }
             #endregion
 
             #region 时分秒滚动条
-            this.InitializeTimeScrollRectangle(this.DateObject.TimeMain.HourArea.verticalScroll, this.DateObject.TimeMain.HourArea.Rect, this.DateObject.TimeMain.HourArea.itemArr.Length, this.time_item_height);
-            this.InitializeTimeScrollRectangle(this.DateObject.TimeMain.MinuteArea.verticalScroll, this.DateObject.TimeMain.MinuteArea.Rect, this.DateObject.TimeMain.MinuteArea.itemArr.Length, this.time_item_height);
-            this.InitializeTimeScrollRectangle(this.DateObject.TimeMain.SecondArea.verticalScroll, this.DateObject.TimeMain.SecondArea.Rect, this.DateObject.TimeMain.SecondArea.itemArr.Length, this.time_item_height);
+            this.InitializeTimeScrollRectangle(this.DateObject.TimeMain.HourArea.verticalScroll, this.DateObject.TimeMain.HourArea.Rect, this.DateObject.TimeMain.HourArea.itemArr.Length, scale_time_item_height);
+            this.InitializeTimeScrollRectangle(this.DateObject.TimeMain.MinuteArea.verticalScroll, this.DateObject.TimeMain.MinuteArea.Rect, this.DateObject.TimeMain.MinuteArea.itemArr.Length, scale_time_item_height);
+            this.InitializeTimeScrollRectangle(this.DateObject.TimeMain.SecondArea.verticalScroll, this.DateObject.TimeMain.SecondArea.Rect, this.DateObject.TimeMain.SecondArea.itemArr.Length, scale_time_item_height);
             #endregion
         }
 
@@ -5859,16 +5919,18 @@ namespace WinformControlLibraryExtension
         /// <param name="item_height"></param>
         private void InitializeTimeScrollRectangle(VerticalScroll scroll_obj, RectangleF display_rect, int item_count, int item_height)
         {
+            int scale_timeScrollThickness = (int)(this.timeScrollThickness * DotsPerInchHelper.DPIScale.YScale);
+
             scroll_obj.DisplayRect = new RectangleF(display_rect.X, display_rect.Y, display_rect.Width, display_rect.Height);
             scroll_obj.ContentRect = new RectangleF(display_rect.X, display_rect.Y, display_rect.Width, item_count * item_height);
 
-            scroll_obj.ScrollBack.Rect = new RectangleF(display_rect.Right, display_rect.Y, this.timeScrollThickness, display_rect.Height);
+            scroll_obj.ScrollBack.Rect = new RectangleF(display_rect.Right, display_rect.Y, scale_timeScrollThickness, display_rect.Height);
             float slide_h = scroll_obj.DisplayRect.Height * scroll_obj.ScrollBack.Rect.Height / scroll_obj.ContentRect.Height;
             if (scroll_obj.ContentRect.Height <= scroll_obj.DisplayRect.Height)
             {
                 slide_h = scroll_obj.ScrollBack.Rect.Height;
             }
-            scroll_obj.ScrollSlide.Rect = new RectangleF(scroll_obj.ScrollBack.Rect.X, scroll_obj.ScrollBack.Rect.Y, this.timeScrollThickness, slide_h);
+            scroll_obj.ScrollSlide.Rect = new RectangleF(scroll_obj.ScrollBack.Rect.X, scroll_obj.ScrollBack.Rect.Y, scale_timeScrollThickness, slide_h);
         }
 
         /// <summary>
@@ -6108,13 +6170,35 @@ namespace WinformControlLibraryExtension
             #region 上一年
             if (this.DateObject.TopBar.prev_year_btn.MoveStatus == MoveStatuss.Enter)
             {
+                float pen_width = this.SolidBrushManageObject.topbarbtnfore_enter_pen.Width;
+                if (DotsPerInchHelper.DPIScale.XScale >= 1.5)
+                {
+                    this.SolidBrushManageObject.topbarbtnfore_enter_pen.Width = 2;
+                }
+
                 g.DrawLines(this.SolidBrushManageObject.topbarbtnfore_enter_pen, this.DateObject.TopBar.prev_year_btn.LineLeftPointArr);
                 g.DrawLines(this.SolidBrushManageObject.topbarbtnfore_enter_pen, this.DateObject.TopBar.prev_year_btn.LineRightPointArr);
+
+                if (DotsPerInchHelper.DPIScale.XScale >= 1.5)
+                {
+                    this.SolidBrushManageObject.topbarbtnfore_enter_pen.Width = pen_width;
+                }
             }
             else
             {
+                float pen_width = this.SolidBrushManageObject.topbarbtnfore_pen.Width;
+                if (DotsPerInchHelper.DPIScale.XScale >= 1.5)
+                {
+                    this.SolidBrushManageObject.topbarbtnfore_pen.Width = 2;
+                }
+
                 g.DrawLines(this.SolidBrushManageObject.topbarbtnfore_pen, this.DateObject.TopBar.prev_year_btn.LineLeftPointArr);
                 g.DrawLines(this.SolidBrushManageObject.topbarbtnfore_pen, this.DateObject.TopBar.prev_year_btn.LineRightPointArr);
+
+                if (DotsPerInchHelper.DPIScale.XScale >= 1.5)
+                {
+                    this.SolidBrushManageObject.topbarbtnfore_pen.Width = pen_width;
+                }
             }
             #endregion
             #region 上一月
@@ -6123,11 +6207,33 @@ namespace WinformControlLibraryExtension
             {
                 if (this.DateObject.TopBar.prev_month_btn.MoveStatus == MoveStatuss.Enter)
                 {
+                    float pen_width = this.SolidBrushManageObject.topbarbtnfore_enter_pen.Width;
+                    if (DotsPerInchHelper.DPIScale.XScale >= 1.5)
+                    {
+                        this.SolidBrushManageObject.topbarbtnfore_enter_pen.Width = 2;
+                    }
+
                     g.DrawLines(this.SolidBrushManageObject.topbarbtnfore_enter_pen, this.DateObject.TopBar.prev_month_btn.LineLeftPointArr);
+
+                    if (DotsPerInchHelper.DPIScale.XScale >= 1.5)
+                    {
+                        this.SolidBrushManageObject.topbarbtnfore_enter_pen.Width = pen_width;
+                    }
                 }
                 else
                 {
+                    float pen_width = this.SolidBrushManageObject.topbarbtnfore_pen.Width;
+                    if (DotsPerInchHelper.DPIScale.XScale >= 1.5)
+                    {
+                        this.SolidBrushManageObject.topbarbtnfore_pen.Width = 2;
+                    }
+
                     g.DrawLines(this.SolidBrushManageObject.topbarbtnfore_pen, this.DateObject.TopBar.prev_month_btn.LineLeftPointArr);
+
+                    if (DotsPerInchHelper.DPIScale.XScale >= 1.5)
+                    {
+                        this.SolidBrushManageObject.topbarbtnfore_pen.Width = pen_width;
+                    }
                 }
             }
             #endregion
@@ -6155,24 +6261,68 @@ namespace WinformControlLibraryExtension
             {
                 if (this.DateObject.TopBar.next_month_btn.MoveStatus == MoveStatuss.Enter)
                 {
+                    float pen_width = this.SolidBrushManageObject.topbarbtnfore_enter_pen.Width;
+                    if (DotsPerInchHelper.DPIScale.XScale >= 1.5)
+                    {
+                        this.SolidBrushManageObject.topbarbtnfore_enter_pen.Width = 2;
+                    }
+
                     g.DrawLines(this.SolidBrushManageObject.topbarbtnfore_enter_pen, this.DateObject.TopBar.next_month_btn.LineRightPointArr);
+
+                    if (DotsPerInchHelper.DPIScale.XScale >= 1.5)
+                    {
+                        this.SolidBrushManageObject.topbarbtnfore_enter_pen.Width = pen_width;
+                    }
                 }
                 else
                 {
+                    float pen_width = this.SolidBrushManageObject.topbarbtnfore_pen.Width;
+                    if (DotsPerInchHelper.DPIScale.XScale >= 1.5)
+                    {
+                        this.SolidBrushManageObject.topbarbtnfore_pen.Width = 2;
+                    }
+
                     g.DrawLines(this.SolidBrushManageObject.topbarbtnfore_pen, this.DateObject.TopBar.next_month_btn.LineRightPointArr);
+
+                    if (DotsPerInchHelper.DPIScale.XScale >= 1.5)
+                    {
+                        this.SolidBrushManageObject.topbarbtnfore_pen.Width = pen_width;
+                    }
                 }
             }
             #endregion
             #region 下一年
             if (this.DateObject.TopBar.next_year_btn.MoveStatus == MoveStatuss.Enter)
             {
+                float pen_width = this.SolidBrushManageObject.topbarbtnfore_enter_pen.Width;
+                if (DotsPerInchHelper.DPIScale.XScale >= 1.5)
+                {
+                    this.SolidBrushManageObject.topbarbtnfore_enter_pen.Width = 2;
+                }
+
                 g.DrawLines(this.SolidBrushManageObject.topbarbtnfore_enter_pen, this.DateObject.TopBar.next_year_btn.LineLeftPointArr);
                 g.DrawLines(this.SolidBrushManageObject.topbarbtnfore_enter_pen, this.DateObject.TopBar.next_year_btn.LineRightPointArr);
+
+                if (DotsPerInchHelper.DPIScale.XScale >= 1.5)
+                {
+                    this.SolidBrushManageObject.topbarbtnfore_enter_pen.Width = pen_width;
+                }
             }
             else
             {
+                float pen_width = this.SolidBrushManageObject.topbarbtnfore_pen.Width;
+                if (DotsPerInchHelper.DPIScale.XScale >= 1.5)
+                {
+                    this.SolidBrushManageObject.topbarbtnfore_pen.Width = 2;
+                }
+
                 g.DrawLines(this.SolidBrushManageObject.topbarbtnfore_pen, this.DateObject.TopBar.next_year_btn.LineLeftPointArr);
                 g.DrawLines(this.SolidBrushManageObject.topbarbtnfore_pen, this.DateObject.TopBar.next_year_btn.LineRightPointArr);
+
+                if (DotsPerInchHelper.DPIScale.XScale >= 1.5)
+                {
+                    this.SolidBrushManageObject.topbarbtnfore_pen.Width = pen_width;
+                }
             }
             #endregion
 
@@ -6418,7 +6568,7 @@ namespace WinformControlLibraryExtension
             string time_text = "";
             if (this.DateDisplayType == DateDisplayTypes.YearMonthDayHour)
             {
-                time_text = string.Format("{0}时", this.DateObject.display_hour.ToString().PadLeft(2,'0'));
+                time_text = string.Format("{0}时", this.DateObject.display_hour.ToString().PadLeft(2, '0'));
             }
             else
             if (this.DateDisplayType == DateDisplayTypes.YearMonthDayHourMinute)
@@ -6455,17 +6605,18 @@ namespace WinformControlLibraryExtension
             #region 滚动条
             if (scroll_obj.ScrollBack.Rect.Height > scroll_obj.ScrollSlide.Rect.Height)
             {
+                int scale_timeScrollThickness = (int)(this.timeScrollThickness * DotsPerInchHelper.DPIScale.YScale);
                 #region 滚动条背景
 
-                PointF scroll_start_point = new PointF(scroll_obj.ScrollBack.Rect.X + this.timeScrollThickness / 2f, scroll_obj.ScrollBack.Rect.Y);
-                PointF scroll_end_point = new PointF(scroll_obj.ScrollBack.Rect.X + this.timeScrollThickness / 2f, scroll_obj.ScrollBack.Rect.Bottom);
+                PointF scroll_start_point = new PointF(scroll_obj.ScrollBack.Rect.X + scale_timeScrollThickness / 2f, scroll_obj.ScrollBack.Rect.Y);
+                PointF scroll_end_point = new PointF(scroll_obj.ScrollBack.Rect.X + scale_timeScrollThickness / 2f, scroll_obj.ScrollBack.Rect.Bottom);
 
                 g.DrawLine(this.SolidBrushManageObject.timescrollback_pen, scroll_start_point, scroll_end_point);
                 #endregion
 
                 #region  滚动条滑块
-                PointF scroll_slide_start_point = new PointF(scroll_obj.ScrollSlide.Rect.X + this.timeScrollThickness / 2f, scroll_obj.ScrollSlide.Rect.Y);
-                PointF scroll_slide_end_point = new PointF(scroll_obj.ScrollSlide.Rect.X + this.timeScrollThickness / 2f, scroll_obj.ScrollSlide.Rect.Bottom);
+                PointF scroll_slide_start_point = new PointF(scroll_obj.ScrollSlide.Rect.X + scale_timeScrollThickness / 2f, scroll_obj.ScrollSlide.Rect.Y);
+                PointF scroll_slide_end_point = new PointF(scroll_obj.ScrollSlide.Rect.X + scale_timeScrollThickness / 2f, scroll_obj.ScrollSlide.Rect.Bottom);
 
                 g.DrawLine(this.SolidBrushManageObject.timescrollslide_pen, scroll_slide_start_point, scroll_slide_end_point);
                 #endregion
@@ -6487,9 +6638,18 @@ namespace WinformControlLibraryExtension
             g.DrawLine(this.SolidBrushManageObject.bottombarborder_pen, this.DateObject.BottomBar.Rect.X, this.DateObject.BottomBar.Rect.Y, this.DateObject.BottomBar.Rect.Right, this.DateObject.BottomBar.Rect.Y);
             if (this.MinMaxTip)
             {
+                float pen_width = this.SolidBrushManageObject.bottombarborder_pen.Width;
+                if (DotsPerInchHelper.DPIScale.XScale >= 1.5)
+                {
+                    this.SolidBrushManageObject.bottombarborder_pen.Width = pen_width * 2;
+                }
                 g.DrawLines(this.SolidBrushManageObject.bottombarborder_pen, this.DateObject.BottomBar.bottombar_minmaxborder_lab.LinePointArr);
-                g.DrawString(this.DateObject.BottomBar.bottombar_mindate_lab.Text, this.SolidBrushManageObject.bottom_rect_tip_font, this.SolidBrushManageObject.bottombar_tip_sb, this.DateObject.BottomBar.bottombar_mindate_lab.Rect.Location);
-                g.DrawString(this.DateObject.BottomBar.bottombar_maxdate_lab.Text, this.SolidBrushManageObject.bottom_rect_tip_font, this.SolidBrushManageObject.bottombar_tip_sb, this.DateObject.BottomBar.bottombar_maxdate_lab.Rect.Location);
+                if (DotsPerInchHelper.DPIScale.XScale >= 1.5)
+                {
+                    this.SolidBrushManageObject.bottombarborder_pen.Width = pen_width;
+                }
+                g.DrawString(this.DateObject.BottomBar.bottombar_mindate_lab.Text, this.SolidBrushManageObject.bottom_rect_tip_font, this.SolidBrushManageObject.bottombar_tip_sb, this.DateObject.BottomBar.bottombar_mindate_lab.Rect.Location, StringFormat.GenericTypographic);
+                g.DrawString(this.DateObject.BottomBar.bottombar_maxdate_lab.Text, this.SolidBrushManageObject.bottom_rect_tip_font, this.SolidBrushManageObject.bottombar_tip_sb, this.DateObject.BottomBar.bottombar_maxdate_lab.Rect.Location, StringFormat.GenericTypographic);
 
             }
 
@@ -6533,7 +6693,7 @@ namespace WinformControlLibraryExtension
             g.DrawEllipse(this.SolidBrushManageObject.bottombarclockborder_pen, this.DateObject.BottomBar.bottombar_time_btn.Rect);
             #endregion
             #region 点
-            int dot_diameter = 1;
+            int dot_diameter = DotsPerInchHelper.DPIScale.XScale >= 1.5 ? 2 : 1;
             g.FillRectangle(this.SolidBrushManageObject.bottombarclockdot_sb, new RectangleF(this.DateObject.BottomBar.bottombar_time_btn.Rect.X + this.DateObject.BottomBar.bottombar_time_btn.Rect.Width / 2, this.DateObject.BottomBar.bottombar_time_btn.Rect.Y + border + dot_diameter, dot_diameter, dot_diameter));
             g.FillRectangle(this.SolidBrushManageObject.bottombarclockdot_sb, new RectangleF(this.DateObject.BottomBar.bottombar_time_btn.Rect.X + this.DateObject.BottomBar.bottombar_time_btn.Rect.Width / 2, this.DateObject.BottomBar.bottombar_time_btn.Rect.Bottom - border - dot_diameter * 2, dot_diameter, dot_diameter));
             g.FillRectangle(this.SolidBrushManageObject.bottombarclockdot_sb, new RectangleF(this.DateObject.BottomBar.bottombar_time_btn.Rect.X + +border + dot_diameter, this.DateObject.BottomBar.bottombar_time_btn.Rect.Y + this.DateObject.BottomBar.bottombar_time_btn.Rect.Height / 2, dot_diameter, dot_diameter));
@@ -6547,19 +6707,46 @@ namespace WinformControlLibraryExtension
             #region 时
             if (this.DateDisplayType == DateDisplayTypes.YearMonthDayHour || this.DateDisplayType == DateDisplayTypes.YearMonthDayHourMinute || this.DateDisplayType == DateDisplayTypes.YearMonthDayHourMinuteSecond)
             {
+                float pen_width = this.SolidBrushManageObject.bottombarclockhour_pen.Width;
+                if (DotsPerInchHelper.DPIScale.XScale >= 1.5)
+                {
+                    this.SolidBrushManageObject.bottombarclockhour_pen.Width = pen_width * 2;
+                }
                 g.DrawLine(this.SolidBrushManageObject.bottombarclockhour_pen, center, ControlCommom.CalculatePointForAngle(center, radius / 5f * 2.5f, this.GetClockHourAngle()));
+                if (DotsPerInchHelper.DPIScale.XScale >= 1.5)
+                {
+                    this.SolidBrushManageObject.bottombarclockhour_pen.Width = pen_width;
+                }
             }
             #endregion
             #region 分
             if (this.DateDisplayType == DateDisplayTypes.YearMonthDayHourMinute || this.DateDisplayType == DateDisplayTypes.YearMonthDayHourMinuteSecond)
             {
+                float pen_width = this.SolidBrushManageObject.bottombarclockminute_pen.Width;
+                if (DotsPerInchHelper.DPIScale.XScale >= 1.5)
+                {
+                    this.SolidBrushManageObject.bottombarclockminute_pen.Width = pen_width * 2;
+                }
                 g.DrawLine(this.SolidBrushManageObject.bottombarclockminute_pen, center, ControlCommom.CalculatePointForAngle(center, radius / 5f * 3, this.GetClockMinuteAngle()));
+                if (DotsPerInchHelper.DPIScale.XScale >= 1.5)
+                {
+                    this.SolidBrushManageObject.bottombarclockminute_pen.Width = pen_width;
+                }
             }
             #endregion
             #region 秒
             if (this.DateDisplayType == DateDisplayTypes.YearMonthDayHourMinuteSecond)
             {
+                float pen_width = this.SolidBrushManageObject.bottombarclocksecond_pen.Width;
+                if (DotsPerInchHelper.DPIScale.XScale >= 1.5)
+                {
+                    this.SolidBrushManageObject.bottombarclocksecond_pen.Width = pen_width * 2;
+                }
                 g.DrawLine(this.SolidBrushManageObject.bottombarclocksecond_pen, center, ControlCommom.CalculatePointForAngle(center, radius / 5f * 4, this.GetClockSecondAngle()));
+                if (DotsPerInchHelper.DPIScale.XScale >= 1.5)
+                {
+                    this.SolidBrushManageObject.bottombarclocksecond_pen.Width = pen_width;
+                }
             }
             #endregion
         }

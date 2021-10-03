@@ -896,8 +896,17 @@ namespace WinformControlLibraryExtension
             base.OnPaint(e);
 
             Graphics g = e.Graphics;
+
+            int scale_slidePadding = (int)(this.SlidePadding * DotsPerInchHelper.DPIScale.XScale);
+            int scale_slideBarThickness = (int)(this.SlideBarThickness * DotsPerInchHelper.DPIScale.XScale); 
+            int scale_slideWidth = (int)(this.SlideWidth * DotsPerInchHelper.DPIScale.XScale); 
+            int scale_slideHeight = (int)(this.SlideHeight * DotsPerInchHelper.DPIScale.XScale); 
+            int scale_slideRadius = (int)(this.SlideRadius * DotsPerInchHelper.DPIScale.XScale); 
+
+
             g.SmoothingMode = SmoothingMode.AntiAlias;
-            Rectangle rectf = new Rectangle(this.SlidePadding, this.SlidePadding, this.ClientRectangle.Width - this.SlidePadding * 2, this.ClientRectangle.Height - this.SlidePadding * 2);
+            g.InterpolationMode = InterpolationMode.High;
+            Rectangle rectf = new Rectangle(scale_slidePadding, scale_slidePadding, this.ClientRectangle.Width - scale_slidePadding * 2, this.ClientRectangle.Height - scale_slidePadding * 2);
 
             #region 滑条
 
@@ -906,25 +915,25 @@ namespace WinformControlLibraryExtension
             {
                 int bar_back_x_start = rectf.X;
                 int bar_back_x_end = rectf.Right;
-                int bar_back_y = (this.Orientation == SlideOrientation.HorizontalTop) ? this.SlidePadding + this.SlideHeight / 2 : rectf.Bottom - this.SlideHeight / 2 - this.SlidePadding;
+                int bar_back_y = (this.Orientation == SlideOrientation.HorizontalTop) ? scale_slidePadding + scale_slideHeight / 2 : rectf.Bottom - scale_slideHeight / 2 - scale_slidePadding;
 
                 if (this.BarColorItems.Count < 2)
                 {
-                    Pen bar_back_pen = new Pen(this.Enabled ? this.SlideBarNormalBackColor : this.SlideBarDisableBackColor, this.SlideBarThickness);
+                    Pen bar_back_pen = new Pen(this.Enabled ? this.SlideBarNormalBackColor : this.SlideBarDisableBackColor, scale_slideBarThickness);
                     if (this.SlideBarRadius)
                     {
                         bar_back_pen.StartCap = LineCap.Round;
                         bar_back_pen.EndCap = LineCap.Round;
-                        bar_back_x_start += this.SlideBarThickness / 2;
-                        bar_back_x_end -= this.SlideBarThickness / 2;
+                        bar_back_x_start += scale_slideBarThickness / 2;
+                        bar_back_x_end -= scale_slideBarThickness / 2;
                     }
                     g.DrawLine(bar_back_pen, bar_back_x_start, bar_back_y, bar_back_x_end, bar_back_y);
                     bar_back_pen.Dispose();
                 }
                 else
                 {
-                    RectangleF bar_back_rectf = new RectangleF(bar_back_x_start, bar_back_y - (float)this.SlideBarThickness / 2f, bar_back_x_end - bar_back_x_start, this.SlideBarThickness);
-                    this.DrawBarLinearGradient(g, bar_back_rectf, true);
+                    RectangleF bar_back_rectf = new RectangleF(bar_back_x_start, bar_back_y - (float)scale_slideBarThickness / 2f, bar_back_x_end - bar_back_x_start, scale_slideBarThickness);
+                    this.DrawBarLinearGradient(g, bar_back_rectf, true, scale_slideBarThickness);
                 }
             }
             #endregion
@@ -933,25 +942,25 @@ namespace WinformControlLibraryExtension
             {
                 int bar_back_x_start = rectf.Y;
                 int bar_back_x_end = rectf.Bottom;
-                int bar_back_y = (this.Orientation == SlideOrientation.VerticalLeft) ? this.SlidePadding + this.SlideWidth / 2 : rectf.Right - this.SlideWidth / 2 - this.SlidePadding;
+                int bar_back_y = (this.Orientation == SlideOrientation.VerticalLeft) ? scale_slidePadding + scale_slideWidth / 2 : rectf.Right - scale_slideWidth / 2 - scale_slidePadding;
 
                 if (this.BarColorItems.Count < 2)
                 {
-                    Pen bar_back_pen = new Pen(this.Enabled ? this.SlideBarNormalBackColor : this.SlideBarDisableBackColor, this.SlideBarThickness);
+                    Pen bar_back_pen = new Pen(this.Enabled ? this.SlideBarNormalBackColor : this.SlideBarDisableBackColor, scale_slideBarThickness);
                     if (this.SlideBarRadius)
                     {
                         bar_back_pen.StartCap = LineCap.Round;
                         bar_back_pen.EndCap = LineCap.Round;
-                        bar_back_x_start += this.SlideBarThickness / 2;
-                        bar_back_x_end -= this.SlideBarThickness / 2;
+                        bar_back_x_start += scale_slideBarThickness / 2;
+                        bar_back_x_end -= scale_slideBarThickness / 2;
                     }
                     g.DrawLine(bar_back_pen, bar_back_y, bar_back_x_start, bar_back_y, bar_back_x_end);
                     bar_back_pen.Dispose();
                 }
                 else
                 {
-                    RectangleF bar_back_rectf = new RectangleF(bar_back_y - (float)this.SlideBarThickness / 2f, bar_back_x_start, this.SlideBarThickness, bar_back_x_end - bar_back_x_start);
-                    this.DrawBarLinearGradient(g, bar_back_rectf, false);
+                    RectangleF bar_back_rectf = new RectangleF(bar_back_y - (float)scale_slideBarThickness / 2f, bar_back_x_start, scale_slideBarThickness, bar_back_x_end - bar_back_x_start);
+                    this.DrawBarLinearGradient(g, bar_back_rectf, false, scale_slideBarThickness);
                 }
             }
             #endregion
@@ -965,24 +974,24 @@ namespace WinformControlLibraryExtension
                 if (this.Orientation == SlideOrientation.HorizontalTop || this.Orientation == SlideOrientation.HorizontalBottom)
                 {
                     int bar_progress_x_start = rectf.X;
-                    int bar_progress_x_end = (int)(this.Items[0].SlideRect.Right - this.Items[0].SlideRect.Width) + this.SlideWidth / 2;
-                    int bar_progress_y = (this.Orientation == SlideOrientation.HorizontalTop) ? this.SlidePadding + this.SlideHeight / 2 : rectf.Bottom - this.SlideHeight / 2 - this.SlidePadding;
+                    int bar_progress_x_end = (int)(this.Items[0].SlideRect.Right - this.Items[0].SlideRect.Width) + scale_slideWidth / 2;
+                    int bar_progress_y = (this.Orientation == SlideOrientation.HorizontalTop) ? scale_slidePadding + scale_slideHeight / 2 : rectf.Bottom - scale_slideHeight / 2 - scale_slidePadding;
 
                     if (this.BarProgressColorItems.Count < 2)
                     {
-                        Pen bar_progress_pen = new Pen(this.Enabled ? this.SlideProgressNormalBackColor : this.SlideProgressDisableBackColor, this.SlideBarThickness);
+                        Pen bar_progress_pen = new Pen(this.Enabled ? this.SlideProgressNormalBackColor : this.SlideProgressDisableBackColor, scale_slideBarThickness);
                         if (this.SlideBarRadius)
                         {
                             bar_progress_pen.StartCap = LineCap.Round;
-                            bar_progress_x_start += this.SlideBarThickness / 2;
+                            bar_progress_x_start += scale_slideBarThickness / 2;
                         }
                         g.DrawLine(bar_progress_pen, bar_progress_x_start, bar_progress_y, bar_progress_x_end, bar_progress_y);
                         bar_progress_pen.Dispose();
                     }
                     else
                     {
-                        RectangleF bar_progress_rectf = new RectangleF(bar_progress_x_start, bar_progress_y - (float)this.SlideBarThickness / 2f, bar_progress_x_end - bar_progress_x_start, this.SlideBarThickness);
-                        this.DrawProgressLinearGradient(g, bar_progress_rectf, true);
+                        RectangleF bar_progress_rectf = new RectangleF(bar_progress_x_start, bar_progress_y - (float)scale_slideBarThickness / 2f, bar_progress_x_end - bar_progress_x_start, scale_slideBarThickness);
+                        this.DrawProgressLinearGradient(g, bar_progress_rectf, true, scale_slideBarThickness);
                     }
                 }
                 #endregion
@@ -991,22 +1000,22 @@ namespace WinformControlLibraryExtension
                 {
                     int bar_progress_x_start = rectf.Bottom;
                     int bar_progress_x_end = (int)(this.Items[0].SlideRect.Bottom - this.Items[0].SlideRect.Height);
-                    int bar_progress_y = (this.Orientation == SlideOrientation.VerticalLeft) ? this.SlidePadding + this.SlideWidth / 2 : rectf.Right - this.SlideWidth / 2 - this.SlidePadding;
+                    int bar_progress_y = (this.Orientation == SlideOrientation.VerticalLeft) ? scale_slidePadding + scale_slideWidth / 2 : rectf.Right - scale_slideWidth / 2 - scale_slidePadding;
                     if (this.BarProgressColorItems.Count < 2)
                     {
-                        Pen bar_progress_pen = new Pen(this.Enabled ? this.SlideProgressNormalBackColor : this.SlideProgressDisableBackColor, this.SlideBarThickness);
+                        Pen bar_progress_pen = new Pen(this.Enabled ? this.SlideProgressNormalBackColor : this.SlideProgressDisableBackColor, scale_slideBarThickness);
                         if (this.SlideBarRadius)
                         {
                             bar_progress_pen.StartCap = LineCap.Round;
-                            bar_progress_x_start -= this.SlideBarThickness / 2;
+                            bar_progress_x_start -= scale_slideBarThickness / 2;
                         }
                         g.DrawLine(bar_progress_pen, bar_progress_y, bar_progress_x_start, bar_progress_y, bar_progress_x_end);
                         bar_progress_pen.Dispose();
                     }
                     else
                     {
-                        RectangleF bar_progress_rectf = new RectangleF(bar_progress_y - (float)this.SlideBarThickness / 2f, bar_progress_x_end, this.SlideBarThickness, bar_progress_x_start - bar_progress_x_end);
-                        this.DrawProgressLinearGradient(g, bar_progress_rectf, false);
+                        RectangleF bar_progress_rectf = new RectangleF(bar_progress_y - (float)scale_slideBarThickness / 2f, bar_progress_x_end, scale_slideBarThickness, bar_progress_x_start - bar_progress_x_end);
+                        this.DrawProgressLinearGradient(g, bar_progress_rectf, false, scale_slideBarThickness);
                     }
                 }
                 #endregion
@@ -1094,7 +1103,7 @@ namespace WinformControlLibraryExtension
                 }
 
                 RectangleF slide_rectf = new RectangleF(this.Items[i].SlideRect.X, this.Items[i].SlideRect.Y, this.Items[i].SlideRect.Width, this.Items[i].SlideRect.Height);
-                GraphicsPath slide_gp = ControlCommom.TransformCircular(slide_rectf, this.SlideRadius);
+                GraphicsPath slide_gp = ControlCommom.TransformCircular(slide_rectf, scale_slideRadius);
                 g.FillPath(commom_slide_back_sb, slide_gp);
                 if (this.Enabled && this.activatedState && this.activatedStateIndex == i)
                 {
@@ -1181,6 +1190,7 @@ namespace WinformControlLibraryExtension
             #region 提示信息
             if (this.TipShow)
             {
+                g.SmoothingMode = SmoothingMode.Default;
                 for (int i = this.Items.Count - 1; i >= 0; i--)
                 {
                     #region
@@ -1697,6 +1707,7 @@ namespace WinformControlLibraryExtension
             base.OnResize(e);
 
             this.InitializeMultidropSlideBarRectangle();
+            this.Invalidate();
         }
 
         #endregion
@@ -1734,38 +1745,42 @@ namespace WinformControlLibraryExtension
                 this.InitializeMultidropSlideBarItemRectangle(this.Items[i]);
             }
         }
-
+     
         /// <summary>
         /// 初始化指定滑块Rectangle
         /// </summary>
         /// <param name="item"></param>
         private void InitializeMultidropSlideBarItemRectangle(MultidropSlideBarItem item)
         {
-            Rectangle rect = new Rectangle(this.SlidePadding, this.SlidePadding, this.ClientRectangle.Width - this.SlidePadding * 2, this.ClientRectangle.Height - this.SlidePadding * 2);
+            int scale_slidePadding = (int)(this.SlidePadding * DotsPerInchHelper.DPIScale.XScale);
+            int scale_slideWidth = (int)(this.SlideWidth * DotsPerInchHelper.DPIScale.XScale);
+            int scale_slideHeight = (int)(this.SlideHeight * DotsPerInchHelper.DPIScale.XScale);
+
+            Rectangle rect = new Rectangle(scale_slidePadding, scale_slidePadding, this.ClientRectangle.Width - scale_slidePadding * 2, this.ClientRectangle.Height - scale_slidePadding * 2);
 
             int index = this.Items.IndexOf(item);
             if (this.Orientation == SlideOrientation.HorizontalBottom || this.Orientation == SlideOrientation.HorizontalTop)
             {
-                float back_l = rect.Width - this.SlideWidth - (this.Items.Count - 1) * this.SlideWidth;
-                int slide_x = this.SlidePadding + (this.SlideWidth / 2) + (int)(item.Value / (Math.Abs(this.MinValue) + Math.Abs(this.MaxValue)) * back_l);
+                float back_l = rect.Width - scale_slideWidth - (this.Items.Count - 1) * scale_slideWidth;
+                int slide_x = scale_slidePadding + (scale_slideWidth / 2) + (int)(item.Value / (Math.Abs(this.MinValue) + Math.Abs(this.MaxValue)) * back_l);
                 if (slide_x < 0)
                     slide_x = 0;
-                if (slide_x > rect.Right - this.SlideWidth / 2)
-                    slide_x = rect.Right - this.SlideWidth / 2;
+                if (slide_x > rect.Right - scale_slideWidth / 2)
+                    slide_x = rect.Right - scale_slideWidth / 2;
 
-                int slide_y = (this.Orientation == SlideOrientation.HorizontalTop) ? rect.Y : rect.Bottom - this.SlideHeight - this.SlidePadding;
-                item.SlideRect = new RectangleF(slide_x - (this.SlideWidth / 2) + index * this.SlideWidth, slide_y, this.SlideWidth, this.SlideHeight);
+                int slide_y = (this.Orientation == SlideOrientation.HorizontalTop) ? rect.Y : rect.Bottom - scale_slideHeight - scale_slidePadding;
+                item.SlideRect = new RectangleF(slide_x - (scale_slideWidth / 2) + index * scale_slideWidth, slide_y, scale_slideWidth, scale_slideHeight);
             }
             else
             {
-                float back_l = rect.Height - this.SlideHeight - (this.Items.Count - 1) * this.SlideHeight;
-                int slide_y = rect.Bottom - (this.SlideHeight / 2) - (int)(item.Value / (Math.Abs(this.MinValue) + Math.Abs(this.MaxValue)) * back_l);
+                float back_l = rect.Height - scale_slideHeight - (this.Items.Count - 1) * scale_slideHeight;
+                int slide_y = rect.Bottom - (scale_slideHeight / 2) - (int)(item.Value / (Math.Abs(this.MinValue) + Math.Abs(this.MaxValue)) * back_l);
                 if (slide_y < 0)
                     slide_y = 0;
-                if (slide_y > rect.Bottom - this.SlideHeight / 2)
-                    slide_y = rect.Bottom - this.SlideHeight / 2;
-                int slide_x = (this.Orientation == SlideOrientation.VerticalLeft) ? rect.X : rect.Right - this.SlideWidth - this.SlidePadding;
-                item.SlideRect = new RectangleF(slide_x, slide_y - (this.SlideHeight / 2) - index * this.SlideHeight, this.SlideWidth, this.SlideHeight);
+                if (slide_y > rect.Bottom - scale_slideHeight / 2)
+                    slide_y = rect.Bottom - scale_slideHeight / 2;
+                int slide_x = (this.Orientation == SlideOrientation.VerticalLeft) ? rect.X : rect.Right - scale_slideWidth - scale_slidePadding;
+                item.SlideRect = new RectangleF(slide_x, slide_y - (scale_slideHeight / 2) - index * scale_slideHeight, scale_slideWidth, scale_slideHeight);
             }
         }
 
@@ -1776,7 +1791,11 @@ namespace WinformControlLibraryExtension
         /// <param name="isGlobal">是否为全局值</param>
         private void InitializeSlideValueByPoint(MultidropSlideBarItem item, bool isGlobal)
         {
-            Rectangle rect = new Rectangle(this.SlidePadding, this.SlidePadding, this.ClientRectangle.Width - this.SlidePadding * 2, this.ClientRectangle.Height - this.SlidePadding * 2);
+            int scale_slidePadding = (int)(this.SlidePadding * DotsPerInchHelper.DPIScale.XScale);
+            int scale_slideWidth = (int)(this.SlideWidth * DotsPerInchHelper.DPIScale.XScale);
+            int scale_slideHeight = (int)(this.SlideHeight * DotsPerInchHelper.DPIScale.XScale);
+
+            Rectangle rect = new Rectangle(scale_slidePadding, scale_slidePadding, this.ClientRectangle.Width - scale_slidePadding * 2, this.ClientRectangle.Height - scale_slidePadding * 2);
             Point point = this.PointToClient(Control.MousePosition);
 
             if (this.Orientation == SlideOrientation.HorizontalTop || this.Orientation == SlideOrientation.HorizontalBottom)
@@ -1786,7 +1805,7 @@ namespace WinformControlLibraryExtension
 
                 int index = this.Items.IndexOf(item);
                 float value_l = Math.Abs(this.MinValue) + Math.Abs(this.MaxValue);//值总长度
-                float back_l = rect.Width - this.SlideWidth - (this.Items.Count - 1) * this.SlideWidth;//背景总长度
+                float back_l = rect.Width - scale_slideWidth - (this.Items.Count - 1) * scale_slideWidth;//背景总长度
                 float increment = value_l / back_l;//一个像素代表曾值量
 
                 float value = item.Value;
@@ -1805,7 +1824,7 @@ namespace WinformControlLibraryExtension
 
                 int index = this.Items.IndexOf(item);
                 float value_l = Math.Abs(this.MinValue) + Math.Abs(this.MaxValue);//值总长度
-                float back_l = rect.Height - this.SlideHeight - (this.Items.Count - 1) * this.SlideHeight;//背景总长度
+                float back_l = rect.Height - scale_slideHeight - (this.Items.Count - 1) * scale_slideHeight;//背景总长度
                 float increment = value_l / back_l;//一个像素代表曾值量
 
                 float value = item.Value;
@@ -1840,20 +1859,21 @@ namespace WinformControlLibraryExtension
         /// <param name="g"></param>
         /// <param name="rectf">渐变背景色rectf</param>
         /// <param name="ishorizontal">是否横向</param>
-        private void DrawBarLinearGradient(Graphics g, RectangleF rectf, bool ishorizontal)
+        /// <param name="scale_slideBarThickness"></param>
+        private void DrawBarLinearGradient(Graphics g, RectangleF rectf, bool ishorizontal, int scale_slideBarThickness)
         {
             if (this.SlideBarRadius)
             {
                 GraphicsPath bar_back_gp = new GraphicsPath();
                 if (ishorizontal)
                 {
-                    bar_back_gp.AddArc(new RectangleF(rectf.X, rectf.Y, (float)this.SlideBarThickness, (float)this.SlideBarThickness), 90, 180);
-                    bar_back_gp.AddArc(new RectangleF(rectf.Right - this.SlideBarThickness, rectf.Top, (float)this.SlideBarThickness, (float)this.SlideBarThickness), 270, 180);
+                    bar_back_gp.AddArc(new RectangleF(rectf.X, rectf.Y, (float)scale_slideBarThickness, (float)scale_slideBarThickness), 90, 180);
+                    bar_back_gp.AddArc(new RectangleF(rectf.Right - scale_slideBarThickness, rectf.Top, (float)scale_slideBarThickness, (float)scale_slideBarThickness), 270, 180);
                 }
                 else
                 {
-                    bar_back_gp.AddArc(new RectangleF(rectf.X, rectf.Y, (float)this.SlideBarThickness, (float)this.SlideBarThickness), 180, 180);
-                    bar_back_gp.AddArc(new RectangleF(rectf.X, rectf.Bottom - (float)this.SlideBarThickness, (float)this.SlideBarThickness, (float)this.SlideBarThickness), 0, 180);
+                    bar_back_gp.AddArc(new RectangleF(rectf.X, rectf.Y, (float)scale_slideBarThickness, (float)scale_slideBarThickness), 180, 180);
+                    bar_back_gp.AddArc(new RectangleF(rectf.X, rectf.Bottom - (float)scale_slideBarThickness, (float)scale_slideBarThickness, (float)scale_slideBarThickness), 0, 180);
                 }
                 bar_back_gp.CloseFigure();
                 if (this.Enabled)
@@ -1893,19 +1913,20 @@ namespace WinformControlLibraryExtension
         /// <param name="g"></param>
         /// <param name="rectf">渐变背景色rectf</param>
         /// <param name="ishorizontal">是否横向</param>
-        private void DrawProgressLinearGradient(Graphics g, RectangleF rectf, bool ishorizontal)
+        /// <param name="scale_slideBarThickness"></param>
+        private void DrawProgressLinearGradient(Graphics g, RectangleF rectf, bool ishorizontal, int scale_slideBarThickness)
         {
             if (this.SlideBarRadius)
             {
                 GraphicsPath bar_progress_gp = new GraphicsPath();
                 if (ishorizontal)
                 {
-                    bar_progress_gp.AddArc(new RectangleF(rectf.X, rectf.Y, (float)this.SlideBarThickness, (float)this.SlideBarThickness), 90, 180);
+                    bar_progress_gp.AddArc(new RectangleF(rectf.X, rectf.Y, (float)scale_slideBarThickness, (float)scale_slideBarThickness), 90, 180);
                     bar_progress_gp.AddLine(new PointF(rectf.Right, rectf.Top), new PointF(rectf.Right, rectf.Bottom));
                 }
                 else
                 {
-                    bar_progress_gp.AddArc(new RectangleF(rectf.X, rectf.Bottom - this.SlideBarThickness, (float)this.SlideBarThickness, (float)this.SlideBarThickness), 0, 180);
+                    bar_progress_gp.AddArc(new RectangleF(rectf.X, rectf.Bottom - scale_slideBarThickness, (float)scale_slideBarThickness, (float)scale_slideBarThickness), 0, 180);
                     bar_progress_gp.AddLine(new PointF(rectf.X, rectf.Y), new PointF(rectf.Right, rectf.Y));
 
                 }

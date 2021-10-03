@@ -1,4 +1,5 @@
 ﻿
+
 /*****版权***************************************************************
 
 版权：  唧唧复唧唧木兰当户织
@@ -127,7 +128,6 @@ namespace WinformControlLibraryExtension
 
                 this.captionEnabled = value;
                 this.CaptionBox.InitializeControlBox();
-                this.UpdateChildrenControls();
             }
         }
 
@@ -173,30 +173,6 @@ namespace WinformControlLibraryExtension
                     return;
 
                 this.borderEnabled = value;
-                this.CaptionBox.InitializeControlBox();
-                this.UpdateChildrenControls();
-            }
-        }
-
-        private int borderWidth = 1;
-        /// <summary>
-        /// 边框宽度
-        /// </summary>
-        [Description("边框宽度")]
-        [DefaultValue(1)]
-        [Browsable(true)]
-        public int BorderWidth
-        {
-            get
-            {
-                return this.BorderEnabled ? this.borderWidth : 0;
-            }
-            set
-            {
-                if (this.borderWidth == value || value < 0)
-                    return;
-
-                this.borderWidth = value;
                 this.CaptionBox.InitializeControlBox();
             }
         }
@@ -435,10 +411,12 @@ namespace WinformControlLibraryExtension
         /// 窗体是否激活
         /// </summary>
         private bool _active;
+
         /// <summary>
         /// 客户区是否按下
         /// </summary>
         private bool isdown = false;
+
         /// <summary>
         /// 客户区按下坐标
         /// </summary>
@@ -449,6 +427,11 @@ namespace WinformControlLibraryExtension
         /// </summary>
         protected static ToolTipExt tte;
 
+        /// <summary>
+        /// 透明边框分层窗体
+        /// </summary>
+        private LayerBoederForm lbForm = null;
+
         #endregion
 
         #region 扩展
@@ -457,82 +440,6 @@ namespace WinformControlLibraryExtension
         /// 允许最小化操作
         /// </summary>
         private const int WS_MINIMIZEBOX = 0x00020000;
-
-        /// <summary>
-        /// 移动鼠标，按住或释放鼠标时发生
-        /// </summary>
-        private const int WM_NCHITTEST = 0x84;
-        /// <summary>
-        /// 此消息发送给窗口当它将要改变大小或位置
-        /// </summary>
-        private const int WM_GETMINMAXINFO = 0x24;
-
-        /// <summary>
-        ///光标的位置
-        /// </summary>
-        protected internal abstract class NCHITTEST
-        {
-            /// <summary>
-            /// 左边界
-            /// </summary>
-            public const int HTLEFT = 10;
-            /// <summary>
-            /// 右边界
-            /// </summary>
-            public const int HTRIGHT = 11;
-            /// <summary>
-            /// 上边界
-            /// </summary>
-            public const int HTTOP = 12;
-            /// <summary>
-            /// 左上角
-            /// </summary>
-            public const int HTTOPLEFT = 13;
-            /// <summary>
-            /// 右上角
-            /// </summary>
-            public const int HTTOPRIGHT = 14;
-            /// <summary>
-            /// 下边界
-            /// </summary>
-            public const int HTBOTTOM = 15;
-            /// <summary>
-            /// 左下角
-            /// </summary>
-            public const int HTBOTTOMLEFT = 16;
-            /// <summary>
-            /// 右下角
-            /// </summary>
-            public const int HTBOTTOMRIGHT = 17;
-        }
-
-        /// <summary>
-        /// 窗口状态
-        /// </summary>
-        [StructLayout(LayoutKind.Sequential)]
-        public struct MINMAXINFO
-        {
-            /// <summary>
-            /// 窗口正常状态的坐标
-            /// </summary>
-            public Point reserved;
-            /// <summary>
-            /// 设置窗口最大化时的宽度、高度
-            /// </summary>
-            public Size maxSize;
-            /// <summary>
-            /// 设置窗口最大化时x坐标、y坐标
-            /// </summary>
-            public Point maxPosition;
-            /// <summary>
-            /// 设置窗口最小宽度、高度
-            /// </summary>
-            public Size minTrackSize;
-            /// <summary>
-            /// 设置窗口最大宽度、高度
-            /// </summary>
-            public Size maxTrackSize;
-        }
 
         #endregion
 
@@ -551,13 +458,14 @@ namespace WinformControlLibraryExtension
             SetStyle(ControlStyles.ResizeRedraw, true);
             SetStyle(ControlStyles.SupportsTransparentBackColor, true);
 
-            InitializeComponent();
-
+            this.VisibleChanged += this.fe_VisibleChanged;
             this.FormBorderStyle = FormBorderStyle.None;
             this.BackColor = Color.FromArgb(176, 197, 175);
             this.ForeColor = Color.FromArgb(255, 255, 255);
-
             this.CaptionBox.InitializeControlBox();
+
+            this.lbForm = new LayerBoederForm(this);
+            this.lbForm.InvalidateLayer();
         }
 
         #region 重写
@@ -566,10 +474,17 @@ namespace WinformControlLibraryExtension
         {
             get
             {
-                CreateParams cp = base.CreateParams;
-                cp.Style = cp.Style | WS_MINIMIZEBOX;
-                return cp;
+                CreateParams cParms = base.CreateParams;
+                cParms.Style = cParms.Style | WS_MINIMIZEBOX;
+                return cParms;
             }
+        }
+
+        protected override void OnPaintBackground(PaintEventArgs e)
+        {
+            base.OnPaintBackground(e);
+
+            this.DrawBackground(e.Graphics);
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -578,8 +493,6 @@ namespace WinformControlLibraryExtension
 
             Graphics g = e.Graphics;
 
-            this.DrawBackground(g);
-            this.DrawBorder(g);
             this.DrawCaption(g);
             this.DrawSizeGrip(g);
         }
@@ -609,6 +522,8 @@ namespace WinformControlLibraryExtension
 
             if (e.Button == MouseButtons.Left)
             {
+                int scale_captionBoxHeight = (int)(this.CaptionBox.Height * DotsPerInchHelper.DPIScale.YScale);
+
                 if (this.CaptionEnabled && this.CaptionBox.Rect.Contains(e.Location))
                 {
                     if (this.CaptionBox.ControlBoxRect.Contains(e.Location))
@@ -665,7 +580,7 @@ namespace WinformControlLibraryExtension
 
                 if (this.MoveEnabled)
                 {
-                    if (new Rectangle(this.ClientRectangle.X + this.BorderWidth, this.ClientRectangle.Y + this.BorderWidth + this.CaptionBox.Height, this.ClientRectangle.Width - this.BorderWidth * 2, this.ClientRectangle.Height - this.BorderWidth * 2 - this.CaptionBox.Height).Contains(e.Location))
+                    if (new Rectangle(this.ClientRectangle.X, this.ClientRectangle.Y + scale_captionBoxHeight, this.ClientRectangle.Width, this.ClientRectangle.Height - scale_captionBoxHeight).Contains(e.Location))
                     {
                         this.isdown = true;
                         this.downpoint = Control.MousePosition;
@@ -866,21 +781,48 @@ namespace WinformControlLibraryExtension
             base.OnResize(e);
 
             this.CaptionBox.InitializeControlBox();
+
+            if (this.DesignMode)
+                return;
+
+            this.lbForm.Size = new Size(this.Size.Width + this.lbForm.borderThickness * 2, this.Size.Height + this.lbForm.borderThickness * 2);
+            this.lbForm.InvalidateLayer();
+
         }
 
-        protected override void WndProc(ref Message m)
+        protected override void OnResizeEnd(EventArgs e)
         {
-            base.WndProc(ref m);
-            switch (m.Msg)
-            {
-                case WM_NCHITTEST:
-                    this.SetNCHITTEST(ref m);
-                    break;
-                case WM_GETMINMAXINFO:
-                    this.SetMinMaxInfo(ref m);
-                    break;
-            }
+            base.OnResizeEnd(e);
 
+            if (this.DesignMode)
+                return;
+
+            if (this.WindowState == FormWindowState.Minimized || this.WindowState == FormWindowState.Maximized)
+            {
+                if (this.lbForm != null && this.lbForm.Visible)
+                {
+                    this.lbForm.Hide();
+                }
+            }
+            else if (this.WindowState == FormWindowState.Normal)
+            {
+                if (this.lbForm != null && this.lbForm.Visible == false)
+                {
+                    this.lbForm.Show(this);
+                    this.lbForm.SetBounds(this.Location.X - this.lbForm.borderThickness, this.Location.Y - this.lbForm.borderThickness, this.Size.Width + this.lbForm.borderThickness * 2, this.Size.Height + this.lbForm.borderThickness * 2);
+                    this.lbForm.InvalidateLayer();
+                }
+            }
+        }
+
+        protected override void OnLocationChanged(EventArgs e)
+        {
+            base.OnLocationChanged(e);
+
+            if (this.DesignMode)
+                return;
+
+            this.lbForm.Location = new Point(this.Location.X - this.lbForm.borderThickness, this.Location.Y - this.lbForm.borderThickness);
         }
 
         #endregion
@@ -915,24 +857,47 @@ namespace WinformControlLibraryExtension
 
         #region 私有方法
 
+        private void fe_VisibleChanged(object sender, EventArgs e)
+        {
+            if (this.DesignMode)
+                return;
+
+            FormExt f = (FormExt)sender;
+            if (f.Visible)
+            {
+                if (this.lbForm.Visible == false)
+                {
+                    lbForm.Show(this);
+                }
+                this.lbForm.SetBounds(this.Location.X - this.lbForm.borderThickness, this.Location.Y - this.lbForm.borderThickness, this.Size.Width + this.lbForm.borderThickness * 2, this.Size.Height + this.lbForm.borderThickness * 2);
+                this.lbForm.InvalidateLayer();
+            }
+            else
+            {
+                lbForm.Hide();
+            }
+
+        }
+
         /// <summary>
         /// 绘制背景
         /// </summary>
         /// <param name="g"></param>
         private void DrawBackground(Graphics g)
         {
+            int scale_captionBoxHeight = (int)(this.CaptionBox.Height * DotsPerInchHelper.DPIScale.YScale);
+
             SolidBrush back_sb = new SolidBrush(this.BackColor);
             g.FillRectangle(back_sb, this.ClientRectangle);
             back_sb.Dispose();
 
             if (this.BackgroundImage != null)
             {
-                int border = this.CaptionEnabled ? this.BorderWidth : 0;
-                int caption = this.CaptionEnabled ? this.CaptionBox.Height : 0;
-                Rectangle rect = new Rectangle(this.ClientRectangle.X + border, this.ClientRectangle.Y + border, this.ClientRectangle.Width - border * 2, this.ClientRectangle.Height - border * 2);
+                int caption = this.CaptionEnabled ? scale_captionBoxHeight : 0;
+                Rectangle rect = new Rectangle(this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Width, this.ClientRectangle.Height);
                 if (this.BackgroundImageCaption == false)
                 {
-                    rect = new Rectangle(this.ClientRectangle.X + border, this.ClientRectangle.Y + border + caption, this.ClientRectangle.Width - border * 2, this.ClientRectangle.Height - border * 2 - caption);
+                    rect = new Rectangle(this.ClientRectangle.X, this.ClientRectangle.Y + caption, this.ClientRectangle.Width, this.ClientRectangle.Height - caption);
                 }
 
                 if (this.BackgroundImageLayout == ImageLayout.Zoom)
@@ -993,21 +958,6 @@ namespace WinformControlLibraryExtension
         }
 
         /// <summary>
-        /// 绘制边框
-        /// </summary>
-        /// <param name="g"></param>
-        private void DrawBorder(Graphics g)
-        {
-            if (this.CaptionEnabled)
-            {
-                Pen border_pen = new Pen(this.BorderColor);
-                Rectangle rect = new Rectangle(this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Width - 1, this.ClientRectangle.Height - 1);
-                g.DrawRectangle(border_pen, rect);
-                border_pen.Dispose();
-            }
-        }
-
-        /// <summary>
         /// 绘制标题栏
         /// </summary>
         /// <param name="g"></param>
@@ -1015,10 +965,12 @@ namespace WinformControlLibraryExtension
         {
             if (this.CaptionEnabled)
             {
+                int scale_captionBoxHeight = (int)(this.CaptionBox.Height * DotsPerInchHelper.DPIScale.YScale);
+
                 if (this.CaptionBox.BackColor != Color.Empty)
                 {
                     SolidBrush border_sb = new SolidBrush(this._active || this.DesignMode ? this.CaptionBox.BackColor : Color.FromArgb(100, this.CaptionBox.BackColor));
-                    Rectangle rect = new Rectangle(this.ClientRectangle.X + this.BorderWidth, this.ClientRectangle.Y + this.BorderWidth, this.ClientRectangle.Width - this.BorderWidth * 2, this.CaptionBox.Height);
+                    Rectangle rect = new Rectangle(this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Width, scale_captionBoxHeight);
                     g.FillRectangle(border_sb, rect);
                     border_sb.Dispose();
                 }
@@ -1046,7 +998,7 @@ namespace WinformControlLibraryExtension
                     }
 
                     int x = 0;
-                    int y = (int)(this.ClientRectangle.Y + this.BorderWidth + (this.CaptionBox.Height - text_size.Height) / 2);
+                    int y = (int)(this.ClientRectangle.Y + (scale_captionBoxHeight - text_size.Height) / 2);
                     Rectangle text_rect = Rectangle.Empty;
                     if (this.TextOrientation == TextOrientations.Left)
                     {
@@ -1098,10 +1050,10 @@ namespace WinformControlLibraryExtension
                 }
 
                 SolidBrush back_sb = new SolidBrush(backcolor);
-                Pen text_pen = new Pen(textcolor, 1);
+                Pen text_pen = new Pen(textcolor, DotsPerInchHelper.DPIScale.XScale >= 1.5f ? 2 : 1);
                 g.FillRectangle(back_sb, this.CaptionBox.CloseBtn.Rect);
 
-                int width = this.CaptionBox.CloseBtn.Rect.Width / 10 * 8;
+                int width = this.CaptionBox.CloseBtn.Rect.Width / 10 * 6;
                 int x1 = this.CaptionBox.CloseBtn.Rect.X + (this.CaptionBox.CloseBtn.Rect.Width - width) / 2;
                 int y1 = this.CaptionBox.CloseBtn.Rect.Y + (this.CaptionBox.CloseBtn.Rect.Height - width) / 2;
                 int x2 = this.CaptionBox.CloseBtn.Rect.X + width + (this.CaptionBox.CloseBtn.Rect.Width - width) / 2;
@@ -1131,11 +1083,11 @@ namespace WinformControlLibraryExtension
                 }
 
                 SolidBrush back_sb = new SolidBrush(backcolor);
-                Pen text_pen = new Pen(textcolor, 1);
+                Pen text_pen = new Pen(textcolor, DotsPerInchHelper.DPIScale.XScale >= 1.5f ? 2 : 1);
                 g.FillRectangle(back_sb, this.CaptionBox.MaxBtn.Rect);
 
-                int width = this.CaptionBox.MaxBtn.Rect.Width / 10 * 8;
-                int height = this.CaptionBox.MaxBtn.Rect.Width / 10 * 8;
+                int width = this.CaptionBox.MaxBtn.Rect.Width / 10 * 6;
+                int height = this.CaptionBox.MaxBtn.Rect.Width / 10 * 6;
 
                 if (this.WindowState != FormWindowState.Maximized)
                 {
@@ -1182,10 +1134,10 @@ namespace WinformControlLibraryExtension
                 }
 
                 SolidBrush back_sb = new SolidBrush(backcolor);
-                Pen text_pen = new Pen(textcolor, 1);
+                Pen text_pen = new Pen(textcolor, DotsPerInchHelper.DPIScale.XScale >= 1.5f ? 2 : 1);
                 g.FillRectangle(back_sb, this.CaptionBox.MinBtn.Rect);
 
-                int width = this.CaptionBox.MaxBtn.Rect.Width / 10 * 8;
+                int width = this.CaptionBox.MaxBtn.Rect.Width / 10 * 6;
                 int x1 = this.CaptionBox.MinBtn.Rect.X + (this.CaptionBox.MinBtn.Rect.Width - width) / 2;
                 int x2 = this.CaptionBox.MinBtn.Rect.X + width + (this.CaptionBox.MinBtn.Rect.Width - width) / 2;
 
@@ -1208,7 +1160,7 @@ namespace WinformControlLibraryExtension
                 int rect_size = 12;
                 int size = 2;
                 int pd = 2;
-                Rectangle rect = new Rectangle(this.ClientRectangle.Right - this.BorderWidth - rect_size, this.ClientRectangle.Bottom - this.BorderWidth - rect_size, rect_size, rect_size);
+                Rectangle rect = new Rectangle(this.ClientRectangle.Right - rect_size, this.ClientRectangle.Bottom - rect_size, rect_size, rect_size);
                 Pen grip_pen = new Pen(this.SizeGripColor, 2);
 
                 g.DrawLine(grip_pen, new Point(rect.Right - pd - size, rect.Bottom - pd - size), new Point(rect.Right - pd, rect.Bottom - pd - size));
@@ -1220,153 +1172,6 @@ namespace WinformControlLibraryExtension
 
                 g.DrawLine(grip_pen, new Point(rect.Right - pd - size, rect.Bottom - pd - size * 5), new Point(rect.Right - pd, rect.Bottom - pd - size * 5));
             }
-        }
-
-        /// <summary>
-        /// 更新所有子控件坐标
-        /// </summary>
-        private void UpdateChildrenControls()
-        {
-            int x = this.CaptionEnabled ? this.BorderWidth : this.BorderWidth;
-            int y = this.CaptionEnabled ? this.BorderWidth + this.CaptionBox.Height : -(this.BorderWidth + this.CaptionBox.Height);
-            foreach (Control control in this.Controls)
-            {
-                control.Location = new Point(control.Location.X + x, control.Location.Y + y);
-            }
-        }
-
-        /// <summary>
-        /// 设置窗体鼠标NCHITTEST状态
-        /// </summary>
-        /// <param name="m"></param>
-        private void SetNCHITTEST(ref Message m)
-        {
-            Point point = new Point(WindowNavigate.LOWORD(m.LParam), WindowNavigate.HIWORD(m.LParam));
-            point = PointToClient(point);
-
-            if (this.WindowState != FormWindowState.Maximized)
-            {
-                if (this.ResizeType == ResizeTypes.Drag || this.ResizeType == ResizeTypes.CaptionDrag)
-                {
-                    if (point.X < 5 && point.Y < 5)
-                    {
-                        m.Result = new IntPtr(NCHITTEST.HTTOPLEFT);
-                    }
-                    else if (point.X > this.ClientSize.Width - 5 && point.Y < 5)
-                    {
-                        m.Result = new IntPtr(NCHITTEST.HTTOPRIGHT);
-                    }
-                    else if (point.X < 5 && point.Y > this.ClientSize.Height - 5)
-                    {
-                        m.Result = new IntPtr(NCHITTEST.HTBOTTOMLEFT);
-                    }
-                    else if (point.X > this.ClientSize.Width - 5 && point.Y > this.ClientSize.Height - 5)
-                    {
-                        m.Result = new IntPtr(NCHITTEST.HTBOTTOMRIGHT);
-                    }
-                    else if (point.Y < 5)
-                    {
-                        m.Result = new IntPtr(NCHITTEST.HTTOP);
-                    }
-                    else if (point.Y > this.ClientSize.Height - 5)
-                    {
-                        m.Result = new IntPtr(NCHITTEST.HTBOTTOM);
-                    }
-                    else if (point.X < 5)
-                    {
-                        m.Result = new IntPtr(NCHITTEST.HTLEFT);
-                    }
-                    else if (point.X > this.ClientSize.Width - 5)
-                    {
-                        m.Result = new IntPtr(NCHITTEST.HTRIGHT);
-                    }
-                    else if (point.X >= this.ClientSize.Width - this.BorderWidth - 12 && point.Y >= this.ClientSize.Height - this.BorderWidth - 12)
-                    {
-                        if (this.SizeGripStyle == SizeGripStyle.Show && this.WindowState != FormWindowState.Maximized)
-                        {
-                            m.Result = new IntPtr(NCHITTEST.HTBOTTOMRIGHT);
-                            return;
-                        }
-                    }
-
-                }
-            }
-
-        }
-
-        /// <summary>
-        /// 设置窗体MINMAXINFO
-        /// </summary>
-        /// <param name="m"></param>
-        private void SetMinMaxInfo(ref Message m)
-        {
-            MINMAXINFO minmax = (MINMAXINFO)Marshal.PtrToStructure(m.LParam, typeof(MINMAXINFO));
-
-            if (MaximumSize != Size.Empty)
-            {
-                minmax.maxTrackSize = MaximumSize;
-            }
-            else
-            {
-                if (this.CaptionEnabled)
-                {
-                    if (this.Parent == null)
-                    {
-                        Rectangle rect = Screen.GetWorkingArea(this);
-                        minmax.maxTrackSize = new Size(rect.Width + this.BorderWidth * 2, rect.Height + this.BorderWidth * 2);
-                        minmax.maxPosition = new Point(rect.X - this.BorderWidth, rect.Y - this.BorderWidth);
-                        minmax.maxSize = new Size(rect.Width + this.BorderWidth * 2, rect.Height + this.BorderWidth * 2);
-                    }
-                    else
-                    {
-                        Rectangle rect = this.Parent.ClientRectangle;
-                        minmax.maxTrackSize = new Size(rect.Width + this.BorderWidth * 2, rect.Height + this.BorderWidth * 2);
-                        minmax.maxPosition = new Point(rect.X - this.BorderWidth, rect.Y - this.BorderWidth);
-                        minmax.maxSize = new Size(rect.Width + this.BorderWidth * 2, rect.Height + this.BorderWidth * 2);
-                    }
-                }
-                else
-                {
-                    if (this.Parent == null)
-                    {
-                        Rectangle rect = Screen.GetWorkingArea(this);
-                        minmax.maxTrackSize = new Size(rect.Width, rect.Height);
-                        minmax.maxPosition = new Point(rect.X, rect.Y);
-                        minmax.maxSize = new Size(rect.Width, rect.Height);
-                    }
-                    else if (this.Parent != null)
-                    {
-                        Rectangle rect = this.Parent.ClientRectangle;
-                        minmax.maxTrackSize = new Size(rect.Width, rect.Height);
-                        minmax.maxPosition = new Point(rect.X, rect.Y);
-                        minmax.maxSize = new Size(rect.Width, rect.Height);
-                    }
-                }
-            }
-
-            if (MinimumSize != Size.Empty)
-            {
-                minmax.minTrackSize = MinimumSize;
-            }
-            else
-            {
-                int x = this.ClientRectangle.Right - 2 - this.CaptionBox.CloseBtn.Rect.Width;
-                if (this.CaptionBox.CloseBtn.Enabled)
-                {
-                    x -= this.CaptionBox.CloseBtn.Rect.Width;
-                }
-                if (this.CaptionBox.MaxBtn.Enabled)
-                {
-                    x -= this.CaptionBox.MaxBtn.Rect.Width;
-                }
-                if (this.CaptionBox.MinBtn.Enabled)
-                {
-                    x -= this.CaptionBox.MinBtn.Rect.Width;
-                }
-                minmax.minTrackSize = new Size((this.ClientRectangle.Right - 2) - x + this.BorderWidth * 2, this.CaptionBox.Height + this.BorderWidth * 2);
-            }
-
-            Marshal.StructureToPtr(minmax, m.LParam, false);
         }
 
         #endregion
@@ -1481,7 +1286,7 @@ namespace WinformControlLibraryExtension
                 }
                 set
                 {
-                    if (this.height == value || value < this.owner.BorderWidth)
+                    if (this.height == value)
                         return;
 
                     this.height = value;
@@ -1594,19 +1399,20 @@ namespace WinformControlLibraryExtension
                 if (this.owner.CaptionEnabled == false)
                     return;
 
-
-                int right = 2;
+                int scale_captionBoxHeight = (int)(this.Height * DotsPerInchHelper.DPIScale.YScale);
+                int scale_buttonSize = (int)(this.ButtonSize * DotsPerInchHelper.DPIScale.YScale);
+                int scale_right = (int)(2 * DotsPerInchHelper.DPIScale.XScale);
                 Rectangle rect = this.owner.ClientRectangle;
-                this.Rect = new Rectangle(rect.X + this.owner.BorderWidth, rect.Y + this.owner.BorderWidth, rect.Width - this.owner.BorderWidth * 2, this.Height);
-                Rectangle controlBox_rect = new Rectangle(rect.X + this.owner.BorderWidth, rect.Y + this.owner.BorderWidth, rect.Width - this.owner.BorderWidth * 2, this.Height);
-                int t = controlBox_rect.Y + this.owner.BorderWidth;
-                int r = controlBox_rect.Right - right;
+                this.Rect = new Rectangle(rect.X, rect.Y, rect.Width, scale_captionBoxHeight);
+                Rectangle controlBox_rect = new Rectangle(rect.X, rect.Y, rect.Width, scale_captionBoxHeight);
+                int t = controlBox_rect.Y;
+                int r = controlBox_rect.Right - scale_right;
 
-                int size = this.ButtonSize;
+                int size = scale_buttonSize;
                 int with_sum = 0;
-                if (size > (this.Height - this.owner.BorderWidth))
+                if (size > scale_captionBoxHeight)
                 {
-                    size = (this.Height - this.owner.BorderWidth);
+                    size = scale_captionBoxHeight;
                 }
 
                 if (this.CloseBtn.Enabled)
@@ -1631,7 +1437,7 @@ namespace WinformControlLibraryExtension
 
                 if (this.owner.ShowIcon)
                 {
-                    this.IconRect = new Rectangle(2, rect.Y + this.owner.BorderWidth + (this.Height - size) / 2, size, size);
+                    this.IconRect = new Rectangle(2, rect.Y + (scale_captionBoxHeight - size) / 2, size, size);
                 }
 
                 this.owner.Invalidate();
@@ -1998,6 +1804,657 @@ namespace WinformControlLibraryExtension
     }
 
     /// <summary>
+    /// 扁平化窗体边框分层窗体
+    /// </summary>
+    [Description("扁平化窗体边框分层窗体")]
+    public class LayerBoederForm : Form
+    {
+        #region 字段
+
+        /// <summary>
+        /// 窗体句柄创建完成
+        /// </summary>
+        private bool isHandleCreate = false;
+
+        /// <summary>
+        /// 所属扁平化窗体
+        /// </summary>
+        private FormExt feForm = null;
+
+        /// <summary>
+        /// 边框阴影厚度
+        /// </summary> 
+        public int borderThickness = 10;
+
+        /// <summary>
+        /// 鼠标当前拉伸状态
+        /// </summary>
+        private StretchTypes stretchType = StretchTypes.None;
+
+        /// <summary>
+        /// 鼠标是否已按下
+        /// </summary>
+        bool mouseIsDown = false;
+
+        /// <summary>
+        /// 鼠标按下时的屏幕坐标
+        /// </summary>
+        Point startMouseDown = Point.Empty;
+
+        /// <summary>
+        /// 鼠标按下时宿主窗体的rect
+        /// </summary>
+        Rectangle feFormRect = Rectangle.Empty;
+
+        #endregion
+
+        #region 扩展
+
+        public const int WS_CLIPCHILDREN = 0x02000000;
+        public const int WS_BORDER = 0x00800000;
+        public const int WS_DLGFRAME = 0x00400000;
+        public const int WS_SYSMENU = 0x00080000;
+        public const int WS_THICKFRAME = 0x00040000;
+        public const int WS_GROUP = 0x00020000;
+        public const int WS_TABSTOP = 0x00010000;
+
+
+        /// <summary>
+        /// 窗户是分层的窗户。如果窗口中有一个不能用这种风格类样式之一CS_OWNDC或CS_CLASSDC。Windows 8的：该WS_EX_LAYERED样式支持顶级窗口和子窗口。以前的Windows版本仅对顶级窗口支持WS_EX_LAYERED。
+        /// </summary>
+        private const int WS_EX_LAYERED = 0x80000;
+        private const int WS_EX_NOACTIVATE = 0x08000000;
+
+        private const int WS_POPUP = unchecked((int)0x80000000);
+        private const int WS_VISIBLE = 0x10000000;
+        private const int WS_CLIPSIBLINGS = 0x04000000;
+
+        public const int CS_HREDRAW = 0x0002;
+        public const int CS_VREDRAW = 0x0001;
+        public const int CS_DBLCLKS = 8;
+
+
+
+        private const byte AC_SRC_OVER = 0;
+        private const byte AC_SRC_ALPHA = 1;
+        /// <summary>
+        /// 使用pblend作为混合功能。如果显示模式为256色或更小，则此值的效果与ULW_OPAQUE的效果相同。
+        /// </summary>
+        private const Int32 ULW_ALPHA = 0x00000002;
+
+        /// <summary>
+        /// 该BLENDFUNCTION结构控制通过指定源和目的地的位图的混合函数共混。
+        /// </summary>
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct BLENDFUNCTION
+        {
+            /// <summary>
+            /// 源混合操作。当前，唯一已定义的源和目标混合操作是AC_SRC_OVER。有关详细信息，请参见以下“备注”部分。
+            /// </summary>
+            public byte BlendOp;
+            /// <summary>
+            /// 必须为零。
+            /// </summary>
+            public byte BlendFlags;
+            /// <summary>
+            /// 指定要在整个源位图上使用的Alpha透明度值。所述SourceConstantAlpha值与源位图任何每像素的alpha值组合。如果将SourceConstantAlpha设置为0，则假定图像是透明的。当您只想使用每像素Alpha值时，请将SourceConstantAlpha值设置为255（不透明）。
+            /// </summary>
+            public byte SourceConstantAlpha;
+            /// <summary>
+            /// 该成员控制解释源位图和目标位图的方式。AlphaFormat具有以下值。
+            /// AC_SRC_ALPHA	
+            /// 当位图具有Alpha通道（即每像素alpha）时，将设置此标志。请注意，API使用预乘Alpha，这意味着位图中的红色，绿色和蓝色通道值必须预乘Alpha通道值。例如，如果Alpha通道值为x，则在调用之前，红色，绿色和蓝色通道必须乘以x并除以0xff。
+            /// </summary>
+            public byte AlphaFormat;
+        }
+
+        /// <summary>
+        /// 检索句柄用于指定窗口的客户区或整个屏幕的设备上下文（DC）。您可以在后续的GDI函数中使用返回的句柄来绘制DC。设备上下文是一个不透明的数据结构，其值由GDI内部使用。
+        /// </summary>
+        /// <param name="hWnd">要获取其DC的窗口的句柄。如果此值为NULL，则GetDC检索整个屏幕的DC。</param>
+        /// <returns>如果函数成功，则返回值是指定窗口的客户区DC的句柄。如果函数失败，则返回值为NULL。</returns>
+        [DllImport("user32.dll", ExactSpelling = true, SetLastError = true)]
+        public static extern IntPtr GetDC(IntPtr hWnd);
+
+        /// <summary>
+        /// 创建具有指定设备兼容的存储器设备上下文（DC）。
+        /// </summary>
+        /// <param name="hdc">现有DC的句柄。如果此句柄为NULL，则该函数将创建一个与应用程序当前屏幕兼容的内存DC。</param>
+        /// <returns>如果函数成功，则返回值是内存DC的句柄。如果函数失败，则返回值为NULL。</returns>
+        [DllImport("gdi32.dll", ExactSpelling = true, SetLastError = true)]
+        public static extern IntPtr CreateCompatibleDC(IntPtr hdc);
+
+        /// <summary>
+        /// 释放设备上下文（DC），释放它，以供其他应用程序使用。ReleaseDC功能的效果取决于DC的类型。它仅释放公共DC和窗口DC。它对班级或专用DC无效。
+        /// </summary>
+        /// <param name="hWnd">要释放其DC的窗口的句柄。</param>
+        /// <param name="hDC">要释放的DC的句柄。</param>
+        /// <returns></returns>
+        [DllImport("user32.dll", ExactSpelling = true, SetLastError = true)]
+        public static extern int ReleaseDC(IntPtr hWnd, IntPtr hDC);
+
+        /// <summary>
+        /// 删除指定的设备上下文（DC）。。
+        /// </summary>
+        /// <param name="hdc">设备上下文的句柄。</param>
+        /// <returns></returns>
+        [DllImport("gdi32.dll", ExactSpelling = true, SetLastError = true)]
+        public static extern int DeleteDC(IntPtr hdc);
+
+        /// <summary>
+        /// 选择一个对象到指定的设备上下文（DC）。新对象将替换相同类型的先前对象。
+        /// </summary>
+        /// <param name="hdc">DC的句柄。</param>
+        /// <param name="h">要选择的对象的句柄。必须使用以下功能之一创建指定的对象。
+        /// CreateBitmap，CreateBitmapIndirect，CreateCompatibleBitmap，CreateDIBitmap，CreateDIBSection
+        /// 位图只能选择到存储器DC中。单个位图不能同时选择到多个DC中。
+        /// CreateBrushIndirect，CreateDIBPatternBrush，CreateDIBPatternBrushPt，CreateHatchBrush，CreatePatternBrush，CreateSolidBrush
+        /// CreateFont，CreateFontIndirect
+        /// 创建笔，创建笔间接
+        /// CombineRgn，CreateEllipticRgn，CreateEllipticRgnIndirect，CreatePolygonRgn，CreateRectRgn，CreateRectRgnIndirect</param>
+        /// <returns></returns>
+        [DllImport("gdi32.dll", ExactSpelling = true, SetLastError = true)]
+        public static extern IntPtr SelectObject(IntPtr hdc, IntPtr h);
+
+        /// <summary>
+        /// 删除逻辑笔，刷子，字体，位图，区域或调色板，释放与该对象相关联的所有系统资源。删除对象后，指定的句柄不再有效。
+        /// </summary>
+        /// <param name="ho">逻辑笔，画笔，字体，位图，区域或调色板的句柄。</param>
+        /// <returns></returns>
+        [DllImport("gdi32.dll", ExactSpelling = true, SetLastError = true)]
+        public static extern int DeleteObject(IntPtr ho);
+
+        /// <summary>
+        /// 更新分层窗口的位置，大小，形状，内容和半透明。
+        /// </summary>
+        /// <param name="hWnd">分层窗口的句柄。使用CreateWindowEx函数创建窗口时，可以通过指定WS_EX_LAYERED来创建分层窗口。Windows 8的：  该WS_EX_LAYERED样式支持顶级窗口和子窗口。以前的Windows版本仅对顶级窗口支持WS_EX_LAYERED。</param>
+        /// <param name="hdcDst">屏幕DC的句柄。通过在调用函数时指定NULL可获得此句柄。当窗口内容更新时，它用于调色板颜色匹配。如果hdcDst为NULL，则将使用默认调色板。如果hdcSrc为NULL，则hdcDst必须为NULL。</param>
+        /// <param name="pptDst">指向指定分层窗口的新屏幕位置的结构的指针。如果当前位置未更改，则pptDst可以为NULL。</param>
+        /// <param name="psize">指向指定分层窗口新大小的结构的指针。如果窗口的大小未更改，则psize可以为NULL。如果hdcSrc为NULL，则psize必须为NULL。</param>
+        /// <param name="hdcSrc">DC的句柄，用于定义分层窗口的表面。可以通过调用CreateCompatibleDC函数获得此句柄。如果窗口的形状和视觉上下文未更改，则hdcSrc可以为NULL。</param>
+        /// <param name="pptSrc">指向指定设备上下文中层位置的结构的指针。如果hdcSrc为NULL，则pptSrc应该为NULL。</param>
+        /// <param name="crKey">一个结构，用于指定在组成分层窗口时要使用的颜色键。要生成COLORREF，请使用RGB宏。</param>
+        /// <param name="pblend">指向结构的指针，该结构指定组成分层窗口时要使用的透明度值。</param>
+        /// <param name="dwFlags"></param>
+        /// <returns></returns>
+        [DllImport("user32.dll", ExactSpelling = true, SetLastError = true)]
+        public static extern int UpdateLayeredWindow(IntPtr hWnd, IntPtr hdcDst, ref Point pptDst, ref Size psize, IntPtr hdcSrc, ref Point pptSrc, Int32 crKey, ref BLENDFUNCTION pblend, Int32 dwFlags);
+
+        #endregion
+
+        public LayerBoederForm(FormExt _feForm)
+        {
+            this.feForm = _feForm;
+            this.Size = new Size(this.feForm.Bounds.Height + borderThickness * 2, this.feForm.Bounds.Height + borderThickness * 2);
+            this.ShowInTaskbar = false;
+            this.FormBorderStyle = FormBorderStyle.None;
+        }
+
+        #region 重写
+
+        protected override void OnHandleCreated(EventArgs e)
+        {
+            base.OnHandleCreated(e);
+
+            isHandleCreate = true;
+        }
+
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cParms = base.CreateParams;
+                cParms.Style |= WS_CLIPSIBLINGS | WS_POPUP | WS_VISIBLE;
+                cParms.Style ^= WS_CLIPCHILDREN | WS_GROUP | WS_TABSTOP;
+                cParms.ExStyle |= WS_EX_NOACTIVATE | WS_EX_LAYERED;
+                return cParms;
+            }
+        }
+
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            base.OnMouseDown(e);
+
+            this.mouseIsDown = true;
+            this.startMouseDown = Control.MousePosition;
+            this.feFormRect = this.feForm.Bounds;
+        }
+
+        protected override void OnMouseUp(MouseEventArgs e)
+        {
+            base.OnMouseUp(e);
+
+            this.mouseIsDown = false;
+            this.startMouseDown = Point.Empty;
+            this.feFormRect = Rectangle.Empty;
+        }
+
+        protected override void OnLeave(EventArgs e)
+        {
+            base.OnLeave(e);
+
+            if (this.mouseIsDown == false)
+            {
+                this.Cursor = Cursors.Default;
+            }
+
+            this.mouseIsDown = false;
+            this.startMouseDown = Point.Empty;
+            this.feFormRect = Rectangle.Empty;
+        }
+
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+
+            if (this.mouseIsDown == false)
+            {
+                this.SetNCHITTEST(this.PointToClient(Control.MousePosition));
+            }
+            else
+            {
+                Point difference = new Point(Control.MousePosition.X - this.startMouseDown.X, Control.MousePosition.Y - this.startMouseDown.Y);
+                if (difference.X != 0 || difference.Y != 0)
+                {
+                    if (this.stretchType == StretchTypes.LeftTop)
+                    {
+                        this.feForm.SetBounds(
+                            this.feFormRect.X + difference.X,
+                            this.feFormRect.Y + difference.Y,
+                            this.feFormRect.Width - difference.X,
+                            this.feFormRect.Height - difference.Y,
+                            BoundsSpecified.All
+                        );
+                    }
+                    else if (this.stretchType == StretchTypes.RightTop)
+                    {
+                        this.feForm.SetBounds(
+                            this.feFormRect.X,
+                            this.feFormRect.Y + difference.Y,
+                            this.feFormRect.Width + difference.X,
+                            this.feFormRect.Height - difference.Y,
+                            BoundsSpecified.Y | BoundsSpecified.Height | BoundsSpecified.Width
+                        );
+                    }
+                    else if (this.stretchType == StretchTypes.RightBottom)
+                    {
+                        this.feForm.SetBounds(
+                            this.feFormRect.X,
+                            this.feFormRect.Y,
+                            this.feFormRect.Width + difference.X,
+                            this.feFormRect.Height + difference.Y,
+                            BoundsSpecified.Size
+                        );
+                    }
+                    else if (this.stretchType == StretchTypes.LeftBottom)
+                    {
+                        this.feForm.SetBounds(
+                            this.feFormRect.X + difference.X,
+                            this.feFormRect.Y,
+                            this.feFormRect.Width - -difference.X,
+                            this.feFormRect.Height - +difference.Y,
+                            BoundsSpecified.X | BoundsSpecified.Width | BoundsSpecified.Height
+                        );
+                    }
+                    else if (this.stretchType == StretchTypes.Top)
+                    {
+                        this.feForm.SetBounds(
+                            this.feFormRect.X,
+                            this.feFormRect.Y + difference.Y,
+                            this.feFormRect.Width,
+                            this.feFormRect.Height - difference.Y,
+                            BoundsSpecified.Y | BoundsSpecified.Height
+                        );
+                    }
+                    else if (this.stretchType == StretchTypes.Bottom)
+                    {
+                        this.feForm.SetBounds(
+                            this.feFormRect.X,
+                            this.feFormRect.Y,
+                            this.feFormRect.Width,
+                            this.feFormRect.Height + difference.Y,
+                            BoundsSpecified.Height
+                        );
+                    }
+                    else if (this.stretchType == StretchTypes.Left)
+                    {
+                        this.feForm.SetBounds(
+                            this.feFormRect.X + difference.X,
+                            this.feFormRect.Y,
+                            this.feFormRect.Width - difference.X,
+                            this.feFormRect.Height,
+                            BoundsSpecified.X | BoundsSpecified.Width
+                        );
+                    }
+                    else if (this.stretchType == StretchTypes.Right)
+                    {
+                        this.feForm.SetBounds(
+                            this.feFormRect.X,
+                            this.feFormRect.Y,
+                            this.feFormRect.Width + difference.X,
+                            this.feFormRect.Height,
+                            BoundsSpecified.Width
+                        );
+                    }
+                }
+            }
+        }
+
+        #endregion
+
+        #region 公开方法
+
+        /// <summary>
+        /// 使分层控件的整个图面无效并导致重绘控件（Invalidate已失效）。
+        /// </summary>
+        public void InvalidateLayer()
+        {
+            if (this.isHandleCreate && this.Visible)
+            {
+                #region 绘制图片
+
+                Color start = Color.FromArgb(40, 0, 0, 0);
+                Color zhongjian = Color.FromArgb(10, 0, 0, 0);
+                Color end = Color.FromArgb(0, 0, 0, 0);
+
+                Rectangle rect = new Rectangle(0, 0, this.Bounds.Width, this.Bounds.Height);
+
+                Bitmap bmp = new Bitmap(rect.Width, rect.Height);
+                Graphics g = Graphics.FromImage(bmp);
+
+
+                Rectangle left = new Rectangle(rect.X, rect.Y + this.borderThickness, this.borderThickness, rect.Height - this.borderThickness * 2);
+                Rectangle right = new Rectangle(rect.Right - this.borderThickness, rect.Y + this.borderThickness, this.borderThickness, rect.Height - this.borderThickness * 2);
+                Rectangle top = new Rectangle(rect.X + this.borderThickness, rect.Y, rect.Width - this.borderThickness * 2, this.borderThickness);
+                Rectangle bottom = new Rectangle(rect.X + this.borderThickness, rect.Bottom - this.borderThickness, rect.Width - this.borderThickness * 2, this.borderThickness);
+
+                Rectangle lefttop = new Rectangle(rect.X, rect.Y, this.borderThickness * 2, this.borderThickness * 2);
+                Rectangle righttop = new Rectangle(rect.Right - this.borderThickness * 2, rect.Y, this.borderThickness * 2, this.borderThickness * 2);
+                Rectangle rightbottom = new Rectangle(rect.Right - this.borderThickness * 2, rect.Bottom - this.borderThickness * 2, this.borderThickness * 2, this.borderThickness * 2);
+                Rectangle leftbottom = new Rectangle(rect.X, rect.Bottom - this.borderThickness * 2, this.borderThickness * 2, this.borderThickness * 2);
+
+                LinearGradientBrush left_brush = new LinearGradientBrush(left, Color.Transparent, Color.Transparent, 360);
+                left_brush.InterpolationColors = new ColorBlend() { Positions = new float[] { 0.0f, 0.5f, 1.0f }, Colors = new Color[3] { end, zhongjian, start } };
+                g.FillRectangle(left_brush, left);
+
+                LinearGradientBrush right_brush = new LinearGradientBrush(right, Color.Transparent, Color.Transparent, 360);
+                right_brush.InterpolationColors = new ColorBlend() { Positions = new float[] { 0.0f, 0.5f, 1.0f }, Colors = new Color[3] { start, zhongjian, end } };
+                g.FillRectangle(right_brush, right);
+
+                LinearGradientBrush top_brush = new LinearGradientBrush(top, Color.Transparent, Color.Transparent, 90);
+                top_brush.InterpolationColors = new ColorBlend() { Positions = new float[] { 0.0f, 0.5f, 1.0f }, Colors = new Color[3] { end, zhongjian, start } };
+                g.FillRectangle(top_brush, top);
+
+                LinearGradientBrush bottom_brush = new LinearGradientBrush(bottom, Color.Transparent, Color.Transparent, 90);
+                bottom_brush.InterpolationColors = new ColorBlend() { Positions = new float[] { 0.0f, 0.5f, 1.0f }, Colors = new Color[3] { start, zhongjian, end } };
+                g.FillRectangle(bottom_brush, bottom);
+
+
+                left_brush.InterpolationColors.Positions = new float[] { 0.0f, 0.3f, 0.7f };
+                right_brush.InterpolationColors.Positions = new float[] { 0.0f, 0.3f, 0.7f };
+                top_brush.InterpolationColors.Positions = new float[] { 0.0f, 0.3f, 0.7f };
+                bottom_brush.InterpolationColors.Positions = new float[] { 0.0f, 0.3f, 0.7f };
+                g.FillRectangle(left_brush, left);
+                g.FillRectangle(right_brush, right);
+                g.FillRectangle(top_brush, top);
+                g.FillRectangle(bottom_brush, bottom);
+
+                {
+                    GraphicsPath graphicsPath = new GraphicsPath();
+                    graphicsPath.AddPie(lefttop, 0, 360);
+                    PathGradientBrush pathGradientBrush = new PathGradientBrush(graphicsPath) { };
+                    pathGradientBrush.Blend.Positions = new float[] { 0.0f, 0.3f, 0.7f };
+                    pathGradientBrush.CenterColor = Color.FromArgb(30, 0, 0, 0);
+                    pathGradientBrush.SurroundColors = new Color[] { end };
+                    g.FillPie(pathGradientBrush, lefttop, 180, 90);
+                    pathGradientBrush.Dispose();
+                }
+
+                {
+                    GraphicsPath graphicsPath = new GraphicsPath();
+                    graphicsPath.AddPie(righttop, 0, 360);
+                    PathGradientBrush pathGradientBrush = new PathGradientBrush(graphicsPath);
+                    pathGradientBrush.Blend.Positions = new float[] { 0.0f, 0.3f, 0.7f };
+                    pathGradientBrush.CenterColor = Color.FromArgb(50, 0, 0, 0);
+                    pathGradientBrush.SurroundColors = new Color[] { end };
+                    g.FillPie(pathGradientBrush, righttop, 270, 90);
+                    pathGradientBrush.Dispose();
+                }
+
+                {
+                    GraphicsPath graphicsPath = new GraphicsPath();
+                    graphicsPath.AddPie(rightbottom, 0, 360);
+                    PathGradientBrush pathGradientBrush = new PathGradientBrush(graphicsPath);
+                    pathGradientBrush.Blend.Positions = new float[] { 0.0f, 0.3f, 0.7f };
+                    pathGradientBrush.CenterColor = Color.FromArgb(50, 0, 0, 0);
+                    pathGradientBrush.SurroundColors = new Color[] { end };
+                    g.FillPie(pathGradientBrush, rightbottom, 360, 90);
+                    pathGradientBrush.Dispose();
+                }
+
+                {
+                    GraphicsPath graphicsPath = new GraphicsPath();
+                    graphicsPath.AddPie(leftbottom, 0, 360);
+                    PathGradientBrush pathGradientBrush = new PathGradientBrush(graphicsPath);
+                    pathGradientBrush.Blend.Positions = new float[] { 0.0f, 0.3f, 0.7f };
+                    pathGradientBrush.CenterColor = Color.FromArgb(50, 0, 0, 0);
+                    pathGradientBrush.SurroundColors = new Color[] { end };
+                    g.FillPie(pathGradientBrush, leftbottom, 90, 90);
+                    pathGradientBrush.Dispose();
+                }
+
+
+                // 绘制边框
+                if (this.feForm.CaptionEnabled)
+                {
+                    Pen border_pen = new Pen(this.feForm.BorderColor, 1);
+                    Rectangle border_rect = new Rectangle(this.borderThickness - 1, this.borderThickness - 1, this.Bounds.Width - this.borderThickness * 2 + 1, this.Bounds.Height - this.borderThickness * 2 + 1);
+                    g.DrawRectangle(border_pen, border_rect);
+                    border_pen.Dispose();
+                }
+
+
+                #region 释放
+
+                if (left_brush != null)
+                    left_brush.Dispose();
+                if (right_brush != null)
+                    right_brush.Dispose();
+                if (top_brush != null)
+                    top_brush.Dispose();
+                if (bottom_brush != null)
+                    bottom_brush.Dispose();
+
+                g.Dispose();
+
+                #endregion
+
+                #endregion
+
+                #region 把图片绘制到控件上
+
+                IntPtr hdcDst = GetDC(this.Handle);
+                IntPtr hdcSrc = CreateCompatibleDC(hdcDst);
+
+                IntPtr newBitmap = bmp.GetHbitmap(Color.FromArgb(0));//创建一张位图
+                IntPtr oldBitmap = SelectObject(hdcSrc, newBitmap);//位图绑定到DC设备上
+
+                Point pptDst = new Point(this.Left, this.Top);
+                Size psize = new Size(bmp.Width, bmp.Height);
+                Point pptSrc = new Point(0, 0);
+
+                BLENDFUNCTION pblend = new BLENDFUNCTION();
+                pblend.BlendOp = AC_SRC_OVER;
+                pblend.SourceConstantAlpha = 255;
+                pblend.AlphaFormat = AC_SRC_ALPHA;
+                pblend.BlendFlags = 0;
+
+                UpdateLayeredWindow(this.Handle, hdcDst, ref pptDst, ref psize, hdcSrc, ref pptSrc, 0, ref pblend, ULW_ALPHA);
+
+                if (oldBitmap != IntPtr.Zero)
+                {
+                    if (oldBitmap != IntPtr.Zero)
+                        DeleteObject(newBitmap);
+                    if (oldBitmap != IntPtr.Zero)
+                        DeleteObject(newBitmap);
+                }
+                if (bmp != null)
+                    bmp.Dispose();
+                ReleaseDC(this.Handle, hdcDst);
+                DeleteDC(hdcSrc);
+
+
+                #endregion 
+
+            }
+        }
+
+        #endregion
+
+        #region 私有方法
+
+        /// <summary>
+        /// 设置窗体鼠标NCHITTEST状态
+        /// </summary>
+        /// <param name="point">鼠标相对于控价的坐标</param>
+        private void SetNCHITTEST(Point point)
+        {
+            if (this.WindowState == FormWindowState.Normal && (this.feForm.ResizeType == FormExt.ResizeTypes.Drag || this.feForm.ResizeType == FormExt.ResizeTypes.CaptionDrag))
+            {
+                int scale_borderThickness = (int)(this.borderThickness * DotsPerInchHelper.DPIScale.XScale);
+
+                //左上
+                if (point.X < scale_borderThickness && point.Y < scale_borderThickness)
+                {
+                    if (this.Cursor != Cursors.SizeNWSE)
+                    {
+                        this.Cursor = Cursors.SizeNWSE;
+                    }
+                    this.stretchType = StretchTypes.LeftTop;
+                }
+                //右下
+                else if (point.X > this.ClientRectangle.Right - scale_borderThickness && point.Y > this.ClientRectangle.Bottom - scale_borderThickness)
+                {
+                    if (this.Cursor != Cursors.SizeNWSE)
+                    {
+                        this.Cursor = Cursors.SizeNWSE;
+                    }
+                    this.stretchType = StretchTypes.RightBottom;
+                }
+                //右上
+                else if (point.X > this.ClientRectangle.Right - scale_borderThickness && point.Y < scale_borderThickness)
+                {
+                    if (this.Cursor != Cursors.SizeNESW)
+                    {
+                        this.Cursor = Cursors.SizeNESW;
+                    }
+                    this.stretchType = StretchTypes.RightTop;
+                }
+                //左下
+                else if (point.X < scale_borderThickness && point.Y > this.ClientRectangle.Bottom - scale_borderThickness)
+                {
+                    if (this.Cursor != Cursors.SizeNESW)
+                    {
+                        this.Cursor = Cursors.SizeNESW;
+                    }
+                    this.stretchType = StretchTypes.LeftBottom;
+                }
+                //上
+                else if (point.Y < scale_borderThickness)
+                {
+                    if (this.Cursor != Cursors.SizeNS)
+                    {
+                        this.Cursor = Cursors.SizeNS;
+                    }
+                    this.stretchType = StretchTypes.Top;
+                }
+                //下
+                else if (point.Y > this.ClientRectangle.Bottom - scale_borderThickness)
+                {
+                    if (this.Cursor != Cursors.SizeNS)
+                    {
+                        this.Cursor = Cursors.SizeNS;
+                    }
+                    this.stretchType = StretchTypes.Bottom;
+                }
+                //左
+                else if (point.X < scale_borderThickness)
+                {
+                    if (this.Cursor != Cursors.SizeWE)
+                    {
+                        this.Cursor = Cursors.SizeWE;
+                    }
+                    this.stretchType = StretchTypes.Left;
+                }
+                //右
+                else if (point.X > this.ClientRectangle.Right - scale_borderThickness)
+                {
+                    if (this.Cursor != Cursors.SizeWE)
+                    {
+                        this.Cursor = Cursors.SizeWE;
+                    }
+                    this.stretchType = StretchTypes.Right;
+                }
+            }
+        }
+
+        #endregion
+
+        #region 枚举
+
+        /// <summary>
+        /// 鼠标当前拉伸状态
+        /// </summary>
+        [Description("鼠标当前拉伸状态")]
+        public enum StretchTypes
+        {
+            /// <summary>
+            /// 禁止拉伸
+            /// </summary>
+            None,
+            /// <summary>
+            /// 允许往上拉伸
+            /// </summary>
+            Top,
+            /// <summary>
+            /// 允许往右拉伸
+            /// </summary>
+            Right,
+            /// <summary>
+            /// 允许往下拉伸
+            /// </summary>
+            Bottom,
+            /// <summary>
+            /// 允许往左拉伸
+            /// </summary>
+            Left,
+            /// <summary>
+            /// 允许往上、右、下、左拉伸
+            /// </summary>
+            Front,
+            /// <summary>
+            /// 允许往左上对角线拉伸
+            /// </summary>
+            LeftTop,
+            /// <summary>
+            /// 允许往右上对角线拉伸
+            /// </summary>
+            RightTop,
+            /// <summary>
+            /// 允许往左下对角线拉伸
+            /// </summary>
+            LeftBottom,
+            /// <summary>
+            /// 允许往右下对角线拉伸
+            /// </summary>
+            RightBottom,
+        }
+
+        #endregion
+
+    }
+
+    /// <summary>
     /// 扁平化窗体基类接口
     /// </summary>
     [Description("扁平化窗体基类接口")]
@@ -2007,3 +2464,4 @@ namespace WinformControlLibraryExtension
     }
 
 }
+

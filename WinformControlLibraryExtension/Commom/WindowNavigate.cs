@@ -53,14 +53,41 @@ namespace WinformControlLibraryExtension
 {
     public static class WindowNavigate
     {
+        /// <summary>
+        /// 获得的设备环境覆盖了整个窗口（包括非客户区）
+        /// </summary>
+        /// <param name="hwnd"></param>
+        /// <returns></returns>
         [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
         public static extern IntPtr GetWindowDC(IntPtr hwnd);
+
+        /// <summary>
+        /// 用于获得hWnd参数所指定窗口的客户区域的一个设备环境
+        /// </summary>
+        /// <param name="ptr"></param>
+        /// <returns></returns>
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetDC(IntPtr ptr);
 
         [DllImport("User32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
         public static extern int ReleaseDC(IntPtr hwnd, IntPtr hdc);
 
         [DllImport("User32.dll", EntryPoint = "SendMessage")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);
+
+        /// <summary>
+        /// DPI的缩放由程序自己处理
+        /// </summary>
+        /// <returns></returns>
+        [DllImport("user32.dll")]
+        public static extern bool SetProcessDPIAware();
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetDesktopWindow();
+
+        [DllImport("gdi32.dll")]
+        public static extern int GetDeviceCaps(IntPtr hdc, int nIndex);
+
 
         /// <summary>
         /// 禁止获取焦点

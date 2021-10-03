@@ -562,6 +562,7 @@ namespace WinformControlLibraryExtension
             base.OnPaint(e);
 
             Graphics g = e.Graphics;
+
             g.SmoothingMode = SmoothingMode.AntiAlias;
             Rectangle rect = this.ClientRectangle;
             int border = 2;
@@ -598,7 +599,7 @@ namespace WinformControlLibraryExtension
                 int value_h = (int)(this.Value * rect.Height);
                 for (int i = 0; i < this.waveFrontPointList.Count; i++)
                 {
-                    behindPoint[i] = new Point(this.waveBehindPointList[i].X - this.wave_distance, rect.Bottom - this.waveBehindPointList[i].Y - value_h + (int)((float)this.WaveHeight / 3f));
+                    behindPoint[i] = new Point(this.waveBehindPointList[i].X - this.wave_distance, rect.Bottom - this.waveBehindPointList[i].Y - value_h + (int)((float)this.WaveHeight* DotsPerInchHelper.DPIScale.YScale / 3f));
                     frontPoint[i] = new Point(this.waveFrontPointList[i].X + this.wave_distance, rect.Bottom - this.waveFrontPointList[i].Y - value_h);
                 }
 
@@ -732,7 +733,7 @@ namespace WinformControlLibraryExtension
                 this.waveAccumulationTime = 0;
 
                 this.wave_distance += this.WaveInterval;
-                if (this.wave_distance >= this.WaveWidth * 2)
+                if (this.wave_distance >= this.WaveWidth * DotsPerInchHelper.DPIScale.XScale * 2)
                 {
                     this.wave_distance = 0;
                 }
@@ -752,16 +753,16 @@ namespace WinformControlLibraryExtension
         {
             this.waveFrontPointList.Clear();
             this.waveBehindPointList.Clear();
-            int startFront_x = this.ClientRectangle.X - this.WaveWidth * 4;
+            int startFront_x = this.ClientRectangle.Left - (int)(this.WaveWidth * DotsPerInchHelper.DPIScale.XScale * 4);
             int start_y = 0;
-            int startBehind_x = this.ClientRectangle.Right + this.WaveWidth * 4;
+            int startBehind_x = this.ClientRectangle.Right + (int)(this.WaveWidth * DotsPerInchHelper.DPIScale.XScale * 4);
 
             int i = 0;
             while (true)
             {
-                startFront_x += this.WaveWidth;
-                startBehind_x -= this.WaveWidth;
-                start_y = this.WaveHeight * (i % 2);
+                startFront_x += (int)(this.WaveWidth * DotsPerInchHelper.DPIScale.XScale);
+                startBehind_x -= (int)(this.WaveWidth * DotsPerInchHelper.DPIScale.XScale);
+                start_y = (int)(this.WaveHeight * DotsPerInchHelper.DPIScale.YScale) * (i % 2);
                 this.waveFrontPointList.Add(new Point(startFront_x, start_y));
                 this.waveBehindPointList.Add(new Point(startBehind_x, start_y));
                 if (startFront_x >= this.ClientRectangle.Right && start_y == 0)

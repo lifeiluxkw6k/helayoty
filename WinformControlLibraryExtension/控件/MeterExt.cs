@@ -1052,9 +1052,23 @@ namespace WinformControlLibraryExtension
             base.OnPaint(e);
 
             Graphics g = e.Graphics;
+
+            int scale_circleRadius = (int)(this.CircleRadius * DotsPerInchHelper.DPIScale.XScale); 
+           int scale_backBorder = (int)(this.BackBorder * DotsPerInchHelper.DPIScale.XScale); 
+           int scale_backShadow = (int)(this.BackShadow * DotsPerInchHelper.DPIScale.XScale); 
+           int scale_arcThickness = (int)(this.ArcThickness * DotsPerInchHelper.DPIScale.XScale); 
+           int scale_scaleWidth = (int)(this.ScaleWidth * DotsPerInchHelper.DPIScale.XScale); 
+           int scale_scaleHeight = (int)(this.ScaleHeight * DotsPerInchHelper.DPIScale.XScale); 
+           int scale_scaleTextRadius = (int)(this.ScaleTextRadius * DotsPerInchHelper.DPIScale.XScale); 
+           int scale_splitScaleWidth = (int)(this.SplitScaleWidth * DotsPerInchHelper.DPIScale.XScale); 
+           int scale_splitScaleHeight = (int)(this.SplitScaleHeight * DotsPerInchHelper.DPIScale.XScale); 
+           int scale_gradualThickness = (int)(this.GradualThickness * DotsPerInchHelper.DPIScale.XScale); 
+           int scale_valueDistance = (int)(this.ValueDistance * DotsPerInchHelper.DPIScale.XScale); 
+           int scale_textDistance = (int)(this.TextDistance * DotsPerInchHelper.DPIScale.XScale); 
+
             g.SmoothingMode = SmoothingMode.AntiAlias;
             float start = 90 + (180 - (this.ArcAngle) / 2f);//绘制开始角度
-            float border_radius = this.BackBorder + this.BackShadow + this.ScaleTextRadius + (this.GradualShow ? this.GradualThickness : this.ScaleHeight) + this.CircleRadius;//外圆半径
+            float border_radius = scale_backBorder + scale_backShadow + scale_scaleTextRadius + (this.GradualShow ? scale_gradualThickness : scale_scaleHeight) + scale_circleRadius;//外圆半径
 
             RectangleF rect = RectangleF.Empty;
             PointF rect_center = PointF.Empty;
@@ -1065,8 +1079,8 @@ namespace WinformControlLibraryExtension
             }
             else
             {
-                int pie_bottom_radian_left_right_height = (int)(this.CircleRadius * (2f / 5f));//扇形底部左右圆弧高度,不能写死
-                int pie_bottom_radian_height = (int)(15 + (this.CircleRadius - 50) / 20f);//扇形底部圆弧高度,不能写死
+                int pie_bottom_radian_left_right_height = (int)(scale_circleRadius * (2f / 5f));//扇形底部左右圆弧高度,不能写死
+                int pie_bottom_radian_height = (int)(15 + (scale_circleRadius - 50) / 20f);//扇形底部圆弧高度,不能写死
                 float height = border_radius + pie_bottom_radian_left_right_height + pie_bottom_radian_height;
                 rect = new RectangleF(this.ClientRectangle.X, this.ClientRectangle.Y + (this.ClientRectangle.Height - height) / 2f, this.ClientRectangle.Width, this.ClientRectangle.Height);
                 rect_center = new PointF(rect.X + rect.Width / 2f, rect.Y + rect.Height / 2f);
@@ -1084,14 +1098,14 @@ namespace WinformControlLibraryExtension
                     #endregion
 
                     #region 内圆
-                    RectangleF circle_in_rect = new RectangleF(rect_center.X - border_radius + this.BackBorder + this.BackShadow, rect_center.Y - border_radius + this.BackBorder + this.BackShadow, (border_radius - this.BackBorder - this.BackShadow) * 2, (border_radius - this.BackBorder - this.BackShadow) * 2);
+                    RectangleF circle_in_rect = new RectangleF(rect_center.X - border_radius + scale_backBorder + scale_backShadow, rect_center.Y - border_radius + scale_backBorder + scale_backShadow, (border_radius - scale_backBorder - scale_backShadow) * 2, (border_radius - scale_backBorder - scale_backShadow) * 2);
                     SolidBrush circle_in_sb = new SolidBrush(this.BackInnerColor);
                     g.FillEllipse(circle_in_sb, circle_in_rect);
                     #endregion
 
                     #region 边框阴影
                     LinearGradientBrush circle_in_lgb = new LinearGradientBrush(circle_in_rect, Color.White, this.BackShadowColor, 225);
-                    Pen circle_shadow_pen = new Pen(circle_in_lgb, this.BackShadow);
+                    Pen circle_shadow_pen = new Pen(circle_in_lgb, scale_backShadow);
                     circle_shadow_pen.Alignment = PenAlignment.Outset;
                     g.DrawEllipse(circle_shadow_pen, circle_in_rect);
                     #endregion
@@ -1103,8 +1117,8 @@ namespace WinformControlLibraryExtension
                 }
                 else//扇形
                 {
-                    int pie_bottom_radian_left_right_height = (int)(this.CircleRadius * (2f / 5f));//扇形底部左右圆弧高度,不能写死
-                    int pie_bottom_radian_height = (int)(15 + (this.CircleRadius - 50) / 20f);//扇形底部圆弧高度,不能写死
+                    int pie_bottom_radian_left_right_height = (int)(scale_circleRadius * (2f / 5f));//扇形底部左右圆弧高度,不能写死
+                    int pie_bottom_radian_height = (int)(15 + (scale_circleRadius - 50) / 20f);//扇形底部圆弧高度,不能写死
 
                     #region 边框
                     RectangleF pie_border_rect = new RectangleF(rect_center.X - border_radius, rect_center.Y - border_radius, border_radius * 2, border_radius * 2);
@@ -1130,7 +1144,7 @@ namespace WinformControlLibraryExtension
                     #endregion
 
                     #region 内扇形
-                    RectangleF pie_in_rect = new RectangleF(rect_center.X - border_radius + this.BackBorder + this.BackShadow, rect_center.Y - border_radius + this.BackBorder + this.BackShadow, (border_radius - this.BackBorder - this.BackShadow) * 2, (border_radius - this.BackBorder - this.BackShadow) * 2);
+                    RectangleF pie_in_rect = new RectangleF(rect_center.X - border_radius + scale_backBorder + scale_backShadow, rect_center.Y - border_radius + scale_backBorder + scale_backShadow, (border_radius - scale_backBorder - scale_backShadow) * 2, (border_radius - scale_backBorder - scale_backShadow) * 2);
                     SolidBrush pie_in_sb = new SolidBrush(this.BackInnerColor);
 
                     GraphicsPath pie_in_gp = new GraphicsPath();
@@ -1153,7 +1167,7 @@ namespace WinformControlLibraryExtension
 
                     #region 边框阴影
                     LinearGradientBrush pie_in_lgb = new LinearGradientBrush(pie_in_rect, Color.White, this.BackShadowColor, 225);
-                    Pen pie_shadow_pen = new Pen(pie_in_lgb, this.BackShadow);
+                    Pen pie_shadow_pen = new Pen(pie_in_lgb, scale_backShadow);
                     pie_shadow_pen.Alignment = PenAlignment.Outset;
                     g.DrawPath(pie_shadow_pen, pie_in_gp);
                     #endregion
@@ -1171,15 +1185,15 @@ namespace WinformControlLibraryExtension
             #region 弧线、值弧线
             if (this.ArcShow)
             {
-                RectangleF arc_rect = new RectangleF(rect_center.X - this.CircleRadius + this.ArcThickness / 2f, rect_center.Y - this.CircleRadius + this.ArcThickness / 2f, (this.CircleRadius - this.ArcThickness / 2f) * 2, (this.CircleRadius - this.ArcThickness / 2f) * 2);
+                RectangleF arc_rect = new RectangleF(rect_center.X - scale_circleRadius + scale_arcThickness / 2f, rect_center.Y - scale_circleRadius + scale_arcThickness / 2f, (scale_circleRadius - scale_arcThickness / 2f) * 2, (scale_circleRadius - scale_arcThickness / 2f) * 2);
 
                 //弧线
-                Pen arcback_pen = new Pen(this.ArcBackColor, this.ArcThickness);
+                Pen arcback_pen = new Pen(this.ArcBackColor, scale_arcThickness);
                 arcback_pen.Alignment = PenAlignment.Outset;
                 g.DrawArc(arcback_pen, arc_rect, start, this.ArcAngle);
 
                 // 值弧线背景
-                Pen arcvalueback_pen = new Pen(this.ArcValueColor, this.ArcThickness);
+                Pen arcvalueback_pen = new Pen(this.ArcValueColor, scale_arcThickness);
                 arcvalueback_pen.Alignment = PenAlignment.Outset;
                 if (this.ArcRound)
                 {
@@ -1195,7 +1209,7 @@ namespace WinformControlLibraryExtension
             #region 渐变环背景
             if (this.GradualShow && this.GradualColorItems.Count > 1)
             {
-                Pen gradual_pen = new Pen(Color.White, this.CircleRadius / 50f * 2f);
+                Pen gradual_pen = new Pen(Color.White, scale_circleRadius / 50f * 2f);
                 int gradual_now_angle = 0;
                 float item_start_angle = 0;
 
@@ -1214,8 +1228,8 @@ namespace WinformControlLibraryExtension
                         ControlCommom.VerifyRGB((int)(this.GradualColorItems[i - 1].Color.G + rgb_g * k)),
                         ControlCommom.VerifyRGB((int)(this.GradualColorItems[i - 1].Color.B + rgb_b * k)));
                         gradual_now_angle = (int)(start + item_start_angle + k);
-                        PointF gradual_line_start_point = ControlCommom.CalculatePointForAngle(rect_center, this.CircleRadius, gradual_now_angle);
-                        PointF gradual_line_end_point = ControlCommom.CalculatePointForAngle(gradual_line_start_point, this.GradualThickness, gradual_now_angle);
+                        PointF gradual_line_start_point = ControlCommom.CalculatePointForAngle(rect_center, scale_circleRadius, gradual_now_angle);
+                        PointF gradual_line_end_point = ControlCommom.CalculatePointForAngle(gradual_line_start_point, scale_gradualThickness, gradual_now_angle);
 
                         g.DrawLine(gradual_pen, gradual_line_start_point, gradual_line_end_point);
                     }
@@ -1227,9 +1241,9 @@ namespace WinformControlLibraryExtension
 
             #region 刻度线、子刻度线、刻度线文本
             StringFormat scale_sf = new StringFormat(StringFormatFlags.NoClip);
-            Pen scale_pen = new Pen(this.ScaleColor, this.ScaleWidth);
+            Pen scale_pen = new Pen(this.ScaleColor, scale_scaleWidth);
             SolidBrush scale_value_sb = new SolidBrush(this.ScaleTextColor);
-            Pen split_pen = new Pen(this.SplitScaleColor, this.SplitScaleWidth);
+            Pen split_pen = new Pen(this.SplitScaleColor, scale_splitScaleWidth);
             float scale_now_angle = 0;
 
             int count = (int)(Math.Abs(this.MaxValue - this.MinValue) / this.ScaleInterval) + (Math.Abs(this.MaxValue - this.MinValue) % this.ScaleInterval == 0 ? 0 : 1);
@@ -1238,15 +1252,15 @@ namespace WinformControlLibraryExtension
                 scale_now_angle = start + this.ArcAngle / count * i;
 
                 #region 刻度线
-                PointF scale_now_start_point = ControlCommom.CalculatePointForAngle(rect_center, this.CircleRadius, scale_now_angle);
-                PointF scale_now_end_point = ControlCommom.CalculatePointForAngle(scale_now_start_point, this.ScaleHeight, scale_now_angle);
+                PointF scale_now_start_point = ControlCommom.CalculatePointForAngle(rect_center, scale_circleRadius, scale_now_angle);
+                PointF scale_now_end_point = ControlCommom.CalculatePointForAngle(scale_now_start_point, scale_scaleHeight, scale_now_angle);
                 g.DrawLine(scale_pen, scale_now_start_point, scale_now_end_point);
                 #endregion
 
                 #region 刻度线文本
                 string scale_text = (this.MinValue + this.ScaleInterval * i).ToString();
                 SizeF scale_text_size = g.MeasureString(scale_text, this.Font, 0, scale_sf);
-                PointF scale_text_point = ControlCommom.CalculatePointForAngle(scale_now_start_point, (this.GradualShow && this.GradualColorItems.Count > 1) ? this.GradualThickness : this.ScaleHeight, scale_now_angle);
+                PointF scale_text_point = ControlCommom.CalculatePointForAngle(scale_now_start_point, (this.GradualShow && this.GradualColorItems.Count > 1) ? scale_gradualThickness : scale_scaleHeight, scale_now_angle);
                 #region 刻度线文本坐标
                 if (scale_now_angle == 0)
                 {
@@ -1296,8 +1310,8 @@ namespace WinformControlLibraryExtension
                     {
                         for (int k = 1; k < this.SplitScaleCount; k++)
                         {
-                            PointF split_now_start_point = ControlCommom.CalculatePointForAngle(rect_center, this.CircleRadius, start + (float)this.ArcAngle / count * i + ((float)this.ArcAngle / count / this.SplitScaleCount * k));
-                            PointF split_now_end_point = ControlCommom.CalculatePointForAngle(split_now_start_point, this.SplitScaleHeight, start + (float)this.ArcAngle / count * i + ((float)this.ArcAngle / count / this.SplitScaleCount * k));
+                            PointF split_now_start_point = ControlCommom.CalculatePointForAngle(rect_center, scale_circleRadius, start + (float)this.ArcAngle / count * i + ((float)this.ArcAngle / count / this.SplitScaleCount * k));
+                            PointF split_now_end_point = ControlCommom.CalculatePointForAngle(split_now_start_point, scale_splitScaleHeight, start + (float)this.ArcAngle / count * i + ((float)this.ArcAngle / count / this.SplitScaleCount * k));
                             g.DrawLine(split_pen, split_now_start_point, split_now_end_point);
                         }
                     }
@@ -1314,7 +1328,7 @@ namespace WinformControlLibraryExtension
             #region 指针
             SolidBrush pointer_sb = new SolidBrush(this.PointerColor);
             float pointer_now_angle = start + this.ArcAngle * (this.animationCurrentValue / this.MaxValue);
-            PointF pointer_now_end_point = ControlCommom.CalculatePointForAngle(rect_center, (float)this.CircleRadius - (this.ArcShow ? this.ArcThickness : 0f), pointer_now_angle);
+            PointF pointer_now_end_point = ControlCommom.CalculatePointForAngle(rect_center, (float)scale_circleRadius - (this.ArcShow ? scale_arcThickness : 0f), pointer_now_angle);
 
             // 针
             int pointer_width = 8;//指针宽度
@@ -1357,7 +1371,7 @@ namespace WinformControlLibraryExtension
                 SolidBrush text_sb = new SolidBrush(this.ForeColor);
                 StringFormat text_sf = new StringFormat(StringFormatFlags.NoClip);
                 SizeF text_size = g.MeasureString(this.Text, this.Font);
-                g.DrawString(this.Text, this.Font, text_sb, new RectangleF(this.ClientRectangle.X + (rect.Width - text_size.Width) / 2f, this.ClientRectangle.Bottom - text_size.Height - this.TextDistance, text_size.Width, text_size.Height), text_sf);
+                g.DrawString(this.Text, this.Font, text_sb, new RectangleF(this.ClientRectangle.X + (rect.Width - text_size.Width) / 2f, this.ClientRectangle.Bottom - text_size.Height - scale_textDistance, text_size.Width, text_size.Height), text_sf);
                 text_sb.Dispose();
                 text_sf.Dispose();
             }
@@ -1370,7 +1384,7 @@ namespace WinformControlLibraryExtension
                 SolidBrush text_sb = new SolidBrush(this.ValueColor);
                 StringFormat text_sf = new StringFormat(StringFormatFlags.NoClip);
                 SizeF text_size = g.MeasureString(valueText, this.ValueFont);
-                g.DrawString(valueText, this.ValueFont, text_sb, new RectangleF(this.ClientRectangle.X + (rect.Width - text_size.Width) / 2f, this.ClientRectangle.Bottom - text_size.Height - this.ValueDistance, text_size.Width, text_size.Height), text_sf);
+                g.DrawString(valueText, this.ValueFont, text_sb, new RectangleF(this.ClientRectangle.X + (rect.Width - text_size.Width) / 2f, this.ClientRectangle.Bottom - text_size.Height - scale_valueDistance, text_size.Width, text_size.Height), text_sf);
                 text_sb.Dispose();
                 text_sf.Dispose();
             }

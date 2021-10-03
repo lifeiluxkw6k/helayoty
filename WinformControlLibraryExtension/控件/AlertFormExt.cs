@@ -519,6 +519,10 @@ namespace WinformControlLibraryExtension
                 return;
 
             Graphics g = e.Graphics;
+
+            int scale_scrollThickness = (int)(this.ScrollThickness * DotsPerInchHelper.DPIScale.XScale);
+            int scale_scrollSlideThickness = (int)(this.ScrollSlideThickness * DotsPerInchHelper.DPIScale.XScale);
+
             SolidBrush back_sb = new SolidBrush(this.ai.BackColor);
 
             #region 背景
@@ -537,13 +541,13 @@ namespace WinformControlLibraryExtension
             if (this.scroll.Rect.Height > this.scroll_slide.Rect.Height)
             {
                 #region 画笔
-                Pen scroll_normal_back_pen = new Pen(this.ScrollNormalBackColor, this.ScrollThickness);
-                Pen scroll_slide_back_pen = new Pen(this.scroll_slide.Status == MoveStatus.Normal ? this.ScrollSlideNormalBackColor : this.ScrollSlideEnterBackColor, this.ScrollSlideThickness);
+                Pen scroll_normal_back_pen = new Pen(this.ScrollNormalBackColor, scale_scrollThickness);
+                Pen scroll_slide_back_pen = new Pen(this.scroll_slide.Status == MoveStatus.Normal ? this.ScrollSlideNormalBackColor : this.ScrollSlideEnterBackColor, scale_scrollSlideThickness);
 
                 SolidBrush scroll_pre_back_sb = new SolidBrush(this.scroll_pre.Status == MoveStatus.Normal ? this.ScrollBtnNormalBackColor : this.ScrollBtnEnterBackColor);
-                Pen scroll_pre_pen = new Pen(this.scroll_pre.Status == MoveStatus.Normal ? this.ScrollBtnNormalForeColor : this.ScrollBtnEnterForeColor, this.ScrollThickness - 2) { EndCap = LineCap.Triangle };
+                Pen scroll_pre_pen = new Pen(this.scroll_pre.Status == MoveStatus.Normal ? this.ScrollBtnNormalForeColor : this.ScrollBtnEnterForeColor, scale_scrollThickness - 2) { EndCap = LineCap.Triangle };
                 SolidBrush scroll_next_back_sb = new SolidBrush(this.scroll_next.Status == MoveStatus.Normal ? this.ScrollBtnNormalBackColor : this.ScrollBtnEnterBackColor);
-                Pen scroll_next_pen = new Pen(this.scroll_next.Status == MoveStatus.Normal ? this.ScrollBtnNormalForeColor : this.ScrollBtnEnterForeColor, this.ScrollThickness - 2) { EndCap = LineCap.Triangle };
+                Pen scroll_next_pen = new Pen(this.scroll_next.Status == MoveStatus.Normal ? this.ScrollBtnNormalForeColor : this.ScrollBtnEnterForeColor, scale_scrollThickness - 2) { EndCap = LineCap.Triangle };
 
                 #endregion
 
@@ -990,57 +994,74 @@ namespace WinformControlLibraryExtension
         /// </summary>
         private void InitializeRectangle()
         {
-            this.tool_rect = new RectangleF(this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Width, this.tool_height);
+            IntPtr hDC = IntPtr.Zero;
+            Graphics g = null;
+            ControlCommom.GetWindowClientGraphics(this.Handle,out g,out hDC);
+
+            int scale_scrollThickness = (int)(this.ScrollThickness * DotsPerInchHelper.DPIScale.XScale);
+            int scale_scrollBtnHeight = (int)(this.ScrollBtnHeight * DotsPerInchHelper.DPIScale.XScale);
+            int scale_tool_height = (int)(this.tool_height * DotsPerInchHelper.DPIScale.XScale);
+            int scale_tool_ico_width = (int)(this.tool_ico_width * DotsPerInchHelper.DPIScale.XScale);
+            int scale_tool_ico_height = (int)(this.tool_ico_height * DotsPerInchHelper.DPIScale.XScale);
+            int scale_tool_copy_image_width = (int)(this.tool_copy_image_width * DotsPerInchHelper.DPIScale.XScale);
+            int scale_tool_copy_image_height = (int)(this.tool_copy_image_height * DotsPerInchHelper.DPIScale.XScale);
+            int scale_tool_close_image_width = (int)(this.tool_close_image_width * DotsPerInchHelper.DPIScale.XScale);
+            int scale_tool_close_image_height = (int)(this.tool_close_image_height * DotsPerInchHelper.DPIScale.XScale);
+
+            this.tool_rect = new RectangleF(this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Width, scale_tool_height);
 
 
-            float toolico_x = this.tool_rect.X + (this.tool_height - this.tool_ico_width) / 2f;
-            float toolico_y = this.tool_rect.Y + (this.tool_height - this.tool_ico_height) / 2f;
-            this.tool_ico_rect = new RectangleF(toolico_x, toolico_y, this.tool_ico_width, this.tool_ico_height);
+            float toolico_x = this.tool_rect.X + (scale_tool_height - scale_tool_ico_width) / 2f;
+            float toolico_y = this.tool_rect.Y + (scale_tool_height - scale_tool_ico_height) / 2f;
+            this.tool_ico_rect = new RectangleF(toolico_x, toolico_y, scale_tool_ico_width, scale_tool_ico_height);
 
 
-            this.tool_close_rect = new RectangleF(this.tool_rect.Right - this.tool_height, this.tool_rect.Y, this.tool_height, this.tool_height);
-            float tool_close_image_x = this.tool_close_rect.X + (this.tool_close_rect.Width - this.tool_close_image_width) / 2;
-            float tool_close_image_y = this.tool_close_rect.Y + (this.tool_close_rect.Height - this.tool_close_image_height) / 2;
-            this.tool_close_image_rect = new RectangleF(tool_close_image_x, tool_close_image_y, this.tool_close_image_width, this.tool_close_image_height);
+            this.tool_close_rect = new RectangleF(this.tool_rect.Right - scale_tool_height, this.tool_rect.Y, scale_tool_height, scale_tool_height);
+            float tool_close_image_x = this.tool_close_rect.X + (this.tool_close_rect.Width - scale_tool_close_image_width) / 2;
+            float tool_close_image_y = this.tool_close_rect.Y + (this.tool_close_rect.Height - scale_tool_close_image_height) / 2;
+            this.tool_close_image_rect = new RectangleF(tool_close_image_x, tool_close_image_y, scale_tool_close_image_width, scale_tool_close_image_height);
 
-            float tool_copy_right_padding = 10;
-            this.tool_copy_rect = new RectangleF(this.tool_close_rect.X - tool_copy_right_padding - this.tool_height, this.tool_rect.Y, this.tool_height, this.tool_height);
-            float tool_copy_image_x = this.tool_copy_rect.X + (this.tool_copy_rect.Width - this.tool_copy_image_width) / 2;
-            float tool_copy_image_y = this.tool_copy_rect.Y + (this.tool_copy_rect.Height - this.tool_copy_image_height) / 2;
-            this.tool_copy_image_rect = new RectangleF(tool_copy_image_x, tool_copy_image_y, this.tool_copy_image_width, this.tool_copy_image_height);
-
-
-            float tooltitle_x = this.tool_ico_rect.Right + (this.tool_height - this.tool_ico_width) / 2f;
-            this.tool_title_rect = new RectangleF(tooltitle_x, this.tool_rect.Y, this.tool_rect.Width - tooltitle_x - this.tool_close_rect.Width, this.tool_height);
+            float tool_copy_right_padding = (int)(10 * DotsPerInchHelper.DPIScale.XScale);
+            this.tool_copy_rect = new RectangleF(this.tool_close_rect.X - tool_copy_right_padding - scale_tool_height, this.tool_rect.Y, scale_tool_height, scale_tool_height);
+            float tool_copy_image_x = this.tool_copy_rect.X + (this.tool_copy_rect.Width - scale_tool_copy_image_width) / 2;
+            float tool_copy_image_y = this.tool_copy_rect.Y + (this.tool_copy_rect.Height - scale_tool_copy_image_height) / 2;
+            this.tool_copy_image_rect = new RectangleF(tool_copy_image_x, tool_copy_image_y, scale_tool_copy_image_width, scale_tool_copy_image_height);
 
 
-            this.content_rect = new RectangleF(this.ClientRectangle.X, this.tool_rect.Bottom, this.ClientRectangle.Width, this.ClientRectangle.Height - this.tool_height);
-            this.text_rect = new RectangleF(this.content_rect.X + this.text_left_padding, this.content_rect.Y, this.content_rect.Width - this.text_left_padding - this.ScrollThickness, this.content_rect.Height);
-            Graphics g = this.CreateGraphics();
+            float tooltitle_x = this.tool_ico_rect.Right + (scale_tool_height - scale_tool_ico_width) / 2f;
+            this.tool_title_rect = new RectangleF(tooltitle_x, this.tool_rect.Y, this.tool_rect.Width - tooltitle_x - this.tool_close_rect.Width, scale_tool_height);
+
+
+            this.content_rect = new RectangleF(this.ClientRectangle.X, this.tool_rect.Bottom, this.ClientRectangle.Width, this.ClientRectangle.Height - scale_tool_height);
+            this.text_rect = new RectangleF(this.content_rect.X + this.text_left_padding, this.content_rect.Y, this.content_rect.Width - this.text_left_padding - scale_scrollThickness, this.content_rect.Height);
+
             StringFormat text_sf = new StringFormat() { Trimming = StringTrimming.Character };
             SizeF text_size = g.MeasureString(this.ai.Text, this.Font, (int)this.text_rect.Width, text_sf);
             text_sf.Dispose();
-            g.Dispose();
+
             this.text_reality_rect = new RectangleF(text_rect.Location, text_size);
 
 
             if (this.ScrollBtnShow)
             {
-                this.scroll_pre.Rect = new RectangleF(this.ClientRectangle.Right - this.ScrollThickness, this.tool_rect.Bottom, this.ScrollThickness, this.ScrollBtnHeight);
-                this.scroll_next.Rect = new RectangleF(this.ClientRectangle.Right - this.ScrollThickness, this.ClientRectangle.Bottom - this.ScrollBtnHeight, this.ScrollThickness, this.ScrollBtnHeight);
+                this.scroll_pre.Rect = new RectangleF(this.ClientRectangle.Right - scale_scrollThickness, this.tool_rect.Bottom, scale_scrollThickness, scale_scrollBtnHeight);
+                this.scroll_next.Rect = new RectangleF(this.ClientRectangle.Right - scale_scrollThickness, this.ClientRectangle.Bottom - scale_scrollBtnHeight, scale_scrollThickness, scale_scrollBtnHeight);
             }
             else
             {
                 this.scroll_pre.Rect = new RectangleF(0, this.content_rect.Y, 0, 0);
-                this.scroll_next.Rect = new RectangleF(this.ClientRectangle.Right - this.ScrollThickness, this.ClientRectangle.Bottom, 0, 0);
+                this.scroll_next.Rect = new RectangleF(this.ClientRectangle.Right - scale_scrollThickness, this.ClientRectangle.Bottom, 0, 0);
             }
-            this.scroll.Rect = new RectangleF(this.content_rect.Right - this.ScrollThickness, this.content_rect.Y + this.scroll_pre.Rect.Height, this.ScrollThickness, this.content_rect.Height - this.scroll_pre.Rect.Height - this.scroll_next.Rect.Height);
+            this.scroll.Rect = new RectangleF(this.content_rect.Right - scale_scrollThickness, this.content_rect.Y + this.scroll_pre.Rect.Height, scale_scrollThickness, this.content_rect.Height - this.scroll_pre.Rect.Height - this.scroll_next.Rect.Height);
             float slide_h = (this.text_rect.Height / this.text_reality_rect.Height * this.scroll.Rect.Height);
             if (this.text_reality_rect.Height <= this.text_rect.Height)
             {
                 slide_h = this.scroll.Rect.Height;
             }
-            this.scroll_slide.Rect = new RectangleF(this.scroll.Rect.X, this.scroll_pre.Rect.Bottom, this.ScrollThickness, slide_h);
+            this.scroll_slide.Rect = new RectangleF(this.scroll.Rect.X, this.scroll_pre.Rect.Bottom, scale_scrollThickness, slide_h);
+
+            g.Dispose();
+            WindowNavigate.ReleaseDC(this.Handle,hDC);
         }
 
         /// <summary>
@@ -1394,19 +1415,22 @@ namespace WinformControlLibraryExtension
                 SetCount(AlertItemList.Count + 1);
                 CurrentMessageType = type;
 
-                Point location = new Point(SystemInformation.WorkingArea.Right - DefaultSize.Width - margin, (AlertItemList.Count == 0 ? SystemInformation.WorkingArea.Bottom : AlertItemList[AlertItemList.Count - 1].Win_Location.Y) - DefaultSize.Height - margin);
                 AlertItem ai = new AlertItem()
                 {
                     MsgType = type,
                     Title = title,
                     Text = text,
-                    Win_Size = new Size(DefaultSize.Width, DefaultSize.Height),
-                    Win_Location = location,
                     Status = AnimationStatuss.none,
-                    Slide_origin = location.Y,
                     IsShow = ((isHideAlert || currentWinCount >= maxWinCount) ? false : true)
                 };
                 AlertFormExt awe = new AlertFormExt(ai) { TopMost = isTopMost };
+      
+                int scale_width =(int)(DefaultSize.Width * DotsPerInchHelper.DPIScale.XScale);
+                int scale_height =(int)(DefaultSize.Height * DotsPerInchHelper.DPIScale.YScale);
+                Point location = new Point(SystemInformation.WorkingArea.Right - scale_width - margin, (AlertItemList.Count == 0 ? SystemInformation.WorkingArea.Bottom : AlertItemList[AlertItemList.Count - 1].Win_Location.Y) - scale_height - margin);
+                ai.Win_Size = new Size(scale_width, scale_height);
+                ai.Win_Location = location;
+                ai.Slide_origin = location.Y;
                 ai.Win = awe;
                 ai.Handle = awe.Handle;
                 switch (type)

@@ -1525,6 +1525,7 @@ namespace WinformControlLibraryExtension
             base.OnResize(e);
 
             this.InitializeDisplayRectangle();
+            this.Invalidate();
         }
 
         /// <summary> 
@@ -1682,15 +1683,14 @@ namespace WinformControlLibraryExtension
                 }
             }
         }
-
         /// <summary>
         /// 初始化指定倒影图片
         /// </summary>
         /// <param name="reload">强制重新生成倒影图片</param>
         /// <param name="index">Images集合图片索引</param>
         public void InitializeReflectionImages(bool reload, int index)
-        {
-            if (!this.ReflectionShow || index < 0 || index >= this.Images.Count)
+        { 
+         if (!this.ReflectionShow || index < 0 || index >= this.Images.Count)
                 return;
 
             if (index >= 0)
@@ -1711,7 +1711,6 @@ namespace WinformControlLibraryExtension
                     }
                 }
             }
-
         }
 
         #endregion
@@ -1755,6 +1754,8 @@ namespace WinformControlLibraryExtension
         /// <param name="e"></param>
         protected void animationTimer_Animationing(object sender, AnimationEventArgs e)
         {
+            int scale_imageFrameWidth = (int)(this.ImageFrameWidth * DotsPerInchHelper.DPIScale.XScale);
+
             int center_index = this.imageFrameList.Count / 2;
 
             #region 计算图片框当前Rectangle
@@ -1773,7 +1774,7 @@ namespace WinformControlLibraryExtension
             {
                 if (this.Orientation == Orientations.RightToLeft)
                 {
-                    if (this.imageFrameList[0].current_rectf.X > (this.display_rectf.Width - this.ImageFrameWidth) / 2)
+                    if (this.imageFrameList[0].current_rectf.X > (this.display_rectf.Width - scale_imageFrameWidth) / 2)
                     {
                         this.imageFrameList[0].image_index = this.ValidEnableImageIndex(this.imageFrameList[this.imageFrameList.Count - 1].image_index + 1);
                         this.isSwitchImage = true;
@@ -1781,7 +1782,7 @@ namespace WinformControlLibraryExtension
                 }
                 else
                 {
-                    if (this.imageFrameList[this.imageFrameList.Count - 1].current_rectf.X < (this.display_rectf.Width - this.ImageFrameWidth) / 2 + this.display_rectf.Width / 2)
+                    if (this.imageFrameList[this.imageFrameList.Count - 1].current_rectf.X < (this.display_rectf.Width - scale_imageFrameWidth) / 2 + this.display_rectf.Width / 2)
                     {
                         this.imageFrameList[this.imageFrameList.Count - 1].image_index = this.ValidEnableImageIndex(this.imageFrameList[0].image_index + 1);
                         this.isSwitchImage = true;
@@ -1874,21 +1875,25 @@ namespace WinformControlLibraryExtension
         /// <returns></returns>
         public void InitializeDisplayRectangle()
         {
+            int scale_imageFrameWidth =(int)( this.ImageFrameWidth * DotsPerInchHelper.DPIScale.XScale);
+            int scale_imageFrameFinallyHeight = (int)(this.ImageFrameFinallyHeight * DotsPerInchHelper.DPIScale.YScale);
+            int scale_imageFrameInterval = (int)(this.ImageFrameInterval * DotsPerInchHelper.DPIScale.XScale);
+
             RectangleF rectf = RectangleF.Empty;
-            int excursion = (int)(this.ImageFrameInterval != 0 ? this.ImageFrameInterval : this.ImageFrameWidth * this.ImageFrameShrink / 4);
+            int excursion = (int)(scale_imageFrameInterval != 0 ? scale_imageFrameInterval : scale_imageFrameWidth * this.ImageFrameShrink / 4);
             int center_index = this.ImageFrameCount / 2;
-            float width = ImageFrameWidth + (this.ImageFrameCount - (center_index + 1)) * excursion * 2;
+            float width = scale_imageFrameWidth + (this.ImageFrameCount - (center_index + 1)) * excursion * 2;
             float x = this.ClientRectangle.X;
             float y = this.ClientRectangle.Y;
             if (this.ClientRectangle.Width != width)
             {
                 x = (this.ClientRectangle.Width - width) / 2f;
             }
-            if (this.ClientRectangle.Height != this.ImageFrameFinallyHeight)
+            if (this.ClientRectangle.Height != scale_imageFrameFinallyHeight)
             {
-                y = (this.ClientRectangle.Height - this.ImageFrameFinallyHeight) / 2f;
+                y = (this.ClientRectangle.Height - scale_imageFrameFinallyHeight) / 2f;
             }
-            rectf = new RectangleF(x, y, width, this.ImageFrameFinallyHeight);
+            rectf = new RectangleF(x, y, width, scale_imageFrameFinallyHeight);
 
             this.display_rectf = rectf;
 
@@ -1903,12 +1908,15 @@ namespace WinformControlLibraryExtension
         {
             if (this.NavigationBarShowType != NavigationBarShowTypes.None)
             {
-                float barbtn_avg_w = this.NavigationBarBtnWidth / 4f;
-                float barbtn_avg_h = this.NavigationBarBtnHeight / 6f;
-                float padding = this.NavigationBarBtnWidth / 5f;
+                int scale_navigationBarBtnWidth = (int)(this.NavigationBarBtnWidth * DotsPerInchHelper.DPIScale.XScale);
+                int scale_navigationBarBtnHeight = (int)(this.NavigationBarBtnHeight * DotsPerInchHelper.DPIScale.YScale);
+
+                float barbtn_avg_w = scale_navigationBarBtnWidth / 4f;
+                float barbtn_avg_h = scale_navigationBarBtnHeight / 6f;
+                float padding = scale_navigationBarBtnWidth / 5f;
 
                 #region 向上一页按钮
-                this.navigationBar.pre_btn.btn_rectf = new RectangleF(this.display_rectf.X + padding, this.display_rectf.Y + (this.display_rectf.Height - this.NavigationBarBtnHeight) / 2f, this.NavigationBarBtnWidth, this.NavigationBarBtnHeight);
+                this.navigationBar.pre_btn.btn_rectf = new RectangleF(this.display_rectf.X + padding, this.display_rectf.Y + (this.display_rectf.Height - scale_navigationBarBtnHeight) / 2f, scale_navigationBarBtnWidth, scale_navigationBarBtnHeight);
                 PointF[] pre_line_points = new PointF[3];
                 pre_line_points[0] = new PointF((this.navigationBar.pre_btn.btn_rectf.X + barbtn_avg_w * 3), (this.navigationBar.pre_btn.btn_rectf.Y + barbtn_avg_h));
                 pre_line_points[1] = new PointF((this.navigationBar.pre_btn.btn_rectf.X + barbtn_avg_w), (this.navigationBar.pre_btn.btn_rectf.Y + barbtn_avg_h * 3));
@@ -1916,7 +1924,7 @@ namespace WinformControlLibraryExtension
                 this.navigationBar.pre_btn.btn_line_rectf = pre_line_points;
                 #endregion
                 #region 向下一页按钮
-                this.navigationBar.next_btn.btn_rectf = new RectangleF(this.display_rectf.Right - this.NavigationBarBtnWidth - padding, this.display_rectf.Y + (this.display_rectf.Height - this.NavigationBarBtnHeight) / 2f, this.NavigationBarBtnWidth, this.NavigationBarBtnHeight);
+                this.navigationBar.next_btn.btn_rectf = new RectangleF(this.display_rectf.Right - scale_navigationBarBtnWidth - padding, this.display_rectf.Y + (this.display_rectf.Height - scale_navigationBarBtnHeight) / 2f, scale_navigationBarBtnWidth, scale_navigationBarBtnHeight);
                 PointF[] next_line_points = new PointF[3];
                 next_line_points[0] = new PointF((this.navigationBar.next_btn.btn_rectf.Right - barbtn_avg_w * 3), (this.navigationBar.next_btn.btn_rectf.Y + barbtn_avg_h));
                 next_line_points[1] = new PointF((this.navigationBar.next_btn.btn_rectf.Right - barbtn_avg_w), (this.navigationBar.next_btn.btn_rectf.Y + barbtn_avg_h * 3));
@@ -1934,12 +1942,16 @@ namespace WinformControlLibraryExtension
             if (this.imageFrameList.Count < 1)
                 return;
 
-            int excursion = (int)(this.ImageFrameInterval != 0 ? this.ImageFrameInterval : this.ImageFrameWidth * this.ImageFrameShrink / 4);
+            int scale_imageFrameWidth = (int)(this.ImageFrameWidth * DotsPerInchHelper.DPIScale.XScale);
+            int scale_imageFrameFinallyHeight = (int)(this.ImageFrameFinallyHeight * DotsPerInchHelper.DPIScale.YScale);
+            int scale_imageFrameInterval = (int)(this.ImageFrameInterval * DotsPerInchHelper.DPIScale.XScale);
+
+            int excursion = (int)(scale_imageFrameInterval != 0 ? scale_imageFrameInterval : scale_imageFrameWidth * this.ImageFrameShrink / 4);
             int center_index = this.imageFrameList.Count / 2;
 
             #region 图片框Rectangle
             //中间图片框
-            this.imageFrameList[center_index].before_rectf = new RectangleF(this.display_rectf.X + (this.display_rectf.Width - this.ImageFrameWidth) / 2, this.display_rectf.Y + (this.display_rectf.Height - this.ImageFrameFinallyHeight) / 2, this.ImageFrameWidth, this.ImageFrameFinallyHeight);
+            this.imageFrameList[center_index].before_rectf = new RectangleF(this.display_rectf.X + (this.display_rectf.Width - scale_imageFrameWidth) / 2, this.display_rectf.Y + (this.display_rectf.Height - scale_imageFrameFinallyHeight) / 2, scale_imageFrameWidth, scale_imageFrameFinallyHeight);
             this.imageFrameList[center_index].current_rectf = this.imageFrameList[center_index].before_rectf;
 
             for (int i = center_index + 1; i < this.imageFrameList.Count; i++)
@@ -2313,12 +2325,12 @@ namespace WinformControlLibraryExtension
         /// 倒影变换
         /// </summary>
         /// <param name="bmp"></param>
-        /// <param name="val">透明度（0-255）</param>
+        /// <param name="dpi_scale"></param>
         private Bitmap TransformReflection(Bitmap bmp)
         {
             if (bmp == null)
                 return null;
-            return ControlCommom.TransformReflection(bmp, this.reflectionTop, this.reflectionBrightness, reflectionTransparentStart, reflectionTransparentEnd, this.ReflectionHeight);
+            return ControlCommom.TransformReflection(bmp, this.reflectionTop, this.reflectionBrightness, reflectionTransparentStart, reflectionTransparentEnd, (int)(this.ReflectionHeight* DotsPerInchHelper.DPIScale.XScale));
         }
 
         /// <summary>

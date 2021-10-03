@@ -1516,6 +1516,9 @@ namespace WinformControlLibraryExtension
         /// <returns></returns>
         private float GetFisheyeMenuItemProportion(PointF itemCenterPoint, PointF mousePoint)
         {
+            float scale_itemDistance = (int)(this.ItemDistance * DotsPerInchHelper.DPIScale.XScale);
+            Size scale_ImageSize =new Size( (int)(this.ImageWidth * DotsPerInchHelper.DPIScale.XScale), (int)(this.ImageHeight * DotsPerInchHelper.DPIScale.YScale));
+
             float item_distance = 0f;
             float distance = 0f;
             float p = 0f;
@@ -1523,7 +1526,7 @@ namespace WinformControlLibraryExtension
             #region
             if (this.ShowType == FisheyeMenuShowTypes.ImageText)
             {
-                item_distance = (float)Math.Sqrt(Math.Pow(this.ImageWidth + (this.ISHorizontal() ? this.ItemDistance : 0), 2) + Math.Pow(this.ImageHeight + (this.ISVertical() ? this.ItemDistance : 0), 2));
+                item_distance = (float)Math.Sqrt(Math.Pow(scale_ImageSize.Width + (this.ISHorizontal() ? scale_itemDistance : 0), 2) + Math.Pow(scale_ImageSize.Height + (this.ISVertical() ? scale_itemDistance : 0), 2));
                 p = 1 - (item_distance == 0 ? 0 : this.ImageProportion * (distance / item_distance));
                 if (p < this.ImageProportion)
                 {
@@ -1661,27 +1664,31 @@ namespace WinformControlLibraryExtension
             if (this.Items.Count < 1)
                 return;
 
+            int scale_cushionThickness = (int)(this.CushionThickness * DotsPerInchHelper.DPIScale.XScale);
+            int scale_itemMaskPadding = (int)(this.ItemMaskPadding * DotsPerInchHelper.DPIScale.XScale);
+            float scale_itemDistance = (int)(this.ItemDistance * DotsPerInchHelper.DPIScale.XScale);
+
             //ImageText:文本在rect外上面
             //     Char:文本在rect内上面
             #region 初始化所有选项
             if (this.ISHorizontal())
             {
-                SizeF rectf_size = this.ShowType == FisheyeMenuShowTypes.ImageText ? this.image_size : new SizeF(this.char_size.Width, this.char_size.Height + this.CushionThickness);
+                SizeF rectf_size = this.ShowType == FisheyeMenuShowTypes.ImageText ? this.image_size : new SizeF(this.char_size.Width, this.char_size.Height + scale_cushionThickness);
                 float start_x = 0;
                 for (int i = 0; i < this.Items.Count; i++)
                 {
                     this.Items[i].rectf = new RectangleF(start_x, 0, rectf_size.Width, rectf_size.Height);
-                    start_x += this.Items[i].rectf.Width + ((i < this.Items.Count - 1) ? this.ItemDistance : 0);
+                    start_x += this.Items[i].rectf.Width + ((i < this.Items.Count - 1) ? scale_itemDistance : 0);
                 }
             }
             else
             {
-                SizeF rectf_size = this.ShowType == FisheyeMenuShowTypes.ImageText ? this.image_size : new SizeF(this.char_size.Width + this.CushionThickness, this.char_size.Height);
+                SizeF rectf_size = this.ShowType == FisheyeMenuShowTypes.ImageText ? this.image_size : new SizeF(this.char_size.Width + scale_cushionThickness, this.char_size.Height);
                 float start_y = 0;
                 for (int i = 0; i < this.Items.Count; i++)
                 {
                     this.Items[i].rectf = new RectangleF(0, start_y, rectf_size.Width, rectf_size.Height);
-                    start_y += this.Items[i].rectf.Height + ((i < this.Items.Count - 1) ? this.ItemDistance : 0);
+                    start_y += this.Items[i].rectf.Height + ((i < this.Items.Count - 1) ? scale_itemDistance : 0);
                 }
             }
             #endregion
@@ -1700,9 +1707,9 @@ namespace WinformControlLibraryExtension
                 float p = this.GetFisheyeMenuItemProportion(this.Items[i].rectf_centerpoint, this.Items[center_item_index].rectf_centerpoint);
                 float item_now_width = this.ShowType == FisheyeMenuShowTypes.ImageText ? (this.Items[i].rectf.Width * p) : (this.Items[i].rectf.Width + (this.ISHorizontal() ? 0 : this.CharTlasticity * p));
                 float item_now_height = this.ShowType == FisheyeMenuShowTypes.ImageText ? (this.Items[i].rectf.Height * p) : (this.Items[i].rectf.Height + (this.ISVertical() ? 0 : this.CharTlasticity * p));
-                max += (this.ISHorizontal() ? item_now_width : item_now_height) + ((i < this.Items.Count - 1) ? this.ItemDistance : 0);
+                max += (this.ISHorizontal() ? item_now_width : item_now_height) + ((i < this.Items.Count - 1) ? scale_itemDistance : 0);
             }
-            max += this.ItemMaskPadding * 2 + uncertain;
+            max += scale_itemMaskPadding * 2 + uncertain;
             #endregion
 
             #region 鱼眼菜单弹层rect(控件的Size(指中间选项放大到最大的状态下的Size)、Location)
@@ -1763,7 +1770,7 @@ namespace WinformControlLibraryExtension
             float min = 0f;
             for (int i = 0; i < this.Items.Count; i++)
             {
-                min += (this.ISHorizontal() ? this.Items[i].rectf.Width : this.Items[i].rectf.Height) + ((i < this.Items.Count - 1) ? this.ItemDistance : 0);
+                min += (this.ISHorizontal() ? this.Items[i].rectf.Width : this.Items[i].rectf.Height) + ((i < this.Items.Count - 1) ? scale_itemDistance : 0);
             }
             for (int i = 0; i < this.Items.Count; i++)
             {
@@ -1773,26 +1780,26 @@ namespace WinformControlLibraryExtension
                 {
                     case FisheyeMenuShowOrientation.Bottom:
                         {
-                            x = (i == 0) ? (this.fml.ClientRectangle.Width - min) / 2 : this.Items[i - 1].now_rectf.Right + this.ItemDistance;
+                            x = (i == 0) ? (this.fml.ClientRectangle.Width - min) / 2 : this.Items[i - 1].now_rectf.Right + scale_itemDistance;
                             y = this.fml.ClientRectangle.Bottom - this.Items[i].now_rectf.Height;
                             break;
                         }
                     case FisheyeMenuShowOrientation.Top:
                         {
-                            x = (i == 0) ? (this.fml.ClientRectangle.Width - min) / 2 : this.Items[i - 1].now_rectf.Right + this.ItemDistance;
+                            x = (i == 0) ? (this.fml.ClientRectangle.Width - min) / 2 : this.Items[i - 1].now_rectf.Right + scale_itemDistance;
                             y = this.fml.ClientRectangle.Y;
                             break;
                         }
                     case FisheyeMenuShowOrientation.Left:
                         {
                             x = this.fml.ClientRectangle.X;
-                            y = (i == 0) ? (this.fml.ClientRectangle.Height - min) / 2 : this.Items[i - 1].now_rectf.Bottom + this.ItemDistance;
+                            y = (i == 0) ? (this.fml.ClientRectangle.Height - min) / 2 : this.Items[i - 1].now_rectf.Bottom + scale_itemDistance;
                             break;
                         }
                     case FisheyeMenuShowOrientation.Right:
                         {
                             x = this.fml.ClientRectangle.Right - this.Items[i].now_rectf.Width;
-                            y = (i == 0) ? (this.fml.ClientRectangle.Height - min) / 2 : this.Items[i - 1].now_rectf.Bottom + this.ItemDistance;
+                            y = (i == 0) ? (this.fml.ClientRectangle.Height - min) / 2 : this.Items[i - 1].now_rectf.Bottom + scale_itemDistance;
                             break;
                         }
                 }
@@ -1811,6 +1818,10 @@ namespace WinformControlLibraryExtension
             if (this.Items.Count < 1)
                 return;
 
+            int scale_cushionThickness = (int)(this.CushionThickness * DotsPerInchHelper.DPIScale.XScale);
+            int scale_itemMaskPadding = (int)(this.ItemMaskPadding * DotsPerInchHelper.DPIScale.XScale);
+            float scale_itemDistance = (int)(this.ItemDistance * DotsPerInchHelper.DPIScale.XScale);
+
             #region s设置选项当前选项Size、计算当前选项总长度
             float now = 0f;
             for (int i = 0; i < this.Items.Count; i++)
@@ -1824,14 +1835,14 @@ namespace WinformControlLibraryExtension
                 }
                 else
                 {
-                    item_now_width = (this.char_size.Width + (this.ISHorizontal() ? 0 :this.CushionThickness+ this.CharTlasticity * this.Items[i].now_proportion));
-                    item_now_height = (this.char_size.Height + (this.ISVertical() ? 0 : this.CushionThickness + this.CharTlasticity * this.Items[i].now_proportion));
+                    item_now_width = (this.char_size.Width + (this.ISHorizontal() ? 0 :scale_cushionThickness+ this.CharTlasticity * this.Items[i].now_proportion));
+                    item_now_height = (this.char_size.Height + (this.ISVertical() ? 0 : scale_cushionThickness + this.CharTlasticity * this.Items[i].now_proportion));
                 }
 
                 this.Items[i].now_rectf = new RectangleF(this.Items[i].now_rectf.X, this.Items[i].now_rectf.Y, item_now_width, item_now_height);
-                now += (this.ISHorizontal() ? item_now_width : item_now_height) + ((i < this.Items.Count - 1) ? this.ItemDistance : 0);
+                now += (this.ISHorizontal() ? item_now_width : item_now_height) + ((i < this.Items.Count - 1) ? scale_itemDistance : 0);
             }
-            now += this.ItemMaskPadding * 2;
+            now += scale_itemMaskPadding * 2;
             #endregion
 
             #region 鱼眼菜单弹层rect(控件的Size(指中间选项放大到最大的状态下的Size)、Location)
@@ -1890,26 +1901,26 @@ namespace WinformControlLibraryExtension
                 {
                     case FisheyeMenuShowOrientation.Bottom:
                         {
-                            x = (i == 0) ? (this.fml.ClientRectangle.Width - now) / 2 + this.ItemMaskPadding : this.Items[i - 1].now_rectf.Right + this.ItemDistance;
+                            x = (i == 0) ? (this.fml.ClientRectangle.Width - now) / 2 + scale_itemMaskPadding : this.Items[i - 1].now_rectf.Right + scale_itemDistance;
                             y = this.fml.ClientRectangle.Bottom - this.Items[i].now_rectf.Height;
                             break;
                         }
                     case FisheyeMenuShowOrientation.Top:
                         {
-                            x = (i == 0) ? (this.fml.ClientRectangle.Width - now) / 2 + this.ItemMaskPadding : this.Items[i - 1].now_rectf.Right + this.ItemDistance;
+                            x = (i == 0) ? (this.fml.ClientRectangle.Width - now) / 2 + scale_itemMaskPadding : this.Items[i - 1].now_rectf.Right + scale_itemDistance;
                             y = this.fml.ClientRectangle.Top;
                             break;
                         }
                     case FisheyeMenuShowOrientation.Left:
                         {
                             x = this.fml.ClientRectangle.X;
-                            y = (i == 0) ? (this.fml.ClientRectangle.Height - now) / 2 + this.ItemMaskPadding : this.Items[i - 1].now_rectf.Bottom + this.ItemDistance;
+                            y = (i == 0) ? (this.fml.ClientRectangle.Height - now) / 2 + scale_itemMaskPadding : this.Items[i - 1].now_rectf.Bottom + scale_itemDistance;
                             break;
                         }
                     case FisheyeMenuShowOrientation.Right:
                         {
                             x = this.fml.ClientRectangle.Right - this.Items[i].now_rectf.Width;
-                            y = (i == 0) ? (this.fml.ClientRectangle.Height - now) / 2 + this.ItemMaskPadding : this.Items[i - 1].now_rectf.Bottom + this.ItemDistance;
+                            y = (i == 0) ? (this.fml.ClientRectangle.Height - now) / 2 + scale_itemMaskPadding : this.Items[i - 1].now_rectf.Bottom + scale_itemDistance;
                             break;
                         }
                 }
@@ -2060,6 +2071,8 @@ namespace WinformControlLibraryExtension
             if (this.ShowWay == FisheyeMenuShowWays.Always)
                 return;
 
+            int scale_handleMaskHeight = (int)(this.HandleMaskHeight * DotsPerInchHelper.DPIScale.XScale);
+
             #region  屏幕
             if (this.ISScreenControl())
             {
@@ -2068,22 +2081,22 @@ namespace WinformControlLibraryExtension
                 {
                     case FisheyeMenuShowOrientation.Bottom:
                         {
-                            this.fbhm_mask_rect = new Rectangle(Math.Max(this.fbl_control_rect.X, screen_rect.X), this.fbl_control_rect.Bottom - this.HandleMaskHeight, Math.Min(this.fbl_control_rect.Right, screen_rect.Right), this.HandleMaskHeight);
+                            this.fbhm_mask_rect = new Rectangle(Math.Max(this.fbl_control_rect.X, screen_rect.X), this.fbl_control_rect.Bottom - scale_handleMaskHeight, Math.Min(this.fbl_control_rect.Right, screen_rect.Right), scale_handleMaskHeight);
                             break;
                         }
                     case FisheyeMenuShowOrientation.Top:
                         {
-                            this.fbhm_mask_rect = new Rectangle(Math.Max(this.fbl_control_rect.X, screen_rect.X), screen_rect.Y, Math.Min(this.fbl_control_rect.Right, screen_rect.Right), this.HandleMaskHeight);
+                            this.fbhm_mask_rect = new Rectangle(Math.Max(this.fbl_control_rect.X, screen_rect.X), screen_rect.Y, Math.Min(this.fbl_control_rect.Right, screen_rect.Right), scale_handleMaskHeight);
                             break;
                         }
                     case FisheyeMenuShowOrientation.Left:
                         {
-                            this.fbhm_mask_rect = new Rectangle(screen_rect.X, Math.Max(this.fbl_control_rect.Y, screen_rect.Y), this.HandleMaskHeight, Math.Min(this.fbl_control_rect.Bottom, screen_rect.Bottom));
+                            this.fbhm_mask_rect = new Rectangle(screen_rect.X, Math.Max(this.fbl_control_rect.Y, screen_rect.Y), scale_handleMaskHeight, Math.Min(this.fbl_control_rect.Bottom, screen_rect.Bottom));
                             break;
                         }
                     case FisheyeMenuShowOrientation.Right:
                         {
-                            this.fbhm_mask_rect = new Rectangle(screen_rect.Right - this.HandleMaskHeight, Math.Max(this.fbl_control_rect.Y, screen_rect.Y), this.HandleMaskHeight, Math.Min(this.fbl_control_rect.Bottom, screen_rect.Bottom));
+                            this.fbhm_mask_rect = new Rectangle(screen_rect.Right - scale_handleMaskHeight, Math.Max(this.fbl_control_rect.Y, screen_rect.Y), scale_handleMaskHeight, Math.Min(this.fbl_control_rect.Bottom, screen_rect.Bottom));
                             break;
                         }
                 }
@@ -2101,25 +2114,25 @@ namespace WinformControlLibraryExtension
                     case FisheyeMenuShowOrientation.Bottom:
                         {
                             int min_width = (this.fml.Width > rect.Width) ? rect.Width : this.fml.Width;
-                            this.fbhm_mask_rect = new Rectangle(rect.X + (rect.Width - min_width) / 2, rect.Bottom - this.HandleMaskHeight, min_width, this.HandleMaskHeight);
+                            this.fbhm_mask_rect = new Rectangle(rect.X + (rect.Width - min_width) / 2, rect.Bottom - scale_handleMaskHeight, min_width, scale_handleMaskHeight);
                             break;
                         }
                     case FisheyeMenuShowOrientation.Top:
                         {
                             int mmin_width = (this.fml.Width > rect.Width) ? rect.Width : this.fml.Width;
-                            this.fbhm_mask_rect = new Rectangle(rect.X + (rect.Width - mmin_width) / 2, rect.Y, mmin_width, this.HandleMaskHeight);
+                            this.fbhm_mask_rect = new Rectangle(rect.X + (rect.Width - mmin_width) / 2, rect.Y, mmin_width, scale_handleMaskHeight);
                             break;
                         }
                     case FisheyeMenuShowOrientation.Left:
                         {
                             int mmin_min_height = (this.fml.Height > rect.Height) ? rect.Height : this.fml.Height;
-                            this.fbhm_mask_rect = new Rectangle(rect.X, rect.Y + (rect.Height - mmin_min_height) / 2, this.HandleMaskHeight, mmin_min_height);
+                            this.fbhm_mask_rect = new Rectangle(rect.X, rect.Y + (rect.Height - mmin_min_height) / 2, scale_handleMaskHeight, mmin_min_height);
                             break;
                         }
                     case FisheyeMenuShowOrientation.Right:
                         {
                             int mmin_min_height = (this.fml.Height > rect.Height) ? rect.Height : this.fml.Height;
-                            this.fbhm_mask_rect = new Rectangle(rect.Right - this.HandleMaskHeight, rect.Y + (rect.Height - mmin_min_height) / 2, this.HandleMaskHeight, mmin_min_height);
+                            this.fbhm_mask_rect = new Rectangle(rect.Right - scale_handleMaskHeight, rect.Y + (rect.Height - mmin_min_height) / 2, scale_handleMaskHeight, mmin_min_height);
                             break;
                         }
                 }
@@ -2205,13 +2218,16 @@ namespace WinformControlLibraryExtension
         /// </summary>
         private void CalculateImageSize()
         {
+            int scale_width = (int)(this.ImageWidth * DotsPerInchHelper.DPIScale.XScale);
+            int scale_height=(int)(this.ImageHeight * DotsPerInchHelper.DPIScale.YScale);
+
             if (this.ShowType == FisheyeMenuShowTypes.ImageText && this.ImageReflection && this.ISHorizontal())
             {
-                this.image_size = new SizeF(this.ImageWidth, this.ImageHeight + (this.ImageHeight * this.reflectionHeight));
+                this.image_size = new SizeF(scale_width, scale_height + (scale_height * this.reflectionHeight));
             }
             else
             {
-                this.image_size = new SizeF(this.ImageWidth, this.ImageHeight);
+                this.image_size = new SizeF(scale_width, scale_height);
             }
         }
 
@@ -2225,9 +2241,13 @@ namespace WinformControlLibraryExtension
         /// <returns></returns>
         internal void CalculateCharSize()
         {
-            IntPtr hDC = GetWindowDC(this.fml.Handle);
-            Graphics g = Graphics.FromHdc(hDC);
+
+            IntPtr hDC = IntPtr.Zero;
+            Graphics g = null;
+            ControlCommom.GetWindowClientGraphics(this.fml.Handle, out g, out hDC);
+
             this.char_size = g.MeasureString("字", this.TextCharFont, Size.Empty);
+
             g.Dispose();
             ReleaseDC(this.fml.Handle, hDC);
         }
@@ -2241,7 +2261,10 @@ namespace WinformControlLibraryExtension
         /// </summary>
         private Bitmap CreateLayerImage()
         {
-            Bitmap bmp = new Bitmap(this.fml.Width, this.fml.Height);
+            float scale_itemMaskRadius = (int)(this.ItemMaskRadius * DotsPerInchHelper.DPIScale.XScale);
+            
+
+               Bitmap bmp = new Bitmap(this.fml.Width, this.fml.Height);
             Graphics g = Graphics.FromImage(bmp);
 
             #region 测试用
@@ -2252,10 +2275,11 @@ namespace WinformControlLibraryExtension
             #endregion
 
             #region 选项背景蒙版
-            if (this.ItemMaskShow && this.Items.Count > 0)
+            if (this.Items.Count > 0)
             {
-                SolidBrush back_mask_sb = new SolidBrush(this.ItemMaskBackColor);
-                if (this.ItemMaskRadius == 0)
+                SolidBrush back_mask_sb = this.ItemMaskShow?new SolidBrush(this.ItemMaskBackColor): new SolidBrush(Color.FromArgb(1,255,255,255));
+
+                if (scale_itemMaskRadius == 0)
                 {
                     g.FillRectangle(back_mask_sb, this.fbl_items_mask_rect);
                 }
@@ -2263,7 +2287,7 @@ namespace WinformControlLibraryExtension
                 {
                     SmoothingMode back_mask_sm = g.SmoothingMode;
                     g.SmoothingMode = SmoothingMode.AntiAlias;
-                    GraphicsPath back_mask_gp = ControlCommom.TransformCircular(this.fbl_items_mask_rect, this.ItemMaskRadius);
+                    GraphicsPath back_mask_gp = ControlCommom.TransformCircular(this.fbl_items_mask_rect, scale_itemMaskRadius);
                     g.FillPath(back_mask_sb, back_mask_gp);
                     g.SmoothingMode = back_mask_sm;
                     back_mask_gp.Dispose();

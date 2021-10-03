@@ -377,13 +377,14 @@ namespace WinformControlLibraryExtension
             base.OnPaint(e);
 
             Graphics g = e.Graphics;
+            int scale_lineThickness = (int)(this.LineThickness * DotsPerInchHelper.DPIScale.XScale);
 
-            int text_padding = 2;
+            int text_padding = (int)(2* DotsPerInchHelper.DPIScale.XScale);
             SizeF text_size = SizeF.Empty;
             RectangleF text_rect = RectangleF.Empty;
 
-            Pen line_pen = new Pen(this.LineColor, this.LineThickness);
-            int circular = this.lineCircular ? this.LineThickness : 0;
+            Pen line_pen = new Pen(this.LineColor, scale_lineThickness);
+            int circular = this.lineCircular ? scale_lineThickness : 0;
             PointF line_left_s = PointF.Empty;
             PointF line_left_e = PointF.Empty;
             PointF line_right_s = PointF.Empty;
@@ -474,7 +475,7 @@ namespace WinformControlLibraryExtension
                     float y = 0;
                     if (this.textAlign == TextAligns.Top)
                     {
-                        y = text_rect.Bottom + this.LineThickness / 2f;
+                        y = text_rect.Bottom + scale_lineThickness / 2f;
                     }
                     else if (this.textAlign == TextAligns.Center)
                     {
@@ -482,7 +483,7 @@ namespace WinformControlLibraryExtension
                     }
                     else if (this.textAlign == TextAligns.Bottom)
                     {
-                        y = text_rect.Y - this.LineThickness / 2f;
+                        y = text_rect.Y - scale_lineThickness / 2f;
                     }
                     #endregion
                     line_left_s = new PointF(this.ClientRectangle.X + circular, y);
@@ -496,7 +497,7 @@ namespace WinformControlLibraryExtension
                     float x = 0;
                     if (this.textAlign == TextAligns.Top)
                     {
-                        x = text_rect.Right + this.LineThickness / 2f;
+                        x = text_rect.Right + scale_lineThickness / 2f;
                     }
                     else if (this.textAlign == TextAligns.Center)
                     {
@@ -504,7 +505,7 @@ namespace WinformControlLibraryExtension
                     }
                     else if (this.textAlign == TextAligns.Bottom)
                     {
-                        x = text_rect.X - this.LineThickness / 2f;
+                        x = text_rect.X - scale_lineThickness / 2f;
                     }
                     #endregion
                     line_left_s = new PointF(x, this.ClientRectangle.Y + circular);
@@ -537,7 +538,7 @@ namespace WinformControlLibraryExtension
                     float y = 0;
                     if (this.textAlign == TextAligns.Top)
                     {
-                        y = text_rect.Bottom + this.LineThickness / 2f;
+                        y = text_rect.Bottom + scale_lineThickness / 2f;
                     }
                     else if (this.textAlign == TextAligns.Center)
                     {
@@ -545,7 +546,7 @@ namespace WinformControlLibraryExtension
                     }
                     else if (this.textAlign == TextAligns.Bottom)
                     {
-                        y = text_rect.Y- text_padding - this.LineThickness / 2f;
+                        y = text_rect.Y- text_padding - scale_lineThickness / 2f;
                     }
                     #endregion
                     line_left_s = new PointF(this.ClientRectangle.X + circular, y);
@@ -557,7 +558,7 @@ namespace WinformControlLibraryExtension
                     float x = 0;
                     if (this.textAlign == TextAligns.Top)
                     {
-                        x = text_rect.Right + this.LineThickness / 2f;
+                        x = text_rect.Right + scale_lineThickness / 2f;
                     }
                     else if (this.textAlign == TextAligns.Center)
                     {
@@ -565,7 +566,7 @@ namespace WinformControlLibraryExtension
                     }
                     else if (this.textAlign == TextAligns.Bottom)
                     {
-                        x = text_rect.X - text_padding - this.LineThickness / 2f;
+                        x = text_rect.X - text_padding - scale_lineThickness / 2f;
                     }
                     #endregion
                     line_left_s = new PointF(x, this.ClientRectangle.Y + circular);

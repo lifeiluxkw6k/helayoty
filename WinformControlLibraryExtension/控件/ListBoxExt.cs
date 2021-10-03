@@ -63,7 +63,7 @@ namespace WinformControlLibraryExtension
     [Description("ListBoxExt控件")]
     [DefaultProperty("Items")]
     [DefaultEvent("ItemClick")]
-    public class ListBoxExt : Control
+    public class ListBoxExt : CheckBoxExt
     {
         #region 新增事件
 
@@ -759,6 +759,20 @@ namespace WinformControlLibraryExtension
 
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool AutoSize
+        {
+            get
+            {
+                return base.AutoSize;
+            }
+            set
+            {
+                base.AutoSize = false;
+            }
+        }
+
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public new Padding Margin
         {
             get
@@ -872,6 +886,7 @@ namespace WinformControlLibraryExtension
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             SetStyle(ControlStyles.ResizeRedraw, true);
             SetStyle(ControlStyles.SupportsTransparentBackColor, true);
+            this.AutoSize = false;
 
             this.InitializeRectangle();
         }
@@ -883,6 +898,11 @@ namespace WinformControlLibraryExtension
             base.OnPaint(e);
 
             Graphics g = e.Graphics;
+
+            int scale_itemHeight = (int)(this.ItemHeight * DotsPerInchHelper.DPIScale.XScale);
+            Size scale_itemImageSize = new Size((int)(this.ItemImageSize.Width * DotsPerInchHelper.DPIScale.XScale), (int)(this.ItemImageSize.Height * DotsPerInchHelper.DPIScale.XScale));
+            int scale_scrollThickness = (int)(this.Scroll.Thickness * DotsPerInchHelper.DPIScale.XScale);
+
 
             #region 边框
 
@@ -1055,7 +1075,7 @@ namespace WinformControlLibraryExtension
                     }
                     if (this.DrawType == DrawTypes.Default)
                     {
-                        this.PaintItem(this.Items[i], g, commom_image, itemborder_pen, commom_back_sb, commom_text_sb);
+                        this.PaintItem(this.Items[i], g, commom_image, itemborder_pen, commom_back_sb, commom_text_sb, scale_itemImageSize);
                     }
                     else
                     {
@@ -1118,12 +1138,12 @@ namespace WinformControlLibraryExtension
                 if (this.Enabled)
                 {
                     bar_back_sb = new SolidBrush(this.Scroll.BarNormalBackColor);
-                    slide_back_pen = new Pen(this.Scroll.SlideStatus == ScrollSlideMoveStatus.Normal ? this.Scroll.SlideNormalBackColor : this.Scroll.SlideEnterBackColor, this.Scroll.Thickness);
+                    slide_back_pen = new Pen(this.Scroll.SlideStatus == ScrollSlideMoveStatus.Normal ? this.Scroll.SlideNormalBackColor : this.Scroll.SlideEnterBackColor, scale_scrollThickness);
                 }
                 else
                 {
                     bar_back_sb = new SolidBrush(this.Scroll.BarDisableBackColor);
-                    slide_back_pen = new Pen(this.Scroll.SlideDisableBackColor, this.Scroll.Thickness);
+                    slide_back_pen = new Pen(this.Scroll.SlideDisableBackColor, scale_scrollThickness);
                 }
 
                 #endregion
@@ -1133,8 +1153,8 @@ namespace WinformControlLibraryExtension
                 #endregion
 
                 #region  滑块
-                PointF sp_start = new PointF(this.Scroll.SlideRect.X + this.Scroll.Thickness / 2, this.Scroll.SlideRect.Y);
-                PointF sp_end = new PointF(this.Scroll.SlideRect.X + this.Scroll.Thickness / 2, this.Scroll.SlideRect.Bottom);
+                PointF sp_start = new PointF(this.Scroll.SlideRect.X + scale_scrollThickness / 2, this.Scroll.SlideRect.Y);
+                PointF sp_end = new PointF(this.Scroll.SlideRect.X + scale_scrollThickness / 2, this.Scroll.SlideRect.Bottom);
 
                 g.DrawLine(slide_back_pen, sp_start, sp_end);
                 #endregion
@@ -1420,7 +1440,9 @@ namespace WinformControlLibraryExtension
             base.OnResize(e);
 
             this.InitializeMainRectangle();
-            this.Scroll.Rect = new Rectangle((int)this.ClientRectangle.Right - this.BorderWidth - this.Scroll.Thickness, this.ClientRectangle.Top + this.BorderWidth, this.Scroll.Thickness, this.ClientRectangle.Height - this.BorderWidth * 2);
+
+            int scale_scrollThickness = (int)(this.Scroll.Thickness * DotsPerInchHelper.DPIScale.XScale);
+            this.Scroll.Rect = new Rectangle((int)this.ClientRectangle.Right - this.BorderWidth - scale_scrollThickness, this.ClientRectangle.Top + this.BorderWidth, scale_scrollThickness, this.ClientRectangle.Height - this.BorderWidth * 2);
             this.InitializeMainRealityRectangle();
             this.Invalidate();
         }
@@ -1489,6 +1511,8 @@ namespace WinformControlLibraryExtension
         /// </summary>
         protected internal void InitializeMainRealityRectangle()
         {
+            int scale_itemHeight = (int)(this.ItemHeight * DotsPerInchHelper.DPIScale.XScale);
+
             this.mainRealityRect = new Rectangle(this.mainRect.X, this.mainRect.Y, this.mainRect.Width, 0);
 
             int y = this.mainRealityRect.Y;
@@ -1505,8 +1529,8 @@ namespace WinformControlLibraryExtension
             int h = 0;
             for (int i = 0; i < this.Items.Count; i++)
             {
-                h += this.ItemHeight;
-                this.Items[i].Rect = new RectangleF(this.mainRect.Left, this.mainRect.Top + i * this.ItemHeight, this.mainRect.Width, this.ItemHeight);
+                h += scale_itemHeight;
+                this.Items[i].Rect = new RectangleF(this.mainRect.Left, this.mainRect.Top + i * scale_itemHeight, this.mainRect.Width, scale_itemHeight);
             }
             this.mainRealityRect = new Rectangle(this.mainRealityRect.X, this.mainRealityRect.Y, this.mainRealityRect.Width, h);
 
@@ -1518,7 +1542,9 @@ namespace WinformControlLibraryExtension
         /// </summary>
         private void InitializeScrollRectangle()
         {
-            this.Scroll.Rect = new Rectangle((int)this.mainRect.Right - this.Scroll.Thickness, this.mainRect.Top, this.Scroll.Thickness, this.mainRect.Height);
+            int scale_scrollThickness = (int)(this.Scroll.Thickness * DotsPerInchHelper.DPIScale.XScale);
+
+            this.Scroll.Rect = new Rectangle((int)this.mainRect.Right - scale_scrollThickness, this.mainRect.Top, scale_scrollThickness, this.mainRect.Height);
             float bi = (float)this.mainRect.Height / (float)this.mainRealityRect.Height;
             if (bi > 1)
             {
@@ -1529,7 +1555,7 @@ namespace WinformControlLibraryExtension
             {
                 slide_height = this.Scroll.SlideMinHeight;
             }
-            this.Scroll.SlideRect = new RectangleF(this.Scroll.Rect.X, this.Scroll.Rect.Y, this.Scroll.Thickness, slide_height);
+            this.Scroll.SlideRect = new RectangleF(this.Scroll.Rect.X, this.Scroll.Rect.Y, scale_scrollThickness, slide_height);
         }
 
         /// <summary>
@@ -1771,9 +1797,11 @@ namespace WinformControlLibraryExtension
         /// </summary>
         private void UpdateItemsRect()
         {
+            int scale_itemHeight = (int)(this.ItemHeight * DotsPerInchHelper.DPIScale.XScale);
+
             for (int i = 0; i < this.Items.Count; i++)
             {
-                this.Items[i].Rect = new RectangleF(this.mainRect.Left, this.mainRealityRect.Top + i * this.ItemHeight, this.mainRect.Width, this.ItemHeight);
+                this.Items[i].Rect = new RectangleF(this.mainRect.Left, this.mainRealityRect.Top + i * scale_itemHeight, this.mainRect.Width, scale_itemHeight);
             }
         }
 
@@ -1814,7 +1842,8 @@ namespace WinformControlLibraryExtension
         /// <param name="itemborder_pen"></param>
         /// <param name="commom_back_sb"></param>
         /// <param name="commom_text_sb"></param>
-        protected virtual void PaintItem(Item item, Graphics g, Image image, Pen itemborder_pen, SolidBrush commom_back_sb, SolidBrush commom_text_sb)
+        /// <param name="scale_itemImageSize"></param>
+        protected virtual void PaintItem(Item item, Graphics g, Image image, Pen itemborder_pen, SolidBrush commom_back_sb, SolidBrush commom_text_sb, Size scale_itemImageSize)
         {
             #region 选项背景
             g.FillRectangle(commom_back_sb, item.Rect);
@@ -1833,7 +1862,7 @@ namespace WinformControlLibraryExtension
             #region 选项文本
 
             SizeF text_size = g.MeasureString(item.Text, this.Font);
-            float text_x = this.mainRect.X + (this.ItemImageShow ? (this.ItemImageSize.Width + image_padding * 2) : 0);
+            float text_x = this.mainRect.X + (this.ItemImageShow ? (scale_itemImageSize.Width + image_padding * 2) : 0);
 
             RectangleF text_rect = new RectangleF(text_x, item.Rect.Y + (item.Rect.Height - text_size.Height) / 2f, text_size.Width, text_size.Height);
             g.DrawString(item.Text, this.Font, commom_text_sb, text_rect);

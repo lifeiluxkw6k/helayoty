@@ -559,33 +559,37 @@ namespace WinformControlLibraryExtension
             base.OnPaint(e);
 
             Graphics g = e.Graphics;
-            Rectangle rect = new Rectangle((int)this.ClientRectangle.X + ((int)this.ClientRectangle.Width / 2 - this.ArcRadius) + 1, (int)this.ClientRectangle.Y + ((int)this.ClientRectangle.Height / 2 - this.ArcRadius) + 1, this.ArcRadius * 2 - 2, this.ArcRadius * 2 - 2);
+
+            int scale_arcRadius =(int)( this.ArcRadius * DotsPerInchHelper.DPIScale.XScale);
+            int scale_arcThickness = (int)(this.ArcThickness * DotsPerInchHelper.DPIScale.XScale);
+            int scale_squareWidth = (int)(this.SquareWidth * DotsPerInchHelper.DPIScale.XScale);
+            Rectangle rect = new Rectangle((int)this.ClientRectangle.X + ((int)this.ClientRectangle.Width / 2 - scale_arcRadius) + 1, (int)this.ClientRectangle.Y + ((int)this.ClientRectangle.Height / 2 - scale_arcRadius) + 1, scale_arcRadius * 2 - 2, scale_arcRadius * 2 - 2);
 
             #region 环形
             if (this.Type == PercentageType.Annulus)
             {
                 g.SmoothingMode = SmoothingMode.AntiAlias;
                 #region 背景
-                Pen arcback_pen = new Pen(this.ArcBackColor, this.ArcThickness);
-                g.DrawArc(arcback_pen, ControlCommom.TransformRectangleByPen(rect, this.ArcThickness), 270, 360);
+                Pen arcback_pen = new Pen(this.ArcBackColor, scale_arcThickness);
+                g.DrawArc(arcback_pen, ControlCommom.TransformRectangleByPen(rect, scale_arcThickness), 270, 360);
                 arcback_pen.Dispose();
                 #endregion
 
                 if (this.ArcAnnulusBackColor != Color.Empty)
                 {
                     SolidBrush arcannulusback_sb = new SolidBrush(this.ArcAnnulusBackColor);
-                    g.FillPie(arcannulusback_sb, rect.X + this.ArcThickness / 2, rect.Y + this.ArcThickness / 2, rect.Width - this.ArcThickness, rect.Height - this.ArcThickness, 270, 360);
+                    g.FillPie(arcannulusback_sb, rect.X + scale_arcThickness / 2, rect.Y + scale_arcThickness / 2, rect.Width - scale_arcThickness, rect.Height - scale_arcThickness, 270, 360);
                     arcannulusback_sb.Dispose();
                 }
 
                 #region 百分比值
-                Pen arc_pen = new Pen(this.ArcColor, this.ArcThickness);
+                Pen arc_pen = new Pen(this.ArcColor, scale_arcThickness);
                 if (this.ArcRound)
                 {
                     arc_pen.StartCap = LineCap.Round;
                     arc_pen.EndCap = LineCap.Round;
                 }
-                g.DrawArc(arc_pen, ControlCommom.TransformRectangleByPen(rect, this.ArcThickness), 270, 360 * this.Value);
+                g.DrawArc(arc_pen, ControlCommom.TransformRectangleByPen(rect, scale_arcThickness), 270, 360 * this.Value);
                 arc_pen.Dispose();
                 #endregion
 
@@ -608,7 +612,7 @@ namespace WinformControlLibraryExtension
                 if (this.ArcAnnulusBackColor != Color.Empty)
                 {
                     SolidBrush arcannulusback_sb = new SolidBrush(this.ArcAnnulusBackColor);
-                    g.FillPie(arcannulusback_sb, rect.X + this.ArcThickness / 2, rect.Y + this.ArcThickness / 2, rect.Width - this.ArcThickness, rect.Height - this.ArcThickness, 270, 360);
+                    g.FillPie(arcannulusback_sb, rect.X + scale_arcThickness / 2, rect.Y + scale_arcThickness / 2, rect.Width - scale_arcThickness, rect.Height - scale_arcThickness, 270, 360);
                     arcannulusback_sb.Dispose();
                 }
 
@@ -631,18 +635,18 @@ namespace WinformControlLibraryExtension
                 int start = this.ArcAngle == 360 ? 270 : 180 + (180 - this.ArcAngle) / 2;
 
                 #region 背景
-                Pen arcback_pen = new Pen(this.ArcBackColor, this.ArcThickness);
-                g.DrawArc(arcback_pen, ControlCommom.TransformRectangleByPen(rect, this.ArcThickness), start, this.ArcAngle);
+                Pen arcback_pen = new Pen(this.ArcBackColor, scale_arcThickness);
+                g.DrawArc(arcback_pen, ControlCommom.TransformRectangleByPen(rect, scale_arcThickness), start, this.ArcAngle);
                 arcback_pen.Dispose();
                 #endregion
 
                 #region 百分比值
-                Pen arc_pen = new Pen(this.ArcColor, this.ArcThickness);
+                Pen arc_pen = new Pen(this.ArcColor, scale_arcThickness);
                 if (this.ArcRound)
                 {
                     arc_pen.EndCap = LineCap.Round;
                 }
-                g.DrawArc(arc_pen, ControlCommom.TransformRectangleByPen(rect, this.ArcThickness), start, this.ArcAngle * this.Value);
+                g.DrawArc(arc_pen, ControlCommom.TransformRectangleByPen(rect, scale_arcThickness), start, this.ArcAngle * this.Value);
                 arc_pen.Dispose();
                 #endregion
 
@@ -656,8 +660,8 @@ namespace WinformControlLibraryExtension
             else if (this.Type == PercentageType.Quadrangle)
             {
                 RectangleF rectf = new RectangleF();
-                rectf.Width = 10 + this.SquareWidth * 10;
-                rectf.Height = 10 + this.SquareWidth * 10;
+                rectf.Width = 10 + scale_squareWidth * 10;
+                rectf.Height = 10 + scale_squareWidth * 10;
                 rectf.X = this.ClientRectangle.X + (this.ClientRectangle.Width - rectf.Width) / 2;
                 rectf.Y = this.ClientRectangle.Bottom - rectf.Height;
 
@@ -674,7 +678,7 @@ namespace WinformControlLibraryExtension
                 int row = int.Parse(str.Substring(index + 1, 1));
                 RectangleF row_rectf = new RectangleF();
                 row_rectf.Width = rectf.Width;
-                row_rectf.Height = row * 1 + row * this.SquareWidth;
+                row_rectf.Height = row * 1 + row * scale_squareWidth;
                 row_rectf.X = rectf.X;
                 row_rectf.Y = rectf.Bottom - row_rectf.Height;
                 g.FillRectangle(arc_sb, row_rectf);
@@ -683,8 +687,8 @@ namespace WinformControlLibraryExtension
                 if (col > 0)
                 {
                     RectangleF col_rectf = new RectangleF();
-                    col_rectf.Width = col * 1 + col * this.SquareWidth;
-                    col_rectf.Height = this.SquareWidth + 1;
+                    col_rectf.Width = col * 1 + col * scale_squareWidth;
+                    col_rectf.Height = scale_squareWidth + 1;
                     col_rectf.X = rectf.X;
                     col_rectf.Y = row_rectf.Y - col_rectf.Height;
                     g.FillRectangle(arc_sb, col_rectf);
@@ -697,11 +701,11 @@ namespace WinformControlLibraryExtension
                 Pen arcbackborder_pen = new Pen(this.SquareBorderColor, 1);
                 for (int i = 0; i < 11; i++)//行
                 {
-                    g.DrawLine(arcbackborder_pen, rectf.X, rectf.Y + i * 1 + i * this.SquareWidth, rectf.Right, rectf.Y + i * 1 + i * this.SquareWidth);
+                    g.DrawLine(arcbackborder_pen, rectf.X, rectf.Y + i * 1 + i * scale_squareWidth, rectf.Right, rectf.Y + i * 1 + i * scale_squareWidth);
                 }
                 for (int i = 0; i < 11; i++)//列
                 {
-                    g.DrawLine(arcbackborder_pen, rectf.X + i * 1 + i * this.SquareWidth, rectf.Y, rectf.X + i * 1 + i * this.SquareWidth, rectf.Bottom);
+                    g.DrawLine(arcbackborder_pen, rectf.X + i * 1 + i * scale_squareWidth, rectf.Y, rectf.X + i * 1 + i * scale_squareWidth, rectf.Bottom);
                 }
                 arcbackborder_pen.Dispose();
                 #endregion
@@ -729,13 +733,13 @@ namespace WinformControlLibraryExtension
                     g.SmoothingMode = SmoothingMode.AntiAlias;
                 }
                 RectangleF rectf = new RectangleF();
-                rectf.Width = this.ClientRectangle.Width - (this.ArcRound ? this.ArcThickness : 0);
-                rectf.Height = this.ArcThickness;
-                rectf.X = this.ClientRectangle.X + (this.ArcRound ? this.ArcThickness / 2 : 0);
+                rectf.Width = this.ClientRectangle.Width - (this.ArcRound ? scale_arcThickness : 0);
+                rectf.Height = scale_arcThickness;
+                rectf.X = this.ClientRectangle.X + (this.ArcRound ? scale_arcThickness / 2 : 0);
                 rectf.Y = this.ClientRectangle.Bottom - rectf.Height;
 
                 #region 背景
-                Pen arcback_pen = new Pen(this.ArcBackColor, this.ArcThickness);
+                Pen arcback_pen = new Pen(this.ArcBackColor, scale_arcThickness);
                 if (this.ArcRound)
                 {
                     arcback_pen.StartCap = LineCap.Round;
@@ -746,7 +750,7 @@ namespace WinformControlLibraryExtension
                 #endregion
 
                 #region 百分比值
-                Pen arc_pen = new Pen(this.ArcColor, this.ArcThickness);
+                Pen arc_pen = new Pen(this.ArcColor, scale_arcThickness);
                 if (this.ArcRound)
                 {
                     arc_pen.StartCap = LineCap.Round;

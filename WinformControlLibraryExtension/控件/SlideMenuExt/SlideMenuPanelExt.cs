@@ -245,11 +245,11 @@ namespace WinformControlLibraryExtension
             }
         }
 
-        private int moveWheelMagnify = 1;
+        private int moveWheelMagnify = 10;
         /// <summary>
         /// 鼠标滚轮旋转一格要移动多少个像素
         /// </summary>
-        [DefaultValue(1)]
+        [DefaultValue(10)]
         [Description("鼠标滚轮旋转一格要移动多少个像素")]
         public int MoveWheelMagnify
         {
@@ -838,6 +838,7 @@ namespace WinformControlLibraryExtension
             base.OnPaint(e);
 
             Graphics g = e.Graphics;
+            int scale_scrollThickness = (int)(this.Scroll.Thickness * DotsPerInchHelper.DPIScale.XScale);
 
             #region 背景
 
@@ -1009,7 +1010,7 @@ namespace WinformControlLibraryExtension
                 g.Clip = menu_region;
             }
 
-            this.RecursionNodePaint(this.Nodes, g, nodeborder_pen
+            this.RecursionNodePaint( this.Nodes, g, nodeborder_pen
                 , menu_normal_back_sb, menu_enter_back_sb, menu_disable_back_sb, menu_normal_text_sb, menu_enter_text_sb, menu_disable_text_sb
                 , menutab_normal_back_sb, menutab_enter_back_sb, menutab_selected_back_sb, menutab_disable_back_sb, menutab_normal_text_sb, menutab_enter_text_sb, menutab_selected_text_sb, menutab_disable_text_sb);
 
@@ -1077,12 +1078,12 @@ namespace WinformControlLibraryExtension
                     if (this.Enabled)
                     {
                         bar_back_sb = new SolidBrush(this.Scroll.BarNormalBackColor);
-                        slide_back_pen = new Pen(this.Scroll.SlideStatus == ScrollSlideMoveStatus.Normal ? this.Scroll.SlideNormalBackColor : this.Scroll.SlideEnterBackColor, this.Scroll.Thickness);
+                        slide_back_pen = new Pen(this.Scroll.SlideStatus == ScrollSlideMoveStatus.Normal ? this.Scroll.SlideNormalBackColor : this.Scroll.SlideEnterBackColor, scale_scrollThickness);
                     }
                     else
                     {
                         bar_back_sb = new SolidBrush(this.Scroll.BarDisableBackColor);
-                        slide_back_pen = new Pen(this.Scroll.SlideDisableBackColor, this.Scroll.Thickness);
+                        slide_back_pen = new Pen(this.Scroll.SlideDisableBackColor, scale_scrollThickness);
                     }
 
                     if (this.Scroll.SlideRadius)
@@ -1101,14 +1102,14 @@ namespace WinformControlLibraryExtension
                     PointF sp_end = PointF.Empty;
                     if (this.Scroll.SlideRadius)
                     {
-                        sp_start = new PointF(this.Scroll.SlideRect.X + this.Scroll.Thickness / 2, this.Scroll.SlideRect.Y + this.Scroll.Thickness / 2);
-                        sp_end = new PointF(this.Scroll.SlideRect.X + this.Scroll.Thickness / 2, this.Scroll.SlideRect.Bottom - this.Scroll.Thickness / 2);
+                        sp_start = new PointF(this.Scroll.SlideRect.X + scale_scrollThickness / 2, this.Scroll.SlideRect.Y + scale_scrollThickness / 2);
+                        sp_end = new PointF(this.Scroll.SlideRect.X + scale_scrollThickness / 2, this.Scroll.SlideRect.Bottom - scale_scrollThickness / 2);
                         g.SmoothingMode = SmoothingMode.AntiAlias;
                     }
                     else
                     {
-                        sp_start = new PointF(this.Scroll.SlideRect.X + this.Scroll.Thickness / 2, this.Scroll.SlideRect.Y);
-                        sp_end = new PointF(this.Scroll.SlideRect.X + this.Scroll.Thickness / 2, this.Scroll.SlideRect.Bottom);
+                        sp_start = new PointF(this.Scroll.SlideRect.X + scale_scrollThickness / 2, this.Scroll.SlideRect.Y);
+                        sp_end = new PointF(this.Scroll.SlideRect.X + scale_scrollThickness / 2, this.Scroll.SlideRect.Bottom);
                     }
                     g.DrawLine(slide_back_pen, sp_start, sp_end);
 
@@ -1337,7 +1338,7 @@ namespace WinformControlLibraryExtension
                             int offset = (int)((point.Y - this.movedownpoint.Y));
                             this.movedownpoint = point;
 
-                            this.MouseMoveWheel(offset);
+                            this.MouseMoveWheel(false,offset);
                         }
                     }
 
@@ -1423,18 +1424,21 @@ namespace WinformControlLibraryExtension
                 return;
 
             int offset = e.Delta > 1 ? -this.MoveWheelMagnify : this.MoveWheelMagnify;
-            this.MouseMoveWheel(offset);
+            this.MouseMoveWheel(true,offset);
         }
 
         protected override void SetBoundsCore(int x, int y, int width, int height, BoundsSpecified specified)
         {
-            if (width < this.Drag.Width + 1)
+            int scale_dragWidth = (int)(this.Drag.Width * DotsPerInchHelper.DPIScale.XScale);
+            int scale_buttonHeight = (int)(this.Tool.ButtonHeight * DotsPerInchHelper.DPIScale.XScale);
+
+            if (width < scale_dragWidth + 1)
             {
-                width = this.Drag.Width + 1;
+                width = scale_dragWidth + 1;
             }
-            if (height < this.Tool.ButtonHeight + 1)
+            if (height < scale_buttonHeight + 1)
             {
-                height = this.Tool.ButtonHeight + 1;
+                height = scale_buttonHeight + 1;
             }
             base.SetBoundsCore(x, y, width, height, specified);
         }
@@ -1443,10 +1447,12 @@ namespace WinformControlLibraryExtension
         {
             base.OnResize(e);
 
+            int scale_scrollThickness = (int)(this.Scroll.Thickness * DotsPerInchHelper.DPIScale.XScale);
+
             this.InitializeDragRectangle();
             this.InitializeToolRectangle();
             this.InitializeMenuRectangle();
-            this.Scroll.Rect = new Rectangle((int)this.Drag.Rect.X - this.Scroll.Thickness, this.Tool.Rect.Bottom, this.Scroll.Thickness, this.ClientRectangle.Height - this.Tool.Rect.Height);
+            this.Scroll.Rect = new Rectangle((int)this.Drag.Rect.X - scale_scrollThickness, this.Tool.Rect.Bottom, scale_scrollThickness, this.ClientRectangle.Height - this.Tool.Rect.Height);
             this.UpdateRealityMenuAndAllNodeRect();
             this.Invalidate();
         }
@@ -1505,6 +1511,18 @@ namespace WinformControlLibraryExtension
         #endregion
 
         #region  公开方法
+
+        /// <summary>
+        /// 初始化控件Rect
+        /// </summary>
+        public void InitializeRectangle()
+        {
+            this.InitializeDragRectangle();
+            this.InitializeToolRectangle();
+            this.InitializeMenuRectangle();
+            this.InitializeRealityMenuRectangle();
+            this.InitializeScrollRectangle();
+        }
 
         /// <summary>
         /// 刷新所有节点信息(Level、Menu、ContainerHeight、NodeRect)
@@ -1629,25 +1647,14 @@ namespace WinformControlLibraryExtension
         #region 私有方法
 
         /// <summary>
-        /// 初始化控件Rect
-        /// </summary>
-        public void InitializeRectangle()
-        {
-            this.InitializeDragRectangle();
-            this.InitializeToolRectangle();
-            this.InitializeMenuRectangle();
-            this.InitializeRealityMenuRectangle();
-            this.InitializeScrollRectangle();
-        }
-
-        /// <summary>
         /// 初始化拖载条Rect
         /// </summary>
         private void InitializeDragRectangle()
         {
             if (this.Drag.Enabled)
             {
-                this.Drag.Rect = new RectangleF(this.ClientRectangle.Right - this.Drag.Width, this.ClientRectangle.Y, this.Drag.Width, this.ClientRectangle.Height);
+                int scale_dragWidth = (int)(this.Drag.Width * DotsPerInchHelper.DPIScale.XScale);
+                this.Drag.Rect = new RectangleF(this.ClientRectangle.Right - scale_dragWidth, this.ClientRectangle.Y, scale_dragWidth, this.ClientRectangle.Height);
             }
             else
             {
@@ -1660,24 +1667,29 @@ namespace WinformControlLibraryExtension
         /// </summary>
         private void InitializeToolRectangle()
         {
+            int scale_toolSearchHeight = (int)(this.Tool.SearchHeight * DotsPerInchHelper.DPIScale.XScale);
+            int scale_toolButtonHeight = (int)(this.Tool.ButtonHeight * DotsPerInchHelper.DPIScale.XScale);
+
             int tool_btn_padding = 4;
-            Size tool_btn_size = new Size(16, 16);
-            int tool_height_tmp = this.Tool.ButtonHeight + (this.Tool.Search ? this.Tool.SearchHeight : 0);
+            int scale_tool_btn_padding = (int)(tool_btn_padding * DotsPerInchHelper.DPIScale.XScale);
+            Size tool_btn_size = new Size((int)(16 * DotsPerInchHelper.DPIScale.XScale), (int)(16 * DotsPerInchHelper.DPIScale.YScale));
+            int tool_height_tmp = scale_toolButtonHeight + (this.Tool.Search ? scale_toolSearchHeight : 0);
             this.Tool.Rect = new Rectangle(this.ClientRectangle.X, this.ClientRectangle.Y, (int)this.Drag.Rect.X, (this.Tool.Enabled ? tool_height_tmp : 0));
 
-            this.Tool.MinBtn.Rect = new RectangleF(this.Tool.Rect.Right - (this.Tool.MinBtn.Enabled ? tool_btn_padding + tool_btn_size.Width : 0), this.Tool.Rect.Y + (this.Tool.ButtonHeight - tool_btn_size.Height) / 2, (this.Tool.MinBtn.Enabled ? tool_btn_size.Width : 0), tool_btn_size.Height);
-            this.Tool.FixedBtn.Rect = new RectangleF(this.Tool.MinBtn.Rect.X - (this.Tool.FixedBtn.Enabled ? tool_btn_padding + tool_btn_size.Width : 0), this.Tool.Rect.Y + (this.Tool.ButtonHeight - tool_btn_size.Height) / 2, (this.Tool.FixedBtn.Enabled ? tool_btn_size.Width : 0), tool_btn_size.Height);
-            this.Tool.AllExpandBtn.Rect = new RectangleF(this.Tool.FixedBtn.Rect.X - (this.Tool.AllExpandBtn.Enabled ? tool_btn_padding + tool_btn_size.Width : 0), this.Tool.Rect.Y + (this.Tool.ButtonHeight - tool_btn_size.Height) / 2, (this.Tool.AllExpandBtn.Enabled ? tool_btn_size.Width : 0), tool_btn_size.Height);
-            this.Tool.FirstExpandBtn.Rect = new RectangleF(this.Tool.AllExpandBtn.Rect.X - (this.Tool.FirstExpandBtn.Enabled ? tool_btn_padding + tool_btn_size.Width : 0), this.Tool.Rect.Y + (this.Tool.ButtonHeight - tool_btn_size.Height) / 2, (this.Tool.FirstExpandBtn.Enabled ? tool_btn_size.Width : 0), tool_btn_size.Height);
-            this.Tool.AllCollapseBtn.Rect = new RectangleF(this.Tool.FirstExpandBtn.Rect.X - (this.Tool.AllCollapseBtn.Enabled ? tool_btn_padding + tool_btn_size.Width : 0), this.Tool.Rect.Y + (this.Tool.ButtonHeight - tool_btn_size.Height) / 2, (this.Tool.AllCollapseBtn.Enabled ? tool_btn_size.Width : 0), tool_btn_size.Height);
+            this.Tool.MinBtn.Rect = new RectangleF(this.Tool.Rect.Right - (this.Tool.MinBtn.Enabled ? scale_tool_btn_padding + tool_btn_size.Width : 0), this.Tool.Rect.Y + (scale_toolButtonHeight - tool_btn_size.Height) / 2, (this.Tool.MinBtn.Enabled ? tool_btn_size.Width : 0), tool_btn_size.Height);
+            this.Tool.FixedBtn.Rect = new RectangleF(this.Tool.MinBtn.Rect.X - (this.Tool.FixedBtn.Enabled ? scale_tool_btn_padding + tool_btn_size.Width : 0), this.Tool.Rect.Y + (scale_toolButtonHeight - tool_btn_size.Height) / 2, (this.Tool.FixedBtn.Enabled ? tool_btn_size.Width : 0), tool_btn_size.Height);
+            this.Tool.AllExpandBtn.Rect = new RectangleF(this.Tool.FixedBtn.Rect.X - (this.Tool.AllExpandBtn.Enabled ? scale_tool_btn_padding + tool_btn_size.Width : 0), this.Tool.Rect.Y + (scale_toolButtonHeight - tool_btn_size.Height) / 2, (this.Tool.AllExpandBtn.Enabled ? tool_btn_size.Width : 0), tool_btn_size.Height);
+            this.Tool.FirstExpandBtn.Rect = new RectangleF(this.Tool.AllExpandBtn.Rect.X - (this.Tool.FirstExpandBtn.Enabled ? scale_tool_btn_padding + tool_btn_size.Width : 0), this.Tool.Rect.Y + (scale_toolButtonHeight - tool_btn_size.Height) / 2, (this.Tool.FirstExpandBtn.Enabled ? tool_btn_size.Width : 0), tool_btn_size.Height);
+            this.Tool.AllCollapseBtn.Rect = new RectangleF(this.Tool.FirstExpandBtn.Rect.X - (this.Tool.AllCollapseBtn.Enabled ? scale_tool_btn_padding + tool_btn_size.Width : 0), this.Tool.Rect.Y + (scale_toolButtonHeight - tool_btn_size.Height) / 2, (this.Tool.AllCollapseBtn.Enabled ? tool_btn_size.Width : 0), tool_btn_size.Height);
 
             if (this.Tool.Search)
             {
-                this.Tool.SearchClearBtn.Rect = new RectangleF(this.Tool.Rect.Right - tool_btn_padding - tool_btn_size.Width, this.Tool.Rect.Bottom - (this.Tool.SearchHeight - tool_btn_size.Height) / 2 - tool_btn_size.Height, tool_btn_size.Width, tool_btn_size.Height);
+                this.Tool.SearchClearBtn.Rect = new RectangleF(this.Tool.Rect.Right - scale_tool_btn_padding - tool_btn_size.Width, this.Tool.Rect.Bottom - (scale_toolSearchHeight - tool_btn_size.Height) / 2 - tool_btn_size.Height, tool_btn_size.Width, tool_btn_size.Height);
 
                 int text_padding = 2;
-                this.Tool.SearchText.Size = new Size((int)(this.Tool.SearchClearBtn.Rect.X - tool_btn_padding - text_padding * 2), this.Tool.SearchHeight - text_padding * 2);
-                this.Tool.SearchText.Location = new Point(this.Tool.Rect.X + text_padding, this.Tool.Rect.Bottom - (this.Tool.SearchHeight - this.Tool.SearchText.Size.Height) / 2 - this.Tool.SearchText.Size.Height);
+                int scale_text_padding = (int)(text_padding * DotsPerInchHelper.DPIScale.XScale);
+                this.Tool.SearchText.Size = new Size((int)this.Drag.Rect.X - scale_text_padding * 2- (int)this.Tool.SearchClearBtn.Rect.Width- tool_btn_padding *2, scale_toolSearchHeight - scale_text_padding * 2);
+                this.Tool.SearchText.Location = new Point(this.Tool.Rect.X + scale_text_padding, this.Tool.Rect.Bottom - (scale_toolSearchHeight - this.Tool.SearchText.Size.Height) / 2 - this.Tool.SearchText.Size.Height);
             }
         }
 
@@ -1704,18 +1716,21 @@ namespace WinformControlLibraryExtension
         /// </summary>
         private void InitializeScrollRectangle()
         {
-            this.Scroll.Rect = new Rectangle((int)this.Drag.Rect.X - this.Scroll.Thickness, this.Tool.Rect.Bottom, this.Scroll.Thickness, this.ClientRectangle.Height - this.Tool.Rect.Height);
+            int scale_scrollThickness = (int)(this.Scroll.Thickness * DotsPerInchHelper.DPIScale.XScale);
+            int scale_scrollSlideMinHeight = (int)(Scroll.SlideMinHeight * DotsPerInchHelper.DPIScale.XScale);
+
+            this.Scroll.Rect = new Rectangle((int)this.Drag.Rect.X - scale_scrollThickness, this.Tool.Rect.Bottom, scale_scrollThickness, this.ClientRectangle.Height - this.Tool.Rect.Height);
             float bi = (float)this.menuRect.Height / (float)this.realityMenuRect.Height;
             if (bi > 1)
             {
                 bi = 1;
             }
             float slide_height = this.Scroll.Rect.Height * bi;
-            if (slide_height < this.Scroll.SlideMinHeight)
+            if (slide_height < scale_scrollSlideMinHeight)
             {
-                slide_height = this.Scroll.SlideMinHeight;
+                slide_height = scale_scrollSlideMinHeight;
             }
-            this.Scroll.SlideRect = new RectangleF(this.Scroll.Rect.X, this.Scroll.Rect.Y, this.Scroll.Thickness, slide_height);
+            this.Scroll.SlideRect = new RectangleF(this.Scroll.Rect.X, this.Scroll.Rect.Y, scale_scrollThickness, slide_height);
         }
 
         /// <summary>
@@ -2056,12 +2071,12 @@ namespace WinformControlLibraryExtension
                     {
                         node.ECAnimationTime = this.ECAnimationAllTimer;
                     }
-                    node.ContainerHeightTmp = this.GetNodeNoAnimationExpandContainerHeight(node);
+                    node.ContainerHeightTmp = this.GetNodeNoAnimationExpandContainerHeight( node);
                     node.ECAnimationStatus = NodeECAnimationStatuss.Collapseing;
                 }
                 else//展开
                 {
-                    node.ContainerHeightTmp = this.GetNodeNoAnimationExpandContainerHeight(node);
+                    node.ContainerHeightTmp = this.GetNodeNoAnimationExpandContainerHeight( node);
                     node.ECAnimationStatus = NodeECAnimationStatuss.Expanding;
                 }
                 this.ecAnimationList.Add(node);
@@ -2246,7 +2261,7 @@ namespace WinformControlLibraryExtension
         {
             for (int i = 0; i < this.Nodes.Count; i++)
             {
-                this.Nodes[i].ContainerHeight = this.RecursionSetNodeContainerHeight(this.Nodes[i]);
+                this.Nodes[i].ContainerHeight = this.RecursionSetNodeContainerHeight( this.Nodes[i]);
             }
         }
 
@@ -2255,9 +2270,12 @@ namespace WinformControlLibraryExtension
         /// </summary>
         /// <param name="node">节点</param>
         /// <returns>返回节点容器高度</returns>
-        private int RecursionSetNodeContainerHeight(Node node)
+        private int RecursionSetNodeContainerHeight( Node node)
         {
             int container_height = 0;
+
+            int scale_menuHeight = (int)(this.Menu.Height * DotsPerInchHelper.DPIScale.XScale);
+            int scale_menuTabHeight = (int)(this.MenuTab.Height * DotsPerInchHelper.DPIScale.XScale);
 
             if (node.ItemType == NodeTypes.MenuTab)
             {
@@ -2274,9 +2292,9 @@ namespace WinformControlLibraryExtension
                         {
                             if (node.Children[i].Display)
                             {
-                                container_height += node.Children[i].ItemType == NodeTypes.Menu ? this.Menu.Height : this.MenuTab.Height;
+                                container_height += node.Children[i].ItemType == NodeTypes.Menu ? scale_menuHeight : scale_menuTabHeight;
                             }
-                            int children_container_height = this.RecursionSetNodeContainerHeight(node.Children[i]);
+                            int children_container_height = this.RecursionSetNodeContainerHeight( node.Children[i]);
                             if (node.Children[i].ItemType == NodeTypes.Menu && (node.Children[i].ECAnimationStatus == NodeECAnimationStatuss.Expanding || node.Children[i].ECAnimationStatus == NodeECAnimationStatuss.Collapseing))
                             {
                                 children_container_height = (int)(children_container_height * WcleAnimationLibrary.AnimationTimer.GetProgress(AnimationTypes.UniformMotion, ecAnimationOptions, node.Children[i].ECAnimationTime));
@@ -2321,7 +2339,7 @@ namespace WinformControlLibraryExtension
         /// </summary>
         /// <param name="node"></param>
         /// <returns>返回指定节点在非动画展开状态下的容器深度</returns>
-        private int GetNodeNoAnimationExpandContainerHeight(Node node)
+        private int GetNodeNoAnimationExpandContainerHeight( Node node)
         {
             int container_height = 0;
 
@@ -2332,7 +2350,7 @@ namespace WinformControlLibraryExtension
 
             for (int i = 0; i < node.Children.Count; i++)
             {
-                container_height += this.GetNodeHeight(node.Children[i], node.Children[i].ECAnimationStatus == NodeECAnimationStatuss.Collapseed);
+                container_height += this.GetNodeHeight( node.Children[i], node.Children[i].ECAnimationStatus == NodeECAnimationStatuss.Collapseed);
             }
             return container_height;
         }
@@ -2343,15 +2361,17 @@ namespace WinformControlLibraryExtension
         /// <param name="node">指定节点</param>
         /// <param name="ancestorCollapse">祖先节点是否折叠过</param>
         /// <returns>返回指定节点实际高度</returns>
-        private int GetNodeHeight(Node node, bool ancestorCollapse)
+        private int GetNodeHeight( Node node, bool ancestorCollapse)
         {
             int container_height = 0;
+            int scale_menuHeight = (int)(this.Menu.Height * DotsPerInchHelper.DPIScale.XScale);
+            int scale_menuTabHeight = (int)(this.MenuTab.Height * DotsPerInchHelper.DPIScale.XScale);
 
             if (node.ItemType == NodeTypes.MenuTab)
             {
                 if (node.Display)
                 {
-                    container_height += this.MenuTab.Height;
+                    container_height += scale_menuTabHeight;
                 }
                 return container_height;
             }
@@ -2359,7 +2379,7 @@ namespace WinformControlLibraryExtension
             {
                 if (node.Display)
                 {
-                    container_height += this.Menu.Height;
+                    container_height += scale_menuHeight;
                 }
                 if (ancestorCollapse == true)
                 {
@@ -2372,7 +2392,7 @@ namespace WinformControlLibraryExtension
                         if (node.Children[i].Display)
                         {
                             bool collapse = ancestorCollapse ? true : (node.Children[i].ECAnimationStatus == NodeECAnimationStatuss.Collapseed);
-                            container_height += GetNodeHeight(node.Children[i], collapse);
+                            container_height += this.GetNodeHeight( node.Children[i], collapse);
                         }
                     }
                 }
@@ -2385,14 +2405,17 @@ namespace WinformControlLibraryExtension
         /// </summary>
         private void UpdateRealityMenuAndAllNodeRect()
         {
+            int scale_menuHeight = (int)(this.Menu.Height * DotsPerInchHelper.DPIScale.XScale);
+            int scale_menuTabHeight = (int)(this.MenuTab.Height * DotsPerInchHelper.DPIScale.XScale);
+
             bool ancestorCollapse = false;//祖先节点是否折叠过
             int height = 0;
             for (int i = 0; i < this.Nodes.Count; i++)
             {
-                this.RecursionSetNodeRect(this.Nodes, this.Nodes[i], ancestorCollapse);
+                this.RecursionSetNodeRect( this.Nodes, this.Nodes[i], ancestorCollapse);
                 if (this.Nodes[i].Display)
                 {
-                    height += (this.Nodes[i].ItemType == NodeTypes.Menu ? this.Menu.Height : this.MenuTab.Height) + this.Nodes[i].ContainerHeight;
+                    height += (this.Nodes[i].ItemType == NodeTypes.Menu ? scale_menuHeight : scale_menuTabHeight) + this.Nodes[i].ContainerHeight;
                 }
             }
 
@@ -2417,7 +2440,7 @@ namespace WinformControlLibraryExtension
                 this.RecursionSetNodeRect(this.Nodes, this.Nodes[i], ancestorCollapse2);
                 if (this.Nodes[i].Display)
                 {
-                    height2 += (this.Nodes[i].ItemType == NodeTypes.Menu ? this.Menu.Height : this.MenuTab.Height) + this.Nodes[i].ContainerHeight;
+                    height2 += (this.Nodes[i].ItemType == NodeTypes.Menu ? scale_menuHeight : scale_menuTabHeight) + this.Nodes[i].ContainerHeight;
                 }
             }
 
@@ -2429,10 +2452,12 @@ namespace WinformControlLibraryExtension
         /// </summary>
         public void UpdateScrollSlideRectLocation()
         {
+            int scale_scrollSlideMinHeight = (int)(this.Scroll.SlideMinHeight * DotsPerInchHelper.DPIScale.XScale);
+
             float slide_height = this.Scroll.Rect.Height * ((float)this.menuRect.Height / ((float)this.realityMenuRect.Height));
-            if (slide_height < this.Scroll.SlideMinHeight)
+            if (slide_height < scale_scrollSlideMinHeight)
             {
-                slide_height = this.Scroll.SlideMinHeight;
+                slide_height = scale_scrollSlideMinHeight;
             }
             float h = this.menuRect.Y - this.realityMenuRect.Y;
             if (this.realityMenuRect.Y < 0)
@@ -2453,6 +2478,9 @@ namespace WinformControlLibraryExtension
         /// <param name="ancestorCollapse">祖先节点是否折叠过</param>
         private void RecursionSetNodeRect(NodeCollection nodeList, Node node, bool ancestorCollapse)
         {
+            int scale_menuHeight = (int)(this.Menu.Height * DotsPerInchHelper.DPIScale.XScale);
+            int scale_menuTabHeight = (int)(this.MenuTab.Height * DotsPerInchHelper.DPIScale.XScale);
+
             int node_index = nodeList.IndexOf(node);//节点在列表的索引值
             int node_x = 0;
             int node_y = 0;
@@ -2461,7 +2489,7 @@ namespace WinformControlLibraryExtension
             {
                 if (node.Parent.ECAnimationStatus == NodeECAnimationStatuss.Expanding || node.Parent.ECAnimationStatus == NodeECAnimationStatuss.Collapseing)
                 {
-                    node_h = node.ItemType == NodeTypes.Menu ? this.Menu.Height : this.MenuTab.Height;
+                    node_h = node.ItemType == NodeTypes.Menu ? scale_menuHeight : scale_menuTabHeight;
                 }
 
                 if (node_index == 0)//0索引
@@ -2505,7 +2533,7 @@ namespace WinformControlLibraryExtension
             }
             else
             {
-                node_h = node.ItemType == NodeTypes.Menu ? this.Menu.Height : this.MenuTab.Height;
+                node_h = node.ItemType == NodeTypes.Menu ? scale_menuHeight : scale_menuTabHeight;
                 if (node_index == 0)
                 {
                     if (node.Level == 0)
@@ -2562,9 +2590,18 @@ namespace WinformControlLibraryExtension
         /// <summary>
         /// 滚动条移动或鼠标滚轮移动
         /// </summary>
+        /// <param name="isscale"></param>
         /// <param name="offset"></param>
-        private void MouseMoveWheel(int offset)
+        private void MouseMoveWheel(bool isscale,int offset)
         {
+            DotsPerInch dpi_scale = DotsPerInchHelper.DPIScale;
+            int scale_menuHeight = (int)(this.Menu.Height * dpi_scale.XScale);
+            int scale_menuTabHeight = (int)(this.MenuTab.Height * dpi_scale.XScale);
+            if (isscale)
+            {
+                offset = (int)(offset * dpi_scale.XScale);
+            }
+
             float y = this.Scroll.SlideRect.Y;
             y += offset;
             if (y < this.Scroll.Rect.Y)
@@ -2588,10 +2625,10 @@ namespace WinformControlLibraryExtension
             int height = 0;
             for (int i = 0; i < this.Nodes.Count; i++)
             {
-                this.RecursionSetNodeRect(this.Nodes, this.Nodes[i], ancestorCollapse);
+                this.RecursionSetNodeRect( this.Nodes, this.Nodes[i], ancestorCollapse);
                 if (this.Nodes[i].Display)
                 {
-                    height += (this.Nodes[i].ItemType == NodeTypes.Menu ? this.Menu.Height : this.MenuTab.Height) + this.Nodes[i].ContainerHeight;
+                    height += (this.Nodes[i].ItemType == NodeTypes.Menu ? scale_menuHeight : scale_menuTabHeight) + this.Nodes[i].ContainerHeight;
                 }
             }
 
@@ -2622,7 +2659,7 @@ namespace WinformControlLibraryExtension
         /// <param name="menutab_enter_text_sb"></param>
         /// <param name="menutab_selected_text_sb"></param>
         /// <param name="menutab_disable_text_sb"></param>
-        private void RecursionNodePaint(NodeCollection nodeList, Graphics g, Pen nodeborder_pen
+        private void RecursionNodePaint( NodeCollection nodeList, Graphics g, Pen nodeborder_pen
             , SolidBrush menu_normal_back_sb, SolidBrush menu_enter_back_sb, SolidBrush menu_disable_back_sb, SolidBrush menu_normal_text_sb, SolidBrush menu_enter_text_sb, SolidBrush menu_disable_text_sb
             , SolidBrush menutab_normal_back_sb, SolidBrush menutab_enter_back_sb, SolidBrush menutab_selected_back_sb, SolidBrush menutab_disable_back_sb, SolidBrush menutab_normal_text_sb, SolidBrush menutab_enter_text_sb, SolidBrush menutab_selected_text_sb, SolidBrush menutab_disable_text_sb)
         {
@@ -2728,7 +2765,7 @@ namespace WinformControlLibraryExtension
                         }
                     }
 
-                    NodePaint(nodeList[i], g, nodeborder_pen, commom_back_sb, commom_text_sb);
+                    this.NodePaint(nodeList[i], g, nodeborder_pen, commom_back_sb, commom_text_sb);
 
                     if (custom_back_sb && commom_back_sb != null)
                         commom_back_sb.Dispose();
@@ -2779,7 +2816,7 @@ namespace WinformControlLibraryExtension
         /// <param name="nodeborder_pen"></param>
         /// <param name="commom_back_sb"></param>
         /// <param name="commom_text_sb"></param>
-        protected virtual void NodePaint(Node node, Graphics g, Pen nodeborder_pen, SolidBrush commom_back_sb, SolidBrush commom_text_sb)
+        protected virtual void NodePaint( Node node, Graphics g, Pen nodeborder_pen, SolidBrush commom_back_sb, SolidBrush commom_text_sb)
         {
             #region 节点背景
             g.FillRectangle(commom_back_sb, node.Rect);
@@ -2787,29 +2824,42 @@ namespace WinformControlLibraryExtension
 
             #region 节点文本
 
+            int scale_nodeLRDistance = (int)(this.NodeLRDistance * DotsPerInchHelper.DPIScale.XScale);
+            int scale_nodeIndent = (int)(this.NodeIndent * DotsPerInchHelper.DPIScale.XScale);
+            int scale_nodeTextPaddingLeft = (int)(this.NodeTextPaddingLeft * DotsPerInchHelper.DPIScale.XScale);
+            int scale_nodeTextPaddingRight = (int)(this.NodeTextPaddingRight * DotsPerInchHelper.DPIScale.XScale);
+            int scale_nodeImagePaddingLeft = (int)(this.NodeImagePaddingLeft * DotsPerInchHelper.DPIScale.XScale);
+            int scale_nodeImagePaddingRight = (int)(this.NodeImagePaddingRight * DotsPerInchHelper.DPIScale.XScale);
+            int scale_menuFoldImagePaddingLeft = (int)(this.Menu.FoldImagePaddingLeft * DotsPerInchHelper.DPIScale.XScale);
+            int scale_menuFoldImagePaddingRight = (int)(this.Menu.FoldImagePaddingRight * DotsPerInchHelper.DPIScale.XScale);
+
+            SizeF scale_menuImageSize = new SizeF(this.Menu.ImageSize.Width * DotsPerInchHelper.DPIScale.XScale, this.Menu.ImageSize.Height * DotsPerInchHelper.DPIScale.YScale);
+            SizeF scale_menuTabImageSize = new SizeF(this.MenuTab.ImageSize.Width * DotsPerInchHelper.DPIScale.XScale, this.MenuTab.ImageSize.Height * DotsPerInchHelper.DPIScale.YScale);
+            SizeF scale_menuFoldImageSize = new SizeF(this.Menu.FoldImageSize.Width * DotsPerInchHelper.DPIScale.XScale, this.Menu.FoldImageSize.Height * DotsPerInchHelper.DPIScale.YScale);
+
             SizeF text_size = g.MeasureString(node.Text, this.Font);
             float text_x = 0;
             switch (node.ItemType == NodeTypes.Menu ? this.Menu.ContentOrientation : this.MenuTab.ContentOrientation)
             {
                 case NodeContentOrientations.Left:
                     {
-                        int fold_image_w = (this.Menu.FoldImageShow && this.Menu.FoldImageOrientation == NodeImageOrientations.Left) ? this.Menu.FoldImageSize.Width + this.Menu.FoldImagePaddingLeft + this.Menu.FoldImagePaddingRight : 0;
-                        int image_w = node.ItemType == NodeTypes.Menu ? (this.Menu.ImageShow ? this.Menu.ImageSize.Width + this.NodeImagePaddingLeft + this.NodeImagePaddingRight : 0) : (this.MenuTab.ImageShow ? this.MenuTab.ImageSize.Width + this.NodeImagePaddingLeft + this.NodeImagePaddingRight : 0);
+                        int fold_image_w = (this.Menu.FoldImageShow && this.Menu.FoldImageOrientation == NodeImageOrientations.Left) ? (int)scale_menuFoldImageSize.Width + scale_menuFoldImagePaddingLeft + scale_menuFoldImagePaddingRight : 0;
+                        int image_w = node.ItemType == NodeTypes.Menu ? (this.Menu.ImageShow ? (int)scale_menuImageSize.Width + scale_nodeImagePaddingLeft + scale_nodeImagePaddingRight : 0) : (this.MenuTab.ImageShow ? (int)scale_menuTabImageSize.Width + scale_nodeImagePaddingLeft + scale_nodeImagePaddingRight : 0);
                         if (node.LRAnimationStatus == NodeLRAnimationStatuss.Restoreed)
                         {
-                            text_x = node.Rect.X + node.Level * this.NodeIndent + fold_image_w + image_w + this.NodeTextPaddingLeft;
+                            text_x = node.Rect.X + node.Level * scale_nodeIndent + fold_image_w + image_w + scale_nodeTextPaddingLeft;
                         }
                         else if (node.LRAnimationStatus == NodeLRAnimationStatuss.Slideed)
                         {
-                            text_x = node.Rect.X + node.Level * this.NodeIndent + fold_image_w + image_w + this.NodeTextPaddingLeft + this.NodeLRDistance;
+                            text_x = node.Rect.X + node.Level * scale_nodeIndent + fold_image_w + image_w + scale_nodeTextPaddingLeft + scale_nodeLRDistance;
                         }
                         else if (node.LRAnimationStatus == NodeLRAnimationStatuss.Slideing)
                         {
-                            text_x = node.Rect.X + node.Level * this.NodeIndent + fold_image_w + image_w + this.NodeTextPaddingLeft + (float)(this.NodeLRDistance * AnimationTimer.GetProgress(AnimationTypes.EaseOut, lrAnimationOptions, node.LRAnimationTime));
+                            text_x = node.Rect.X + node.Level * scale_nodeIndent + fold_image_w + image_w + scale_nodeTextPaddingLeft + (float)(scale_nodeLRDistance * AnimationTimer.GetProgress(AnimationTypes.EaseOut, lrAnimationOptions, node.LRAnimationTime));
                         }
                         else if (node.LRAnimationStatus == NodeLRAnimationStatuss.Restoreing)
                         {
-                            text_x = node.Rect.X + node.Level * this.NodeIndent + fold_image_w + image_w + this.NodeTextPaddingLeft + (float)(this.NodeLRDistance * AnimationTimer.GetProgress(AnimationTypes.EaseOut, lrAnimationOptions, (this.LRAnimationAllTimer - node.LRAnimationTime)));
+                            text_x = node.Rect.X + node.Level * scale_nodeIndent + fold_image_w + image_w + scale_nodeTextPaddingLeft + (float)(scale_nodeLRDistance * AnimationTimer.GetProgress(AnimationTypes.EaseOut, lrAnimationOptions, (this.LRAnimationAllTimer - node.LRAnimationTime)));
                         }
                         break;
                     }
@@ -2820,38 +2870,38 @@ namespace WinformControlLibraryExtension
                     }
                 case NodeContentOrientations.Right:
                     {
-                        int fold_image_w = (this.Menu.FoldImageShow && this.Menu.FoldImageOrientation == NodeImageOrientations.Right) ? this.Menu.FoldImageSize.Width + this.Menu.FoldImagePaddingLeft + this.Menu.FoldImagePaddingRight : 0;
+                        int fold_image_w = (this.Menu.FoldImageShow && this.Menu.FoldImageOrientation == NodeImageOrientations.Right) ? (int)scale_menuFoldImageSize.Width + scale_menuFoldImagePaddingLeft + scale_menuFoldImagePaddingRight : 0;
                         int image_w = 0;
                         if (node.ItemType == NodeTypes.Menu)
                         {
                             if (this.Menu.ImageShow && ((this.Menu.ContentOrientation != NodeContentOrientations.Right && this.Menu.ContentOrientation != NodeContentOrientations.Right) || (this.Menu.ContentOrientation == NodeContentOrientations.Right && this.Menu.ContentOrientation == NodeContentOrientations.Right)))
                             {
-                                image_w = this.Menu.ImageSize.Width + this.NodeImagePaddingLeft + this.NodeImagePaddingRight;
+                                image_w =(int) scale_menuImageSize.Width + scale_nodeImagePaddingLeft + scale_nodeImagePaddingRight;
                             }
                         }
                         else
                         {
                             if (this.MenuTab.ImageShow && ((this.MenuTab.ContentOrientation != NodeContentOrientations.Right && this.MenuTab.ContentOrientation != NodeContentOrientations.Right) || (this.MenuTab.ContentOrientation == NodeContentOrientations.Right && this.MenuTab.ContentOrientation == NodeContentOrientations.Right)))
                             {
-                                image_w = this.MenuTab.ImageSize.Width + this.NodeImagePaddingLeft + this.NodeImagePaddingRight;
+                                image_w = (int)scale_menuTabImageSize.Width + scale_nodeImagePaddingLeft + scale_nodeImagePaddingRight;
                             }
                         }
 
                         if (node.LRAnimationStatus == NodeLRAnimationStatuss.Restoreed)
                         {
-                            text_x = node.Rect.Right - fold_image_w - image_w - this.NodeTextPaddingRight - text_size.Width;
+                            text_x = node.Rect.Right - fold_image_w - image_w - scale_nodeTextPaddingRight - text_size.Width;
                         }
                         else if (node.LRAnimationStatus == NodeLRAnimationStatuss.Slideed)
                         {
-                            text_x = node.Rect.Right - fold_image_w - image_w - this.NodeTextPaddingRight - text_size.Width - this.NodeLRDistance;
+                            text_x = node.Rect.Right - fold_image_w - image_w - scale_nodeTextPaddingRight - text_size.Width - scale_nodeLRDistance;
                         }
                         else if (node.LRAnimationStatus == NodeLRAnimationStatuss.Slideing)
                         {
-                            text_x = node.Rect.Right - fold_image_w - image_w - this.NodeTextPaddingRight - text_size.Width - (float)(this.NodeLRDistance * AnimationTimer.GetProgress(AnimationTypes.EaseOut, lrAnimationOptions, node.LRAnimationTime));
+                            text_x = node.Rect.Right - fold_image_w - image_w - scale_nodeTextPaddingRight - text_size.Width - (float)(scale_nodeLRDistance * AnimationTimer.GetProgress(AnimationTypes.EaseOut, lrAnimationOptions, node.LRAnimationTime));
                         }
                         else if (node.LRAnimationStatus == NodeLRAnimationStatuss.Restoreing)
                         {
-                            text_x = node.Rect.Right - fold_image_w - image_w - this.NodeTextPaddingRight - text_size.Width - (float)(this.NodeLRDistance * AnimationTimer.GetProgress(AnimationTypes.EaseOut, lrAnimationOptions, (this.LRAnimationAllTimer - node.LRAnimationTime)));
+                            text_x = node.Rect.Right - fold_image_w - image_w - scale_nodeTextPaddingRight - text_size.Width - (float)(scale_nodeLRDistance * AnimationTimer.GetProgress(AnimationTypes.EaseOut, lrAnimationOptions, (this.LRAnimationAllTimer - node.LRAnimationTime)));
                         }
                         break;
                     }
@@ -2867,10 +2917,10 @@ namespace WinformControlLibraryExtension
                 Image image = node.Image != null ? node.Image : this.Menu.Image;
                 if (this.Menu.ImageShow && image != null)
                 {
-                    Rectangle image_rect = new Rectangle((int)(text_rect.X - this.Menu.ImageSize.Width - this.NodeTextPaddingLeft - this.NodeImagePaddingRight), (int)(node.Rect.Y + (node.Rect.Height - this.Menu.ImageSize.Height) / 2), this.Menu.ImageSize.Width, this.Menu.ImageSize.Height);
+                    Rectangle image_rect = new Rectangle((int)(text_rect.X - scale_menuImageSize.Width - scale_nodeTextPaddingLeft - scale_nodeImagePaddingRight), (int)(node.Rect.Y + (node.Rect.Height - scale_menuImageSize.Height) / 2), (int)scale_menuImageSize.Width, (int)scale_menuImageSize.Height);
                     if (this.Menu.ContentOrientation == NodeContentOrientations.Right)
                     {
-                        image_rect = new Rectangle((int)(text_rect.Right + this.NodeTextPaddingLeft), (int)(node.Rect.Y + (node.Rect.Height - this.Menu.ImageSize.Height) / 2), this.Menu.ImageSize.Width, this.Menu.ImageSize.Height);
+                        image_rect = new Rectangle((int)(text_rect.Right + scale_nodeTextPaddingLeft), (int)(node.Rect.Y + (node.Rect.Height - scale_menuImageSize.Height) / 2), (int)scale_menuImageSize.Width, (int)scale_menuImageSize.Height);
                     }
                     g.DrawImage(image, image_rect);
                 }
@@ -2880,10 +2930,10 @@ namespace WinformControlLibraryExtension
                 Image image = node.Image != null ? node.Image : this.MenuTab.Image;
                 if (this.MenuTab.ImageShow && image != null)
                 {
-                    Rectangle image_rect = new Rectangle((int)(text_rect.X - this.MenuTab.ImageSize.Width - this.NodeTextPaddingLeft - this.NodeImagePaddingRight), (int)(node.Rect.Y + (node.Rect.Height - this.MenuTab.ImageSize.Height) / 2), this.MenuTab.ImageSize.Width, this.MenuTab.ImageSize.Height);
+                    Rectangle image_rect = new Rectangle((int)(text_rect.X - scale_menuTabImageSize.Width - scale_nodeTextPaddingLeft - scale_nodeImagePaddingRight), (int)(node.Rect.Y + (node.Rect.Height - scale_menuTabImageSize.Height) / 2), (int)scale_menuTabImageSize.Width, (int)scale_menuTabImageSize.Height);
                     if (this.Menu.ContentOrientation == NodeContentOrientations.Right)
                     {
-                        image_rect = new Rectangle((int)(text_rect.Right + this.NodeTextPaddingLeft), (int)(node.Rect.Y + (node.Rect.Height - this.MenuTab.ImageSize.Height) / 2), this.MenuTab.ImageSize.Width, this.MenuTab.ImageSize.Height);
+                        image_rect = new Rectangle((int)(text_rect.Right + scale_nodeTextPaddingLeft), (int)(node.Rect.Y + (node.Rect.Height - scale_menuTabImageSize.Height) / 2), (int)scale_menuTabImageSize.Width, (int)scale_menuTabImageSize.Height);
                     }
                     g.DrawImage(image, image_rect);
                 }
@@ -2895,10 +2945,10 @@ namespace WinformControlLibraryExtension
 
             if (this.Menu.FoldImageShow && node.ItemType == NodeTypes.Menu)
             {
-                Rectangle image_rect = new Rectangle((int)(node.Rect.Right - this.Menu.FoldImageSize.Width - this.Menu.FoldImagePaddingRight), (int)(node.Rect.Y + (node.Rect.Height - this.Menu.FoldImageSize.Height) / 2), this.Menu.FoldImageSize.Width, this.Menu.FoldImageSize.Height);
+                Rectangle image_rect = new Rectangle((int)(node.Rect.Right - scale_menuFoldImageSize.Width - scale_menuFoldImagePaddingRight), (int)(node.Rect.Y + (node.Rect.Height - scale_menuFoldImageSize.Height) / 2), (int)scale_menuFoldImageSize.Width, (int)scale_menuFoldImageSize.Height);
                 if (this.Menu.FoldImageOrientation == NodeImageOrientations.Left)
                 {
-                    image_rect = new Rectangle((int)(node.Rect.X + this.Menu.FoldImagePaddingLeft), (int)(node.Rect.Y + (node.Rect.Height - this.Menu.FoldImageSize.Height) / 2), this.Menu.FoldImageSize.Width, this.Menu.FoldImageSize.Height);
+                    image_rect = new Rectangle((int)(node.Rect.X + scale_menuFoldImagePaddingLeft), (int)(node.Rect.Y + (node.Rect.Height - scale_menuFoldImageSize.Height) / 2), (int)scale_menuFoldImageSize.Width, (int)scale_menuFoldImageSize.Height);
                 }
                 if (node.ECAnimationStatus == NodeECAnimationStatuss.Expanded)
                 {
@@ -5019,12 +5069,12 @@ namespace WinformControlLibraryExtension
                 }
             }
 
-            private int searchHeight = 24;
+            private int searchHeight = 21;
             /// <summary>
             /// 工具栏过滤功能高度
             /// </summary>
             [Description("工具栏过滤功能高度")]
-            [DefaultValue(24)]
+            [DefaultValue(21)]
             [NotifyParentProperty(true)]
             public int SearchHeight
             {
@@ -5898,28 +5948,6 @@ namespace WinformControlLibraryExtension
             Enter
         }
 
-        #endregion
-
-        #region test
-        //public string getTest(NodeCollection menuList)
-        //{
-        //    StringBuilder str = new StringBuilder();
-        //    for (int i = 0; i < menuList.Count; i++)
-        //    {
-        //        str.AppendLine(String.Format("name:{0} Display:{7}  containerHeight:{1}  containerHeightTmp:{6}  x:{2}  y:{3}  w:{4}  h:{5}",
-        //            menuList[i].Text.PadRight(10, ' '),
-        //            menuList[i].ContainerHeight.ToString().PadRight(10, ' '),
-        //            menuList[i].Rect.X.ToString().PadRight(5, ' '),
-        //            menuList[i].Rect.Y.ToString().PadRight(5, ' '),
-        //            menuList[i].Rect.Width.ToString().PadRight(5, ' '),
-        //            menuList[i].Rect.Height.ToString().PadRight(5, ' '),
-        //            menuList[i].ContainerHeightTmp.ToString().PadRight(5, ' '),
-        //            menuList[i].Display.ToString()));
-
-        //        str.AppendLine(getTest(menuList[i].Children));
-        //    }
-        //    return str.ToString();
-        //}
         #endregion
 
     }

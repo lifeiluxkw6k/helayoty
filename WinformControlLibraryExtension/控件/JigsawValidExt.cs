@@ -594,7 +594,8 @@ namespace WinformControlLibraryExtension
             RectangleF rect = this.ClientRectangle;
 
             #region  绘制背景
-            g.DrawImage(this.ValidImage, new System.Drawing.PointF(0, 0));
+
+            g.DrawImage(this.ValidImage, new Rectangle(0, 0, this.ClientRectangle.Width, this.ClientRectangle.Height), new Rectangle(0, 0, this.ValidImage.Width, this.ValidImage.Height), GraphicsUnit.Pixel);
             #endregion
 
             #region  绘制拼图
@@ -609,13 +610,10 @@ namespace WinformControlLibraryExtension
                 {
                     g.DrawImage(this.one_bmp, this.one_gp.GetBounds().Location);
                 }
-                float x = this.one_start_pointf.X + this.one_move_pointf.X;
-                if (x < this.valid_start_pointf.X - this.one_gp.GetBounds().Width / 5f || x > this.valid_start_pointf.X + this.one_gp.GetBounds().Width / 5f)
-                {
-                    Pen pen_one = new Pen(this.SlideBorderColor);
-                    g.DrawPath(pen_one, this.one_gp);
-                    pen_one.Dispose();
-                }
+
+                Pen pen_one = new Pen(this.SlideBorderColor);
+                g.DrawPath(pen_one, this.one_gp);
+                pen_one.Dispose();
             }
             if (this.slideType == SlideTypes.Two || this.slideType == SlideTypes.Three)
             {
@@ -623,13 +621,10 @@ namespace WinformControlLibraryExtension
                 {
                     g.DrawImage(this.two_bmp, this.two_gp.GetBounds().Location);
                 }
-                float x = this.two_start_pointf.X + this.two_move_pointf.X;
-                if (x < this.valid_start_pointf.X - this.two_gp.GetBounds().Width / 5f || x > this.valid_start_pointf.X + this.two_gp.GetBounds().Width / 5f)
-                {
-                    Pen pen_two = new Pen(this.SlideBorderColor);
-                    g.DrawPath(pen_two, this.two_gp);
-                    pen_two.Dispose();
-                }
+
+                Pen pen_two = new Pen(this.SlideBorderColor);
+                g.DrawPath(pen_two, this.two_gp);
+                pen_two.Dispose();
             }
             if (this.slideType == SlideTypes.Three)
             {
@@ -637,13 +632,10 @@ namespace WinformControlLibraryExtension
                 {
                     g.DrawImage(this.three_bmp, this.three_gp.GetBounds().Location);
                 }
-                float x = this.three_start_pointf.X + this.three_move_pointf.X;
-                if (x < this.valid_start_pointf.X - this.three_gp.GetBounds().Width / 5f || x > this.valid_start_pointf.X + this.three_gp.GetBounds().Width / 5f)
-                {
-                    Pen pen_three = new Pen(this.SlideBorderColor);
-                    g.DrawPath(pen_three, this.three_gp);
-                    pen_three.Dispose();
-                }
+
+                Pen pen_three = new Pen(this.SlideBorderColor);
+                g.DrawPath(pen_three, this.three_gp);
+                pen_three.Dispose();
             }
             #endregion
 
@@ -742,23 +734,24 @@ namespace WinformControlLibraryExtension
                     this.two_move_pointf = new PointF(0, 0);
                     this.three_move_pointf = new PointF(0, 0);
 
-                    float radius = this.SlideSize / 4f;
+                    int scale_slideSize = (int)(this.SlideSize * DotsPerInchHelper.DPIScale.XScale);
+                    float radius = scale_slideSize / 4f;
                     #region
                     if (this.moveDownSlideIndex == 1)
                     {
-                        RectangleF rectf_one = new RectangleF(this.one_start_pointf.X + this.one_move_pointf.X, this.one_start_pointf.Y + (this.one_move_pointf.X * (this.valid_start_pointf.Y - this.one_start_pointf.Y) / (this.valid_start_pointf.X - this.one_start_pointf.X)), this.SlideSize + radius * 2f, this.SlideSize + radius * 2f);
+                        RectangleF rectf_one = new RectangleF(this.one_start_pointf.X + this.one_move_pointf.X, this.one_start_pointf.Y + (this.one_move_pointf.X * (this.valid_start_pointf.Y - this.one_start_pointf.Y) / (this.valid_start_pointf.X - this.one_start_pointf.X)), scale_slideSize + radius * 2f, scale_slideSize + radius * 2f);
                         this.one_gp.Reset();
                         this.GetPath(this.shapeIndexList[0], this.one_gp, rectf_one);
                     }
                     else if (this.moveDownSlideIndex == 2)
                     {
-                        RectangleF rectf_two = new RectangleF(this.two_start_pointf.X + this.two_move_pointf.X, this.two_start_pointf.Y - (this.two_move_pointf.X * (this.valid_start_pointf.Y - this.two_start_pointf.Y) / (this.valid_start_pointf.X - this.two_start_pointf.X)), this.SlideSize + radius * 2f, this.SlideSize + radius * 2f);
+                        RectangleF rectf_two = new RectangleF(this.two_start_pointf.X + this.two_move_pointf.X, this.two_start_pointf.Y - (this.two_move_pointf.X * (this.valid_start_pointf.Y - this.two_start_pointf.Y) / (this.valid_start_pointf.X - this.two_start_pointf.X)), scale_slideSize + radius * 2f, scale_slideSize + radius * 2f);
                         this.two_gp.Reset();
                         this.GetPath(this.shapeIndexList[1], this.two_gp, rectf_two);
                     }
                     else if (this.moveDownSlideIndex == 3)
                     {
-                        RectangleF rectf_three = new RectangleF(this.three_start_pointf.X, this.three_start_pointf.Y, this.SlideSize + radius * 2f, this.SlideSize + radius * 2f);
+                        RectangleF rectf_three = new RectangleF(this.three_start_pointf.X, this.three_start_pointf.Y, scale_slideSize + radius * 2f, scale_slideSize + radius * 2f);
                         this.three_gp.Reset();
                         this.GetPath(this.shapeIndexList[2], this.three_gp, rectf_three);
                     }
@@ -825,12 +818,13 @@ namespace WinformControlLibraryExtension
 
                 #region 更新滑块GraphicsPath
 
-                float radius = this.SlideSize / 4f;
+                int scale_slideSize = (int)(this.SlideSize * DotsPerInchHelper.DPIScale.XScale);
+                float radius = scale_slideSize / 4f;
                 if (this.SlideType == SlideTypes.One)
                 {
                     if (this.moveDownSlideIndex == 1)
                     {
-                        RectangleF rectf_one = new RectangleF(this.one_start_pointf.X + this.one_move_pointf.X, this.one_start_pointf.Y, this.SlideSize + radius * 2, this.SlideSize + radius * 2);
+                        RectangleF rectf_one = new RectangleF(this.one_start_pointf.X + this.one_move_pointf.X, this.one_start_pointf.Y, scale_slideSize + radius * 2, scale_slideSize + radius * 2);
                         this.one_gp.Reset();
                         this.GetPath(this.shapeIndexList[0], this.one_gp, rectf_one);
                     }
@@ -839,13 +833,13 @@ namespace WinformControlLibraryExtension
                 {
                     if (this.moveDownSlideIndex == 1)
                     {
-                        RectangleF rectf_one = new RectangleF(this.one_start_pointf.X + this.one_move_pointf.X, this.one_start_pointf.Y + (this.one_move_pointf.X * (this.valid_start_pointf.Y - this.one_start_pointf.Y) / (this.valid_start_pointf.X - this.one_start_pointf.X)), this.SlideSize + radius * 2, this.SlideSize + radius * 2);
+                        RectangleF rectf_one = new RectangleF(this.one_start_pointf.X + this.one_move_pointf.X, this.one_start_pointf.Y + (this.one_move_pointf.X * (this.valid_start_pointf.Y - this.one_start_pointf.Y) / (this.valid_start_pointf.X - this.one_start_pointf.X)), scale_slideSize + radius * 2, scale_slideSize + radius * 2);
                         this.one_gp.Reset();
                         this.GetPath(this.shapeIndexList[0], this.one_gp, rectf_one);
                     }
                     else if (this.moveDownSlideIndex == 2)
                     {
-                        RectangleF rectf_two = new RectangleF(this.two_start_pointf.X + this.two_move_pointf.X, this.two_start_pointf.Y + (this.two_move_pointf.X * (this.valid_start_pointf.Y - this.two_start_pointf.Y) / (this.valid_start_pointf.X - this.two_start_pointf.X)), this.SlideSize + radius * 2, this.SlideSize + radius * 2);
+                        RectangleF rectf_two = new RectangleF(this.two_start_pointf.X + this.two_move_pointf.X, this.two_start_pointf.Y + (this.two_move_pointf.X * (this.valid_start_pointf.Y - this.two_start_pointf.Y) / (this.valid_start_pointf.X - this.two_start_pointf.X)), scale_slideSize + radius * 2, scale_slideSize + radius * 2);
                         this.two_gp.Reset();
                         this.GetPath(this.shapeIndexList[1], this.two_gp, rectf_two);
                     }
@@ -854,19 +848,19 @@ namespace WinformControlLibraryExtension
                 {
                     if (this.moveDownSlideIndex == 1)
                     {
-                        RectangleF rectf_one = new RectangleF(this.one_start_pointf.X + this.one_move_pointf.X, this.one_start_pointf.Y + (this.one_move_pointf.X * (this.valid_start_pointf.Y - this.one_start_pointf.Y) / (this.valid_start_pointf.X - this.one_start_pointf.X)), this.SlideSize + radius * 2, this.SlideSize + radius * 2);
+                        RectangleF rectf_one = new RectangleF(this.one_start_pointf.X + this.one_move_pointf.X, this.one_start_pointf.Y + (this.one_move_pointf.X * (this.valid_start_pointf.Y - this.one_start_pointf.Y) / (this.valid_start_pointf.X - this.one_start_pointf.X)), scale_slideSize + radius * 2, scale_slideSize + radius * 2);
                         this.one_gp.Reset();
                         this.GetPath(this.shapeIndexList[0], this.one_gp, rectf_one);
                     }
                     else if (this.moveDownSlideIndex == 2)
                     {
-                        RectangleF rectf_two = new RectangleF(this.two_start_pointf.X + this.two_move_pointf.X, this.two_start_pointf.Y + (this.two_move_pointf.X * (this.valid_start_pointf.Y - this.two_start_pointf.Y) / (this.valid_start_pointf.X - this.two_start_pointf.X)), this.SlideSize + radius * 2, this.SlideSize + radius * 2);
+                        RectangleF rectf_two = new RectangleF(this.two_start_pointf.X + this.two_move_pointf.X, this.two_start_pointf.Y + (this.two_move_pointf.X * (this.valid_start_pointf.Y - this.two_start_pointf.Y) / (this.valid_start_pointf.X - this.two_start_pointf.X)), scale_slideSize + radius * 2, scale_slideSize + radius * 2);
                         this.two_gp.Reset();
                         this.GetPath(this.shapeIndexList[1], this.two_gp, rectf_two);
                     }
                     else if (this.moveDownSlideIndex == 3)
                     {
-                        RectangleF rectf_three = new RectangleF(this.three_start_pointf.X + this.three_move_pointf.X, this.three_start_pointf.Y + (this.three_move_pointf.X * (this.valid_start_pointf.Y - this.three_start_pointf.Y) / (this.valid_start_pointf.X - this.three_start_pointf.X)), this.SlideSize + radius * 2, this.SlideSize + radius * 2);
+                        RectangleF rectf_three = new RectangleF(this.three_start_pointf.X + this.three_move_pointf.X, this.three_start_pointf.Y + (this.three_move_pointf.X * (this.valid_start_pointf.Y - this.three_start_pointf.Y) / (this.valid_start_pointf.X - this.three_start_pointf.X)), scale_slideSize + radius * 2, scale_slideSize + radius * 2);
                         this.three_gp.Reset();
                         this.GetPath(this.shapeIndexList[2], this.three_gp, rectf_three);
                     }
@@ -933,6 +927,8 @@ namespace WinformControlLibraryExtension
             if (this.ValidImage == null || this.shapeIndexList.Count < 1)
                 return;
 
+            int scale_slideSize = (int)(this.SlideSize * DotsPerInchHelper.DPIScale.XScale);
+
             this.pass = false;
 
             if (this.one_bmp != null)
@@ -943,78 +939,84 @@ namespace WinformControlLibraryExtension
                 this.three_bmp.Dispose();
 
             Rectangle rect = this.ClientRectangle;
-            float radius = this.SlideSize / 4f;
+            float scale_radius = scale_slideSize / 4f;
 
             #region 滑块信息
             if (this.SlideType == SlideTypes.One)//一个滑块
             {
-                this.one_start_pointf.Y = (float)(rect.Height - this.SlideSize) / 2f;
+                this.one_start_pointf.Y = (float)(rect.Height - scale_slideSize) / 2f;
             }
             else if (this.SlideType == SlideTypes.Two)//二个滑块
             {
-                float height = (float)(rect.Height - this.SlideSize * 2);
+                float height = (float)(rect.Height - scale_slideSize * 2);
                 this.one_start_pointf.Y = height / 3f;
-                this.two_start_pointf.Y = height / 3f + this.SlideSize + height / 3f;
+                this.two_start_pointf.Y = height / 3f + scale_slideSize + height / 3f;
             }
             else if (this.SlideType == SlideTypes.Three)//三个滑块
             {
-                float height = (float)(rect.Height - this.SlideSize * 3);
+                float height = (float)(rect.Height - scale_slideSize * 3);
                 this.one_start_pointf.Y = height / 4f;
-                this.two_start_pointf.Y = height / 4f + this.SlideSize + height / 4f;
-                this.three_start_pointf.Y = height / 4f + this.SlideSize + height / 4f + this.SlideSize + height / 4f;
+                this.two_start_pointf.Y = height / 4f + scale_slideSize + height / 4f;
+                this.three_start_pointf.Y = height / 4f + scale_slideSize + height / 4f + scale_slideSize + height / 4f;
             }
 
-            Random rd = new Random();
-            this.valid_start_pointf = new PointF(((float)rect.Width - this.SlideSize * 3f) + (float)rd.Next(0, this.SlideSize), (float)(rect.Height - this.SlideSize) / 2f);
-            this.valid_rectf = new RectangleF(this.valid_start_pointf.X, this.valid_start_pointf.Y, this.SlideSize + radius * 2, this.SlideSize + radius * 2);
+            this.valid_start_pointf = new PointF(((float)rect.Width - scale_slideSize * 3f), (float)(rect.Height - scale_slideSize) / 2f);
+            this.valid_rectf = new RectangleF(this.valid_start_pointf.X, this.valid_start_pointf.Y, scale_slideSize + scale_radius * 2, scale_slideSize + scale_radius * 2);
             this.valid_gp.Reset();
             this.GetPath(this.shapeIndexList[this.passSlideIndex - 1], this.valid_gp, this.valid_rectf);
 
             #endregion
 
-            #region
-            if (this.SlideType == SlideTypes.One || this.SlideType == SlideTypes.Two || this.SlideType == SlideTypes.Three)
+            Bitmap back_image = new Bitmap(this.ClientRectangle.Width, this.ClientRectangle.Height);
+            #region 
+            using (Graphics back_g = Graphics.FromImage(back_image))
             {
-                this.one_rectf = new RectangleF(this.one_start_pointf.X, this.one_start_pointf.Y, this.SlideSize + radius * 2f, this.SlideSize + radius * 2f);
+                back_g.DrawImage(this.ValidImage, new Rectangle(0, 0, back_image.Width, back_image.Height), new Rectangle(0, 0, this.ValidImage.Width, this.ValidImage.Height), GraphicsUnit.Pixel);
 
-                this.one_gp.Reset();
-                this.GetPath(this.shapeIndexList[0], this.one_gp, this.one_rectf);
-                GraphicsPath gp_one_tmp = (GraphicsPath)this.one_gp.Clone();
-                Matrix matrix = new Matrix();
-                matrix.Translate(this.valid_rectf.Left - this.one_rectf.Left, this.valid_rectf.Top - this.one_rectf.Top);
-                gp_one_tmp.Transform(matrix);
-                this.one_bmp = CutBitmap((Bitmap)this.ValidImage, gp_one_tmp);
-                gp_one_tmp.Dispose();
-                matrix.Dispose();
-            }
-            if (this.SlideType == SlideTypes.Two || this.SlideType == SlideTypes.Three)
-            {
-                this.two_rectf = new RectangleF(this.two_start_pointf.X, this.two_start_pointf.Y, this.SlideSize + radius * 2f, this.SlideSize + radius * 2f);
+                if (this.SlideType == SlideTypes.One || this.SlideType == SlideTypes.Two || this.SlideType == SlideTypes.Three)
+                {
+                    this.one_rectf = new RectangleF(this.one_start_pointf.X, this.one_start_pointf.Y, scale_slideSize + scale_radius * 2f, scale_slideSize + scale_radius * 2f);
 
-                this.two_gp.Reset();
-                this.GetPath(this.shapeIndexList[1], this.two_gp, this.two_rectf);
-                GraphicsPath gp_two_tmp = (GraphicsPath)this.two_gp.Clone();
-                Matrix matrix = new Matrix();
-                matrix.Translate(this.valid_rectf.Left - this.two_rectf.Left, this.valid_rectf.Top - this.two_rectf.Top);
-                gp_two_tmp.Transform(matrix);
-                this.two_bmp = CutBitmap((Bitmap)this.ValidImage, gp_two_tmp);
-                gp_two_tmp.Dispose();
-                matrix.Dispose();
-            }
-            if (this.SlideType == SlideTypes.Three)
-            {
-                this.three_rectf = new RectangleF(this.three_start_pointf.X, this.three_start_pointf.Y, this.SlideSize + radius * 2, this.SlideSize + radius * 2);
+                    this.one_gp.Reset();
+                    this.GetPath(this.shapeIndexList[0], this.one_gp, this.one_rectf);
+                    GraphicsPath gp_one_tmp = (GraphicsPath)this.one_gp.Clone();
+                    Matrix matrix = new Matrix();
+                    matrix.Translate(this.valid_rectf.Left - this.one_rectf.Left, this.valid_rectf.Top - this.one_rectf.Top);
+                    gp_one_tmp.Transform(matrix);
+                    this.one_bmp = CutBitmap(back_image, gp_one_tmp);
+                    gp_one_tmp.Dispose();
+                    matrix.Dispose();
+                }
+                if (this.SlideType == SlideTypes.Two || this.SlideType == SlideTypes.Three)
+                {
+                    this.two_rectf = new RectangleF(this.two_start_pointf.X, this.two_start_pointf.Y, scale_slideSize + scale_radius * 2f, scale_slideSize + scale_radius * 2f);
 
-                this.three_gp.Reset();
-                this.GetPath(this.shapeIndexList[2], this.three_gp, this.three_rectf);
-                GraphicsPath gp_three_tmp = (GraphicsPath)this.three_gp.Clone();
-                Matrix matrix = new Matrix();
-                matrix.Translate(this.valid_rectf.Left - this.three_rectf.Left, this.valid_rectf.Top - this.three_rectf.Top);
-                gp_three_tmp.Transform(matrix);
-                this.three_bmp = CutBitmap((Bitmap)this.ValidImage, gp_three_tmp);
-                gp_three_tmp.Dispose();
-                matrix.Dispose();
+                    this.two_gp.Reset();
+                    this.GetPath(this.shapeIndexList[1], this.two_gp, this.two_rectf);
+                    GraphicsPath gp_two_tmp = (GraphicsPath)this.two_gp.Clone();
+                    Matrix matrix = new Matrix();
+                    matrix.Translate(this.valid_rectf.Left - this.two_rectf.Left, this.valid_rectf.Top - this.two_rectf.Top);
+                    gp_two_tmp.Transform(matrix);
+                    this.two_bmp = CutBitmap(back_image, gp_two_tmp);
+                    gp_two_tmp.Dispose();
+                    matrix.Dispose();
+                }
+                if (this.SlideType == SlideTypes.Three)
+                {
+                    this.three_rectf = new RectangleF(this.three_start_pointf.X, this.three_start_pointf.Y, scale_slideSize + scale_radius * 2, scale_slideSize + scale_radius * 2);
+
+                    this.three_gp.Reset();
+                    this.GetPath(this.shapeIndexList[2], this.three_gp, this.three_rectf);
+                    GraphicsPath gp_three_tmp = (GraphicsPath)this.three_gp.Clone();
+                    Matrix matrix = new Matrix();
+                    matrix.Translate(this.valid_rectf.Left - this.three_rectf.Left, this.valid_rectf.Top - this.three_rectf.Top);
+                    gp_three_tmp.Transform(matrix);
+                    this.three_bmp = CutBitmap(back_image, gp_three_tmp);
+                    gp_three_tmp.Dispose();
+                    matrix.Dispose();
+                }
             }
+            back_image.Dispose();
             #endregion
 
         }

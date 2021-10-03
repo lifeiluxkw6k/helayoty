@@ -656,10 +656,13 @@ namespace WinformControlLibraryExtension
             base.OnPaint(e);
 
             Graphics g = e.Graphics;
+
             SmoothingMode sm = g.SmoothingMode;
             g.SmoothingMode = SmoothingMode.AntiAlias;
 
-            int diameter = this.circleRadius * 2;
+            int scale_circleRadius = (int)(this.CircleRadius * DotsPerInchHelper.DPIScale.XScale);
+
+            int scale_diameter = scale_circleRadius * 2;
             Rectangle bounds_rect = this.ClientRectangle;
             RectangleF text_rect = new RectangleF(0, 0, 0, 0);//文本rect
             if (this.TextShow)
@@ -670,14 +673,14 @@ namespace WinformControlLibraryExtension
                 text_rect.X = bounds_rect.X + ((float)bounds_rect.Width - text_size.Width) / 2f;
                 text_rect.Y = bounds_rect.Bottom - text_size.Height;
             }
-            float scale_width = (float)Math.Sqrt(Math.Pow(this.CircleRadius, 2) * 2);//温度计刻度部分rect的宽度
-            float scale_height = bounds_rect.Height - this.paddingBottom - text_rect.Height - this.CircleRadius - scale_width / 2f - scale_width / 2f - this.paddingTop;
-            Rectangle circle_rect = new Rectangle(this.paddingLeft, bounds_rect.Bottom - this.paddingBottom - (int)text_rect.Height - diameter, diameter, diameter);//圆的rect
+            float scale_width = (float)Math.Sqrt(Math.Pow(scale_circleRadius, 2) * 2);//温度计刻度部分rect的宽度
+            float scale_height = bounds_rect.Height - this.paddingBottom - text_rect.Height - scale_circleRadius - scale_width / 2f - scale_width / 2f - this.paddingTop;
+            Rectangle circle_rect = new Rectangle(this.paddingLeft, bounds_rect.Bottom - this.paddingBottom - (int)text_rect.Height - scale_diameter, scale_diameter, scale_diameter);//圆的rect
             if (this.scaleDirectionType == ScaleDirection.Right)
             {
-                circle_rect.X = bounds_rect.Right - this.paddingRight - diameter;
+                circle_rect.X = bounds_rect.Right - this.paddingRight - scale_diameter;
             }
-            RectangleF scale_rect = new RectangleF(circle_rect.X + (this.circleRadius - scale_width / 2f), bounds_rect.Y + this.paddingTop + scale_width / 2f, scale_width, scale_height);//温度计刻度部分rect
+            RectangleF scale_rect = new RectangleF(circle_rect.X + (scale_circleRadius - scale_width / 2f), bounds_rect.Y + this.paddingTop + scale_width / 2f, scale_width, scale_height);//温度计刻度部分rect
 
             float sumValue = 0;
             if (this.MaxValue > 0 && this.MinValue >= 0)

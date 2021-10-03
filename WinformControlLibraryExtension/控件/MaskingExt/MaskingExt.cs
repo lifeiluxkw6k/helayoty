@@ -119,7 +119,7 @@ namespace WinformControlLibraryExtension
             ms.InitializeAngles();
             ms.InitializeColors();
 
-            MaskingForm mp = new MaskingForm();
+            MaskingForm mp = new MaskingForm() {Visible=false };
             mp.MaskingSetting = ms;
 
             MaskingClass mc = new MaskingClass();
@@ -132,9 +132,10 @@ namespace WinformControlLibraryExtension
             {
                 maskingClassList.Add(mc);
             }
-            mp.Show(form);
             Size size = MaskingForm.GetMaskingSize(mc.owner_form);
             Point point = MaskingForm.GetMaskingLocation(mc.owner_form);
+            mp.SetBounds(point.X, point.Y, size.Width, size.Height);
+            mp.Show(form);
             mp.SetBounds(point.X, point.Y, size.Width, size.Height);
 
             maskingKeyHook.HookStart();
@@ -1295,7 +1296,7 @@ namespace WinformControlLibraryExtension
             if (form is IFormExt)
             {
                 FormExt fe = (FormExt)form;
-                size = new Size(form.ClientRectangle.Size.Width - fe.BorderWidth * 2, fe.ClientRectangle.Size.Height - fe.BorderWidth * 2 - fe.CaptionBox.Height);
+                size = new Size(form.ClientRectangle.Size.Width, fe.ClientRectangle.Size.Height - fe.CaptionBox.Height);
             }
             else
             {
@@ -1315,7 +1316,7 @@ namespace WinformControlLibraryExtension
             if (form is IFormExt)
             {
                 FormExt fe = (FormExt)form;
-                point = form.PointToScreen(new Point(form.ClientRectangle.X + fe.BorderWidth, fe.ClientRectangle.Y + fe.BorderWidth + fe.CaptionBox.Height));
+                point = form.PointToScreen(new Point(form.ClientRectangle.X , fe.ClientRectangle.Y  + fe.CaptionBox.Height));
             }
             else
             {
@@ -1379,6 +1380,10 @@ namespace WinformControlLibraryExtension
         /// <param name="g"></param>
         private void DrawMasking(Graphics g)
         {
+            int scale_lineDotCircleRadius = (int)(this.MaskingSetting.LineDotCircleRadius * DotsPerInchHelper.DPIScale.XScale);
+            int scale_brushThickness = (int)(this.MaskingSetting.BrushThickness * DotsPerInchHelper.DPIScale.XScale);
+            int scale_brushLenght = (int)(this.MaskingSetting.BrushLenght * DotsPerInchHelper.DPIScale.XScale);
+
             g.SmoothingMode = SmoothingMode.AntiAlias;
 
             #region 背景
@@ -1397,12 +1402,12 @@ namespace WinformControlLibraryExtension
                     {
                         #region
                         int node = this.MaskingSetting.Progress;
-                        Pen line_pen = new Pen(Color.Transparent, this.MaskingSetting.BrushThickness);
+                        Pen line_pen = new Pen(Color.Transparent, scale_brushThickness);
                         for (int i = 0; i < this.MaskingSetting.LineDotNumber; i++)
                         {
                             node = node % this.MaskingSetting.LineDotNumber;
-                            PointF point1 = this.GetCoordinate(this.ClientRectangle, this.MaskingSetting.LineDotCircleRadius - this.MaskingSetting.BrushLenght, this.MaskingSetting.LineAngles[node]);
-                            PointF point2 = this.GetCoordinate(this.ClientRectangle, this.MaskingSetting.LineDotCircleRadius, this.MaskingSetting.LineAngles[node]);
+                            PointF point1 = this.GetCoordinate(this.ClientRectangle, scale_lineDotCircleRadius - scale_brushLenght, this.MaskingSetting.LineAngles[node]);
+                            PointF point2 = this.GetCoordinate(this.ClientRectangle, scale_lineDotCircleRadius, this.MaskingSetting.LineAngles[node]);
 
                             line_pen.StartCap = LineCap.Round;
                             line_pen.EndCap = LineCap.Round;
@@ -1423,10 +1428,10 @@ namespace WinformControlLibraryExtension
                         for (int i = 0; i < this.MaskingSetting.LineDotNumber; i++)
                         {
                             node = node % this.MaskingSetting.LineDotNumber;
-                            PointF point = this.GetCoordinate(this.ClientRectangle, this.MaskingSetting.LineDotCircleRadius, this.MaskingSetting.LineAngles[node]);
+                            PointF point = this.GetCoordinate(this.ClientRectangle, scale_lineDotCircleRadius, this.MaskingSetting.LineAngles[node]);
 
                             dot_sb.Color = this.MaskingSetting.LineColors[i];
-                            g.FillEllipse(dot_sb, point.X - this.MaskingSetting.BrushThickness / 2, point.Y - this.MaskingSetting.BrushThickness / 2, this.MaskingSetting.BrushThickness, this.MaskingSetting.BrushThickness);
+                            g.FillEllipse(dot_sb, point.X - scale_brushThickness / 2, point.Y - scale_brushThickness / 2, scale_brushThickness, scale_brushThickness);
 
                             node++;
                         }
@@ -1443,15 +1448,16 @@ namespace WinformControlLibraryExtension
             if (!String.IsNullOrWhiteSpace(this.MaskingSetting.Text))
             {
                 SolidBrush text_sb = new SolidBrush(this.MaskingSetting.TextColor);
-                StringFormat text_sf = new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Far, Trimming = StringTrimming.EllipsisCharacter };
-                SizeF text_sizef = g.MeasureString(this.MaskingSetting.Text, this.MaskingSetting.TextFont);
+                StringFormat text_sf = new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Far };
+                Size text_sizef =Size.Ceiling(g.MeasureString(this.MaskingSetting.Text, this.MaskingSetting.TextFont,int.MaxValue, text_sf));
 
                 Point center = new Point(this.ClientRectangle.X + this.ClientRectangle.Width / 2, this.ClientRectangle.Y + this.ClientRectangle.Height / 2);
-                Rectangle text_rect = new Rectangle(center.X - (int)(text_sizef.Width / 2), center.Y + this.MaskingSetting.LineDotCircleRadius + this.MaskingSetting.BrushThickness + 4, (int)text_sizef.Width, (int)text_sizef.Height);
+                Rectangle text_rect = new Rectangle(center.X - (int)(text_sizef.Width / 2), center.Y + scale_lineDotCircleRadius + scale_brushThickness, (int)text_sizef.Width, (int)text_sizef.Height);
                 if (this.MaskingSetting.TextOrientation == MaskingExt.MaskingTextOrientations.Right)
                 {
-                    text_rect = new Rectangle(center.X + this.MaskingSetting.LineDotCircleRadius + this.MaskingSetting.BrushThickness, center.Y, (int)text_sizef.Width, (int)text_sizef.Height);
+                    text_rect = new Rectangle(center.X + scale_lineDotCircleRadius + scale_brushThickness, center.Y, (int)text_sizef.Width, (int)text_sizef.Height);
                 }
+                g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
                 g.DrawString(this.MaskingSetting.Text, this.MaskingSetting.TextFont, text_sb, text_rect, text_sf);
                 text_sb.Dispose();
                 text_sf.Dispose();

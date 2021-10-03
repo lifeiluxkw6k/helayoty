@@ -701,6 +701,8 @@ namespace WinformControlLibraryExtension
 
             Graphics g = e.Graphics;
 
+            float scale_distance = (int)(this.Distance * DotsPerInchHelper.DPIScale.XScale);
+
             #region 文本画笔
             StringFormat item_text_sf = this.GetTextStringFormat();
             SolidBrush normal_item_text_sb = null;
@@ -770,11 +772,11 @@ namespace WinformControlLibraryExtension
                 RectangleF rectf = RectangleF.Empty;
                 if (this.ISHorizontal())
                 {
-                    rectf = new RectangleF(this.Items[0].now_rectf.X - 1, this.Items[0].now_rectf.Y - 1, image_size.Width * this.Proportion * this.Items.Count + this.Distance * (this.Items.Count - 1), image_size.Height * this.Proportion);
+                    rectf = new RectangleF(this.Items[0].now_rectf.X - 1, this.Items[0].now_rectf.Y - 1, image_size.Width * this.Proportion * this.Items.Count + scale_distance * (this.Items.Count - 1), image_size.Height * this.Proportion);
                 }
                 else if (this.ISVertical())
                 {
-                    rectf = new RectangleF(this.Items[0].now_rectf.X - 1, this.Items[0].now_rectf.Y - 1, image_size.Width * this.Proportion, image_size.Height * this.Proportion * this.Items.Count + this.Distance * (this.Items.Count - 1));
+                    rectf = new RectangleF(this.Items[0].now_rectf.X - 1, this.Items[0].now_rectf.Y - 1, image_size.Width * this.Proportion, image_size.Height * this.Proportion * this.Items.Count + scale_distance * (this.Items.Count - 1));
                 }
 
                 g.DrawRectangle(active_border_pen, rectf.X, rectf.Y, rectf.Width, rectf.Height);
@@ -1145,6 +1147,9 @@ namespace WinformControlLibraryExtension
         /// </summary>
         private void InitializeFisheyeMenuRectangle()
         {
+            int scale_itemPadding = (int)(this.ItemPadding * DotsPerInchHelper.DPIScale.XScale);
+            float scale_distance = (int)(this.Distance * DotsPerInchHelper.DPIScale.XScale);
+
             SizeF image_size = this.GetImageRealitySize();
             RectangleF rectf = new RectangleF(this.activated_border, this.activated_border, this.ClientRectangle.Width - this.activated_border * 2, this.ClientRectangle.Height - this.activated_border * 2);
             float sum = 0f;
@@ -1153,7 +1158,7 @@ namespace WinformControlLibraryExtension
                 float item_now_width = image_size.Width * this.Items[i].now_proportion;
                 float item_now_height = image_size.Height * this.Items[i].now_proportion;
                 this.Items[i].now_rectf = new RectangleF(0f, 0f, item_now_width, item_now_height);
-                sum = sum + (this.ISHorizontal() ? item_now_width : item_now_height) + ((i < this.Items.Count - 1) ? this.Distance : 0);
+                sum = sum + (this.ISHorizontal() ? item_now_width : item_now_height) + ((i < this.Items.Count - 1) ? scale_distance : 0);
 
             }
             #region  计算选项图片Rectangle
@@ -1165,39 +1170,39 @@ namespace WinformControlLibraryExtension
                 {
                     case FisheyeMenuOrientation.Bottom:
                         {
-                            x = (i == 0) ? (rectf.Width - sum) / 2f : this.Items[i - 1].now_rectf.Right + this.Distance;
-                            y = rectf.Bottom - this.ItemPadding - this.Items[i].now_rectf.Height - activated_border;
+                            x = (i == 0) ? (rectf.Width - sum) / 2f : this.Items[i - 1].now_rectf.Right + scale_distance;
+                            y = rectf.Bottom - scale_itemPadding - this.Items[i].now_rectf.Height - activated_border;
                             break;
                         }
                     case FisheyeMenuOrientation.Top:
                         {
-                            x = (i == 0) ? (rectf.Width - sum) / 2f : this.Items[i - 1].now_rectf.Right + this.Distance;
-                            y = activated_border + this.ItemPadding;
+                            x = (i == 0) ? (rectf.Width - sum) / 2f : this.Items[i - 1].now_rectf.Right + scale_distance;
+                            y = activated_border + scale_itemPadding;
                             break;
                         }
 
                     case FisheyeMenuOrientation.HorizontalCenter:
                         {
-                            x = (i == 0) ? (rectf.Width - sum) / 2f : this.Items[i - 1].now_rectf.Right + this.Distance;
+                            x = (i == 0) ? (rectf.Width - sum) / 2f : this.Items[i - 1].now_rectf.Right + scale_distance;
                             y = (rectf.Height - this.Items[i].now_rectf.Height) / 2f;
                             break;
                         }
                     case FisheyeMenuOrientation.Left:
                         {
-                            x = activated_border + this.ItemPadding;
-                            y = (i == 0) ? (rectf.Height - sum) / 2f : this.Items[i - 1].now_rectf.Bottom + this.Distance;
+                            x = activated_border + scale_itemPadding;
+                            y = (i == 0) ? (rectf.Height - sum) / 2f : this.Items[i - 1].now_rectf.Bottom + scale_distance;
                             break;
                         }
                     case FisheyeMenuOrientation.Right:
                         {
-                            x = rectf.Right - this.ItemPadding - this.Items[i].now_rectf.Width - activated_border;
-                            y = (i == 0) ? (rectf.Height - sum) / 2f : this.Items[i - 1].now_rectf.Bottom + this.Distance;
+                            x = rectf.Right - scale_itemPadding - this.Items[i].now_rectf.Width - activated_border;
+                            y = (i == 0) ? (rectf.Height - sum) / 2f : this.Items[i - 1].now_rectf.Bottom + scale_distance;
                             break;
                         }
                     case FisheyeMenuOrientation.VerticalCenter:
                         {
                             x = (rectf.Right - this.Items[i].now_rectf.Width) / 2f;
-                            y = (i == 0) ? (rectf.Height - sum) / 2f : this.Items[i - 1].now_rectf.Bottom + this.Distance;
+                            y = (i == 0) ? (rectf.Height - sum) / 2f : this.Items[i - 1].now_rectf.Bottom + scale_distance;
                             break;
                         }
                 }
@@ -1233,13 +1238,15 @@ namespace WinformControlLibraryExtension
         /// <param name="point">鼠标坐标</param>
         private void UpdateFisheyeMenuItemZoom(PointF point)
         {
+            float scale_distance = (int)(this.Distance * DotsPerInchHelper.DPIScale.XScale);
+
             SizeF image_size = this.GetImageRealitySize();
             for (int i = 0; i < this.Items.Count; i++)
             {
                 #region 计算当前选项的缩放比例
                 float distance = (float)Math.Sqrt(Math.Pow(Math.Abs(this.Items[i].now_centerpointf.X - point.X), 2) + Math.Pow(Math.Abs(this.Items[i].now_centerpointf.Y - point.Y), 2));//鼠标焦点和选项圆心的距离
                 float item_distance = (float)Math.Sqrt(Math.Pow(image_size.Width, 2) + Math.Pow(image_size.Height, 2));
-                float p = 1 - distance / item_distance / 2f + this.Distance / 2f;//当焦点位于两个选项中间时应放大剩余还原百分比的二分之一。例如宽度100px 默认缩放0.6那么剩余还原百分比为0.4
+                float p = 1 - distance / item_distance / 2f + scale_distance / 2f;//当焦点位于两个选项中间时应放大剩余还原百分比的二分之一。例如宽度100px 默认缩放0.6那么剩余还原百分比为0.4
                 if (p < this.Proportion)
                 {
                     p = this.Proportion;
@@ -1349,13 +1356,16 @@ namespace WinformControlLibraryExtension
         /// </summary>
         private SizeF GetImageRealitySize()
         {
+            float scale_width = this.ItemWidth * DotsPerInchHelper.DPIScale.XScale;
+            float scale_height = this.ItemHeight * DotsPerInchHelper.DPIScale.YScale;
+
             if (this.Type == FisheyeMenuTypes.ImageText && this.ImageReflection && this.ISHorizontal())
             {
-                return new SizeF((float)this.ItemWidth, this.ItemHeight + this.ItemHeight / 3f);
+                return new SizeF(scale_width, scale_height + scale_height / 3f);
             }
             else
             {
-                return new SizeF(this.ItemWidth, this.ItemHeight);
+                return new SizeF(scale_width, scale_height);
             }
         }
 
@@ -1372,6 +1382,8 @@ namespace WinformControlLibraryExtension
         /// <returns></returns>
         private RectangleF GetTextRectangle(Graphics g, FisheyeMenuItem item, StringFormat sf)
         {
+            int scale_itemPadding = (int)(this.ItemPadding * DotsPerInchHelper.DPIScale.XScale);
+
             RectangleF item_text_rectf = RectangleF.Empty;
             SizeF item_text_size = g.MeasureString(item.Text, this.TextFont, new SizeF(), sf);
 
@@ -1379,7 +1391,7 @@ namespace WinformControlLibraryExtension
             float item_text_tlasticity = 0f;
             if (this.Type == FisheyeMenuTypes.Text)
             {
-                item_text_tlasticity = (this.ISHorizontal() ? item_text_size.Height : item_text_size.Width) * this.TextTlasticity * (item.now_proportion - this.Proportion);
+                item_text_tlasticity = (this.ISHorizontal() ? item_text_size.Height : item_text_size.Width) *this.TextTlasticity * (item.now_proportion - this.Proportion);
             }
             #endregion
 
@@ -1391,13 +1403,13 @@ namespace WinformControlLibraryExtension
                         if (item.now_rectf.Width > item_text_size.Width)
                         {
                             float x = item.now_rectf.X + (item.now_rectf.Width - item_text_size.Width) / 2f;
-                            float y = (this.Type == FisheyeMenuTypes.Text ? this.ItemPadding : item.now_rectf.Bottom) + item_text_size.Height + item_text_tlasticity;
+                            float y = (this.Type == FisheyeMenuTypes.Text ? scale_itemPadding : item.now_rectf.Bottom) + item_text_size.Height + item_text_tlasticity;
                             item_text_rectf = new RectangleF(x, y, item_text_size.Width, item_text_size.Height);
                         }
                         else
                         {
                             float x = item.now_rectf.X;
-                            float y = (this.Type == FisheyeMenuTypes.Text ? this.ItemPadding : item.now_rectf.Bottom) + item_text_size.Height + item_text_tlasticity;
+                            float y = (this.Type == FisheyeMenuTypes.Text ? scale_itemPadding : item.now_rectf.Bottom) + item_text_size.Height + item_text_tlasticity;
                             item_text_rectf = new RectangleF(x, y, item.now_rectf.Width, item_text_size.Height);
                         }
                         break;
@@ -1408,13 +1420,13 @@ namespace WinformControlLibraryExtension
                         if (item.now_rectf.Width > item_text_size.Width)
                         {
                             float x = item.now_rectf.X + (item.now_rectf.Width - item_text_size.Width) / 2f;
-                            float y = (this.Type == FisheyeMenuTypes.Text ? item.now_rectf.Bottom - this.ItemPadding : item.now_rectf.Y) - item_text_size.Height - item_text_tlasticity;
+                            float y = (this.Type == FisheyeMenuTypes.Text ? item.now_rectf.Bottom - scale_itemPadding : item.now_rectf.Y) - item_text_size.Height - item_text_tlasticity;
                             item_text_rectf = new RectangleF(x, y, item_text_size.Width, item_text_size.Height);
                         }
                         else
                         {
                             float x = item.now_rectf.X;
-                            float y = (this.Type == FisheyeMenuTypes.Text ? item.now_rectf.Bottom - this.ItemPadding : item.now_rectf.Y) - item_text_size.Height - item_text_tlasticity;
+                            float y = (this.Type == FisheyeMenuTypes.Text ? item.now_rectf.Bottom - scale_itemPadding : item.now_rectf.Y) - item_text_size.Height - item_text_tlasticity;
                             item_text_rectf = new RectangleF(x, y, item.now_rectf.Width, item_text_size.Height);
                         }
                         break;
@@ -1426,20 +1438,20 @@ namespace WinformControlLibraryExtension
                         {
                             if (item.now_rectf.Height > item_text_size.Height)
                             {
-                                float x = (this.Type == FisheyeMenuTypes.Text ? this.ItemPadding : item.now_rectf.Right) + item_text_tlasticity;
+                                float x = (this.Type == FisheyeMenuTypes.Text ? scale_itemPadding : item.now_rectf.Right) + item_text_tlasticity;
                                 float y = item.now_rectf.Y + (item.now_rectf.Height - item_text_size.Height) / 2f;
                                 item_text_rectf = new RectangleF(x, y, item_text_size.Width, item_text_size.Height);
                             }
                             else
                             {
-                                float x = (this.Type == FisheyeMenuTypes.Text ? this.ItemPadding : item.now_rectf.Right) + item_text_tlasticity;
+                                float x = (this.Type == FisheyeMenuTypes.Text ? scale_itemPadding : item.now_rectf.Right) + item_text_tlasticity;
                                 float y = item.now_rectf.Y;
                                 item_text_rectf = new RectangleF(x, y, item_text_size.Width, item.now_rectf.Height);
                             }
                         }
                         else
                         {
-                            float x = (this.Type == FisheyeMenuTypes.Text ? this.ItemPadding : item.now_rectf.Right) + item_text_tlasticity;
+                            float x = (this.Type == FisheyeMenuTypes.Text ? scale_itemPadding : item.now_rectf.Right) + item_text_tlasticity;
                             float y = item.now_rectf.Y + (item.now_rectf.Height - item_text_size.Height) / 2f;
                             item_text_rectf = new RectangleF(x, y, item_text_size.Width, item_text_size.Height);
                         }
@@ -1451,20 +1463,20 @@ namespace WinformControlLibraryExtension
                         {
                             if (item.now_rectf.Height > item_text_size.Height)
                             {
-                                float x = (this.Type == FisheyeMenuTypes.Text ? item.now_rectf.Right - this.ItemPadding : item.now_rectf.X) - item_text_size.Width - item_text_tlasticity;
+                                float x = (this.Type == FisheyeMenuTypes.Text ? item.now_rectf.Right - scale_itemPadding : item.now_rectf.X) - item_text_size.Width - item_text_tlasticity;
                                 float y = item.now_rectf.Y + (item.now_rectf.Height - item_text_size.Height) / 2f;
                                 item_text_rectf = new RectangleF(x, y, item_text_size.Width, item_text_size.Height);
                             }
                             else
                             {
-                                float x = (this.Type == FisheyeMenuTypes.Text ? item.now_rectf.Right - this.ItemPadding : item.now_rectf.X) - item_text_size.Width - item_text_tlasticity;
+                                float x = (this.Type == FisheyeMenuTypes.Text ? item.now_rectf.Right - scale_itemPadding : item.now_rectf.X) - item_text_size.Width - item_text_tlasticity;
                                 float y = item.now_rectf.Y;
                                 item_text_rectf = new RectangleF(x, y, item_text_size.Width, item.now_rectf.Height);
                             }
                         }
                         else
                         {
-                            float x = (this.Type == FisheyeMenuTypes.Text ? item.now_rectf.Right - this.ItemPadding : item.now_rectf.X) - item_text_size.Width - item_text_tlasticity;
+                            float x = (this.Type == FisheyeMenuTypes.Text ? item.now_rectf.Right - scale_itemPadding : item.now_rectf.X) - item_text_size.Width - item_text_tlasticity;
                             float y = item.now_rectf.Y + (item.now_rectf.Height - item_text_size.Height) / 2f;
                             item_text_rectf = new RectangleF(x, y, item_text_size.Width, item_text_size.Height);
                         }

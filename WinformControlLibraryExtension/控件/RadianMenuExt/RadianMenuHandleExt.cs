@@ -392,6 +392,8 @@ namespace WinformControlLibraryExtension
 
             if (this.rmce != null && !this.rmce.LayerVisible)//圆弧菜单未显示
             {
+                float scale_circleRadius = (this.rmce.CircleRadius * DotsPerInchHelper.DPIScale.XScale);
+
                 #region 自定义绘制控件界面
                 if (this.CustomDraw)
                 {
@@ -406,7 +408,7 @@ namespace WinformControlLibraryExtension
                         Graphics g = e.Graphics;
                         g.SmoothingMode = SmoothingMode.AntiAlias;
                         g.TextRenderingHint = TextRenderingHint.AntiAlias;
-                        float diameter = this.rmce.CircleRadius * 2 - 2;//直径
+                        float diameter = scale_circleRadius * 2 - 2;//直径
                         RectangleF radian_rect = new RectangleF(this.ClientRectangle.X + (this.ClientRectangle.Width - diameter) / 2, this.ClientRectangle.Y + (this.ClientRectangle.Height - diameter) / 2, diameter, diameter);
 
                         #region 控件形状
@@ -1226,7 +1228,9 @@ namespace WinformControlLibraryExtension
         {
             float client_width = this.rml.ClientRectangle.Width;
             float client_height = this.rml.ClientRectangle.Height;
-            float diameter = this.CircleRadius * 2;//直径
+            float scale_diameter = (int)(this.CircleRadius * 2 * DotsPerInchHelper.DPIScale.XScale);//直径
+            float scale_radianWidthShakeLargen = (this.RadianWidthShakeLargen * DotsPerInchHelper.DPIScale.XScale);
+            float scale_radianWidth = (this.RadianWidth * DotsPerInchHelper.DPIScale.XScale);
 
             for (int i = 0; i < this.Items.Count; i++)
             {
@@ -1234,13 +1238,13 @@ namespace WinformControlLibraryExtension
                 #region 圆心
                 if (i == 0)
                 {
-                    float w = diameter;
-                    float h = diameter;
+                    float w = scale_diameter;
+                    float h = scale_diameter;
                     float x = (client_width - w) / 2f;
                     float y = (client_height - h) / 2f;
 
-                    float max_w = w + (float)this.RadianWidthShakeLargen * 2;
-                    float max_h = h + (float)this.RadianWidthShakeLargen * 2;
+                    float max_w = w + scale_radianWidthShakeLargen * 2;
+                    float max_h = h + scale_radianWidthShakeLargen * 2;
                     float max_x = (client_width - max_w) / 2f;
                     float max_y = (client_height - max_h) / 2f;
 
@@ -1256,13 +1260,13 @@ namespace WinformControlLibraryExtension
                 #region 圆弧
                 else
                 {
-                    float w = diameter + (float)this.RadianWidth * 2 * i;
-                    float h = diameter + (float)this.RadianWidth * 2 * i;
+                    float w = scale_diameter + scale_radianWidth * 2 * i;
+                    float h = scale_diameter + scale_radianWidth * 2 * i;
                     float x = (client_width - w) / 2f;
                     float y = (client_height - h) / 2f;
 
-                    float max_w = w + (float)this.RadianWidthShakeLargen * 2;
-                    float max_h = h + (float)this.RadianWidthShakeLargen * 2;
+                    float max_w = w + (float)scale_radianWidthShakeLargen * 2;
+                    float max_h = h + (float)scale_radianWidthShakeLargen * 2;
                     float max_x = (client_width - max_w) / 2f;
                     float max_y = (client_height - max_h) / 2f;
 
@@ -1271,9 +1275,9 @@ namespace WinformControlLibraryExtension
                     this.Items[i].RadianZoonMinRectF = new RectangleF(this.Items[0].RadianNormalRectF.X, this.Items[0].RadianNormalRectF.Y, this.Items[0].RadianNormalRectF.Width, this.Items[0].RadianNormalRectF.Height);
                     this.Items[i].RadianNowRectF = this.Items[i].RadianZoonMinRectF;
 
-                    this.Items[i].RadianNormalThickness = this.RadianWidth;
-                    this.Items[i].RadianMaxThickness = this.RadianWidth + this.RadianWidthShakeLargen * 2;
-                    this.Items[i].RadianNowThickness = this.RadianWidth;
+                    this.Items[i].RadianNormalThickness = (int)scale_radianWidth;
+                    this.Items[i].RadianMaxThickness = (int)(scale_radianWidth + scale_radianWidthShakeLargen * 2);
+                    this.Items[i].RadianNowThickness = (int)scale_radianWidth;
                     this.Items[i].RadianNowStartAngle = this.Items[i].RadianStartAngle;
 
                     GraphicsPath gp_out = new GraphicsPath();
@@ -1295,12 +1299,15 @@ namespace WinformControlLibraryExtension
         /// </summary>
         private void InitializeText()
         {
-            IntPtr hDC = GetWindowDC(this.rml.Handle);
-            Graphics g = Graphics.FromHdc(hDC);
+            IntPtr hDC = IntPtr.Zero;
+            Graphics g = null;
+            ControlCommom.GetWindowClientGraphics(this.rml.Handle, out g, out hDC);
+
             for (int i = 0; i < this.Items.Count; i++)
             {
                 this.Items[i].RadianTextSize = g.MeasureString(this.Items[i].Text, this.TextFont);
             }
+
             g.Dispose();
             ReleaseDC(this.rml.Handle, hDC);
         }
@@ -1309,6 +1316,10 @@ namespace WinformControlLibraryExtension
 
         private void timer_Animationing(object sender, EventArgs e)
         {
+            float scale_radianWidthShakeLargen = (this.RadianWidthShakeLargen * DotsPerInchHelper.DPIScale.XScale);
+            float scale_radianWidth = (this.RadianWidth * DotsPerInchHelper.DPIScale.XScale);
+            float scale_diameter = (int)(this.CircleRadius * 2 * DotsPerInchHelper.DPIScale.XScale);//直径
+
             bool isreset = false;
 
             #region 缩放
@@ -1414,7 +1425,7 @@ namespace WinformControlLibraryExtension
                                 pv = 0.0f;
                             }
 
-                            float largen = this.RadianWidthShakeLargen * pv * 2;
+                            float largen = scale_radianWidthShakeLargen * pv * 2;
                             float w = (float)(rmi.RadianNormalRectF.Width + largen);
                             float h = (float)(rmi.RadianNormalRectF.Height + largen);
                             float x = ((float)this.rml.ClientRectangle.Width - w) / 2f;
@@ -1639,11 +1650,13 @@ namespace WinformControlLibraryExtension
         /// </summary>
         private void UpdateLayerSizeLocation()
         {
-            float diameter = this.CircleRadius * 2;//直径
-            float w = diameter + (float)this.RadianWidth * 2 * this.Items.Count;
-            float h = diameter + (float)this.RadianWidth * 2 * this.Items.Count;
-            float max_w = w + (float)this.RadianWidthShakeLargen * 2;
-            float max_h = h + (float)this.RadianWidthShakeLargen * 2;
+            float scale_radianWidthShakeLargen = (this.RadianWidthShakeLargen * DotsPerInchHelper.DPIScale.XScale);
+            float scale_radianWidth = (this.RadianWidth * DotsPerInchHelper.DPIScale.XScale);
+            float scale_diameter = (int)(this.CircleRadius * 2 * DotsPerInchHelper.DPIScale.XScale);//直径
+            float w = scale_diameter + scale_radianWidth * 2 * this.Items.Count;
+            float h = scale_diameter + scale_radianWidth * 2 * this.Items.Count;
+            float max_w = w + scale_radianWidthShakeLargen * 2;
+            float max_h = h + scale_radianWidthShakeLargen * 2;
             this.rml.SetBounds(this.rml.Location.X, this.rml.Location.Y, (int)max_w, (int)max_h);
 
             this.InvalidateLayer();
