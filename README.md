@@ -13,9 +13,9 @@ qq交流群： **180744253**
 WinformControlLibraryExtension      
 WinformDemo      
 WcleAnimationLibrary      
-（注意）本次版本修改主要是为了适应高分屏绘制，如果要从低版本升级到5.0.0.0 版本，要测试好你的程序不变形才确定要不要更新。
-新增 HRulerExt.cs 横向刻度尺控件、VRulerExt.cs 纵向刻度尺控件、LabelExt.cs带滚动条文本控件 。 
-修改 ToolTipExt 隐藏部分属性、ProcedureExt 内边距计算修改过、ControlCommom 修正 圆角换算、边框换算。对所有控件绘制计算加入缩放比例。
+（注意）本次版本修改主要是为了适应高分屏绘制，如果要从低版本升级到5.0.0.0 版本，要测试好你的程序不变形才确定要不要更新。      
+新增 HRulerExt.cs 横向刻度尺控件、VRulerExt.cs 纵向刻度尺控件、LabelExt.cs带滚动条文本控件 。       
+修改 ToolTipExt 隐藏部分属性、ProcedureExt 内边距计算修改过、ControlCommom 修正 圆角换算、边框换算。对所有控件绘制计算加入缩放比例。      
 
                  
 **4.7.5.11       [2021-07-13]**   
