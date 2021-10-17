@@ -61,13 +61,15 @@
             this.propertyGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.propertyGrid1.Location = new System.Drawing.Point(0, 0);
+            this.propertyGrid1.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.propertyGrid1.Name = "propertyGrid1";
             this.propertyGrid1.SelectedObject = this.stepProgressExt1;
-            this.propertyGrid1.Size = new System.Drawing.Size(350, 630);
+            this.propertyGrid1.Size = new System.Drawing.Size(642, 1102);
             this.propertyGrid1.TabIndex = 13;
             // 
             // stepProgressExt1
             // 
+            this.stepProgressExt1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(247)))), ((int)(((byte)(240)))));
             this.stepProgressExt1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.stepProgressExt1.CausesValidation = false;
             this.stepProgressExt1.ItemDisableFinishBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
@@ -162,10 +164,12 @@
             this.stepProgressExt1.Items.Add(procedureItem3);
             this.stepProgressExt1.Items.Add(procedureItem4);
             this.stepProgressExt1.Items.Add(procedureItem5);
-            this.stepProgressExt1.Location = new System.Drawing.Point(378, 28);
+            this.stepProgressExt1.Location = new System.Drawing.Point(693, 49);
+            this.stepProgressExt1.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.stepProgressExt1.Name = "stepProgressExt1";
+            this.stepProgressExt1.Padding = new System.Windows.Forms.Padding(15, 0, 0, 0);
             this.stepProgressExt1.SelectIndex = 4;
-            this.stepProgressExt1.Size = new System.Drawing.Size(372, 97);
+            this.stepProgressExt1.Size = new System.Drawing.Size(707, 170);
             this.stepProgressExt1.TabIndex = 0;
             this.stepProgressExt1.TabStop = false;
             this.stepProgressExt1.Text = "stepProgressExt1";
@@ -176,6 +180,7 @@
             // 
             // stepProgressExt2
             // 
+            this.stepProgressExt2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(247)))), ((int)(((byte)(240)))));
             this.stepProgressExt2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.stepProgressExt2.CausesValidation = false;
             this.stepProgressExt2.ItemDisableFinishBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
@@ -271,10 +276,12 @@
             this.stepProgressExt2.Items.Add(procedureItem8);
             this.stepProgressExt2.Items.Add(procedureItem9);
             this.stepProgressExt2.Items.Add(procedureItem10);
-            this.stepProgressExt2.Location = new System.Drawing.Point(378, 134);
+            this.stepProgressExt2.Location = new System.Drawing.Point(693, 234);
+            this.stepProgressExt2.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.stepProgressExt2.Name = "stepProgressExt2";
             this.stepProgressExt2.Orientation = WinformControlLibraryExtension.ProcedureExt.Orientations.HorizontalBottom;
-            this.stepProgressExt2.Size = new System.Drawing.Size(372, 97);
+            this.stepProgressExt2.Padding = new System.Windows.Forms.Padding(15, 0, 0, 0);
+            this.stepProgressExt2.Size = new System.Drawing.Size(707, 170);
             this.stepProgressExt2.TabIndex = 0;
             this.stepProgressExt2.TabStop = false;
             this.stepProgressExt2.Text = "stepProgressExt2";
@@ -285,6 +292,7 @@
             // 
             // stepProgressExt3
             // 
+            this.stepProgressExt3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(247)))), ((int)(((byte)(240)))));
             this.stepProgressExt3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.stepProgressExt3.CausesValidation = false;
             this.stepProgressExt3.ItemDisableFinishBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
@@ -380,11 +388,13 @@
             this.stepProgressExt3.Items.Add(procedureItem13);
             this.stepProgressExt3.Items.Add(procedureItem14);
             this.stepProgressExt3.Items.Add(procedureItem15);
-            this.stepProgressExt3.Location = new System.Drawing.Point(424, 250);
+            this.stepProgressExt3.Location = new System.Drawing.Point(777, 438);
+            this.stepProgressExt3.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.stepProgressExt3.Name = "stepProgressExt3";
             this.stepProgressExt3.Orientation = WinformControlLibraryExtension.ProcedureExt.Orientations.VerticalLeft;
+            this.stepProgressExt3.Padding = new System.Windows.Forms.Padding(0);
             this.stepProgressExt3.SelectIndex = 4;
-            this.stepProgressExt3.Size = new System.Drawing.Size(124, 359);
+            this.stepProgressExt3.Size = new System.Drawing.Size(227, 664);
             this.stepProgressExt3.TabIndex = 0;
             this.stepProgressExt3.TabStop = false;
             this.stepProgressExt3.Text = "stepProgressExt3";
@@ -395,6 +405,7 @@
             // 
             // stepProgressExt4
             // 
+            this.stepProgressExt4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(247)))), ((int)(((byte)(240)))));
             this.stepProgressExt4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.stepProgressExt4.CausesValidation = false;
             this.stepProgressExt4.ItemDisableFinishBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
@@ -490,11 +501,13 @@
             this.stepProgressExt4.Items.Add(procedureItem18);
             this.stepProgressExt4.Items.Add(procedureItem19);
             this.stepProgressExt4.Items.Add(procedureItem20);
-            this.stepProgressExt4.Location = new System.Drawing.Point(577, 250);
+            this.stepProgressExt4.Location = new System.Drawing.Point(1058, 438);
+            this.stepProgressExt4.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.stepProgressExt4.Name = "stepProgressExt4";
             this.stepProgressExt4.Orientation = WinformControlLibraryExtension.ProcedureExt.Orientations.VerticalRight;
+            this.stepProgressExt4.Padding = new System.Windows.Forms.Padding(1);
             this.stepProgressExt4.SelectIndex = 3;
-            this.stepProgressExt4.Size = new System.Drawing.Size(124, 359);
+            this.stepProgressExt4.Size = new System.Drawing.Size(271, 660);
             this.stepProgressExt4.TabIndex = 0;
             this.stepProgressExt4.TabStop = false;
             this.stepProgressExt4.Text = "stepProgressExt4";
@@ -505,15 +518,16 @@
             // 
             // ProcedureExtForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(247)))), ((int)(((byte)(240)))));
-            this.ClientSize = new System.Drawing.Size(772, 632);
+            this.ClientSize = new System.Drawing.Size(1415, 1106);
             this.Controls.Add(this.propertyGrid1);
             this.Controls.Add(this.stepProgressExt1);
             this.Controls.Add(this.stepProgressExt2);
             this.Controls.Add(this.stepProgressExt3);
             this.Controls.Add(this.stepProgressExt4);
+            this.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.Name = "ProcedureExtForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "步骤流程控件";

@@ -10,7 +10,7 @@ using WinformControlLibraryExtension;
 
 namespace WinformDemo
 {
-    public partial class ToolStripExtForm : FormExt
+    public partial class ToolStripExtForm : Form
     {
         public ToolStripExtForm()
         {

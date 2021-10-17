@@ -40,9 +40,10 @@
             this.propertyGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.propertyGrid1.Location = new System.Drawing.Point(0, 0);
+            this.propertyGrid1.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.propertyGrid1.Name = "propertyGrid1";
             this.propertyGrid1.SelectedObject = this.waveProgressExt1;
-            this.propertyGrid1.Size = new System.Drawing.Size(350, 631);
+            this.propertyGrid1.Size = new System.Drawing.Size(642, 1104);
             this.propertyGrid1.TabIndex = 4;
             // 
             // waveProgressExt1
@@ -52,9 +53,10 @@
             this.waveProgressExt1.CausesValidation = false;
             this.waveProgressExt1.Font = new System.Drawing.Font("宋体", 13F, System.Drawing.FontStyle.Bold);
             this.waveProgressExt1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(123)))), ((int)(((byte)(104)))), ((int)(((byte)(238)))));
-            this.waveProgressExt1.Location = new System.Drawing.Point(368, 88);
+            this.waveProgressExt1.Location = new System.Drawing.Point(675, 154);
+            this.waveProgressExt1.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.waveProgressExt1.Name = "waveProgressExt1";
-            this.waveProgressExt1.Size = new System.Drawing.Size(100, 100);
+            this.waveProgressExt1.Size = new System.Drawing.Size(180, 180);
             this.waveProgressExt1.TabIndex = 0;
             this.waveProgressExt1.TabStop = false;
             this.waveProgressExt1.Text = "waveProgressExt1";
@@ -74,9 +76,10 @@
             this.waveProgressExt4.CausesValidation = false;
             this.waveProgressExt4.Font = new System.Drawing.Font("宋体", 13F, System.Drawing.FontStyle.Bold);
             this.waveProgressExt4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(153)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
-            this.waveProgressExt4.Location = new System.Drawing.Point(488, 60);
+            this.waveProgressExt4.Location = new System.Drawing.Point(895, 105);
+            this.waveProgressExt4.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.waveProgressExt4.Name = "waveProgressExt4";
-            this.waveProgressExt4.Size = new System.Drawing.Size(100, 154);
+            this.waveProgressExt4.Size = new System.Drawing.Size(183, 270);
             this.waveProgressExt4.TabIndex = 0;
             this.waveProgressExt4.TabStop = false;
             this.waveProgressExt4.Text = "waveProgressExt4";
@@ -94,9 +97,10 @@
             this.waveProgressExt3.CausesValidation = false;
             this.waveProgressExt3.Font = new System.Drawing.Font("宋体", 13F, System.Drawing.FontStyle.Bold);
             this.waveProgressExt3.ForeColor = System.Drawing.Color.LightCoral;
-            this.waveProgressExt3.Location = new System.Drawing.Point(793, 88);
+            this.waveProgressExt3.Location = new System.Drawing.Point(1454, 154);
+            this.waveProgressExt3.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.waveProgressExt3.Name = "waveProgressExt3";
-            this.waveProgressExt3.Size = new System.Drawing.Size(211, 100);
+            this.waveProgressExt3.Size = new System.Drawing.Size(387, 175);
             this.waveProgressExt3.Style = WinformControlLibraryExtension.WaveProgressExt.WaveProgressStyles.Quadrangle;
             this.waveProgressExt3.TabIndex = 0;
             this.waveProgressExt3.TabStop = false;
@@ -113,9 +117,10 @@
             this.waveProgressExt2.CausesValidation = false;
             this.waveProgressExt2.Font = new System.Drawing.Font("宋体", 13F, System.Drawing.FontStyle.Bold);
             this.waveProgressExt2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(204)))), ((int)(((byte)(153)))));
-            this.waveProgressExt2.Location = new System.Drawing.Point(610, 88);
+            this.waveProgressExt2.Location = new System.Drawing.Point(1118, 154);
+            this.waveProgressExt2.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.waveProgressExt2.Name = "waveProgressExt2";
-            this.waveProgressExt2.Size = new System.Drawing.Size(163, 100);
+            this.waveProgressExt2.Size = new System.Drawing.Size(299, 175);
             this.waveProgressExt2.TabIndex = 0;
             this.waveProgressExt2.TabStop = false;
             this.waveProgressExt2.Text = "waveProgressExt2";
@@ -127,15 +132,16 @@
             // 
             // WaveProgressExtForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(247)))), ((int)(((byte)(240)))));
-            this.ClientSize = new System.Drawing.Size(1034, 631);
+            this.ClientSize = new System.Drawing.Size(1896, 1104);
             this.Controls.Add(this.propertyGrid1);
             this.Controls.Add(this.waveProgressExt4);
             this.Controls.Add(this.waveProgressExt3);
             this.Controls.Add(this.waveProgressExt2);
             this.Controls.Add(this.waveProgressExt1);
+            this.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.Name = "WaveProgressExtForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "水波纹进度控件";

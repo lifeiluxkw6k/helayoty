@@ -49,13 +49,15 @@
             this.colorExt2.ColorPicker.ColorValue = System.Drawing.Color.FromArgb(((int)(((byte)(188)))), ((int)(((byte)(139)))), ((int)(((byte)(195)))), ((int)(((byte)(74)))));
             this.colorExt2.ColorPicker.Location = new System.Drawing.Point(0, 0);
             this.colorExt2.ColorPicker.Name = "";
+            this.colorExt2.ColorPicker.Size = new System.Drawing.Size(813, 577);
             this.colorExt2.ColorPicker.TabIndex = 0;
             this.colorExt2.ColorPicker.TabStop = false;
             this.colorExt2.Font = new System.Drawing.Font("微软雅黑", 9F);
             this.colorExt2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
-            this.colorExt2.Location = new System.Drawing.Point(528, 25);
+            this.colorExt2.Location = new System.Drawing.Point(981, 44);
+            this.colorExt2.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.colorExt2.Name = "colorExt2";
-            this.colorExt2.Size = new System.Drawing.Size(130, 24);
+            this.colorExt2.Size = new System.Drawing.Size(222, 42);
             this.colorExt2.TabIndex = 0;
             this.colorExt2.Text = "colorExt2";
             // 
@@ -68,9 +70,11 @@
             this.colorPickerExt1.ColorValue = System.Drawing.Color.Empty;
             this.colorPickerExt1.CurrentTextForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
             this.colorPickerExt1.CustomSelectLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(142)))), ((int)(((byte)(35)))));
-            this.colorPickerExt1.Location = new System.Drawing.Point(372, 110);
+            this.colorPickerExt1.Location = new System.Drawing.Point(682, 192);
+            this.colorPickerExt1.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.colorPickerExt1.Name = "colorPickerExt1";
-            this.colorPickerExt1.Size = new System.Drawing.Size(465, 330);
+            this.colorPickerExt1.Padding = new System.Windows.Forms.Padding(9);
+            this.colorPickerExt1.Size = new System.Drawing.Size(813, 577);
             this.colorPickerExt1.TabIndex = 0;
             this.colorPickerExt1.TabStop = false;
             this.colorPickerExt1.Text = "colorPickerExt1";
@@ -91,15 +95,17 @@
             this.colorExt1.ColorPicker.ColorValue = System.Drawing.Color.FromArgb(((int)(((byte)(188)))), ((int)(((byte)(240)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.colorExt1.ColorPicker.Location = new System.Drawing.Point(0, 0);
             this.colorExt1.ColorPicker.Name = "";
+            this.colorExt1.ColorPicker.Size = new System.Drawing.Size(813, 577);
             this.colorExt1.ColorPicker.TabIndex = 0;
             this.colorExt1.ColorPicker.TabStop = false;
             this.colorExt1.ColorStyle = WinformControlLibraryExtension.ColorExt.ColorStyles.ColorPanel;
             this.colorExt1.ColorTextAlign = WinformControlLibraryExtension.ColorExt.ColorTextAligns.Left;
             this.colorExt1.Font = new System.Drawing.Font("微软雅黑", 9F);
             this.colorExt1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
-            this.colorExt1.Location = new System.Drawing.Point(383, 25);
+            this.colorExt1.Location = new System.Drawing.Point(702, 44);
+            this.colorExt1.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.colorExt1.Name = "colorExt1";
-            this.colorExt1.Size = new System.Drawing.Size(130, 24);
+            this.colorExt1.Size = new System.Drawing.Size(238, 42);
             this.colorExt1.TabIndex = 0;
             this.colorExt1.Text = "colorExt1";
             // 
@@ -108,22 +114,24 @@
             this.propertyGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.propertyGrid1.Location = new System.Drawing.Point(0, 0);
+            this.propertyGrid1.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.propertyGrid1.Name = "propertyGrid1";
             this.propertyGrid1.SelectedObject = this.colorPickerExt1;
-            this.propertyGrid1.Size = new System.Drawing.Size(350, 496);
+            this.propertyGrid1.Size = new System.Drawing.Size(642, 868);
             this.propertyGrid1.TabIndex = 9;
             // 
             // ColorExtForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(247)))), ((int)(((byte)(240)))));
-            this.ClientSize = new System.Drawing.Size(888, 497);
+            this.ClientSize = new System.Drawing.Size(1628, 870);
             this.Controls.Add(this.propertyGrid1);
             this.Controls.Add(this.colorExt2);
             this.Controls.Add(this.colorPickerExt1);
             this.Controls.Add(this.colorExt1);
             this.ForeColor = System.Drawing.Color.White;
+            this.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.Name = "ColorExtForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "颜色选择美化控件";

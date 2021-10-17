@@ -45,9 +45,10 @@
             "MenuPanelExt1",
             "MenuPanelExt2",
             "MenuPanelExt3"});
-            this.comboBox1.Location = new System.Drawing.Point(765, 1);
+            this.comboBox1.Location = new System.Drawing.Point(1403, 2);
+            this.comboBox1.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(288, 20);
+            this.comboBox1.Size = new System.Drawing.Size(525, 29);
             this.comboBox1.TabIndex = 15;
             // 
             // menuPanelExt3
@@ -55,7 +56,8 @@
             this.menuPanelExt3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.menuPanelExt3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.menuPanelExt3.Location = new System.Drawing.Point(453, 39);
+            this.menuPanelExt3.Location = new System.Drawing.Point(831, 68);
+            this.menuPanelExt3.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.menuPanelExt3.Menu.ContentOrientation = WinformControlLibraryExtension.SlideMenuPanelExt.NodeContentOrientations.Center;
             this.menuPanelExt3.Menu.DisableBackColor = System.Drawing.Color.Empty;
             this.menuPanelExt3.Menu.DisableTextColor = System.Drawing.Color.Empty;
@@ -75,8 +77,9 @@
             this.menuPanelExt3.NodeBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.menuPanelExt3.NodeBorderStyle = WinformControlLibraryExtension.SlideMenuPanelExt.NodeBorderStyles.BottomBorder;
             this.menuPanelExt3.Scroll.SlideDisableBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.menuPanelExt3.Size = new System.Drawing.Size(200, 533);
-            this.menuPanelExt3.TabIndex = 14;
+            this.menuPanelExt3.Size = new System.Drawing.Size(367, 933);
+            this.menuPanelExt3.TabIndex = 0;
+            this.menuPanelExt3.TabStop = false;
             this.menuPanelExt3.Tool.FixedBtn.Enabled = false;
             this.menuPanelExt3.Tool.MinBtn.Enabled = false;
             this.menuPanelExt3.Tool.Search = false;
@@ -86,7 +89,8 @@
             this.menuPanelExt2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.menuPanelExt2.Drag.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(247)))), ((int)(((byte)(240)))));
             this.menuPanelExt2.Drag.Enabled = false;
-            this.menuPanelExt2.Location = new System.Drawing.Point(235, 39);
+            this.menuPanelExt2.Location = new System.Drawing.Point(431, 68);
+            this.menuPanelExt2.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.menuPanelExt2.Menu.DisableBackColor = System.Drawing.Color.Empty;
             this.menuPanelExt2.Menu.DisableTextColor = System.Drawing.Color.Empty;
             this.menuPanelExt2.Menu.EnterTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
@@ -102,8 +106,9 @@
             this.menuPanelExt2.MenuTab.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.menuPanelExt2.Name = "menuPanelExt2";
             this.menuPanelExt2.Scroll.SlideDisableBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.menuPanelExt2.Size = new System.Drawing.Size(200, 533);
-            this.menuPanelExt2.TabIndex = 13;
+            this.menuPanelExt2.Size = new System.Drawing.Size(370, 933);
+            this.menuPanelExt2.TabIndex = 0;
+            this.menuPanelExt2.TabStop = false;
             this.menuPanelExt2.Tool.FixedBtn.Enabled = false;
             this.menuPanelExt2.Tool.MinBtn.Enabled = false;
             // 
@@ -114,7 +119,8 @@
             this.menuPanelExt1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.menuPanelExt1.Drag.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(210)))));
             this.menuPanelExt1.Drag.Enabled = false;
-            this.menuPanelExt1.Location = new System.Drawing.Point(18, 39);
+            this.menuPanelExt1.Location = new System.Drawing.Point(33, 68);
+            this.menuPanelExt1.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.menuPanelExt1.Menu.ContentOrientation = WinformControlLibraryExtension.SlideMenuPanelExt.NodeContentOrientations.Right;
             this.menuPanelExt1.Menu.DisableBackColor = System.Drawing.Color.Empty;
             this.menuPanelExt1.Menu.DisableTextColor = System.Drawing.Color.Empty;
@@ -132,13 +138,14 @@
             this.menuPanelExt1.MenuTab.NormalTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.menuPanelExt1.MenuTab.SelectedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(176)))), ((int)(((byte)(197)))), ((int)(((byte)(175)))));
             this.menuPanelExt1.MenuTab.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.menuPanelExt1.MinimumSize = new System.Drawing.Size(5, 0);
+            this.menuPanelExt1.MinimumSize = new System.Drawing.Size(9, 0);
             this.menuPanelExt1.Name = "menuPanelExt1";
             this.menuPanelExt1.NodeBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.menuPanelExt1.NodeBorderStyle = WinformControlLibraryExtension.SlideMenuPanelExt.NodeBorderStyles.BottomBorder;
             this.menuPanelExt1.Scroll.SlideDisableBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.menuPanelExt1.Size = new System.Drawing.Size(200, 533);
-            this.menuPanelExt1.TabIndex = 12;
+            this.menuPanelExt1.Size = new System.Drawing.Size(367, 933);
+            this.menuPanelExt1.TabIndex = 0;
+            this.menuPanelExt1.TabStop = false;
             this.menuPanelExt1.Tool.FixedBtn.Enabled = false;
             this.menuPanelExt1.Tool.MinBtn.Enabled = false;
             this.menuPanelExt1.Tool.Search = false;
@@ -148,24 +155,26 @@
             this.propertyGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.propertyGrid1.Location = new System.Drawing.Point(765, 23);
+            this.propertyGrid1.Location = new System.Drawing.Point(1403, 40);
+            this.propertyGrid1.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.propertyGrid1.Name = "propertyGrid1";
             this.propertyGrid1.SelectedObject = this.menuPanelExt3;
-            this.propertyGrid1.Size = new System.Drawing.Size(288, 593);
+            this.propertyGrid1.Size = new System.Drawing.Size(528, 1038);
             this.propertyGrid1.TabIndex = 9;
             // 
-            // MenuPanelExtForm
+            // SlideMenuPanelExtForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(247)))), ((int)(((byte)(240)))));
-            this.ClientSize = new System.Drawing.Size(1053, 618);
+            this.ClientSize = new System.Drawing.Size(1931, 1082);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.menuPanelExt3);
             this.Controls.Add(this.menuPanelExt2);
             this.Controls.Add(this.menuPanelExt1);
             this.Controls.Add(this.propertyGrid1);
-            this.Name = "MenuPanelExtForm";
+            this.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.Name = "SlideMenuPanelExtForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MenuPanelExt控件";
             this.Load += new System.EventHandler(this.MenuExtForm_Load);

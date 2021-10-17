@@ -11,7 +11,7 @@ using WinformControlLibraryExtension;
 
 namespace WinformDemo
 {
-    public partial class StatusStripExtForm : FormExt
+    public partial class StatusStripExtForm : Form
     {
         public StatusStripExtForm()
         {

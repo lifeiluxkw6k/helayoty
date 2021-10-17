@@ -45,9 +45,10 @@
             this.propertyGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.propertyGrid1.Location = new System.Drawing.Point(0, 0);
+            this.propertyGrid1.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.propertyGrid1.Name = "propertyGrid1";
             this.propertyGrid1.SelectedObject = this.datePickerExt3;
-            this.propertyGrid1.Size = new System.Drawing.Size(350, 572);
+            this.propertyGrid1.Size = new System.Drawing.Size(642, 1001);
             this.propertyGrid1.TabIndex = 9;
             // 
             // datePickerExt3
@@ -73,9 +74,10 @@
             this.datePickerExt3.DateForeSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.datePickerExt3.DateTitleForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
             this.datePickerExt3.DateValue = new System.DateTime(1753, 1, 1, 0, 0, 0, 0);
-            this.datePickerExt3.Location = new System.Drawing.Point(383, 124);
+            this.datePickerExt3.Location = new System.Drawing.Point(702, 217);
+            this.datePickerExt3.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.datePickerExt3.Name = "datePickerExt3";
-            this.datePickerExt3.Size = new System.Drawing.Size(226, 298);
+            this.datePickerExt3.Size = new System.Drawing.Size(395, 521);
             this.datePickerExt3.TabIndex = 5;
             this.datePickerExt3.Text = "datePickerExt3";
             this.datePickerExt3.TimeForeNormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
@@ -114,6 +116,7 @@
             this.dateExt6.DatePicker.DateValue = new System.DateTime(2019, 9, 1, 0, 0, 0, 0);
             this.dateExt6.DatePicker.Location = new System.Drawing.Point(0, 0);
             this.dateExt6.DatePicker.Name = "";
+            this.dateExt6.DatePicker.Size = new System.Drawing.Size(395, 521);
             this.dateExt6.DatePicker.TabIndex = 0;
             this.dateExt6.DatePicker.TimeBackSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(102)))), ((int)(((byte)(153)))));
             this.dateExt6.DatePicker.TimeForeNormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(102)))), ((int)(((byte)(153)))));
@@ -123,9 +126,10 @@
             this.dateExt6.DateTextAlign = WinformControlLibraryExtension.DateExt.DataTextAligns.Left;
             this.dateExt6.Font = new System.Drawing.Font("微软雅黑", 9F);
             this.dateExt6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
-            this.dateExt6.Location = new System.Drawing.Point(968, 33);
+            this.dateExt6.Location = new System.Drawing.Point(1775, 58);
+            this.dateExt6.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.dateExt6.Name = "dateExt6";
-            this.dateExt6.Size = new System.Drawing.Size(156, 24);
+            this.dateExt6.Size = new System.Drawing.Size(286, 42);
             this.dateExt6.TabIndex = 8;
             this.dateExt6.Text = "dateExt6";
             // 
@@ -160,6 +164,7 @@
             this.dateExt5.DatePicker.DateValue = new System.DateTime(2019, 9, 1, 0, 0, 0, 0);
             this.dateExt5.DatePicker.Location = new System.Drawing.Point(0, 0);
             this.dateExt5.DatePicker.Name = "";
+            this.dateExt5.DatePicker.Size = new System.Drawing.Size(395, 521);
             this.dateExt5.DatePicker.TabIndex = 0;
             this.dateExt5.DatePicker.TimeBackSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(86)))), ((int)(((byte)(195)))), ((int)(((byte)(191)))));
             this.dateExt5.DatePicker.TimeForeNormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(86)))), ((int)(((byte)(195)))), ((int)(((byte)(191)))));
@@ -168,9 +173,10 @@
             this.dateExt5.DateTextAlign = WinformControlLibraryExtension.DateExt.DataTextAligns.Left;
             this.dateExt5.Font = new System.Drawing.Font("微软雅黑", 9F);
             this.dateExt5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
-            this.dateExt5.Location = new System.Drawing.Point(671, 33);
+            this.dateExt5.Location = new System.Drawing.Point(1230, 58);
+            this.dateExt5.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.dateExt5.Name = "dateExt5";
-            this.dateExt5.Size = new System.Drawing.Size(121, 24);
+            this.dateExt5.Size = new System.Drawing.Size(241, 42);
             this.dateExt5.TabIndex = 3;
             this.dateExt5.Text = "dateExt5";
             // 
@@ -205,6 +211,7 @@
             this.dateExt4.DatePicker.DateValue = new System.DateTime(2019, 9, 1, 0, 0, 0, 0);
             this.dateExt4.DatePicker.Location = new System.Drawing.Point(0, 0);
             this.dateExt4.DatePicker.Name = "";
+            this.dateExt4.DatePicker.Size = new System.Drawing.Size(395, 521);
             this.dateExt4.DatePicker.TabIndex = 0;
             this.dateExt4.DatePicker.TimeBackSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(86)))), ((int)(((byte)(195)))), ((int)(((byte)(191)))));
             this.dateExt4.DatePicker.TimeForeNormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(86)))), ((int)(((byte)(195)))), ((int)(((byte)(191)))));
@@ -214,9 +221,10 @@
             this.dateExt4.DateTextAlign = WinformControlLibraryExtension.DateExt.DataTextAligns.Left;
             this.dateExt4.Font = new System.Drawing.Font("微软雅黑", 9F);
             this.dateExt4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
-            this.dateExt4.Location = new System.Drawing.Point(809, 33);
+            this.dateExt4.Location = new System.Drawing.Point(1483, 58);
+            this.dateExt4.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.dateExt4.Name = "dateExt4";
-            this.dateExt4.Size = new System.Drawing.Size(140, 24);
+            this.dateExt4.Size = new System.Drawing.Size(257, 42);
             this.dateExt4.TabIndex = 4;
             this.dateExt4.Text = "dateExt4";
             // 
@@ -243,9 +251,10 @@
             this.datePickerExt2.DateForeSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.datePickerExt2.DateTitleForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
             this.datePickerExt2.DateValue = new System.DateTime(1753, 1, 1, 0, 0, 0, 0);
-            this.datePickerExt2.Location = new System.Drawing.Point(631, 124);
+            this.datePickerExt2.Location = new System.Drawing.Point(1157, 217);
+            this.datePickerExt2.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.datePickerExt2.Name = "datePickerExt2";
-            this.datePickerExt2.Size = new System.Drawing.Size(226, 298);
+            this.datePickerExt2.Size = new System.Drawing.Size(395, 521);
             this.datePickerExt2.TabIndex = 6;
             this.datePickerExt2.Text = "datePickerExt2";
             this.datePickerExt2.TimeForeNormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
@@ -271,9 +280,10 @@
             this.datePickerExt1.DateForeSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.datePickerExt1.DateTitleForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
             this.datePickerExt1.DateValue = new System.DateTime(1753, 1, 1, 0, 0, 0, 0);
-            this.datePickerExt1.Location = new System.Drawing.Point(881, 124);
+            this.datePickerExt1.Location = new System.Drawing.Point(1615, 217);
+            this.datePickerExt1.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.datePickerExt1.Name = "datePickerExt1";
-            this.datePickerExt1.Size = new System.Drawing.Size(226, 298);
+            this.datePickerExt1.Size = new System.Drawing.Size(395, 521);
             this.datePickerExt1.TabIndex = 7;
             this.datePickerExt1.Text = "datePickerExt1";
             this.datePickerExt1.TimeForeNormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
@@ -309,14 +319,16 @@
             this.dateExt3.DatePicker.DateValue = new System.DateTime(2019, 9, 1, 0, 0, 0, 0);
             this.dateExt3.DatePicker.Location = new System.Drawing.Point(0, 0);
             this.dateExt3.DatePicker.Name = "";
+            this.dateExt3.DatePicker.Size = new System.Drawing.Size(395, 521);
             this.dateExt3.DatePicker.TabIndex = 0;
             this.dateExt3.DatePicker.TopBarBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(86)))), ((int)(((byte)(195)))), ((int)(((byte)(191)))));
             this.dateExt3.DatePicker.TopBarBtnForeNormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.dateExt3.Font = new System.Drawing.Font("微软雅黑", 9F);
             this.dateExt3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
-            this.dateExt3.Location = new System.Drawing.Point(551, 33);
+            this.dateExt3.Location = new System.Drawing.Point(1010, 58);
+            this.dateExt3.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.dateExt3.Name = "dateExt3";
-            this.dateExt3.Size = new System.Drawing.Size(102, 24);
+            this.dateExt3.Size = new System.Drawing.Size(192, 42);
             this.dateExt3.TabIndex = 2;
             this.dateExt3.Text = "dateExt3";
             // 
@@ -351,6 +363,7 @@
             this.dateExt2.DatePicker.DateValue = new System.DateTime(2019, 9, 1, 0, 0, 0, 0);
             this.dateExt2.DatePicker.Location = new System.Drawing.Point(0, 0);
             this.dateExt2.DatePicker.Name = "";
+            this.dateExt2.DatePicker.Size = new System.Drawing.Size(395, 521);
             this.dateExt2.DatePicker.TabIndex = 0;
             this.dateExt2.DatePicker.TopBarBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(168)))), ((int)(((byte)(154)))));
             this.dateExt2.DatePicker.TopBarBtnForeNormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
@@ -358,9 +371,10 @@
             this.dateExt2.DateTextAlign = WinformControlLibraryExtension.DateExt.DataTextAligns.Left;
             this.dateExt2.Font = new System.Drawing.Font("微软雅黑", 9F);
             this.dateExt2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
-            this.dateExt2.Location = new System.Drawing.Point(448, 33);
+            this.dateExt2.Location = new System.Drawing.Point(821, 58);
+            this.dateExt2.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.dateExt2.Name = "dateExt2";
-            this.dateExt2.Size = new System.Drawing.Size(85, 24);
+            this.dateExt2.Size = new System.Drawing.Size(159, 42);
             this.dateExt2.TabIndex = 1;
             this.dateExt2.Text = "dateExt2";
             // 
@@ -395,24 +409,26 @@
             this.dateExt1.DatePicker.DateValue = new System.DateTime(2019, 9, 1, 0, 0, 0, 0);
             this.dateExt1.DatePicker.Location = new System.Drawing.Point(0, 0);
             this.dateExt1.DatePicker.Name = "";
+            this.dateExt1.DatePicker.Size = new System.Drawing.Size(395, 521);
             this.dateExt1.DatePicker.TabIndex = 0;
             this.dateExt1.DatePicker.TopBarBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(204)))), ((int)(((byte)(153)))));
             this.dateExt1.DatePicker.TopBarBtnForeNormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.dateExt1.DateTextAlign = WinformControlLibraryExtension.DateExt.DataTextAligns.Left;
             this.dateExt1.Font = new System.Drawing.Font("微软雅黑", 9F);
             this.dateExt1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
-            this.dateExt1.Location = new System.Drawing.Point(370, 33);
+            this.dateExt1.Location = new System.Drawing.Point(678, 58);
+            this.dateExt1.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.dateExt1.Name = "dateExt1";
-            this.dateExt1.Size = new System.Drawing.Size(62, 24);
+            this.dateExt1.Size = new System.Drawing.Size(121, 42);
             this.dateExt1.TabIndex = 0;
             this.dateExt1.Text = "dateExt1";
             // 
             // DatePickerExtForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(247)))), ((int)(((byte)(240)))));
-            this.ClientSize = new System.Drawing.Size(1160, 571);
+            this.ClientSize = new System.Drawing.Size(2127, 999);
             this.Controls.Add(this.propertyGrid1);
             this.Controls.Add(this.dateExt6);
             this.Controls.Add(this.dateExt5);
@@ -423,6 +439,7 @@
             this.Controls.Add(this.dateExt3);
             this.Controls.Add(this.dateExt2);
             this.Controls.Add(this.dateExt1);
+            this.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.Name = "DatePickerExtForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "日期选择美化控件";

@@ -43,17 +43,19 @@
             this.panel1.BackColor = System.Drawing.Color.White;
             this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.label1);
-            this.panel1.Location = new System.Drawing.Point(203, 0);
+            this.panel1.Location = new System.Drawing.Point(367, 0);
+            this.panel1.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(623, 490);
+            this.panel1.Size = new System.Drawing.Size(1146, 858);
             this.panel1.TabIndex = 1;
             // 
             // button1
             // 
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.button1.Location = new System.Drawing.Point(214, 176);
+            this.button1.Location = new System.Drawing.Point(392, 308);
+            this.button1.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(170, 23);
+            this.button1.Size = new System.Drawing.Size(312, 40);
             this.button1.TabIndex = 1;
             this.button1.Text = "设置选中节点为 Buttons";
             this.button1.UseVisualStyleBackColor = true;
@@ -63,9 +65,10 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("宋体", 12F);
-            this.label1.Location = new System.Drawing.Point(261, 237);
+            this.label1.Location = new System.Drawing.Point(479, 415);
+            this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(56, 16);
+            this.label1.Size = new System.Drawing.Size(96, 28);
             this.label1.TabIndex = 0;
             this.label1.Text = "label1";
             // 
@@ -77,7 +80,7 @@
             this.menuExt1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.menuExt1.CausesValidation = false;
             this.menuExt1.Location = new System.Drawing.Point(0, 0);
-            this.menuExt1.MenuHeight = 490;
+            this.menuExt1.MenuHeight = 858;
             // 
             // 
             // 
@@ -86,6 +89,7 @@
             this.menuExt1.MenuPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.menuExt1.MenuPanel.Drag.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(157)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.menuExt1.MenuPanel.Location = new System.Drawing.Point(0, 0);
+            this.menuExt1.MenuPanel.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.menuExt1.MenuPanel.Menu.DisableBackColor = System.Drawing.Color.Empty;
             this.menuExt1.MenuPanel.Menu.DisableTextColor = System.Drawing.Color.Empty;
             this.menuExt1.MenuPanel.Menu.EnterTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
@@ -102,24 +106,25 @@
             this.menuExt1.MenuPanel.Name = "";
             this.menuExt1.MenuPanel.NodeIndent = 10;
             this.menuExt1.MenuPanel.Scroll.SlideDisableBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.menuExt1.MenuPanel.Size = new System.Drawing.Size(200, 490);
+            this.menuExt1.MenuPanel.Size = new System.Drawing.Size(367, 858);
             this.menuExt1.MenuPanel.TabIndex = 0;
             this.menuExt1.MenuPanel.TabStop = false;
-            this.menuExt1.MinimumSize = new System.Drawing.Size(10, 0);
+            this.menuExt1.MinimumSize = new System.Drawing.Size(18, 0);
             this.menuExt1.Name = "menuExt1";
-            this.menuExt1.Size = new System.Drawing.Size(200, 490);
+            this.menuExt1.Size = new System.Drawing.Size(367, 858);
             this.menuExt1.TabIndex = 0;
             this.menuExt1.TabStop = false;
             this.menuExt1.PatternChanged += new WinformControlLibraryExtension.SlideMenuExt.StatusChangedEventHandler(this.menuExt1_PatternChanged);
             // 
             // SlideMenuExtForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(247)))), ((int)(((byte)(240)))));
-            this.ClientSize = new System.Drawing.Size(826, 490);
+            this.ClientSize = new System.Drawing.Size(1514, 858);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.menuExt1);
+            this.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.Name = "SlideMenuExtForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MenuExt控件";

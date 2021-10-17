@@ -130,7 +130,7 @@ namespace WinformDemo
             this.fisheyeBarExt2.CausesValidation = false;
             this.fisheyeBarExt2.ImageReflection = true;
             this.fisheyeBarExt2.ItemPadding = 20;
-            fisheyeMenuItem7.Image = global::WinformDemo.Properties.Resources.Adobe1;
+            fisheyeMenuItem7.Image = ((System.Drawing.Image)(resources.GetObject("fisheyeMenuItem7.Image")));
             fisheyeMenuItem7.now_centerpointf = ((System.Drawing.PointF)(resources.GetObject("fisheyeMenuItem7.now_centerpointf")));
             fisheyeMenuItem7.now_proportion = 0.5F;
             fisheyeMenuItem7.now_rectf = ((System.Drawing.RectangleF)(resources.GetObject("fisheyeMenuItem7.now_rectf")));
@@ -170,7 +170,7 @@ namespace WinformDemo
             fisheyeMenuItem14.now_proportion = 0.5F;
             fisheyeMenuItem14.now_rectf = ((System.Drawing.RectangleF)(resources.GetObject("fisheyeMenuItem14.now_rectf")));
             fisheyeMenuItem14.Text = "Ps";
-            fisheyeMenuItem15.Image = global::WinformDemo.Properties.Resources.Adobe9;
+            fisheyeMenuItem15.Image = ((System.Drawing.Image)(resources.GetObject("fisheyeMenuItem15.Image")));
             fisheyeMenuItem15.now_centerpointf = ((System.Drawing.PointF)(resources.GetObject("fisheyeMenuItem15.now_centerpointf")));
             fisheyeMenuItem15.now_proportion = 0.5F;
             fisheyeMenuItem15.now_rectf = ((System.Drawing.RectangleF)(resources.GetObject("fisheyeMenuItem15.now_rectf")));

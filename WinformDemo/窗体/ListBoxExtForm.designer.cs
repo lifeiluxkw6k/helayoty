@@ -39,26 +39,57 @@
             WinformControlLibraryExtension.ListBoxExt.Item item9 = new WinformControlLibraryExtension.ListBoxExt.Item();
             WinformControlLibraryExtension.ListBoxExt.Item item10 = new WinformControlLibraryExtension.ListBoxExt.Item();
             WinformControlLibraryExtension.ListBoxExt.Item item11 = new WinformControlLibraryExtension.ListBoxExt.Item();
-            this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
-            this.listBoxExt2 = new WinformControlLibraryExtension.ListBoxExt();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
+            this.listBoxExt2 = new WinformControlLibraryExtension.ListBoxExt();
             this.SuspendLayout();
+            // 
+            // button1
+            // 
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.button1.Location = new System.Drawing.Point(702, 677);
+            this.button1.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(138, 40);
+            this.button1.TabIndex = 6;
+            this.button1.Text = "高度330";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.button2.Location = new System.Drawing.Point(875, 677);
+            this.button2.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(138, 40);
+            this.button2.TabIndex = 7;
+            this.button2.Text = "高度177";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // propertyGrid1
             // 
             this.propertyGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.propertyGrid1.Location = new System.Drawing.Point(2, 2);
+            this.propertyGrid1.Location = new System.Drawing.Point(4, 4);
+            this.propertyGrid1.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.propertyGrid1.Name = "propertyGrid1";
             this.propertyGrid1.SelectedObject = this.listBoxExt2;
-            this.propertyGrid1.Size = new System.Drawing.Size(350, 490);
+            this.propertyGrid1.Size = new System.Drawing.Size(642, 858);
             this.propertyGrid1.TabIndex = 5;
             // 
             // listBoxExt2
             // 
+            this.listBoxExt2.AutoSize = false;
             this.listBoxExt2.BackColor = System.Drawing.Color.White;
             this.listBoxExt2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.listBoxExt2.CheckedBackColor = System.Drawing.Color.Empty;
+            this.listBoxExt2.CheckedBoxBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.listBoxExt2.CheckedBoxCharColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.listBoxExt2.DisableBoxBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.listBoxExt2.DisableBoxCharColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.listBoxExt2.DisableTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.listBoxExt2.EnterTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.listBoxExt2.Font = new System.Drawing.Font("宋体", 9F);
@@ -101,48 +132,34 @@
             this.listBoxExt2.Items.Add(item9);
             this.listBoxExt2.Items.Add(item10);
             this.listBoxExt2.Items.Add(item11);
-            this.listBoxExt2.Location = new System.Drawing.Point(383, 32);
+            this.listBoxExt2.Location = new System.Drawing.Point(702, 55);
+            this.listBoxExt2.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.listBoxExt2.Multiple = true;
             this.listBoxExt2.Name = "listBoxExt2";
             this.listBoxExt2.NormalBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.listBoxExt2.NormalTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.listBoxExt2.PartCheckedBackColor = System.Drawing.Color.Empty;
+            this.listBoxExt2.PartCheckedBoxBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.listBoxExt2.PartCheckedBoxBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.listBoxExt2.Scroll.SlideDisableBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.listBoxExt2.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.listBoxExt2.Size = new System.Drawing.Size(239, 330);
+            this.listBoxExt2.Size = new System.Drawing.Size(365, 513);
             this.listBoxExt2.TabIndex = 1;
-            // 
-            // button1
-            // 
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.button1.Location = new System.Drawing.Point(383, 387);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "高度330";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // button2
-            // 
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.button2.Location = new System.Drawing.Point(477, 387);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 7;
-            this.button2.Text = "高度177";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.listBoxExt2.UnCheckedBackColor = System.Drawing.Color.Empty;
+            this.listBoxExt2.UnCheckedBoxBackColor = System.Drawing.Color.Empty;
+            this.listBoxExt2.UnCheckedBoxCharColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             // 
             // ListBoxExtForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(247)))), ((int)(((byte)(240)))));
-            this.ClientSize = new System.Drawing.Size(815, 492);
+            this.ClientSize = new System.Drawing.Size(1494, 861);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.propertyGrid1);
             this.Controls.Add(this.listBoxExt2);
+            this.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.Name = "ListBoxExtForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ListBoxExt控件";

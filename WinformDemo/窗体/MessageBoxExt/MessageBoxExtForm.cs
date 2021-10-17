@@ -10,7 +10,7 @@ using WinformControlLibraryExtension;
 
 namespace WinformDemo
 {
-    public partial class MessageBoxExtForm : FormExt
+    public partial class MessageBoxExtForm : Form
     {
         public MessageBoxExtForm()
         {
@@ -64,6 +64,7 @@ namespace WinformDemo
         {
             MessageBoxExtStyles style = new MessageBoxExtStyles()
             {
+                 CloseEnable=true,
                 BorderColor = Color.SteelBlue,
                 ButtonBackColor = Color.LightSkyBlue,
                 ButtonBackEnterColor = Color.SteelBlue,
@@ -71,7 +72,33 @@ namespace WinformDemo
                 Button1Text = "同意",
                 Button2Text = "不同意"
             };
-            DialogResult da = MessageBoxExt.Show(this, @"同意不同意", "提示", MessageBoxExtButtons.YesNo, MessageBoxExtIcon.None, MessageBoxExtDefaultButton.Button1, style);
+            DialogResult da = MessageBoxExt.Show(this, @"
+Label label = new Label();
+            label.AutoSize = false;
+            label.Text = text;
+            label.ForeColor = styles.TextColor;
+            label.ImageAlign = ContentAlignment.MiddleLeft;
+            label.TextAlign = ContentAlignment.MiddleCenter;
+            if (icon != MessageBoxExtIcon.None)
+            {
+                label.Image = GetIco(icon, customImage);
+            }
+            label.SetBounds(fe.ClientRectangle.X + text_padding, fe.ClientRectangle.Y + text_padding + fe.CaptionBox.Height, (int)text_sizef.Width, (int)text_sizef.Height);
+            fe.Controls.Add(label);
+
+
+
+            List<MessageBoxExtButton> btnList = new List<MessageBoxExtButton>();
+            if (buttons == MessageBoxExtButtons.OK)
+            {
+                MessageBoxExtButton ok_btn = CreateButton(fe, styles.Button1Text == String.Empty ? 确定 : styles.Button1Text, OK_Click, btn_w, btn_h, 0, styles);
+                ok_btn.Location = new Point(
+                    (int)((fe.ClientSize.Width - ok_btn.Width) / 2),
+                    (int)(fe.ClientRectangle.Bottom - btn_h - (btn_rect_height - btn_h) / 2));
+
+            fe.Controls.Add(ok_btn);
+            btnList.Add(ok_btn);
+            ", "提示", MessageBoxExtButtons.YesNo, MessageBoxExtIcon.Warning, MessageBoxExtDefaultButton.Button1, style);
             this.label2.Text = da.ToString();
         }
     }

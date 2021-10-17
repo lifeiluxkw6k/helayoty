@@ -10,7 +10,7 @@ using WinformControlLibraryExtension;
 
 namespace WinformDemo
 {
-    public partial class ContextMenuStripExtForm : FormExt
+    public partial class ContextMenuStripExtForm : Form
     {
         public ContextMenuStripExtForm()
         {
