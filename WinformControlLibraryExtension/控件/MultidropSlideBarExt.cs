@@ -310,9 +310,19 @@ namespace WinformControlLibraryExtension
             get { return this.maxValue; }
             set
             {
-                if (this.maxValue == value || value < this.minValue)
+                if (this.maxValue == value || value <= this.minValue)
                     return;
+
                 this.maxValue = value;
+                for (int i = 0; i < this.Items.Count; i++)
+                {
+                    if (this.Items[i].Value > value)
+                    {
+                        this.Items[i].UpdateValue(value,true);
+                    }
+                }
+
+                this.InitializeMultidropSlideBarRectangle();
                 this.Invalidate();
             }
         }
@@ -328,9 +338,19 @@ namespace WinformControlLibraryExtension
             get { return this.minValue; }
             set
             {
-                if (this.minValue == value || value > this.maxValue)
+                if (this.minValue == value || value >= this.maxValue)
                     return;
+
                 this.minValue = value;
+                for (int i = this.Items.Count - 1; i >= 0; i--)
+                {
+                    if (this.Items[i].Value < value)
+                    {
+                        this.Items[i].UpdateValue(value,true);
+                    }
+                }
+
+                this.InitializeMultidropSlideBarRectangle();
                 this.Invalidate();
             }
         }
@@ -898,10 +918,10 @@ namespace WinformControlLibraryExtension
             Graphics g = e.Graphics;
 
             int scale_slidePadding = (int)(this.SlidePadding * DotsPerInchHelper.DPIScale.XScale);
-            int scale_slideBarThickness = (int)(this.SlideBarThickness * DotsPerInchHelper.DPIScale.XScale); 
-            int scale_slideWidth = (int)(this.SlideWidth * DotsPerInchHelper.DPIScale.XScale); 
-            int scale_slideHeight = (int)(this.SlideHeight * DotsPerInchHelper.DPIScale.XScale); 
-            int scale_slideRadius = (int)(this.SlideRadius * DotsPerInchHelper.DPIScale.XScale); 
+            int scale_slideBarThickness = (int)(this.SlideBarThickness * DotsPerInchHelper.DPIScale.XScale);
+            int scale_slideWidth = (int)(this.SlideWidth * DotsPerInchHelper.DPIScale.XScale);
+            int scale_slideHeight = (int)(this.SlideHeight * DotsPerInchHelper.DPIScale.XScale);
+            int scale_slideRadius = (int)(this.SlideRadius * DotsPerInchHelper.DPIScale.XScale);
 
 
             g.SmoothingMode = SmoothingMode.AntiAlias;
@@ -1509,7 +1529,7 @@ namespace WinformControlLibraryExtension
                     {
                         if (value_tmp > this.MaxValue)
                         {
-                            value_tmp = this.MinValue;
+                            value_tmp = this.MaxValue;
                         }
                     }
                     else
@@ -1522,7 +1542,7 @@ namespace WinformControlLibraryExtension
 
                     if (value_tmp != this.Items[this.activatedStateIndex].Value)
                     {
-                        this.Items[this.activatedStateIndex].UpdateValue(value_tmp);
+                        this.Items[this.activatedStateIndex].UpdateValue(value_tmp,false);
                     }
                     return false;
                 }
@@ -1534,9 +1554,9 @@ namespace WinformControlLibraryExtension
 
                     if (this.activatedStateIndex <= 0)
                     {
-                        if (value_tmp < this.minValue)
+                        if (value_tmp < this.MinValue)
                         {
-                            value_tmp = this.minValue;
+                            value_tmp = this.MinValue;
                         }
                     }
                     else
@@ -1549,7 +1569,7 @@ namespace WinformControlLibraryExtension
 
                     if (value_tmp != this.Items[this.activatedStateIndex].Value)
                     {
-                        this.Items[this.activatedStateIndex].UpdateValue(value_tmp);
+                        this.Items[this.activatedStateIndex].UpdateValue(value_tmp,false);
                     }
                     return false;
                 }
@@ -1646,7 +1666,7 @@ namespace WinformControlLibraryExtension
 
                     if (value_tmp != this.Items[this.activatedStateIndex].Value)
                     {
-                        this.Items[this.activatedStateIndex].UpdateValue(value_tmp);
+                        this.Items[this.activatedStateIndex].UpdateValue(value_tmp,false);
                     }
                 }
                 #endregion
@@ -1672,7 +1692,7 @@ namespace WinformControlLibraryExtension
 
                     if (value_tmp != this.Items[this.activatedStateIndex].Value)
                     {
-                        this.Items[this.activatedStateIndex].UpdateValue(value_tmp);
+                        this.Items[this.activatedStateIndex].UpdateValue(value_tmp,false);
                     }
                 }
                 #endregion
@@ -1745,7 +1765,7 @@ namespace WinformControlLibraryExtension
                 this.InitializeMultidropSlideBarItemRectangle(this.Items[i]);
             }
         }
-     
+
         /// <summary>
         /// 初始化指定滑块Rectangle
         /// </summary>
@@ -1759,10 +1779,28 @@ namespace WinformControlLibraryExtension
             Rectangle rect = new Rectangle(scale_slidePadding, scale_slidePadding, this.ClientRectangle.Width - scale_slidePadding * 2, this.ClientRectangle.Height - scale_slidePadding * 2);
 
             int index = this.Items.IndexOf(item);
+            float value_tmp = 0;
+            float fanwei_tmp = 0;
+            if (this.MinValue >= 0 && this.MaxValue >= 0)
+            {
+                value_tmp = item.Value - this.MinValue;
+                fanwei_tmp = this.MaxValue - this.MinValue;
+            }
+            else if (this.MinValue <= 0 && this.MaxValue <= 0)
+            {
+                value_tmp = Math.Abs(this.MinValue) - Math.Abs(item.Value);
+                fanwei_tmp = Math.Abs(this.MinValue) - Math.Abs(this.MaxValue);
+            }
+            else if (this.MinValue < 0 && this.MaxValue > 0)
+            {
+                value_tmp = Math.Abs(this.MinValue) + item.Value;
+                fanwei_tmp = Math.Abs(this.MinValue) + Math.Abs(this.MaxValue);
+            }
+
             if (this.Orientation == SlideOrientation.HorizontalBottom || this.Orientation == SlideOrientation.HorizontalTop)
             {
                 float back_l = rect.Width - scale_slideWidth - (this.Items.Count - 1) * scale_slideWidth;
-                int slide_x = scale_slidePadding + (scale_slideWidth / 2) + (int)(item.Value / (Math.Abs(this.MinValue) + Math.Abs(this.MaxValue)) * back_l);
+                int slide_x = scale_slidePadding + (scale_slideWidth / 2) + (int)(value_tmp / fanwei_tmp * back_l);
                 if (slide_x < 0)
                     slide_x = 0;
                 if (slide_x > rect.Right - scale_slideWidth / 2)
@@ -1774,7 +1812,7 @@ namespace WinformControlLibraryExtension
             else
             {
                 float back_l = rect.Height - scale_slideHeight - (this.Items.Count - 1) * scale_slideHeight;
-                int slide_y = rect.Bottom - (scale_slideHeight / 2) - (int)(item.Value / (Math.Abs(this.MinValue) + Math.Abs(this.MaxValue)) * back_l);
+                int slide_y = rect.Bottom - (scale_slideHeight / 2) - (int)(value_tmp / fanwei_tmp * back_l);
                 if (slide_y < 0)
                     slide_y = 0;
                 if (slide_y > rect.Bottom - scale_slideHeight / 2)
@@ -1798,13 +1836,25 @@ namespace WinformControlLibraryExtension
             Rectangle rect = new Rectangle(scale_slidePadding, scale_slidePadding, this.ClientRectangle.Width - scale_slidePadding * 2, this.ClientRectangle.Height - scale_slidePadding * 2);
             Point point = this.PointToClient(Control.MousePosition);
 
+            float value_l = 0;//值总长度
+            if (this.MinValue >= 0 && this.MaxValue >= 0)
+            {
+                value_l = this.MaxValue - this.MinValue;
+            }
+            else if (this.MinValue <= 0 && this.MaxValue <= 0)
+            {
+                value_l = Math.Abs(this.MinValue) - Math.Abs(this.MaxValue);
+            }
+            else if (this.MinValue < 0 && this.MaxValue > 0)
+            {
+                value_l = Math.Abs(this.MinValue) + Math.Abs(this.MaxValue);
+            }
             if (this.Orientation == SlideOrientation.HorizontalTop || this.Orientation == SlideOrientation.HorizontalBottom)
             {
                 if (point.X == this.move_point.X)
                     return;
 
                 int index = this.Items.IndexOf(item);
-                float value_l = Math.Abs(this.MinValue) + Math.Abs(this.MaxValue);//值总长度
                 float back_l = rect.Width - scale_slideWidth - (this.Items.Count - 1) * scale_slideWidth;//背景总长度
                 float increment = value_l / back_l;//一个像素代表曾值量
 
@@ -1813,9 +1863,9 @@ namespace WinformControlLibraryExtension
                 this.move_point = point;
 
                 if (isGlobal)
-                    item.UpdateGlobalValue(value);
+                    item.UpdateGlobalValue(value,false);
                 else
-                    item.UpdateValue(value);
+                    item.UpdateValue(value,false);
             }
             else
             {
@@ -1823,7 +1873,6 @@ namespace WinformControlLibraryExtension
                     return;
 
                 int index = this.Items.IndexOf(item);
-                float value_l = Math.Abs(this.MinValue) + Math.Abs(this.MaxValue);//值总长度
                 float back_l = rect.Height - scale_slideHeight - (this.Items.Count - 1) * scale_slideHeight;//背景总长度
                 float increment = value_l / back_l;//一个像素代表曾值量
 
@@ -1832,9 +1881,9 @@ namespace WinformControlLibraryExtension
                 this.move_point = point;
 
                 if (isGlobal)
-                    item.UpdateGlobalValue(value);
+                    item.UpdateGlobalValue(value, false);
                 else
-                    item.UpdateValue(value);
+                    item.UpdateValue(value, false);
             }
         }
 
@@ -2442,6 +2491,8 @@ namespace WinformControlLibraryExtension
             [Browsable(false)]
             [EditorBrowsable(EditorBrowsableState.Never)]
             [Description("滑块rect")]
+            [Localizable(false)]
+            [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
             public RectangleF SlideRect
             {
                 get { return this.slideRect; }
@@ -2529,6 +2580,7 @@ namespace WinformControlLibraryExtension
             /// </summary>
             [Browsable(false)]
             [EditorBrowsable(EditorBrowsableState.Never)]
+            [Localizable(false)]
             [Description("滑块连线的坐标")]
             public PointF Slidepoint
             {
@@ -2547,6 +2599,7 @@ namespace WinformControlLibraryExtension
             /// </summary>
             [Browsable(false)]
             [EditorBrowsable(EditorBrowsableState.Never)]
+            [Localizable(false)]
             [Description("提示信息连线的坐标")]
             public PointF TipPoint
             {
@@ -2613,6 +2666,9 @@ namespace WinformControlLibraryExtension
             /// 提示信息rect
             /// </summary>
             [Browsable(false)]
+            [EditorBrowsable(EditorBrowsableState.Never)]
+            [Localizable(false)]
+            [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
             [Description("提示信息rect")]
             public Rectangle TipRect
             {
@@ -2749,15 +2805,16 @@ namespace WinformControlLibraryExtension
             /// 更改值
             /// </summary>
             /// <param name="value"></param>
+            /// <param name="ignoreSlideLock">是否忽略滑块锁</param>
             [Description("更改值")]
-            public void UpdateValue(float value)
+            public void UpdateValue(float value,bool ignoreSlideLock)
             {
                 if (this.owner == null)
                 {
                     throw new ArgumentNullException("滑块选项值修改方法调用必须在添加到集合之后");
                 }
 
-                if (this.SlideLock)
+                if (ignoreSlideLock==false && this.SlideLock)
                     return;
 
                 if (value < this.owner.MinValue)
@@ -2813,14 +2870,15 @@ namespace WinformControlLibraryExtension
             /// 更改全局值值
             /// </summary>
             /// <param name="value"></param>
-            public void UpdateGlobalValue(float value)
+            /// <param name="ignoreSlideLock">是否忽略滑块锁</param>
+            public void UpdateGlobalValue(float value, bool ignoreSlideLock)
             {
                 if (this.owner == null)
                 {
                     throw new ArgumentNullException("滑块选项值修改方法调用必须在添加到集合之后");
                 }
 
-                if (this.SlideLock)
+                if (ignoreSlideLock == false && this.SlideLock)
                     return;
 
                 if (value < this.owner.MinValue)
